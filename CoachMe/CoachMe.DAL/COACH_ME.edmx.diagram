@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6a6a9a0b315f4843bc8647cf3dc04598" Name="Diagram1" ZoomLevel="59">
+        <EntityTypeShape EntityType="COACH_MEModel.COURSE_PLACE" Width="1.5" PointX="9" PointY="0.875" />
+        <EntityTypeShape EntityType="COACH_MEModel.COURS" Width="1.5" PointX="13.5" PointY="2.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_LOGON" Width="1.5" PointX="6.25" PointY="8" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" Width="1.5" PointX="12.5" PointY="6.25" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_ROLE" Width="1.5" PointX="6.25" PointY="4.25" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_TEACH_COURSE" Width="1.5" PointX="9.5" PointY="4.875" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER" Width="1.5" PointX="4" PointY="4" />
+        <EntityTypeShape EntityType="COACH_MEModel.PLACE" Width="1.5" PointX="11.375" PointY="0.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.ROLE" Width="1.5" PointX="4" PointY="0.5" />
+        <AssociationConnector Association="COACH_MEModel.FK_COURSE_PLACE_COURSES" />
+        <AssociationConnector Association="COACH_MEModel.FK_COURSE_PLACE_PLACE" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COURSES" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_TEACHER_COURSE_COURSES" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_ROLE_ROLE" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_TEACH_COURSE_MEMBER_ROLE" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
