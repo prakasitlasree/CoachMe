@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using COACHME.MODEL;
-
-namespace COACHME.DataService
+using COACHME.DAL;
+namespace COACHME.DATASERVICE
 {
-    public class AuthenticationServices
+    public static class AuthenticationServices
     {
-        public List<LOGON> GetAll()
+        public static List<MEMBER_LOGON> GetLogOnAll()
         {
-            var result = new List<LOGON>();
+            var result = new List<MEMBER_LOGON>();
             try
             {
-                using (var ctx = new BIG_RY_DBEntities())
+                using (var ctx = new COACH_MEEntities())
                 {
-                    result = ctx.LOGONs.ToList();
+                     
+                    result = ctx.MEMBER_LOGON.ToList();
                 }
                 return result;
             }

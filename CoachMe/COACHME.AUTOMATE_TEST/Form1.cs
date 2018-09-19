@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using COACHME.DATASERVICE;
 namespace COACHME.AUTOMATE_TEST
 {
     public partial class Form1 : Form
@@ -19,7 +19,8 @@ namespace COACHME.AUTOMATE_TEST
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var res = DATASERVICE.AuthenticationServices.GetLogOnAll();
+            dataGridView1.DataSource = res;
         }
     }
 }

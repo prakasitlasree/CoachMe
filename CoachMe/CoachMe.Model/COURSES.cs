@@ -12,10 +12,10 @@ namespace COACHME.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class COURS
+    public partial class COURSES
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public COURS()
+        public COURSES()
         {
             this.COURSE_PLACE = new HashSet<COURSE_PLACE>();
             this.MEMBER_REGIS_COURSE = new HashSet<MEMBER_REGIS_COURSE>();

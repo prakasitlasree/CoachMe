@@ -23,7 +23,7 @@ namespace COACHME.MODEL
         public string UPDATED_BY { get; set; }
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
     
-        public virtual COURS COURS { get; set; }
+        public virtual COURSES COURSES { get; set; }
         public virtual PLACE PLACE { get; set; }
     }
 }

@@ -12,10 +12,10 @@ namespace COACHME.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class MEMBER
+    public partial class MEMBERS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MEMBER()
+        public MEMBERS()
         {
             this.MEMBER_LOGON = new HashSet<MEMBER_LOGON>();
             this.MEMBER_ROLE = new HashSet<MEMBER_ROLE>();

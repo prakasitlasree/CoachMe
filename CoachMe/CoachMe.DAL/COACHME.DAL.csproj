@@ -64,22 +64,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="COACH_ME.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>COACH_ME.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
     <None Include="COACH_ME.edmx.diagram">
       <DependentUpon>COACH_ME.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="COACH_ME.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>COACH_ME.edmx</DependentUpon>
-      <LastGenOutput>COACH_ME.Context.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -89,6 +82,13 @@
       <Project>{aee9cb9e-d3ff-41d0-9e16-ad9e799b39b7}</Project>
       <Name>COACHME.MODEL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="COACH_ME.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COACH_ME.edmx</DependentUpon>
+      <LastGenOutput>COACH_ME.Context.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
