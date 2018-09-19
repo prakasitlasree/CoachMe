@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>COACHME.MODEL</RootNamespace>
-    <AssemblyName>CoachMe.Model</AssemblyName>
+    <AssemblyName>COACHME.MODEL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

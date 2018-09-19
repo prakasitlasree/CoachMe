@@ -7,8 +7,8 @@
     <ProjectGuid>{9ACCCA6A-BBCA-4977-AE01-C0D44051ED95}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CoachMe.DAL</RootNamespace>
-    <AssemblyName>CoachMe.DAL</AssemblyName>
+    <RootNamespace>COACHME.DAL</RootNamespace>
+    <AssemblyName>COACHME.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

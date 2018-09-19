@@ -79,6 +79,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\COACHME.DataService\COACHME.DATASERVICE.csproj">
+      <Project>{a1610d2a-573f-47f3-ab0d-72cff9ca17ba}</Project>
+      <Name>COACHME.DATASERVICE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoachMe.Model\COACHME.MODEL.csproj">
+      <Project>{aee9cb9e-d3ff-41d0-9e16-ad9e799b39b7}</Project>
+      <Name>COACHME.MODEL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

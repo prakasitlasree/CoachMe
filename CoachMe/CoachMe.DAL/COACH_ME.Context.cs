@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CoachMe.DAL
+namespace COACHME.DAL
 {
     using System;
     using System.Data.Entity;
