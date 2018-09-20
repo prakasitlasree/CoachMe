@@ -18,6 +18,8 @@ namespace COACHME.DATASERVICE
                 {
                      
                     result = ctx.MEMBER_LOGON.ToList();
+
+                    //test
                 }
                 return result;
             }
