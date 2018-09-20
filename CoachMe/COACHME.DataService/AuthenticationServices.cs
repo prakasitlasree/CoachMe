@@ -3,25 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 using COACHME.MODEL;
 using COACHME.DAL;
 namespace COACHME.DATASERVICE
 {
-    public static class AuthenticationServices
+    public  class AuthenticationServices
     {
-        public static List<MEMBER_LOGON> GetLogOnAll()
+        public async  Task<bool> GetLogOnAll(string email, string password)
         {
-            var result = new List<MEMBER_LOGON>();
+            var result = false;
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    
-                    result = ctx.MEMBER_LOGON.ToList();
 
-                    //test
+                   var  member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email && x.PASSWORD == password).SingleOrDefaultAsync();
+                    if (member != null)
+                    {
+                        result= true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                    
                 }
-                return result;
+                return  result;
+                 
             }
             catch (Exception ex)
             {
