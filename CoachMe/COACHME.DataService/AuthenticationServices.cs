@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using COACHME.MODEL;
 using COACHME.DAL;
+using COACHME.CustomModels;
+
 namespace COACHME.DATASERVICE
 {
     public  class AuthenticationServices
@@ -36,6 +38,50 @@ namespace COACHME.DATASERVICE
             {
                 throw ex;
             }
+        }
+
+        public async Task<bool> Register(RegisterModel source)
+        {
+            var result = false;
+            MEMBERS member = new MEMBERS();
+            MEMBER_LOGON memberLogon = new MEMBER_LOGON();
+
+           
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == source.USER_NAME).FirstOrDefaultAsync();
+                    if(checkMember != null)
+                    {
+
+                    }
+                    else
+                    {
+                        memberLogon.USER_NAME = source.USER_NAME;
+                        memberLogon.PASSWORD = source.PASSWORD;
+
+                        member.FULLNAME = source.FULLNAME;
+                        member.MOBILE = source.MOBILE;
+
+                        ctx.MEMBERS.Add(member);
+                        ctx.MEMBER_LOGON.Add(memberLogon);
+                        //await ctx.SaveChangesAsync();
+                    }
+                  
+                    result = true;                            
+
+                }
+               
+
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                throw ex;
+               
+            }
+            return result;
         }
     }
 }

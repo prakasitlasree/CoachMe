@@ -19,8 +19,8 @@ namespace COACHME.AUTOMATE_TEST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var res = DATASERVICE.AuthenticationServices.GetLogOnAll();
-            dataGridView1.DataSource = res;
+            //var res = DATASERVICE.AuthenticationServices.GetLogOnAll("asd","asd");
+            //dataGridView1.DataSource = res;
         }
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="COURSE_PLACE.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\RegisterModel.cs" />
     <Compile Include="MEMBERS.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>

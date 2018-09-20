@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using COACHME.MODEL;
 using COACHME.DATASERVICE;
 using CoachMe.Models;
+using COACHME.CustomModels;
 
 namespace CoachMe.Controllers
 {
@@ -19,6 +20,7 @@ namespace CoachMe.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private AuthenticationServices service = new AuthenticationServices();
 
         public AccountController()
         {
@@ -78,7 +80,7 @@ namespace CoachMe.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            AuthenticationServices service = new AuthenticationServices();
+           
             var result = await service.GetLogOnAll(model.Email, model.Password);
             if (result)
             {
@@ -152,6 +154,7 @@ namespace CoachMe.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //var registerModel = new RegisterModel();
             return View();
         }
 
@@ -160,25 +163,30 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
+           
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
+                var result = await service.Register(model);
+                if (result)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return RedirectToAction("Index", "Home");
+                    //For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    //Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    //return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                else
+                {
+
+                }
+                //AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
