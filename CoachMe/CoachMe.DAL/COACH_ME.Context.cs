@@ -19,6 +19,8 @@ namespace COACHME.DAL
         public COACH_MEEntities()
             : base("name=COACH_MEEntities")
         {
+    	this.Configuration.ProxyCreationEnabled = false;
+    
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -16,7 +16,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                     
+                    
                     result = ctx.MEMBER_LOGON.ToList();
 
                     //test
