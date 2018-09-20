@@ -279,6 +279,16 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\COACHME.DataService\COACHME.DATASERVICE.csproj">
+      <Project>{a1610d2a-573f-47f3-ab0d-72cff9ca17ba}</Project>
+      <Name>COACHME.DATASERVICE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoachMe.Model\COACHME.MODEL.csproj">
+      <Project>{aee9cb9e-d3ff-41d0-9e16-ad9e799b39b7}</Project>
+      <Name>COACHME.MODEL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
