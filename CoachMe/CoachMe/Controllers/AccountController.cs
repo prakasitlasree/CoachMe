@@ -10,8 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using COACHME.MODEL;
 using COACHME.DATASERVICE;
-using CoachMe.Models;
-using COACHME.CustomModels;
+using CoachMe.Models; 
+using COACHME.CUSTOM_MODELS;
 
 namespace CoachMe.Controllers
 {
@@ -163,13 +163,13 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel dto)
         {
            
             if (ModelState.IsValid)
             {
                 //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
-                var result = await service.Register(model);
+                var result = await service.Register(dto);
                 if (result)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -180,7 +180,7 @@ namespace CoachMe.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -188,10 +188,10 @@ namespace CoachMe.Controllers
                 }
                 //AddErrors(result);
             }
-
+             
             // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+            return View(dto);
+        } 
 
         //
         // GET: /Account/ConfirmEmail

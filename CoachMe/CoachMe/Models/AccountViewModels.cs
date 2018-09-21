@@ -47,7 +47,7 @@ namespace CoachMe.Models
     }
 
     public class LoginViewModel
-    {
+    { 
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -60,6 +60,15 @@ namespace CoachMe.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        [Required]
+        [Display(Name = "Fullname")]
+        public string Fullname { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 
     public class RegisterViewModel

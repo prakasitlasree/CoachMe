@@ -30,6 +30,18 @@
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="UPDATED_DATE" Type="date" />
         </EntityType>
+        <EntityType Name="LOGON_ACTIVITY">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATE" Type="datetime" />
+          <Property Name="ACTION" Type="nvarchar" MaxLength="500" />
+          <Property Name="FULLNAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="PASSWORD" Type="nvarchar" MaxLength="500" />
+          <Property Name="STATUS" Type="bit" />
+        </EntityType>
         <EntityType Name="MEMBER_LOGON">
           <Key>
             <PropertyRef Name="AUTO_ID" />
@@ -221,6 +233,7 @@
         <EntityContainer Name="COACH_MEModelStoreContainer">
           <EntitySet Name="COURSE_PLACE" EntityType="Self.COURSE_PLACE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COURSES" EntityType="Self.COURSES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGON_ACTIVITY" EntityType="Self.LOGON_ACTIVITY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_LOGON" EntityType="Self.MEMBER_LOGON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_REGIS_COURSE" EntityType="Self.MEMBER_REGIS_COURSE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_ROLE" EntityType="Self.MEMBER_ROLE" Schema="dbo" store:Type="Tables" />
@@ -307,6 +320,7 @@
             <End Role="MEMBER_ROLE" EntitySet="MEMBER_ROLE" />
             <End Role="MEMBER_TEACH_COURSE" EntitySet="MEMBER_TEACH_COURSE" />
           </AssociationSet>
+          <EntitySet Name="LOGON_ACTIVITY" EntityType="COACH_MEModel.LOGON_ACTIVITY" />
         </EntityContainer>
         <EntityType Name="COURSE_PLACE">
           <Key>
@@ -537,6 +551,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LOGON_ACTIVITY">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATE" Type="DateTime" Precision="3" />
+          <Property Name="ACTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FULLNAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="USER_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PASSWORD" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -665,6 +691,19 @@
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGON_ACTIVITY">
+            <EntityTypeMapping TypeName="COACH_MEModel.LOGON_ACTIVITY">
+              <MappingFragment StoreEntitySet="LOGON_ACTIVITY">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
                 <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
               </MappingFragment>
             </EntityTypeMapping>

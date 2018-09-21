@@ -61,6 +61,9 @@
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="CUSTOM_MODELS\RegisterModel.cs" />
+    <Compile Include="LOGON_ACTIVITY.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
     <Compile Include="MEMBERS.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>

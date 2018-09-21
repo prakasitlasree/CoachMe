@@ -37,5 +37,6 @@ namespace COACHME.DAL
         public virtual DbSet<MEMBERS> MEMBERS { get; set; }
         public virtual DbSet<PLACE> PLACE { get; set; }
         public virtual DbSet<ROLE> ROLE { get; set; }
+        public virtual DbSet<LOGON_ACTIVITY> LOGON_ACTIVITY { get; set; }
     }
 }
