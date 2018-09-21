@@ -20,16 +20,18 @@
                 <div class="m-login__signin">
                     <div class="m-login__head">
                         <h3 class="m-login__title">Sign In Coach Me</h3>
-                    </div>
+                    </div> 
                     @*<form class="m-login__form m-form" >*@
                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
                    {
                     @Html.AntiForgeryToken()
                         <div class="form-group m-form__group"> 
                             <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group m-form__group">
                             <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                          </div>
                         <div class="row m-login__form-sub">
                             <div class="col m--align-left m-login__form-left">
@@ -37,13 +39,14 @@
                                     <input type="checkbox" name="remember"> Remember me
                                     <span></span>
                                 </label>
+
                             </div>
                             <div class="col m--align-right m-login__form-right">
-                                <a href="javascript:;" id="m_login_forget_password" class="m-link">Forget Password ?</a>
+                                <a  href="@Url.Action("ForgotPassword","Account")" class="m-link">Forget Password ?</a>
                             </div>
                         </div>
                         <div class="m-login__form-action">
-                            <button id="m_login_signin_submit"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">Sign In</button>
+                            <button  type="submit" value="Login" name="buttonType"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">Sign In</button>
                         </div>
                    }
                     @*</form>*@

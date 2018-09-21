@@ -164,47 +164,59 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel dto)
+        public async Task<ActionResult> Register(RegisterViewModel dto,string buttonType)
         {
-           
+            var model = new RegisterViewModel();
+            var source = new RegisterModel();
             if (ModelState.IsValid)
             {
-                //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
-                var source = new RegisterModel();
-                source.Email = dto.Email;
-                source.Fullname = dto.Fullname;
-                source.Password = dto.Password;
-                source.Mobile = dto.Mobile;
-                source.Agree = dto.Agree;
-                source.ConfirmPassword = dto.ConfirmPassword;
-                 
-                var result = await service.Register(source);
-                if (result)
-                {
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    //For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    //Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                if (buttonType == "Save")
                 {
 
+                    //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
+
+                    source.Email = dto.Email;
+                    source.Fullname = dto.Fullname;
+                    source.Password = dto.Password;
+                    source.Mobile = dto.Mobile;
+                    source.Agree = dto.Agree;
+                    source.ConfirmPassword = dto.ConfirmPassword;
+
+                    var result = await service.Register(source);
+                    if (result)
+                    {
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        //For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        //Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+
+                    }
+                    //AddErrors(result);
                 }
-                //AddErrors(result);
+
+                // If we got this far, something failed, redisplay form
+
+                model.Email = dto.Email;
+                model.Fullname = dto.Fullname;
+                model.Password = dto.Password;
+                model.Mobile = dto.Mobile;
+                model.Agree = dto.Agree;
+                model.ConfirmPassword = dto.ConfirmPassword;
+
+                if (buttonType == "Cancel")
+                {
+
+                    return RedirectToAction("Login", "Account");
+                }
             }
-
-            // If we got this far, something failed, redisplay form
-            var model =new RegisterViewModel();
-            model.Email = dto.Email;
-            model.Fullname = dto.Fullname;
-            model.Password = dto.Password;
-            model.Mobile = dto.Mobile;
-
             return View(model);
         } 
 
@@ -234,23 +246,29 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model, string buttonType)
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                if (buttonType == "Request")
+                { 
+                    var user = await UserManager.FindByNameAsync(model.Email);
+                    if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                    {
+                        return View("ForgotPasswordConfirmation");
+                    } 
                 }
+                if (buttonType == "Cancel")
+                {
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                    return RedirectToAction("Login", "Account");
+                } 
+            } 
+
+            if (buttonType == "Cancel")
+            {
+
+                return RedirectToAction("Login", "Account");
             }
 
             // If we got this far, something failed, redisplay form
