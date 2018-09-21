@@ -15,21 +15,33 @@ namespace COACHME.DATASERVICE
         public async  Task<bool> GetLogOnAll(string email, string password)
         {
             var result = false;
+            var fullname = string.Empty;
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                   var  member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email && x.PASSWORD == password).SingleOrDefaultAsync();
+                   var  member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME == email && x.PASSWORD == password).FirstOrDefaultAsync();
                     if (member != null)
                     {
-                        result= true;
+                        fullname = member.MEMBERS.FULLNAME;
+                        result = true;
                     }
                     else
                     {
                         result = false;
                     }
-                    
+                     
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "LOGON";
+                    activity.FULLNAME = fullname;
+                    activity.USER_NAME = email;
+                    activity.PASSWORD = password;
+                    activity.STATUS = result;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    var act_result = await ctx.SaveChangesAsync();
+
                 }
                 return  result;
                  

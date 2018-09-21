@@ -10,8 +10,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using COACHME.MODEL;
 using COACHME.DATASERVICE;
-using CoachMe.Models; 
+using CoachMe.Models;
 using COACHME.CUSTOM_MODELS;
+using COACHME.MODEL.CUSTOM_MODELS;
 
 namespace CoachMe.Controllers
 {
@@ -70,18 +71,18 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel dto, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(dto);
             }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
            
-            var result = await service.GetLogOnAll(model.Email, model.Password);
+            var result = await service.GetLogOnAll(dto.Email, dto.Password);
             if (result)
             {
                 return RedirectToLocal(returnUrl);
@@ -89,7 +90,7 @@ namespace CoachMe.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid login attempt.");
-                return View(model);
+                return View(dto);
             }
             //switch (result)
             //{
@@ -163,13 +164,21 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterModel dto)
+        public async Task<ActionResult> Register(RegisterViewModel dto)
         {
            
             if (ModelState.IsValid)
             {
                 //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
-                var result = await service.Register(dto);
+                var source = new RegisterModel();
+                source.Email = dto.Email;
+                source.Fullname = dto.Fullname;
+                source.Password = dto.Password;
+                source.Mobile = dto.Mobile;
+                source.Agree = dto.Agree;
+                source.ConfirmPassword = dto.ConfirmPassword;
+                 
+                var result = await service.Register(source);
                 if (result)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -188,9 +197,15 @@ namespace CoachMe.Controllers
                 }
                 //AddErrors(result);
             }
-             
+
             // If we got this far, something failed, redisplay form
-            return View(dto);
+            var model =new RegisterViewModel();
+            model.Email = dto.Email;
+            model.Fullname = dto.Fullname;
+            model.Password = dto.Password;
+            model.Mobile = dto.Mobile;
+
+            return View(model);
         } 
 
         //
