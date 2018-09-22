@@ -68,17 +68,25 @@ namespace COACHME.DATASERVICE
                     }
                     else
                     {
+                        //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
                         member.MOBILE = dto.Mobile;
+
+                        //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();
                         memberRole.ROLE_ID = 1;
+
+                        //3. Details 
                         MEMBER_LOGON memberLogon = new MEMBER_LOGON();
                         memberLogon.USER_NAME = dto.Email;
                         memberLogon.PASSWORD = dto.Password; 
+
+                        //4. Add detail to master 
                         member.MEMBER_ROLE.Add(memberRole);
                         member.MEMBER_LOGON.Add(memberLogon);
 
+                        //5. Save master
                         ctx.MEMBERS.Add(member); 
                         await ctx.SaveChangesAsync();
                     }
