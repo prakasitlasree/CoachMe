@@ -200,6 +200,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,10 +216,25 @@
     <Content Include="Content\asset\vendors.bundle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\teacher\fonts\flaticon\Flaticon.svg" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-brands-400.svg" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-regular-400.svg" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-solid-900.svg" />
+    <Content Include="Content\css\teacher\fonts\line-awesome\line-awesome.svg" />
+    <Content Include="Content\css\teacher\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.svg" />
+    <Content Include="Content\css\teacher\fonts\socicon\socicon.svg" />
+    <Content Include="Content\css\teacher\style.bundle.css" />
+    <Content Include="Content\css\teacher\style.bundle.rtl.css" />
+    <Content Include="Content\css\teacher\vendors.bundle.css" />
+    <Content Include="Content\css\teacher\vendors.bundle.rtl.css" />
     <Content Include="Content\images\bg-3.jpg" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\teacher\logo.png" />
+    <Content Include="Content\images\teacher\user1.jpg" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\scripts.bundle.js" />
+    <Content Include="Content\js\teacher\scripts.bundle.js" />
+    <Content Include="Content\js\teacher\vendors.bundle.js" />
     <Content Include="Content\js\vendors.bundle.js" />
     <Content Include="Content\js\webfont.js" />
     <Content Include="favicon.ico" />
@@ -230,6 +246,35 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\css\teacher\fonts\flaticon\Flaticon.eot" />
+    <Content Include="Content\css\teacher\fonts\flaticon\Flaticon.ttf" />
+    <Content Include="Content\css\teacher\fonts\flaticon\Flaticon.woff" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-brands-400.eot" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-brands-400.ttf" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-brands-400.woff" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-brands-400.woff2" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-regular-400.eot" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-regular-400.ttf" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-regular-400.woff" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-regular-400.woff2" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-solid-900.eot" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-solid-900.ttf" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-solid-900.woff" />
+    <Content Include="Content\css\teacher\fonts\fontawesome5\fa-solid-900.woff2" />
+    <Content Include="Content\css\teacher\fonts\line-awesome\line-awesome.eot" />
+    <Content Include="Content\css\teacher\fonts\line-awesome\line-awesome.ttf" />
+    <Content Include="Content\css\teacher\fonts\line-awesome\line-awesome.woff" />
+    <Content Include="Content\css\teacher\fonts\line-awesome\line-awesome.woff2" />
+    <Content Include="Content\css\teacher\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.eot" />
+    <Content Include="Content\css\teacher\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.ttf" />
+    <Content Include="Content\css\teacher\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.woff" />
+    <Content Include="Content\css\teacher\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.woff2" />
+    <Content Include="Content\css\teacher\fonts\socicon\socicon.eot" />
+    <Content Include="Content\css\teacher\fonts\socicon\socicon.ttf" />
+    <Content Include="Content\css\teacher\fonts\socicon\socicon.woff" />
+    <Content Include="Content\css\teacher\fonts\summernote\summernote.eot" />
+    <Content Include="Content\css\teacher\fonts\summernote\summernote.ttf" />
+    <Content Include="Content\css\teacher\fonts\summernote\summernote.woff" />
     <None Include="Properties\PublishProfiles\VPS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -280,6 +325,8 @@
     <Content Include="Views\Account\Login_new.cshtml" />
     <Content Include="Views\Account\Register_backup.cshtml" />
     <Content Include="Views\Account\ForgotPassword_backup.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Shared\_TeacherLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

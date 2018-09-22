@@ -85,7 +85,7 @@ namespace CoachMe.Controllers
             var result = await service.GetLogOnAll(dto.Email, dto.Password);
             if (result)
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Index", "Teacher");
             }
             else
             {
