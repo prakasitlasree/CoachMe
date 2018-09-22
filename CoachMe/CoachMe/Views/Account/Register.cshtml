@@ -1,5 +1,5 @@
 ﻿@*@model CoachMe.Models.RegisterViewModel*@
-@model CoachMe.Models.RegisterViewModel
+@model COACHME.CUSTOM_MODELS.RegisterModel
 @{
     ViewBag.Title = "Register new Account";
 }
@@ -55,7 +55,9 @@
                         <div class="m-login__form-action">
                             <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
                             
-                            <button type="submit" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</button>
+                            <a href="@Url.Action("Login","Account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
+                            @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
+                            Cancel</button>*@
                         </div>
                     } 
                 </div>

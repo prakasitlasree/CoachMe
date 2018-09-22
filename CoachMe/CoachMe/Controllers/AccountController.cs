@@ -164,7 +164,7 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel dto,string buttonType)
+        public async Task<ActionResult> Register(RegisterModel dto,string buttonType)
         {
             var model = new RegisterViewModel();
             var source = new RegisterModel();
@@ -174,15 +174,8 @@ namespace CoachMe.Controllers
                 {
 
                     //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
-
-                    source.Email = dto.Email;
-                    source.Fullname = dto.Fullname;
-                    source.Password = dto.Password;
-                    source.Mobile = dto.Mobile;
-                    source.Agree = dto.Agree;
-                    source.ConfirmPassword = dto.ConfirmPassword;
-
-                    var result = await service.Register(source);
+                     
+                    var result = await service.Register(dto);
                     if (result)
                     {
                         //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -203,21 +196,13 @@ namespace CoachMe.Controllers
                 }
 
                 // If we got this far, something failed, redisplay form
-
-                model.Email = dto.Email;
-                model.Fullname = dto.Fullname;
-                model.Password = dto.Password;
-                model.Mobile = dto.Mobile;
-                model.Agree = dto.Agree;
-                model.ConfirmPassword = dto.ConfirmPassword;
-
+ 
                 if (buttonType == "Cancel")
-                {
-
+                { 
                     return RedirectToAction("Login", "Account");
                 }
             }
-            return View(model);
+            return View(dto);
         } 
 
         //
