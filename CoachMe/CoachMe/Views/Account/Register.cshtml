@@ -1,23 +1,29 @@
-﻿@*@model CoachMe.Models.RegisterViewModel*@
-@model COACHME.CUSTOM_MODELS.RegisterModel
+﻿ 
+@model COACHME.MODEL.CUSTOM_MODELS.RegisterModel
 @{
+    
     ViewBag.Title = "Register new Account";
 }
 
- 
 <div class="m-grid m-grid--hor m-grid--root m-page">
 
 
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../Content/images/bg-3.jpg);">
         <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
             <div class="m-login__container">
-                 
+                <div class="m-login__logo">
+                    <a href="#">
+                        <img src="~/Content/images/logo.png">
+                    </a>
+                </div>
+
                 <!--Start SignUp -->
-                <div class="m-login__signin">  @*m-login__signup">*@
+                <div class="m-login__signin">
+                    @*m-login__signup">*@
                     <div class="m-login__head">
                         <h3 class="m-login__title">Register new Coach Me account</h3>
                         <div class="m-login__desc">Enter your details to create your account:</div>
-                    </div>  
+                    </div>
                     @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
                     {
                         @Html.AntiForgeryToken()
@@ -36,11 +42,7 @@
                         <div class="form-group m-form__group">
                             <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="ConfirmPassword">
                             @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input" type="text" placeholder="Mobile" name="Mobile">
-                            @Html.ValidationMessageFor(m => m.Mobile, "", new { @class = "text-danger" })
-                        </div>
+                        </div> 
                         <div class="row form-group m-form__group m-login__form-sub">
                             <div class="col m--align-left">
                                 <label class="m-checkbox m-checkbox--focus">
@@ -54,21 +56,21 @@
                         </div>
                         <div class="m-login__form-action">
                             <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
-                            
+
                             <a href="@Url.Action("Login","Account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
                             @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
-                            Cancel</button>*@
+                                Cancel</button>*@
                         </div>
-                    } 
+                    }
                 </div>
                 <!--End SignUp -->
-                  
+
             </div>
         </div>
     </div>
 
 </div>
- 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

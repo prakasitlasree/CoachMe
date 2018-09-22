@@ -56,7 +56,21 @@
     @*<script src="../../../assets/snippets/custom/pages/user/login.js" type="text/javascript"></script>*@
     <script src="~/Content/js/login.js" type="text/javascript"></script>
     <!--end::Page Scripts -->
+    @*<script type="text/javascript">
+    $(document).ready(function () {
+        alert()
+        $("#formOuter #forgotpassword").click(function (e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            alert(form.serialize())
+            $(form).submit();
+        })
+    });
+
+    </script>*@
 </body>
  @RenderSection("scripts", required: false)
+
+
 <!-- end::Body -->
 </html>

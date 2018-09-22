@@ -228,6 +228,8 @@
     <Content Include="Content\css\teacher\vendors.bundle.css" />
     <Content Include="Content\css\teacher\vendors.bundle.rtl.css" />
     <Content Include="Content\images\bg-3.jpg" />
+    <Content Include="Content\images\CM21.png" />
+    <Content Include="Content\images\CoachMELogo.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\teacher\logo.png" />
     <Content Include="Content\images\teacher\user1.jpg" />
@@ -327,6 +329,7 @@
     <Content Include="Views\Account\ForgotPassword_backup.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

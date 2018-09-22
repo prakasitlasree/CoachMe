@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace COACHME.CUSTOM_MODELS
+namespace COACHME.MODEL.CUSTOM_MODELS
 {
-    public class RegisterModel
+    public partial class RegisterModel
     {
         [Required]
         [EmailAddress]
@@ -28,12 +28,7 @@ namespace COACHME.CUSTOM_MODELS
         [Display(Name = "ConfirmPassword")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
-        [Display(Name = "Mobile")]
-        [DataType(DataType.PhoneNumber)]
-        public string Mobile { get; set; }
-
+          
         [Required]
         [Display(Name = "Agree")]
         public bool Agree { get; set; }

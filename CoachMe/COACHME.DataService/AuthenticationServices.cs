@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using COACHME.MODEL;
 using COACHME.DAL;
-using COACHME.CUSTOM_MODELS;
+using COACHME.MODEL.CUSTOM_MODELS;
 
 namespace COACHME.DATASERVICE
 {
@@ -71,8 +71,7 @@ namespace COACHME.DATASERVICE
                         //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
-                        member.MOBILE = dto.Mobile;
-
+                         
                         //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();
                         memberRole.ROLE_ID = 1;

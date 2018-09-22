@@ -11,7 +11,6 @@ using Microsoft.Owin.Security;
 using COACHME.MODEL;
 using COACHME.DATASERVICE;
 using CoachMe.Models;
-using COACHME.CUSTOM_MODELS;
 using COACHME.MODEL.CUSTOM_MODELS;
 
 namespace CoachMe.Controllers
@@ -19,6 +18,7 @@ namespace CoachMe.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        public const string PARTIAL_VIEW_FOLDER = "~/Views/Account/ForgotPasswordPartial.cshtml";
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private AuthenticationServices service = new AuthenticationServices();
@@ -27,7 +27,7 @@ namespace CoachMe.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -39,9 +39,9 @@ namespace CoachMe.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace CoachMe.Controllers
                 _userManager = value;
             }
         }
-         
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -67,11 +67,20 @@ namespace CoachMe.Controllers
         }
 
         //
+        // GET: /Account/Login
+        [AllowAnonymous]
+        public ActionResult Fo(string returnUrl)
+        {
+            //ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel dto, string returnUrl)
+        public async Task<ActionResult> Login(LogonModel dto, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +90,7 @@ namespace CoachMe.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-           
+
             var result = await service.GetLogOnAll(dto.Email, dto.Password);
             if (result)
             {
@@ -136,7 +145,7 @@ namespace CoachMe.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -164,7 +173,7 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterModel dto,string buttonType)
+        public async Task<ActionResult> Register(RegisterModel dto, string buttonType)
         {
             var model = new RegisterViewModel();
             var source = new RegisterModel();
@@ -174,7 +183,7 @@ namespace CoachMe.Controllers
                 {
 
                     //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
-                     
+
                     var result = await service.Register(dto);
                     if (result)
                     {
@@ -196,14 +205,15 @@ namespace CoachMe.Controllers
                 }
 
                 // If we got this far, something failed, redisplay form
- 
+
                 if (buttonType == "Cancel")
-                { 
+                {
                     return RedirectToAction("Login", "Account");
                 }
             }
+            // return RedirectToAction("Login", "Account");
             return View(dto);
-        } 
+        }
 
         //
         // GET: /Account/ConfirmEmail
@@ -231,32 +241,34 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model, string buttonType)
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model)
         {
             if (ModelState.IsValid)
             {
-                if (buttonType == "Request")
-                { 
-                    var user = await UserManager.FindByNameAsync(model.Email);
-                    if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                    {
-                        return View("ForgotPasswordConfirmation");
-                    } 
-                }
-                if (buttonType == "Cancel")
+
+                var user = await UserManager.FindByNameAsync(model.Email);
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
+                    //1. Check with exiting email logon
 
-                    return RedirectToAction("Login", "Account");
-                } 
-            } 
+                    //2. Send New password to email
 
-            if (buttonType == "Cancel")
-            {
+                    //3. Add activity
 
-                return RedirectToAction("Login", "Account");
+                    //4 Return message 
+                    return View("ForgotPasswordConfirmation");
+                }
+                
             }
 
+            //if (buttonType == "Cancel")
+            //{
+
+            //    return RedirectToAction("Login", "Account");
+            //}
+
             // If we got this far, something failed, redisplay form
+            //return PartialView(PARTIAL_VIEW_FOLDER);
             return View(model);
         }
 
