@@ -135,11 +135,11 @@
           <Key>
             <PropertyRef Name="AUTO_ID" />
           </Key>
-          <Property Name="AUTO_ID" Type="int" Nullable="false" />
+          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" />
           <Property Name="TOKEN_HASH" Type="nvarchar(max)" />
-          <Property Name="TETOKEN_XPIRATION" Type="datetime" />
-          <Property Name="TETOKEN_USED" Type="bit" />
+          <Property Name="TOKEN_EXPIRATION" Type="datetime" />
+          <Property Name="TOKEN_USED" Type="bit" />
         </EntityType>
         <EntityType Name="ROLE">
           <Key>
@@ -602,8 +602,8 @@
           <Property Name="AUTO_ID" Type="Int32" Nullable="false" />
           <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TOKEN_HASH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TETOKEN_XPIRATION" Type="DateTime" Precision="3" />
-          <Property Name="TETOKEN_USED" Type="Boolean" />
+          <Property Name="TOKEN_EXPIRATION" Type="DateTime" Precision="3" />
+          <Property Name="TOKEN_USED" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -763,8 +763,8 @@
           <EntitySetMapping Name="RESET_PASSWORD">
             <EntityTypeMapping TypeName="COACH_MEModel.RESET_PASSWORD">
               <MappingFragment StoreEntitySet="RESET_PASSWORD">
-                <ScalarProperty Name="TETOKEN_USED" ColumnName="TETOKEN_USED" />
-                <ScalarProperty Name="TETOKEN_XPIRATION" ColumnName="TETOKEN_XPIRATION" />
+                <ScalarProperty Name="TOKEN_USED" ColumnName="TOKEN_USED" />
+                <ScalarProperty Name="TOKEN_EXPIRATION" ColumnName="TOKEN_EXPIRATION" />
                 <ScalarProperty Name="TOKEN_HASH" ColumnName="TOKEN_HASH" />
                 <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
                 <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />

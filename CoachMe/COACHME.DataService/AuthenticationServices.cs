@@ -6,6 +6,7 @@ using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System.Net.Mail;
 using System.Net;
+using COACHME.DAL;
 
 namespace COACHME.DATASERVICE
 {
@@ -107,14 +108,27 @@ namespace COACHME.DATASERVICE
         public async Task<bool> ForgotPassword(ForgotPasswordModel email)
         {
             var result = false;
-            var emailFrom = "No-reply@CoachMe.asia";
+            var emailFrom = "Natchaphon2140@gmail.com";
             //const string fromPassword = "0991142688";
             var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");
             var fromPassword = "0991142688";
-            GenUniqueKey(email.Email);
+
+
 
             using (var ctx = new COACH_MEEntities())
             {
+                #region ===== GEN HASH CODE====
+                var hash = GenUniqueKey(email.Email);
+                var resetPassword = new RESET_PASSWORD();
+                resetPassword.USER_NAME = email.Email;
+                resetPassword.TOKEN_HASH = hash;
+                resetPassword.TOKEN_USED = false;
+                resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
+                ctx.RESET_PASSWORD.Add(resetPassword);
+                var act_result = await ctx.SaveChangesAsync();
+                #endregion
+
+
                 //1. Check with exiting email logon
                 var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync();
 
@@ -124,7 +138,8 @@ namespace COACHME.DATASERVICE
                     #region =========SEND EMAIL TEST=========
                     var emailTo = email;
                     const string subject = "Coach Me : Reset Password";
-                    const string body = "Link : ";
+                    string link = "http://localhost:1935/Account/ResetPassword?";
+                    string body = "Link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash;
 
                     try
                     {
@@ -161,7 +176,7 @@ namespace COACHME.DATASERVICE
                         activity.PASSWORD = "SYSTEM";
                         activity.STATUS = result;
                         ctx.LOGON_ACTIVITY.Add(activity);
-                        var act_result = await ctx.SaveChangesAsync();
+                        act_result = await ctx.SaveChangesAsync();
                         #endregion
 
                     }
@@ -183,14 +198,35 @@ namespace COACHME.DATASERVICE
 
         private string GenUniqueKey(string email)
         {
-            string a = "natchaphonasdasdsad";
-            int hash = a.GetHashCode();
-            return hash.ToString(); 
+            string str = email + DateTime.Now.ToString();
+            int hash = email.GetHashCode();
+            return hash.ToString();
         }
 
-        public async Task<bool> ResetPassword(ForgotPasswordModel email)
+        public async Task<bool> ResetPassword(ResetPasswordValidateModel resetPassword)
         {
-            return false;
+            var result = false;
+            using (var ctx = new COACH_MEEntities())
+            {
+                var tokenValidate = await ctx.RESET_PASSWORD.Where(x => x.USER_NAME == resetPassword.USER_NAME.ToString() && x.TOKEN_HASH == resetPassword.TOKEN_HASH && x.TOKEN_EXPIRATION > DateTime.Now && x.TOKEN_USED == false).FirstOrDefaultAsync();
+                try
+                {
+                    if (tokenValidate != null)
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                
+                }
+                catch (Exception ex)
+            {
+
+            }
+            return result;
         }
     }
+}
 }

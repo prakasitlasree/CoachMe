@@ -17,7 +17,7 @@ namespace COACHME.MODEL
         public int AUTO_ID { get; set; }
         public string USER_NAME { get; set; }
         public string TOKEN_HASH { get; set; }
-        public Nullable<System.DateTime> TETOKEN_XPIRATION { get; set; }
-        public Nullable<bool> TETOKEN_USED { get; set; }
+        public Nullable<System.DateTime> TOKEN_EXPIRATION { get; set; }
+        public Nullable<bool> TOKEN_USED { get; set; }
     }
 }
