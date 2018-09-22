@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="COACH_MEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CONFIGURATION">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CONTROLER_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="SETING_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="VALUE" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="COURSE_PLACE">
           <Key>
             <PropertyRef Name="AUTO_ID" />
@@ -34,7 +43,7 @@
           <Key>
             <PropertyRef Name="AUTO_ID" />
           </Key>
-          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUTO_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DATE" Type="datetime" />
           <Property Name="ACTION" Type="nvarchar" MaxLength="500" />
           <Property Name="FULLNAME" Type="nvarchar" MaxLength="500" />
@@ -121,6 +130,16 @@
           <Property Name="ADDRESS" Type="nvarchar" MaxLength="50" />
           <Property Name="SIZE" Type="nvarchar" MaxLength="50" />
           <Property Name="TYPE" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RESET_PASSWORD">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="int" Nullable="false" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="TOKEN_HASH" Type="nvarchar(max)" />
+          <Property Name="TETOKEN_XPIRATION" Type="datetime" />
+          <Property Name="TETOKEN_USED" Type="bit" />
         </EntityType>
         <EntityType Name="ROLE">
           <Key>
@@ -231,6 +250,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="COACH_MEModelStoreContainer">
+          <EntitySet Name="CONFIGURATION" EntityType="Self.CONFIGURATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COURSE_PLACE" EntityType="Self.COURSE_PLACE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COURSES" EntityType="Self.COURSES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOGON_ACTIVITY" EntityType="Self.LOGON_ACTIVITY" Schema="dbo" store:Type="Tables" />
@@ -240,6 +260,7 @@
           <EntitySet Name="MEMBER_TEACH_COURSE" EntityType="Self.MEMBER_TEACH_COURSE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBERS" EntityType="Self.MEMBERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PLACE" EntityType="Self.PLACE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESET_PASSWORD" EntityType="Self.RESET_PASSWORD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_COURSE_PLACE_COURSES" Association="Self.FK_COURSE_PLACE_COURSES">
             <End Role="COURSES" EntitySet="COURSES" />
@@ -321,6 +342,8 @@
             <End Role="MEMBER_TEACH_COURSE" EntitySet="MEMBER_TEACH_COURSE" />
           </AssociationSet>
           <EntitySet Name="LOGON_ACTIVITY" EntityType="COACH_MEModel.LOGON_ACTIVITY" />
+          <EntitySet Name="CONFIGURATION" EntityType="COACH_MEModel.CONFIGURATION" />
+          <EntitySet Name="RESET_PASSWORD" EntityType="COACH_MEModel.RESET_PASSWORD" />
         </EntityContainer>
         <EntityType Name="COURSE_PLACE">
           <Key>
@@ -563,6 +586,25 @@
           <Property Name="PASSWORD" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="STATUS" Type="Boolean" />
         </EntityType>
+        <EntityType Name="CONFIGURATION">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CONTROLER_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SETING_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VALUE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RESET_PASSWORD">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TOKEN_HASH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TETOKEN_XPIRATION" Type="DateTime" Precision="3" />
+          <Property Name="TETOKEN_USED" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -704,6 +746,27 @@
                 <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
                 <ScalarProperty Name="ACTION" ColumnName="ACTION" />
                 <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONFIGURATION">
+            <EntityTypeMapping TypeName="COACH_MEModel.CONFIGURATION">
+              <MappingFragment StoreEntitySet="CONFIGURATION">
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="SETING_NAME" ColumnName="SETING_NAME" />
+                <ScalarProperty Name="CONTROLER_NAME" ColumnName="CONTROLER_NAME" />
+                <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESET_PASSWORD">
+            <EntityTypeMapping TypeName="COACH_MEModel.RESET_PASSWORD">
+              <MappingFragment StoreEntitySet="RESET_PASSWORD">
+                <ScalarProperty Name="TETOKEN_USED" ColumnName="TETOKEN_USED" />
+                <ScalarProperty Name="TETOKEN_XPIRATION" ColumnName="TETOKEN_XPIRATION" />
+                <ScalarProperty Name="TOKEN_HASH" ColumnName="TOKEN_HASH" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
                 <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
               </MappingFragment>
             </EntityTypeMapping>

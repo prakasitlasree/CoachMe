@@ -23,6 +23,8 @@
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_ROLE_ROLE" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_TEACH_COURSE_MEMBER_ROLE" />
         <EntityTypeShape EntityType="COACH_MEModel.LOGON_ACTIVITY" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.CONFIGURATION" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.RESET_PASSWORD" Width="1.5" PointX="7.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

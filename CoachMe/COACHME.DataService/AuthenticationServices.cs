@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using COACHME.MODEL;
-using COACHME.DAL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System.Net.Mail;
 using System.Net;
 
 namespace COACHME.DATASERVICE
 {
-    public  class AuthenticationServices
+    public class AuthenticationServices
     {
-        public async  Task<bool> GetLogOnAll(string email, string password)
+        public async Task<bool> GetLogOnAll(string email, string password)
         {
             var result = false;
             var fullname = string.Empty;
@@ -23,7 +20,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                   var  member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME == email && x.PASSWORD == password).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME == email && x.PASSWORD == password).FirstOrDefaultAsync();
                     if (member != null)
                     {
                         fullname = member.MEMBERS.FULLNAME;
@@ -33,7 +30,7 @@ namespace COACHME.DATASERVICE
                     {
                         result = false;
                     }
-                     
+
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;
                     activity.ACTION = "LOGON";
@@ -45,8 +42,8 @@ namespace COACHME.DATASERVICE
                     var act_result = await ctx.SaveChangesAsync();
 
                 }
-                return  result;
-                 
+                return result;
+
             }
             catch (Exception ex)
             {
@@ -58,13 +55,13 @@ namespace COACHME.DATASERVICE
         {
             var result = false;
             var member = new MEMBERS();
-             
+
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
                     var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.Email).FirstOrDefaultAsync();
-                    if(checkMember != null)
+                    if (checkMember != null)
                     {
 
                     }
@@ -73,7 +70,7 @@ namespace COACHME.DATASERVICE
                         //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
-                         
+
                         //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();
                         memberRole.ROLE_ID = 1;
@@ -81,28 +78,28 @@ namespace COACHME.DATASERVICE
                         //3. Details 
                         MEMBER_LOGON memberLogon = new MEMBER_LOGON();
                         memberLogon.USER_NAME = dto.Email;
-                        memberLogon.PASSWORD = dto.Password; 
+                        memberLogon.PASSWORD = dto.Password;
 
                         //4. Add detail to master 
                         member.MEMBER_ROLE.Add(memberRole);
                         member.MEMBER_LOGON.Add(memberLogon);
 
                         //5. Save master
-                        ctx.MEMBERS.Add(member); 
+                        ctx.MEMBERS.Add(member);
                         await ctx.SaveChangesAsync();
                     }
-                  
-                    result = true;                            
+
+                    result = true;
 
                 }
-               
+
 
             }
             catch (Exception ex)
             {
                 result = false;
                 throw ex;
-               
+
             }
             return result;
         }
@@ -110,9 +107,11 @@ namespace COACHME.DATASERVICE
         public async Task<bool> ForgotPassword(ForgotPasswordModel email)
         {
             var result = false;
-            var emailFrom = "natchaphon2140@gmail.com";
-            const string fromPassword = "0991142688";
-            var fromAddress = new MailAddress(emailFrom, "From Name");
+            var emailFrom = "No-reply@CoachMe.asia";
+            //const string fromPassword = "0991142688";
+            var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");
+            var fromPassword = "0991142688";
+            GenUniqueKey(email.Email);
 
             using (var ctx = new COACH_MEEntities())
             {
@@ -125,11 +124,11 @@ namespace COACHME.DATASERVICE
                     #region =========SEND EMAIL TEST=========
                     var emailTo = email;
                     const string subject = "Coach Me : Reset Password";
-                    const string body = "Coach Me : Test Reset Password";
+                    const string body = "Link : ";
 
                     try
                     {
-                        var toAddress = new MailAddress(email.Email);
+                        var toAddress = new MailAddress("Natchaphon2140@gmail.com");
                         var smtp = new SmtpClient
                         {
                             Host = "smtp.gmail.com",
@@ -166,20 +165,32 @@ namespace COACHME.DATASERVICE
                         #endregion
 
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         result = false;
                     }
-                    
+
                 }
                 else
                 {
 
-                    result = true;
+                    result = false;
                 }
             }
 
             return result;
+        }
+
+        private string GenUniqueKey(string email)
+        {
+            string a = "natchaphonasdasdsad";
+            int hash = a.GetHashCode();
+            return hash.ToString(); 
+        }
+
+        public async Task<bool> ResetPassword(ForgotPasswordModel email)
+        {
+            return false;
         }
     }
 }

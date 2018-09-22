@@ -54,6 +54,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
+    <Compile Include="CONFIGURATION.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
     <Compile Include="COURSES.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
@@ -85,6 +88,9 @@
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RESET_PASSWORD.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
     <Compile Include="ROLE.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
