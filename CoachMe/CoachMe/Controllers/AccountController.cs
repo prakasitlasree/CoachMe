@@ -241,22 +241,34 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model)
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model, string buttonType)
         {
             if (ModelState.IsValid)
             {
+                if (buttonType == "Request")
+                {
+                    var result = await service.ForgotPassword(model);
+                    if(result)
+                    {
+                        ViewBag.Message = "please check your email to reset your password.";
+                        return View();
+                    }
+                    else
+                    {
+                        ViewBag.Message = "This email did not register yet.";
+                        return View("ForgotPasswordConfirmation");
+                    }
+                }
+                else
+                {
+
+                }
 
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    //1. Check with exiting email logon
-
-                    //2. Send New password to email
-
-                    //3. Add activity
-
-                    //4 Return message 
-                    return View("ForgotPasswordConfirmation");
+                    
+                   
                 }
                 
             }

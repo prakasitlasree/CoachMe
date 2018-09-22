@@ -7,6 +7,8 @@ using System.Data.Entity;
 using COACHME.MODEL;
 using COACHME.DAL;
 using COACHME.MODEL.CUSTOM_MODELS;
+using System.Net.Mail;
+using System.Net;
 
 namespace COACHME.DATASERVICE
 {
@@ -102,6 +104,81 @@ namespace COACHME.DATASERVICE
                 throw ex;
                
             }
+            return result;
+        }
+
+        public async Task<bool> ForgotPassword(ForgotPasswordModel email)
+        {
+            var result = false;
+            var emailFrom = "natchaphon2140@gmail.com";
+            const string fromPassword = "0991142688";
+            var fromAddress = new MailAddress(emailFrom, "From Name");
+
+            using (var ctx = new COACH_MEEntities())
+            {
+                //1. Check with exiting email logon
+                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync();
+
+                if (member != null)
+                {
+                    //2. Send New password to email
+                    #region =========SEND EMAIL TEST=========
+                    var emailTo = email;
+                    const string subject = "Coach Me : Reset Password";
+                    const string body = "Coach Me : Test Reset Password";
+
+                    try
+                    {
+                        var toAddress = new MailAddress(email.Email);
+                        var smtp = new SmtpClient
+                        {
+                            Host = "smtp.gmail.com",
+                            Port = 587,
+                            EnableSsl = true,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            UseDefaultCredentials = false,
+                            Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                        };
+
+                        using (var message = new MailMessage(fromAddress, toAddress)
+                        {
+                            Subject = subject,
+                            Body = body
+                        })
+                        {
+                            smtp.Send(message);
+                        }
+                        #endregion
+
+                        result = true;
+
+                        //3. Add activity
+                        #region =========Add Activity=========
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "FORGOT PASSWORD";
+                        activity.FULLNAME = "SYSTEM";
+                        activity.USER_NAME = email.Email;
+                        activity.PASSWORD = "SYSTEM";
+                        activity.STATUS = result;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        var act_result = await ctx.SaveChangesAsync();
+                        #endregion
+
+                    }
+                    catch
+                    {
+                        result = false;
+                    }
+                    
+                }
+                else
+                {
+
+                    result = true;
+                }
+            }
+
             return result;
         }
     }
