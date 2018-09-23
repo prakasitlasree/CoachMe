@@ -199,7 +199,7 @@ namespace CoachMe.Controllers
                     }
                     else
                     {
-                        return View(dto);
+
                     }
                     //AddErrors(result);
                 }
@@ -295,27 +295,41 @@ namespace CoachMe.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public async Task<ActionResult> ResetPassword(ResetPasswordValidateModel resetPassword, string buttonType)
+        [OutputCache(NoStore = true, Duration = 0)]
+        public async Task<ActionResult> ResetPassword(ResetPasswordValidateModel resetPassword,ResetPasswordModel newPassword, string buttonType)
         {
-            var result = await service.ResetPassword(resetPassword);
-            if (result)
+
+            if (newPassword.NEW_PASSWORD == null)
             {
-                ViewBag.Val = resetPassword;
-                return View(resetPassword);
+                var result = await service.ResetPasswordValidate(resetPassword);
+                if (result)
+                {
+                    newPassword.EMAIL = resetPassword.USER_NAME;
+                    return View(newPassword);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
             else
             {
-                return View(resetPassword);
-                //return RedirectToAction("Login", "Account");
+                if (ModelState.IsValid)
+                {                    
+                    var result = await service.ResetPassword(newPassword);
+                    if (result)
+                    {
+                        return RedirectToAction("Login", "Account");   
+                    }
+                }
+                else
+                {
+                    return View(newPassword);
+                }
             }
-
-        }
-
-        [AllowAnonymous]
-
-        public async Task<ActionResult> ResetPasswordForm(string user, RegisterModel dto, string buttonType)
-        {
+            
             return View();
+
         }
 
         //
