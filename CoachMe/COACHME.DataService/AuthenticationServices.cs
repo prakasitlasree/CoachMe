@@ -7,6 +7,7 @@ using COACHME.MODEL.CUSTOM_MODELS;
 using System.Net.Mail;
 using System.Net;
 using COACHME.DAL;
+using System.Configuration;
 
 namespace COACHME.DATASERVICE
 {
@@ -120,19 +121,25 @@ namespace COACHME.DATASERVICE
         public async Task<bool> ForgotPassword(ForgotPasswordModel email)
         {
             var result = false;
-            var emailFrom = "Natchaphon2140@gmail.com";
-            //const string fromPassword = "0991142688";
-            var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");
-            var fromPassword = "0991142688";
-            //fromPassword ="Admin@coachme1"
-            var hash = GenUniqueKey(email.Email);
             var resetPassword = new RESET_PASSWORD();
             var act_result = 0;
             using (var ctx = new COACH_MEEntities()) 
             {
                 var config = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
+                var emailFrom = ConfigurationManager.AppSettings["Email"];
+                var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");
+                var fromPassword = ConfigurationManager.AppSettings["Password"];
+                string from = config[0].VALUE.ToString();
+                string subject = config[1].VALUE.ToString();
+                string footer = config[3].VALUE.ToString();
+                string link = "http://localhost:1935/Account/ResetPassword?";
+                //Open When Deploy.
+                //link = "http://119.59.122.206/Account/ResetPassword?";
 
-           
+                var hash = GenUniqueKey(email.Email);
+
+                string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
+                
                 #region ===== GEN HASH CODE====
                 try
                 { 
@@ -147,15 +154,7 @@ namespace COACHME.DATASERVICE
                 {
                 }
                 #endregion
-
-                string from = config[0].VALUE.ToString();
-                string subject = config[1].VALUE.ToString();
-                string footer = config[3].VALUE.ToString();
-                string link = "http://localhost:1935/Account/ResetPassword?";
-                string body = "Link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash +Environment.NewLine +footer;
-                
-
-
+            
                 //1. Check with exiting email logon
                 var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync();
 
@@ -164,9 +163,7 @@ namespace COACHME.DATASERVICE
                     //2. Send New password to email
                     #region =========SEND EMAIL TEST=========
                     var emailTo = email;
-                    const string subject = "Coach Me : Reset Password";
-                    string link = "http://119.59.122.206/Account/ResetPassword?";
-                    string body = "Link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash;
+                    
 
                     try
                     {
