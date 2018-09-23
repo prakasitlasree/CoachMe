@@ -135,13 +135,13 @@ namespace COACHME.DATASERVICE
                     string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT.ToString()).FirstOrDefault().VALUE.ToString();
                     string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
                     string link = "http://localhost:1935/Account/ResetPassword?";
-
+                    var hash = GenUniqueKey(email.Email);
+                    link = link + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash;
                     //Open When Deploy.  
                     //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE.ToString();
-                    var hash = GenUniqueKey(email.Email);
-                    string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
+                   
                     //Test mail body  
-                    body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
+                    string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(), "CoachMe Member",link);
                     #endregion
 
                     #region ===== GEN TOKEN====
@@ -307,5 +307,12 @@ namespace COACHME.DATASERVICE
             return result;
         }
 
+        private string ReplaceMailBody(string mailbody,string user,string actionUrl)
+        {
+            mailbody = mailbody.Replace("[Product Name]", "CoachMe");
+            mailbody = mailbody.Replace("{{name}}", user);
+            mailbody = mailbody.Replace("{{action_url}}", actionUrl);
+            return mailbody;
+        }
     }
 }
