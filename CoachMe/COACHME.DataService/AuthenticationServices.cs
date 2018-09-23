@@ -125,9 +125,10 @@ namespace COACHME.DATASERVICE
             var act_result = 0;
             using (var ctx = new COACH_MEEntities()) 
             {
+                #region ===== Create Mail====
                 var config = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
                 var emailFrom = ConfigurationManager.AppSettings["Email"];
-                var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");
+                var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");//Create Mail
                 var fromPassword = ConfigurationManager.AppSettings["Password"];
                 string from = config[0].VALUE.ToString();
                 string subject = config[1].VALUE.ToString();
@@ -135,12 +136,11 @@ namespace COACHME.DATASERVICE
                 string link = "http://localhost:1935/Account/ResetPassword?";
                 //Open When Deploy.
                 //link = "http://119.59.122.206/Account/ResetPassword?";
-
                 var hash = GenUniqueKey(email.Email);
-
                 string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
-                
-                #region ===== GEN HASH CODE====
+                #endregion
+              
+                #region ===== Generate Token ====
                 try
                 { 
                     resetPassword.USER_NAME = email.Email;
@@ -161,10 +161,9 @@ namespace COACHME.DATASERVICE
                 if (member != null)
                 {
                     //2. Send New password to email
-                    #region =========SEND EMAIL TEST=========
+                    #region =========SEND EMAIL =========
                     var emailTo = email;
                     
-
                     try
                     {
                         var toAddress = new MailAddress(email.Email);
