@@ -14,7 +14,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required] 
+        [Required]
         [Display(Name = "Fullname")]
         public string Fullname { get; set; }
 
@@ -28,7 +28,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         [Display(Name = "ConfirmPassword")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-          
+
         [Required]
         [Display(Name = "Agree")]
         public bool Agree { get; set; }

@@ -130,6 +130,9 @@ namespace COACHME.DATASERVICE
             var act_result = 0;
             using (var ctx = new COACH_MEEntities()) 
             {
+                var config = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
+
+           
                 #region ===== GEN HASH CODE====
                 try
                 { 
@@ -144,6 +147,13 @@ namespace COACHME.DATASERVICE
                 {
                 }
                 #endregion
+
+                string from = config[0].VALUE.ToString();
+                string subject = config[1].VALUE.ToString();
+                string footer = config[3].VALUE.ToString();
+                string link = "http://localhost:1935/Account/ResetPassword?";
+                string body = "Link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash +Environment.NewLine +footer;
+                
 
 
                 //1. Check with exiting email logon
@@ -215,11 +225,11 @@ namespace COACHME.DATASERVICE
         private string GenUniqueKey(string email)
         {
             string str = email + DateTime.Now.ToString();
-            int hash = email.GetHashCode();
+            int hash = str.GetHashCode();
             return hash.ToString();
         }
 
-        public async Task<bool> ResetPassword(ResetPasswordValidateModel resetPassword)
+        public async Task<bool> ResetPasswordValidate(ResetPasswordValidateModel resetPassword)
         {
             var result = false;
             using (var ctx = new COACH_MEEntities())
@@ -239,10 +249,54 @@ namespace COACHME.DATASERVICE
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
                 return result;
             }
+        }
+
+        public async Task<bool> ResetPassword(ResetPasswordModel dto)
+        {
+            var result = false;
+            if (dto != null)
+            {
+
+                try
+                {
+                    using (var ctx = new COACH_MEEntities())
+                    {
+
+
+                        var updateMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.EMAIL).FirstOrDefaultAsync();
+                        updateMember.PASSWORD = dto.NEW_PASSWORD;
+
+                        var updateToken = await ctx.RESET_PASSWORD.Where(x => x.TOKEN_HASH == dto.TOKEN_HASH).FirstOrDefaultAsync();
+                        updateToken.TOKEN_USED = true;
+
+                        #region =========Add Activity=========
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "RESET PASSWORD";
+                        activity.FULLNAME = dto.EMAIL;
+                        activity.USER_NAME = dto.EMAIL;
+                        activity.PASSWORD = dto.NEW_PASSWORD;
+                        activity.STATUS = result;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        #endregion
+
+                        await ctx.SaveChangesAsync();
+                        result = true;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    result = false;
+                    throw ex;
+
+                }
+            }
+            return result;
         }
     }
 }
