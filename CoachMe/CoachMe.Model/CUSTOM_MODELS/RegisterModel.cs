@@ -31,6 +31,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 
         [Required]
         [Display(Name = "Agree")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Please read and accept the Terms of use.")]
         public bool Agree { get; set; }
     }
 }
