@@ -71,15 +71,27 @@ namespace COACHME.DATASERVICE
                         //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
+                        member.CREATED_DATE = DateTime.Now;
+                        member.CREATED_BY = dto.Fullname;
+                        member.UPDATED_DATE = DateTime.Now;
+                        member.UPDATED_BY = dto.Fullname;
 
                         //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();
                         memberRole.ROLE_ID = 1;
+                        memberRole.CREATED_DATE = DateTime.Now;
+                        memberRole.CREATED_BY = dto.Fullname;
+                        memberRole.UPDATED_DATE = DateTime.Now;
+                        memberRole.UPDATED_BY = dto.Fullname;
 
                         //3. Details 
                         MEMBER_LOGON memberLogon = new MEMBER_LOGON();
                         memberLogon.USER_NAME = dto.Email;
                         memberLogon.PASSWORD = dto.Password;
+                        memberLogon.CREATED_DATE = DateTime.Now;
+                        memberLogon.CREATED_BY = dto.Fullname;
+                        memberLogon.UPDATED_DATE = DateTime.Now;
+                        memberLogon.UPDATED_BY = dto.Fullname;
 
                         //4. Add detail to master 
                         member.MEMBER_ROLE.Add(memberRole);
@@ -112,20 +124,25 @@ namespace COACHME.DATASERVICE
             //const string fromPassword = "0991142688";
             var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");
             var fromPassword = "0991142688";
-
-
-
-            using (var ctx = new COACH_MEEntities())
+            //fromPassword ="Admin@coachme1"
+            var hash = GenUniqueKey(email.Email);
+            var resetPassword = new RESET_PASSWORD();
+            var act_result = 0;
+            using (var ctx = new COACH_MEEntities()) 
             {
                 #region ===== GEN HASH CODE====
-                var hash = GenUniqueKey(email.Email);
-                var resetPassword = new RESET_PASSWORD();
-                resetPassword.USER_NAME = email.Email;
-                resetPassword.TOKEN_HASH = hash;
-                resetPassword.TOKEN_USED = false;
-                resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
-                ctx.RESET_PASSWORD.Add(resetPassword);
-                var act_result = await ctx.SaveChangesAsync();
+                try
+                { 
+                    resetPassword.USER_NAME = email.Email;
+                    resetPassword.TOKEN_HASH = hash;
+                    resetPassword.TOKEN_USED = false;
+                    resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
+                    ctx.RESET_PASSWORD.Add(resetPassword);
+                    act_result = await ctx.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                }
                 #endregion
 
 
@@ -138,7 +155,7 @@ namespace COACHME.DATASERVICE
                     #region =========SEND EMAIL TEST=========
                     var emailTo = email;
                     const string subject = "Coach Me : Reset Password";
-                    string link = "http://localhost:1935/Account/ResetPassword?";
+                    string link = "http://119.59.122.206/Account/ResetPassword?";
                     string body = "Link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash;
 
                     try
@@ -170,7 +187,7 @@ namespace COACHME.DATASERVICE
                         #region =========Add Activity=========
                         var activity = new LOGON_ACTIVITY();
                         activity.DATE = DateTime.Now;
-                        activity.ACTION = "FORGOT PASSWORD";
+                        activity.ACTION = "FORGET PASSWORD";
                         activity.FULLNAME = "SYSTEM";
                         activity.USER_NAME = email.Email;
                         activity.PASSWORD = "SYSTEM";
@@ -188,7 +205,6 @@ namespace COACHME.DATASERVICE
                 }
                 else
                 {
-
                     result = false;
                 }
             }
@@ -219,14 +235,14 @@ namespace COACHME.DATASERVICE
                     {
                         result = false;
                     }
-                
+
                 }
                 catch (Exception ex)
-            {
+                {
 
+                }
+                return result;
             }
-            return result;
         }
     }
-}
 }
