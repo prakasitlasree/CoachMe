@@ -28,17 +28,17 @@ namespace COACHME.DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CONFIGURATION> CONFIGURATION { get; set; }
         public virtual DbSet<COURSE_PLACE> COURSE_PLACE { get; set; }
         public virtual DbSet<COURSES> COURSES { get; set; }
+        public virtual DbSet<LOGON_ACTIVITY> LOGON_ACTIVITY { get; set; }
         public virtual DbSet<MEMBER_LOGON> MEMBER_LOGON { get; set; }
         public virtual DbSet<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
         public virtual DbSet<MEMBER_ROLE> MEMBER_ROLE { get; set; }
         public virtual DbSet<MEMBER_TEACH_COURSE> MEMBER_TEACH_COURSE { get; set; }
         public virtual DbSet<MEMBERS> MEMBERS { get; set; }
         public virtual DbSet<PLACE> PLACE { get; set; }
-        public virtual DbSet<ROLE> ROLE { get; set; }
-        public virtual DbSet<LOGON_ACTIVITY> LOGON_ACTIVITY { get; set; }
-        public virtual DbSet<CONFIGURATION> CONFIGURATION { get; set; }
         public virtual DbSet<RESET_PASSWORD> RESET_PASSWORD { get; set; }
+        public virtual DbSet<ROLE> ROLE { get; set; }
     }
 }

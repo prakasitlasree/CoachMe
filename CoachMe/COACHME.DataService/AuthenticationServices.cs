@@ -56,20 +56,15 @@ namespace COACHME.DATASERVICE
 
         public async Task<bool> Register(RegisterModel dto)
         {
-            var result = false;
-            var member = new MEMBERS();
-
+            var result = false; 
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+                    var member = new MEMBERS();
                     var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.Email).FirstOrDefaultAsync();
-                    if (checkMember != null)
-                    {
-
-                    }
-                    else
-                    {
+                    if (checkMember == null)
+                    { 
                         //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
@@ -140,11 +135,15 @@ namespace COACHME.DATASERVICE
                     string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT.ToString()).FirstOrDefault().VALUE.ToString();
                     string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
                     string link = "http://localhost:1935/Account/ResetPassword?";
+
                     //Open When Deploy.  
+                    //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE.ToString();
                     var hash = GenUniqueKey(email.Email);
                     string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
+                    //Test mail body  
+                    body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
                     #endregion
-                    
+
                     #region ===== GEN TOKEN====
                     try
                     {
@@ -182,7 +181,8 @@ namespace COACHME.DATASERVICE
                         using (var message = new MailMessage(fromAddress, toAddress)
                         {
                             Subject = subject,
-                            Body = body
+                            Body = body,
+                            IsBodyHtml = true
                         })
                         {
                             smtp.Send(message);

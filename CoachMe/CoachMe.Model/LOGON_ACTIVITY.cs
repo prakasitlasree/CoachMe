@@ -14,7 +14,7 @@ namespace COACHME.MODEL
     
     public partial class LOGON_ACTIVITY
     {
-        public int AUTO_ID { get; set; }
+        public long AUTO_ID { get; set; }
         public Nullable<System.DateTime> DATE { get; set; }
         public string ACTION { get; set; }
         public string FULLNAME { get; set; }
