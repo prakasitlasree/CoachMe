@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using COACHME.DAL;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace COACHME.DATASERVICE
 {
@@ -55,20 +56,15 @@ namespace COACHME.DATASERVICE
 
         public async Task<bool> Register(RegisterModel dto)
         {
-            var result = false;
-            var member = new MEMBERS();
-
+            var result = false; 
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+                    var member = new MEMBERS();
                     var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.Email).FirstOrDefaultAsync();
-                    if (checkMember != null)
-                    {
-
-                    }
-                    else
-                    {
+                    if (checkMember == null)
+                    { 
                         //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
@@ -123,47 +119,52 @@ namespace COACHME.DATASERVICE
             var result = false;
             var resetPassword = new RESET_PASSWORD();
             var act_result = 0;
-            using (var ctx = new COACH_MEEntities()) 
+            using (var ctx = new COACH_MEEntities())
             {
-                #region ===== Create Mail====
-                var config = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
-                var emailFrom = ConfigurationManager.AppSettings["Email"];
-                var fromAddress = new MailAddress(emailFrom, "No-reply@CoachMe.asia");//Create Mail
-                var fromPassword = ConfigurationManager.AppSettings["Password"];
-                string from = config[0].VALUE.ToString();
-                string subject = config[1].VALUE.ToString();
-                string footer = config[3].VALUE.ToString();
-                string link = "http://localhost:1935/Account/ResetPassword?";
-                //Open When Deploy.
-                //link = "http://119.59.122.206/Account/ResetPassword?";
-                var hash = GenUniqueKey(email.Email);
-                string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
-                #endregion
-              
-                #region ===== Generate Token ====
-                try
-                { 
-                    resetPassword.USER_NAME = email.Email;
-                    resetPassword.TOKEN_HASH = hash;
-                    resetPassword.TOKEN_USED = false;
-                    resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
-                    ctx.RESET_PASSWORD.Add(resetPassword);
-                    act_result = await ctx.SaveChangesAsync();
-                }
-                catch (Exception)
-                {
-                }
-                #endregion
-            
                 //1. Check with exiting email logon
-                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync();
-
+                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync(); 
                 if (member != null)
                 {
+                    #region ===== Create Mail====
+                    var listConfig = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
+                    string smtpAcc = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_ACCOUNT.ToString()).FirstOrDefault().VALUE.ToString();
+                    var fromAddress = new MailAddress(smtpAcc, "No-reply@CoachMe.asia");//Create Mail
+
+                    string smtpPassword = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_PASSWORD.ToString()).FirstOrDefault().VALUE.ToString();
+                    string from = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SENDER.ToString()).FirstOrDefault().VALUE.ToString();
+                    string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT.ToString()).FirstOrDefault().VALUE.ToString();
+                    string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
+                    string link = "http://localhost:1935/Account/ResetPassword?";
+
+                    //Open When Deploy.  
+                    //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE.ToString();
+                    var hash = GenUniqueKey(email.Email);
+                    string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
+                    //Test mail body  
+                    body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
+                    #endregion
+
+                    #region ===== GEN TOKEN====
+                    try
+                    {
+                        resetPassword.USER_NAME = email.Email;
+                        resetPassword.TOKEN_HASH = hash;
+                        resetPassword.TOKEN_USED = false;
+                        resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
+                        ctx.RESET_PASSWORD.Add(resetPassword);
+                        act_result = await ctx.SaveChangesAsync();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    #endregion
+
+
+
                     //2. Send New password to email
-                    #region =========SEND EMAIL =========
+                    #region =========SEND EMAIL TEST=========
                     var emailTo = email;
-                    
+
                     try
                     {
                         var toAddress = new MailAddress(email.Email);
@@ -174,13 +175,14 @@ namespace COACHME.DATASERVICE
                             EnableSsl = true,
                             DeliveryMethod = SmtpDeliveryMethod.Network,
                             UseDefaultCredentials = false,
-                            Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                            Credentials = new NetworkCredential(fromAddress.Address, smtpPassword)
                         };
 
                         using (var message = new MailMessage(fromAddress, toAddress)
                         {
                             Subject = subject,
-                            Body = body
+                            Body = body,
+                            IsBodyHtml = true
                         })
                         {
                             smtp.Send(message);
@@ -261,27 +263,37 @@ namespace COACHME.DATASERVICE
                 {
                     using (var ctx = new COACH_MEEntities())
                     {
+                        //1. check isvalid token
+                        var resetIoKen = await ctx.RESET_PASSWORD.Where(x => x.TOKEN_HASH == dto.TOKEN_HASH).FirstOrDefaultAsync();
+                        if (resetIoKen != null)
+                        {
+                            //2. update new password
+                            var updateMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.EMAIL).FirstOrDefaultAsync();
+                            updateMember.PASSWORD = dto.NEW_PASSWORD;
 
+                            //3. Update status token used
+                            resetIoKen.TOKEN_USED = true;
 
-                        var updateMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.EMAIL).FirstOrDefaultAsync();
-                        updateMember.PASSWORD = dto.NEW_PASSWORD;
+                            //4. Update log
+                            #region =========Add Activity=========
+                            var activity = new LOGON_ACTIVITY();
+                            activity.DATE = DateTime.Now;
+                            activity.ACTION = "RESET PASSWORD";
+                            activity.FULLNAME = dto.EMAIL;
+                            activity.USER_NAME = dto.EMAIL;
+                            activity.PASSWORD = dto.NEW_PASSWORD;
+                            activity.STATUS = result;
+                            ctx.LOGON_ACTIVITY.Add(activity);
+                            #endregion
+                             
+                            await ctx.SaveChangesAsync();
+                            result = true;
+                        }
+                        else
+                        {
+                            result = false;
+                        }
 
-                        var updateToken = await ctx.RESET_PASSWORD.Where(x => x.TOKEN_HASH == dto.TOKEN_HASH).FirstOrDefaultAsync();
-                        updateToken.TOKEN_USED = true;
-
-                        #region =========Add Activity=========
-                        var activity = new LOGON_ACTIVITY();
-                        activity.DATE = DateTime.Now;
-                        activity.ACTION = "RESET PASSWORD";
-                        activity.FULLNAME = dto.EMAIL;
-                        activity.USER_NAME = dto.EMAIL;
-                        activity.PASSWORD = dto.NEW_PASSWORD;
-                        activity.STATUS = result;
-                        ctx.LOGON_ACTIVITY.Add(activity);
-                        #endregion
-
-                        await ctx.SaveChangesAsync();
-                        result = true;
                     }
 
                 }
@@ -294,5 +306,6 @@ namespace COACHME.DATASERVICE
             }
             return result;
         }
+
     }
 }
