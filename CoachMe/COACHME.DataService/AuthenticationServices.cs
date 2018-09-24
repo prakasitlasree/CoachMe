@@ -228,9 +228,11 @@ namespace COACHME.DATASERVICE
 
         private string GenUniqueKey(string email)
         {
-             string str = email + DateTime.Now.ToString();
-            int hash = str.GetHashCode();
-            return hash.ToString();
+            return Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Replace("=","");
+
+            // string str = email + DateTime.Now.ToString();
+            //int hash = str.GetHashCode();
+            //return hash.ToString();
         }
 
         public async Task<bool> ResetPasswordValidate(ResetPasswordValidateModel resetPassword)
