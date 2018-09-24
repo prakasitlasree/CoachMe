@@ -97,11 +97,17 @@ namespace COACHME.DATASERVICE
                         //5. Save master
                         ctx.MEMBERS.Add(member);
                         await ctx.SaveChangesAsync();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
                     }
 
-                    result = true;
+                   
 
                 }
+              
 
 
             }
@@ -141,7 +147,7 @@ namespace COACHME.DATASERVICE
                     //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE.ToString();
                    
                     //Test mail body  
-                    string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(), "CoachMe Member",link);
+                    //body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
                     #endregion
 
                     #region ===== GEN TOKEN====

@@ -173,6 +173,7 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public async Task<ActionResult> Register(RegisterModel dto, string buttonType)
         {
             var model = new RegisterViewModel();
@@ -194,12 +195,13 @@ namespace CoachMe.Controllers
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                        return RedirectToAction("Login", "Account");
+                        ViewBag.Success = "Register complete please check your email.";
+                        return View(dto);
                     }
                     else
                     {
-
+                        ViewBag.Fail = "This email address has already been registered. ";
+                        return View(dto);
                     }
                     //AddErrors(result);
                 }
@@ -211,7 +213,6 @@ namespace CoachMe.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            // return RedirectToAction("Login", "Account");
             return View(dto);
         }
 
@@ -243,6 +244,7 @@ namespace CoachMe.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model, string buttonType)
         {
+           
             if (ModelState.IsValid)
             {
                 if (buttonType == "Request")
@@ -250,13 +252,14 @@ namespace CoachMe.Controllers
                     var result = await service.ForgotPassword(model);
                     if (result)
                     {
-                        ViewBag.Message = "please check your email to reset your password.";
-                        return View();
+                       
+                        ViewBag.Success = "Please check your email to reset your password.";
+                        return View(model);
                     }
                     else
                     {
-                        ViewBag.Message = "This email did not register yet.";
-                        return View("ForgotPasswordConfirmation");
+                        ViewBag.Fail = "This email did not registerd yet.";
+                        return View(model);
                     }
                 }
                 else
