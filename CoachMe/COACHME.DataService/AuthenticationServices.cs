@@ -147,7 +147,7 @@ namespace COACHME.DATASERVICE
                     //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE.ToString();
                    
                     //Test mail body  
-                    //body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
+                    string body =ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(),member.USER_NAME, link);
                     #endregion
 
                     #region ===== GEN TOKEN====
@@ -228,7 +228,7 @@ namespace COACHME.DATASERVICE
 
         private string GenUniqueKey(string email)
         {
-            string str = email + DateTime.Now.ToString();
+             string str = email + DateTime.Now.ToString();
             int hash = str.GetHashCode();
             return hash.ToString();
         }
