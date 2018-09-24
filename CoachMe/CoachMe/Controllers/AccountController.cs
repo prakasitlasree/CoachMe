@@ -299,7 +299,7 @@ namespace CoachMe.Controllers
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         [OutputCache(NoStore = true, Duration = 0)]
-        public async Task<ActionResult> ResetPassword(ResetPasswordValidateModel resetPassword,ResetPasswordModel newPassword, string buttonType)
+        public async Task<ActionResult> ResetPassword(ResetPasswordValidateModel resetPassword, ResetPasswordModel newPassword, string buttonType)
         {
 
             if (newPassword.NEW_PASSWORD == null)
@@ -307,6 +307,7 @@ namespace CoachMe.Controllers
                 var result = await service.ResetPasswordValidate(resetPassword);
                 if (result)
                 {
+                    ViewBag.FirstCall = true;
                     newPassword.EMAIL = resetPassword.USER_NAME;
                     return View(newPassword);
                 }
@@ -318,23 +319,27 @@ namespace CoachMe.Controllers
             else
             {
                 if (ModelState.IsValid)
-                {                    
+                {
                     var result = await service.ResetPassword(newPassword);
                     if (result)
                     {
-                        return RedirectToAction("Login", "Account");   
+                        return RedirectToAction("Login", "Account");
                     }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+
                 }
                 else
                 {
                     return View(newPassword);
                 }
             }
-            
+
             return View();
 
         }
-
         //
         // POST: /Account/ResetPassword
         //[HttpPost]

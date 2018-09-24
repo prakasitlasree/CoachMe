@@ -56,7 +56,7 @@ namespace COACHME.DATASERVICE
 
         public async Task<bool> Register(RegisterModel dto)
         {
-            var result = false; 
+            var result = false;
             try
             {
                 using (var ctx = new COACH_MEEntities())
@@ -64,7 +64,7 @@ namespace COACHME.DATASERVICE
                     var member = new MEMBERS();
                     var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.Email).FirstOrDefaultAsync();
                     if (checkMember == null)
-                    { 
+                    {
                         //1.Master 
                         member.FULLNAME = dto.Fullname;
                         member.FIRST_NAME = dto.Fullname;
@@ -104,10 +104,10 @@ namespace COACHME.DATASERVICE
                         result = false;
                     }
 
-                   
+
 
                 }
-              
+
 
 
             }
@@ -128,7 +128,7 @@ namespace COACHME.DATASERVICE
             using (var ctx = new COACH_MEEntities())
             {
                 //1. Check with exiting email logon
-                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync(); 
+                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync();
                 if (member != null)
                 {
                     #region ===== Create Mail====
@@ -141,14 +141,14 @@ namespace COACHME.DATASERVICE
                     string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT.ToString()).FirstOrDefault().VALUE.ToString();
                     string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
                     string link = "http://localhost:1935/Account/ResetPassword?";
-                     
+
                     var hash = GenUniqueKey(email.Email);
                     link = link + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash;
                     //Open When Deploy.  
                     link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash; ;
-                   
+
                     //mail body  
-                    string body =ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(),member.USER_NAME, link);
+                    string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(), member.USER_NAME, link);
                     #endregion
 
                     #region ===== Add Activity====
@@ -229,7 +229,7 @@ namespace COACHME.DATASERVICE
 
         private string GenUniqueKey(string email)
         {
-            string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray() );
+            string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
             string[] reserved = new string[] { ";", "/", "?", ":", "@", "&", "=", "+", ",", "$" };
             foreach (var item in reserved)
             {
@@ -279,7 +279,7 @@ namespace COACHME.DATASERVICE
                     using (var ctx = new COACH_MEEntities())
                     {
                         //1. check isvalid token
-                        var resetIoKen = await ctx.RESET_PASSWORD.Where(x => x.TOKEN_HASH == dto.TOKEN_HASH).FirstOrDefaultAsync();
+                        var resetIoKen = await ctx.RESET_PASSWORD.Where(x => x.TOKEN_HASH == dto.TOKEN_HASH && x.TOKEN_USED == false).FirstOrDefaultAsync();
                         if (resetIoKen != null)
                         {
                             //2. update new password
@@ -300,7 +300,7 @@ namespace COACHME.DATASERVICE
                             activity.STATUS = result;
                             ctx.LOGON_ACTIVITY.Add(activity);
                             #endregion
-                             
+
                             await ctx.SaveChangesAsync();
                             result = true;
                         }
@@ -322,7 +322,7 @@ namespace COACHME.DATASERVICE
             return result;
         }
 
-        private string ReplaceMailBody(string mailbody,string user,string actionUrl)
+        private string ReplaceMailBody(string mailbody, string user, string actionUrl)
         {
             mailbody = mailbody.Replace("[Product Name]", "CoachMe");
             mailbody = mailbody.Replace("{{name}}", user);
