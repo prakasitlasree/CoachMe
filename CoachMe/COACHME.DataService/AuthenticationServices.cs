@@ -97,11 +97,17 @@ namespace COACHME.DATASERVICE
                         //5. Save master
                         ctx.MEMBERS.Add(member);
                         await ctx.SaveChangesAsync();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
                     }
 
-                    result = true;
+                   
 
                 }
+              
 
 
             }

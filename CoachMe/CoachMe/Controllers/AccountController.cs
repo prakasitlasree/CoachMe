@@ -200,7 +200,8 @@ namespace CoachMe.Controllers
                     }
                     else
                     {
-
+                        ViewBag.Fail = "This email address has already been registered. ";
+                        return View(dto);
                     }
                     //AddErrors(result);
                 }
