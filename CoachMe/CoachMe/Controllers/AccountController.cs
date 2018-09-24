@@ -243,6 +243,7 @@ namespace CoachMe.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model, string buttonType)
         {
+           
             if (ModelState.IsValid)
             {
                 if (buttonType == "Request")
@@ -250,13 +251,14 @@ namespace CoachMe.Controllers
                     var result = await service.ForgotPassword(model);
                     if (result)
                     {
-                        ViewBag.Message = "please check your email to reset your password.";
-                        return View();
+                       
+                        ViewBag.Success = "Please check your email to reset your password.";
+                        return View(model);
                     }
                     else
                     {
-                        ViewBag.Message = "This email did not register yet.";
-                        return View("ForgotPasswordConfirmation");
+                        ViewBag.Fail = "This email did not registerd yet.";
+                        return View(model);
                     }
                 }
                 else
