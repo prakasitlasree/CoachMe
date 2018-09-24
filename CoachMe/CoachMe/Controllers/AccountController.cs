@@ -173,6 +173,7 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public async Task<ActionResult> Register(RegisterModel dto, string buttonType)
         {
             var model = new RegisterViewModel();
@@ -194,8 +195,8 @@ namespace CoachMe.Controllers
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                        return RedirectToAction("Login", "Account");
+                        ViewBag.Success = "Register complete please check your email.";
+                        return View(dto);
                     }
                     else
                     {
@@ -211,7 +212,6 @@ namespace CoachMe.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            // return RedirectToAction("Login", "Account");
             return View(dto);
         }
 

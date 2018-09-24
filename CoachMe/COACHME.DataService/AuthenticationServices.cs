@@ -141,7 +141,7 @@ namespace COACHME.DATASERVICE
                     var hash = GenUniqueKey(email.Email);
                     string body = "Reset password link : " + link + "USER_NAME=" + email.Email + "&TOKEN_HASH=" + hash + Environment.NewLine + footer;
                     //Test mail body  
-                    body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
+                    //body = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString();
                     #endregion
 
                     #region ===== GEN TOKEN====
