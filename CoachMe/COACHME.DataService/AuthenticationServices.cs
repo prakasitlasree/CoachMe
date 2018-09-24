@@ -141,16 +141,17 @@ namespace COACHME.DATASERVICE
                     string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT.ToString()).FirstOrDefault().VALUE.ToString();
                     string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
                     string link = "http://localhost:1935/Account/ResetPassword?";
+                     
                     var hash = GenUniqueKey(email.Email);
                     link = link + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash;
                     //Open When Deploy.  
-                    //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE.ToString();
+                    link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash; ;
                    
-                    //Test mail body  
+                    //mail body  
                     string body =ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(),member.USER_NAME, link);
                     #endregion
 
-                    #region ===== GEN TOKEN====
+                    #region ===== Add Activity====
                     try
                     {
                         resetPassword.USER_NAME = email.Email;
@@ -168,7 +169,7 @@ namespace COACHME.DATASERVICE
 
 
                     //2. Send New password to email
-                    #region =========SEND EMAIL TEST=========
+                    #region =========SEND EMAIL =========
                     var emailTo = email;
 
                     try
@@ -228,7 +229,13 @@ namespace COACHME.DATASERVICE
 
         private string GenUniqueKey(string email)
         {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Replace("=","");
+            string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray() );
+            string[] reserved = new string[] { ";", "/", "?", ":", "@", "&", "=", "+", ",", "$" };
+            foreach (var item in reserved)
+            {
+                token = token.Replace(item, "");
+            }
+            return token;
 
             // string str = email + DateTime.Now.ToString();
             //int hash = str.GetHashCode();
