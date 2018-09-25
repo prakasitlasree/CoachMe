@@ -231,6 +231,7 @@
     <Content Include="Content\images\CM21.png" />
     <Content Include="Content\images\CoachMELogo.png" />
     <Content Include="Content\images\login\login_logo.png" />
+    <Content Include="Content\images\login\login_logo2.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\teacher\CM_LOGO.png" />
     <Content Include="Content\images\teacher\logo.png" />
