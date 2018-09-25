@@ -298,7 +298,7 @@ namespace CoachMe.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        [OutputCache(NoStore = true, Duration = 0)]
+        [OutputCache(NoStore = true, Duration = 0)]      
         public async Task<ActionResult> ResetPassword(ResetPasswordValidateModel resetPassword, ResetPasswordModel newPassword, string buttonType)
         {
 
@@ -308,7 +308,7 @@ namespace CoachMe.Controllers
                 if (result)
                 {
                     ViewBag.FirstCall = true;
-                    newPassword.EMAIL = resetPassword.USER_NAME;
+                    newPassword.EMAIL = resetPassword.USER_NAME;                 
                     return View(newPassword);
                 }
                 else
@@ -318,59 +318,45 @@ namespace CoachMe.Controllers
             }
             else
             {
-                if (ModelState.IsValid)
-                {
-                    var result = await service.ResetPassword(newPassword);
-                    if (result)
-                    {
-                        return RedirectToAction("Login", "Account");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Login", "Account");
-                    }
+                return RedirectToAction("Login", "Account");
 
-                }
-                else
-                {
-                    return View(newPassword);
-                }
             }
 
             return View();
 
         }
-        //
-        // POST: /Account/ResetPassword
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> ResetPassword(ResetPasswordModel resetPassword)
-        //{
+      
+       [HttpPost]
+       [AllowAnonymous]
+       [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public async Task<ActionResult> ResetPassword(ResetPasswordModel newPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await service.ResetPassword(newPassword);
+                if (result)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-        //    var user = await UserManager.FindByNameAsync(model.Email);
-        //    if (user == null)
-        //    {
-        //        // Don't reveal that the user does not exist
-        //        return RedirectToAction("ResetPasswordConfirmation", "Account");
-        //    }
-        //    var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-        //    if (result.Succeeded)
-        //    {
-        //        return RedirectToAction("ResetPasswordConfirmation", "Account");
-        //    }
-        //    AddErrors(result);
-        //    return View();
+            }
+            else
+            {
+                return View(newPassword);
+            }
 
-        //}
+        }
 
         //
         // GET: /Account/ResetPasswordConfirmation
+        [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
