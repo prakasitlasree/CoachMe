@@ -62,7 +62,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var member = new MEMBERS();
-                    var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.Email).FirstOrDefaultAsync();
+                    var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.Email.ToUpper()).FirstOrDefaultAsync();
                     if (checkMember == null)
                     {
                         //1.Master 
@@ -83,7 +83,7 @@ namespace COACHME.DATASERVICE
 
                         //3. Details 
                         MEMBER_LOGON memberLogon = new MEMBER_LOGON();
-                        memberLogon.USER_NAME = dto.Email;
+                        memberLogon.USER_NAME = dto.Email.ToUpper();
                         memberLogon.PASSWORD = dto.Password;
                         memberLogon.CREATED_DATE = DateTime.Now;
                         memberLogon.CREATED_BY = dto.Fullname;
@@ -104,11 +104,7 @@ namespace COACHME.DATASERVICE
                         result = false;
                     }
 
-
-
                 }
-
-
 
             }
             catch (Exception ex)
