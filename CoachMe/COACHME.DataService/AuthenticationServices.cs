@@ -23,7 +23,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME == email && x.PASSWORD == password).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == email.ToUpper() && x.PASSWORD == password).FirstOrDefaultAsync();
                     if (member != null)
                     {
                         fullname = member.MEMBERS.FULLNAME;
@@ -124,7 +124,7 @@ namespace COACHME.DATASERVICE
             using (var ctx = new COACH_MEEntities())
             {
                 //1. Check with exiting email logon
-                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == email.Email).FirstOrDefaultAsync();
+                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == email.Email.ToUpper()).FirstOrDefaultAsync();
                 if (member != null)
                 {
                     #region ===== Create Mail====
@@ -150,7 +150,7 @@ namespace COACHME.DATASERVICE
                     #region ===== Add Activity====
                     try
                     {
-                        resetPassword.USER_NAME = email.Email;
+                        resetPassword.USER_NAME = email.Email.ToUpper();
                         resetPassword.TOKEN_HASH = hash;
                         resetPassword.TOKEN_USED = false;
                         resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
@@ -200,7 +200,7 @@ namespace COACHME.DATASERVICE
                         activity.DATE = DateTime.Now;
                         activity.ACTION = "FORGET PASSWORD";
                         activity.FULLNAME = "SYSTEM";
-                        activity.USER_NAME = email.Email;
+                        activity.USER_NAME = email.Email.ToUpper();
                         activity.PASSWORD = "SYSTEM";
                         activity.STATUS = result;
                         ctx.LOGON_ACTIVITY.Add(activity);
@@ -243,7 +243,7 @@ namespace COACHME.DATASERVICE
             var result = false;
             using (var ctx = new COACH_MEEntities())
             {
-                var tokenValidate = await ctx.RESET_PASSWORD.Where(x => x.USER_NAME == resetPassword.USER_NAME.ToString() && x.TOKEN_HASH == resetPassword.TOKEN_HASH && x.TOKEN_EXPIRATION > DateTime.Now && x.TOKEN_USED == false).FirstOrDefaultAsync();
+                var tokenValidate = await ctx.RESET_PASSWORD.Where(x => x.USER_NAME.ToUpper() == resetPassword.USER_NAME.ToString().ToUpper() && x.TOKEN_HASH == resetPassword.TOKEN_HASH && x.TOKEN_EXPIRATION > DateTime.Now && x.TOKEN_USED == false).FirstOrDefaultAsync();
                 try
                 {
                     if (tokenValidate != null)
@@ -279,7 +279,7 @@ namespace COACHME.DATASERVICE
                         if (resetIoKen != null)
                         {
                             //2. update new password
-                            var updateMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME == dto.EMAIL).FirstOrDefaultAsync();
+                            var updateMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper()).FirstOrDefaultAsync();
                             updateMember.PASSWORD = dto.NEW_PASSWORD;
 
                             //3. Update status token used
