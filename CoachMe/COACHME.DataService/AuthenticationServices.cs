@@ -145,7 +145,7 @@ namespace COACHME.DATASERVICE
                     var hash = GenUniqueKey(email.Email);
                     link = link + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash;
                     //Open When Deploy.  
-                    //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash; ;
+                    link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash; ;
 
                     //mail body  
                     string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(), member.USER_NAME, link);

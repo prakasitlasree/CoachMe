@@ -31,11 +31,11 @@
                         <div class="form-group m-form__group">
                             @if (!string.IsNullOrEmpty(ViewBag.Success))
                             {
-                                <p class="text-success">@ViewBag.Success</p>
+                                <p class="text-success">@ViewBag.Success<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
                             }
                             @if (!string.IsNullOrEmpty(ViewBag.Fail))
                             {
-                                <p class="text-danger">@ViewBag.Fail</p>
+                                <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
                             }
                             <input class="form-control m-input" type="text" placeholder="Fullname" name="fullname">                         
                             @Html.ValidationMessageFor(m => m.Fullname, "", new { @class = "text-danger" })
