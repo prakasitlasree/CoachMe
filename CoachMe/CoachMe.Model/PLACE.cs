@@ -7,29 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace COACHME.MODEL
+using System;
+using System.Collections.Generic;
+
+public partial class PLACE
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class PLACE
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public PLACE()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PLACE()
-        {
-            this.COURSE_PLACE = new HashSet<COURSE_PLACE>();
-        }
-    
-        public int AUTO_ID { get; set; }
-        public Nullable<int> COURSE_ID { get; set; }
-        public string NAME { get; set; }
-        public string DESCRIPTION { get; set; }
-        public string BUILDING { get; set; }
-        public string ADDRESS { get; set; }
-        public string SIZE { get; set; }
-        public string TYPE { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COURSE_PLACE> COURSE_PLACE { get; set; }
+        this.COURSE_PLACE = new HashSet<COURSE_PLACE>();
     }
+
+    public int AUTO_ID { get; set; }
+    public Nullable<int> COURSE_ID { get; set; }
+    public string NAME { get; set; }
+    public string DESCRIPTION { get; set; }
+    public string BUILDING { get; set; }
+    public string ADDRESS { get; set; }
+    public string SIZE { get; set; }
+    public string TYPE { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<COURSE_PLACE> COURSE_PLACE { get; set; }
 }

@@ -63,6 +63,10 @@
           <Property Name="CREATED_DATE" Type="date" />
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="UPDATED_DATE" Type="date" />
+          <Property Name="STATUS" Type="int" />
+          <Property Name="TOKEN_HASH" Type="nvarchar(max)" />
+          <Property Name="TOKEN_EXPIRATION" Type="datetime" />
+          <Property Name="TOKEN_USED" Type="bit" />
         </EntityType>
         <EntityType Name="MEMBER_REGIS_COURSE">
           <Key>
@@ -409,6 +413,10 @@
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBER_LOGON" ToRole="MEMBERS" />
+          <Property Name="STATUS" Type="Int32" />
+          <Property Name="TOKEN_HASH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TOKEN_EXPIRATION" Type="DateTime" Precision="3" />
+          <Property Name="TOKEN_USED" Type="Boolean" />
         </EntityType>
         <EntityType Name="MEMBER_REGIS_COURSE">
           <Key>
@@ -664,6 +672,10 @@
           <EntitySetMapping Name="MEMBER_LOGON">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBER_LOGON">
               <MappingFragment StoreEntitySet="MEMBER_LOGON">
+                <ScalarProperty Name="TOKEN_USED" ColumnName="TOKEN_USED" />
+                <ScalarProperty Name="TOKEN_EXPIRATION" ColumnName="TOKEN_EXPIRATION" />
+                <ScalarProperty Name="TOKEN_HASH" ColumnName="TOKEN_HASH" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />

@@ -115,8 +115,24 @@ namespace COACHME.DATASERVICE
             }
             return result;
         }
+        public async Task<bool> RegisterVerify(RegisterModel dto)
+        {
+            var result = false;
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var member = new MEMBERS();
+                }
+            }
+            catch
+            {
 
-       
+            }
+        }
+
+
+
 
         public async Task<bool> ForgotPassword(ForgotPasswordModel email)
         {

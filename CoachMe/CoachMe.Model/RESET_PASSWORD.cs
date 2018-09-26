@@ -7,17 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace COACHME.MODEL
+using System;
+using System.Collections.Generic;
+
+public partial class RESET_PASSWORD
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class RESET_PASSWORD
-    {
-        public int AUTO_ID { get; set; }
-        public string USER_NAME { get; set; }
-        public string TOKEN_HASH { get; set; }
-        public Nullable<System.DateTime> TOKEN_EXPIRATION { get; set; }
-        public Nullable<bool> TOKEN_USED { get; set; }
-    }
+    public int AUTO_ID { get; set; }
+    public string USER_NAME { get; set; }
+    public string TOKEN_HASH { get; set; }
+    public Nullable<System.DateTime> TOKEN_EXPIRATION { get; set; }
+    public Nullable<bool> TOKEN_USED { get; set; }
 }
