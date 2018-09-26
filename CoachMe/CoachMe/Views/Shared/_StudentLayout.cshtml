@@ -1,5 +1,7 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
+<!DOCTYPE html>
+
+ <html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -26,6 +28,7 @@
     <!--<link href="assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />-->
     <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
     <!-- begin:: Page -->
     @RenderBody()
@@ -286,7 +289,7 @@
                                                                     <span class="m-nav__link-text">Activity</span>
                                                                 </a>
                                                             </li>
-                                                           
+
                                                             <li class="m-nav__separator m-nav__separator--fit">
                                                             </li>
                                                             <li class="m-nav__item">
@@ -304,7 +307,7 @@
                                                             <li class="m-nav__separator m-nav__separator--fit">
                                                             </li>
                                                             <li class="m-nav__item">
-                                                                <a href="@Url.Action("Login","Account")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                                                <a href="@Url.Action(" Login","Account")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -360,10 +363,10 @@
                                 <span class="m-menu__link-text">การเงิน</span>
                             </a>
                         </li>
-                         
+
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">คอร์ส</span></a></li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span></a></li>
-                          
+
                     </ul>
                 </div>
 
@@ -378,7 +381,7 @@
                         <div class="mr-auto">
                             <h3 class="m-subheader__title ">My Profile</h3>
                         </div>
-                         
+
                     </div>
                 </div>
 
@@ -499,7 +502,7 @@
                                                     Update Profile
                                                 </a>
                                             </li>
-                                             
+
                                         </ul>
                                     </div>
 
@@ -533,7 +536,7 @@
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
                                                     <div class="col-7">
-                                                        <input class="form-control m-input" type="text" value="Jenny"> 
+                                                        <input class="form-control m-input" type="text" value="Jenny">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-form__group row">
@@ -541,11 +544,11 @@
                                                     <div class="col-7">
                                                         <input class="form-control m-input" type="text" value="+456669067890">
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
                                                     <div class="col-7">
-                                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 133px;" >สอนศิลปินนักแสดงระดับเวิล์ดคลาส ที่เปิดสอนร้องเพลง เต้น การแสดง บุคลิกภาพ พิธีกร เปียโน กีตาร์ กลอง เบส แต่งเพลง สำหรับนักเรียนอายุ 2 ปีถึงผู้ใหญ่                                                    </textarea>
+                                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 133px;">สอนศิลปินนักแสดงระดับเวิล์ดคลาส ที่เปิดสอนร้องเพลง เต้น การแสดง บุคลิกภาพ พิธีกร เปียโน กีตาร์ กลอง เบส แต่งเพลง สำหรับนักเรียนอายุ 2 ปีถึงผู้ใหญ่                                                    </textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-form__group row">
@@ -559,9 +562,9 @@
                                                     <div class="col-7">
                                                         <input class="form-control m-input" type="text" value="#ดนตรี #เปียโน #กีตาร์">
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                                                 
+
                                             </div>
                                             <div class="m-portlet__foot m-portlet__foot--fit">
                                                 <div class="m-form__actions">
@@ -1108,8 +1111,7 @@
     <script src="~/Content/js/teacher/scripts.bundle.js" type="text/javascript"></script>
     <!--end::Global Theme Bundle -->
 </body>
-
-
+ 
 @RenderSection("scripts", required: false)
 <!-- end::Body -->
 </html>
