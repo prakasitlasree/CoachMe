@@ -24,7 +24,9 @@
     <link href="~/Content/css/teacher/vendors.bundle.css" rel="stylesheet" type="text/css" />
     <!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
     <!--<link href="assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />-->
-    <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
     <!-- begin:: Page -->
@@ -286,7 +288,7 @@
                                                                     <span class="m-nav__link-text">Activity</span>
                                                                 </a>
                                                             </li>
-                                                           
+
                                                             <li class="m-nav__separator m-nav__separator--fit">
                                                             </li>
                                                             <li class="m-nav__item">
@@ -360,10 +362,10 @@
                                 <span class="m-menu__link-text">การเงิน</span>
                             </a>
                         </li>
-                         
+
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">คอร์ส</span></a></li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span></a></li>
-                          
+
                     </ul>
                 </div>
 
@@ -378,7 +380,7 @@
                         <div class="mr-auto">
                             <h3 class="m-subheader__title ">My Profile</h3>
                         </div>
-                         
+
                     </div>
                 </div>
 
@@ -499,7 +501,7 @@
                                                     Update Profile
                                                 </a>
                                             </li>
-                                             
+
                                         </ul>
                                     </div>
 
@@ -533,7 +535,44 @@
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
                                                     <div class="col-7">
-                                                        <input class="form-control m-input" type="text" value="Jenny"> 
+                                                        <input class="form-control m-input" type="text" value="Jenny">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
+                                                    <div class="col-7">
+                                                        <div class='input-group date' id='datetimepicker1'>
+                                                            <input type='text' class="form-control" style="height:32px"/>
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
+                                                    <div class="col-7">
+                                                        <span class="input-group-append">
+                                                            <input class="form-control m-input" type="text" value="1557744125141">
+                                                            <label class="btn btn-default">
+                                                                <input id="fileUpload" name="FileUpload" multiple="" type="file" accept="image/png, image/jpeg, image/jpg" />
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
+                                                    <div class="col-7">
+                                                        <div class="m-radio-inline">
+                                                            <label class="m-radio">
+                                                                <input type="radio" name="example_3" value="1"> ชาย
+                                                                <span></span>
+                                                            </label>
+                                                            <label class="m-radio">
+                                                                <input type="radio" name="example_3" value="2"> หญิง
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-form__group row">
@@ -541,11 +580,11 @@
                                                     <div class="col-7">
                                                         <input class="form-control m-input" type="text" value="+456669067890">
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
                                                     <div class="col-7">
-                                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 133px;" >สอนศิลปินนักแสดงระดับเวิล์ดคลาส ที่เปิดสอนร้องเพลง เต้น การแสดง บุคลิกภาพ พิธีกร เปียโน กีตาร์ กลอง เบส แต่งเพลง สำหรับนักเรียนอายุ 2 ปีถึงผู้ใหญ่                                                    </textarea>
+                                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 133px;">สอนศิลปินนักแสดงระดับเวิล์ดคลาส ที่เปิดสอนร้องเพลง เต้น การแสดง บุคลิกภาพ พิธีกร เปียโน กีตาร์ กลอง เบส แต่งเพลง สำหรับนักเรียนอายุ 2 ปีถึงผู้ใหญ่                                                    </textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-form__group row">
@@ -559,9 +598,9 @@
                                                     <div class="col-7">
                                                         <input class="form-control m-input" type="text" value="#ดนตรี #เปียโน #กีตาร์">
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                                                 
+
                                             </div>
                                             <div class="m-portlet__foot m-portlet__foot--fit">
                                                 <div class="m-form__actions">
@@ -1101,11 +1140,25 @@
     <!-- begin::Quick Nav -->
     <!--begin::Global Theme Bundle -->
     @*
-        <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>*@
+    <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>*@
     <script src="~/Content/js/vendors.bundle.js" type="text/javascript"></script>
     @*
-        <script src="assets/demo/demo12/base/scripts.bundle.js" type="text/javascript"></script>*@
+
+    <script src="assets/demo/demo12/base/scripts.bundle.js" type="text/javascript"></script>*@
     <script src="~/Content/js/teacher/scripts.bundle.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                pickTime: false,
+                minView: 2,
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+            });
+            
+        });
+
+    </script>
     <!--end::Global Theme Bundle -->
 </body>
 
