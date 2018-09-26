@@ -337,6 +337,7 @@
     <Content Include="Views\Shared\_LogoPartial.cshtml" />
     <Content Include="Views\Shared\_StudentLayout.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Account\RegisterVerify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

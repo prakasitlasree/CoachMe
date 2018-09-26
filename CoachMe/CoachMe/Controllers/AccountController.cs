@@ -168,6 +168,22 @@ namespace CoachMe.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public async Task<ActionResult> RegisterVerify(MEMBER_LOGON dto)
+        {
+            //var registerModel = new RegisterModel();
+            var result = await service.RegisterVerify(dto);
+            if (result)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -183,19 +199,10 @@ namespace CoachMe.Controllers
                 if (buttonType == "Save")
                 {
 
-                    //var user = new ApplicationUser { USER_NAME = model.Email, USER_NAME = model.Email };
-
                     var result = await service.Register(dto);
                     if (result)
-                    {
-                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                        //For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        //Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                        ViewBag.Success = "Register complete please check your email.";
+                    { 
+                        ViewBag.Success = "Register complete please check your email in 24Hr.";
                         return View(dto);
                     }
                     else
@@ -203,11 +210,8 @@ namespace CoachMe.Controllers
                         ViewBag.Fail = "This email address has already been registered. ";
                         return View(dto);
                     }
-                    //AddErrors(result);
+                    
                 }
-
-                // If we got this far, something failed, redisplay form
-
                 if (buttonType == "Cancel")
                 {
                     return RedirectToAction("Login", "Account");

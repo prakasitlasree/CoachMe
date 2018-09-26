@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 
 namespace COACHME.DATASERVICE
 {
-   public static class StandardEnums
+    public static class StandardEnums
     {
-       public enum ConfigurationSettingName
+        public enum ConfigurationSettingName
         {
             MAIL_SENDER,
             MAIL_SUBJECT,
-            MAIL_BODY, 
+            MAIL_BODY,
             MAIL_FOOTER,
             SMTP_ACCOUNT,
             SMTP_PASSWORD,
-                FORGET_PASSWORD_URL
+            FORGET_PASSWORD_URL,
+            MAIL_SUBJECT_REGISTER,
+            MAIL_BODY_REGISTER,
+            MAIL_FOOTER_REGISTER
         }
     }
 }
