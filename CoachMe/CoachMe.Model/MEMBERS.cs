@@ -30,6 +30,14 @@ public partial class MEMBERS
     public Nullable<System.DateTime> CREATED_DATE { get; set; }
     public string UPDATED_BY { get; set; }
     public Nullable<System.DateTime> UPDATED_DATE { get; set; }
+    public string ABOUT { get; set; }
+    public string PROFILE_IMG_URL { get; set; }
+    public string ABOUT_IMG_URL1 { get; set; }
+    public string ABOUT_IMG_URL2 { get; set; }
+    public string ABOUT_IMG_URL3 { get; set; }
+    public string ABOUT_IMG_URL4 { get; set; }
+    public string ABOUT_IMG_URL5 { get; set; }
+    public string NICKNAME { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<MEMBER_LOGON> MEMBER_LOGON { get; set; }

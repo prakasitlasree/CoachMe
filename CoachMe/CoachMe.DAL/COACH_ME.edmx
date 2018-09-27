@@ -112,15 +112,23 @@
           </Key>
           <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FULLNAME" Type="nvarchar" MaxLength="500" />
-          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="50" />
-          <Property Name="LAST_NAME" Type="nvarchar" MaxLength="50" />
-          <Property Name="MOBILE" Type="nvarchar" MaxLength="50" />
+          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="LAST_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="MOBILE" Type="nvarchar" MaxLength="500" />
           <Property Name="DATE_OF_BIRTH" Type="date" />
           <Property Name="AGE" Type="int" />
-          <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
+          <Property Name="ABOUT" Type="nvarchar(max)" />
+          <Property Name="PROFILE_IMG_URL" Type="nvarchar" MaxLength="500" />
+          <Property Name="ABOUT_IMG_URL1" Type="nvarchar" MaxLength="500" />
+          <Property Name="ABOUT_IMG_URL2" Type="nvarchar" MaxLength="500" />
+          <Property Name="ABOUT_IMG_URL3" Type="nvarchar" MaxLength="500" />
+          <Property Name="ABOUT_IMG_URL4" Type="nvarchar" MaxLength="500" />
+          <Property Name="ABOUT_IMG_URL5" Type="nvarchar" MaxLength="500" />
+          <Property Name="CREATED_BY" Type="nvarchar" MaxLength="500" />
           <Property Name="CREATED_DATE" Type="date" />
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="UPDATED_DATE" Type="date" />
+          <Property Name="NICKNAME" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -468,17 +476,25 @@
           </Key>
           <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FULLNAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="FIRST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LAST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MOBILE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MOBILE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DATE_OF_BIRTH" Type="DateTime" Precision="0" />
           <Property Name="AGE" Type="Int32" />
-          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
+          <Property Name="ABOUT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PROFILE_IMG_URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ABOUT_IMG_URL1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ABOUT_IMG_URL2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ABOUT_IMG_URL3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ABOUT_IMG_URL4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ABOUT_IMG_URL5" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -731,6 +747,14 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
+                <ScalarProperty Name="ABOUT_IMG_URL5" ColumnName="ABOUT_IMG_URL5" />
+                <ScalarProperty Name="ABOUT_IMG_URL4" ColumnName="ABOUT_IMG_URL4" />
+                <ScalarProperty Name="ABOUT_IMG_URL3" ColumnName="ABOUT_IMG_URL3" />
+                <ScalarProperty Name="ABOUT_IMG_URL2" ColumnName="ABOUT_IMG_URL2" />
+                <ScalarProperty Name="ABOUT_IMG_URL1" ColumnName="ABOUT_IMG_URL1" />
+                <ScalarProperty Name="PROFILE_IMG_URL" ColumnName="PROFILE_IMG_URL" />
+                <ScalarProperty Name="ABOUT" ColumnName="ABOUT" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />

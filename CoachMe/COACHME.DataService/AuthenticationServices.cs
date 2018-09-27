@@ -9,12 +9,14 @@ using System.Net;
 using COACHME.DAL;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Web;
+using System.IO;
 
 namespace COACHME.DATASERVICE
 {
     public class AuthenticationServices
     {
-        public async Task<bool> GetLogOnAll(string email, string password)
+        public async Task<MEMBER_LOGON> GetLogOnAll(MEMBER_LOGON dto)
         {
             var result = false;
             var fullname = string.Empty;
@@ -23,7 +25,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == email.ToUpper() && x.PASSWORD == password /*&& x.STATUS != 1*/).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD /*&& x.STATUS != 1*/).FirstOrDefaultAsync();
                     if (member != null)
                     {
                         fullname = member.MEMBERS.FULLNAME;
@@ -38,14 +40,13 @@ namespace COACHME.DATASERVICE
                     activity.DATE = DateTime.Now;
                     activity.ACTION = "LOGON";
                     activity.FULLNAME = fullname;
-                    activity.USER_NAME = email;
-                    activity.PASSWORD = password;
+                    activity.USER_NAME = dto.USER_NAME;
+                    activity.PASSWORD = dto.PASSWORD;
                     activity.STATUS = result;
                     ctx.LOGON_ACTIVITY.Add(activity);
                     var act_result = await ctx.SaveChangesAsync();
-
+                    return member;
                 }
-                return result;
 
             }
             catch (Exception ex)
@@ -94,8 +95,8 @@ namespace COACHME.DATASERVICE
                         memberLogon.CREATED_BY = dto.Fullname;
                         memberLogon.UPDATED_DATE = DateTime.Now;
                         memberLogon.UPDATED_BY = dto.Fullname;
-                        
-                     
+
+
                         //4. Add detail to master 
                         member.MEMBER_ROLE.Add(memberRole);
                         member.MEMBER_LOGON.Add(memberLogon);
@@ -176,7 +177,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var tokenValidate = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToString().ToUpper() && x.TOKEN_HASH == dto.TOKEN_HASH && x.TOKEN_EXPIRATION > DateTime.Now && x.TOKEN_USED != true).FirstOrDefaultAsync();
-                    if(tokenValidate != null)
+                    if (tokenValidate != null)
                     {
                         //Update Member Status
                         var member = new MEMBERS();
@@ -191,7 +192,7 @@ namespace COACHME.DATASERVICE
                         {
                             result = false;
                         }
-                        
+
                     }
                     else
                     {
@@ -199,7 +200,7 @@ namespace COACHME.DATASERVICE
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = false;
                 throw ex;
@@ -409,6 +410,64 @@ namespace COACHME.DATASERVICE
             return result;
         }
 
+        public async Task<ResponseModel> GetMemberProfile(MEMBER_LOGON dto)
+        {
+            ResponseModel resp = new ResponseModel();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberProfile = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.MEMBER_ID).FirstOrDefaultAsync();
+                    resp.OUTPUT_DATA = memberProfile;
+                    resp.STATUS = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+            }
+            return resp;
+
+        }
+
+        public async Task<ResponseModel> UpdateProfilePic(HttpPostedFileBase profileImage, MEMBERS dto)
+        {
+            ResponseModel resp = new ResponseModel();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    //Create Directory
+                    string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
+                    string path = "";
+                    var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    myDir += memberUsername.USER_NAME.ToUpper();
+                    System.IO.Directory.CreateDirectory(myDir);
+
+                    //Upload Pic
+                    if (profileImage.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileName(profileImage.FileName);
+                        path = Path.Combine(myDir, fileName);
+                        profileImage.SaveAs(path);
+                    }
+                    //updateMemberProfileUrl
+                    var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    int index = path.IndexOf("Content");
+                    member.PROFILE_IMG_URL = "\\"+ path.Substring(index);
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+            }
+            return resp;
+        }
+
         private string ReplaceMailBody(string mailbody, string user, string actionUrl)
         {
             mailbody = mailbody.Replace("[Product Name]", "CoachMe");
@@ -416,5 +475,7 @@ namespace COACHME.DATASERVICE
             mailbody = mailbody.Replace("{{action_url}}", actionUrl);
             return mailbody;
         }
+
+
     }
 }

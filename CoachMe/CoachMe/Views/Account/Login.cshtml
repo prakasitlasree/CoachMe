@@ -1,5 +1,5 @@
 ﻿ 
-@model COACHME.MODEL.CUSTOM_MODELS.LogonModel
+@model MEMBER_LOGON
 @{
     ViewBag.Title = "Coach ME : Log in";
 }
@@ -30,12 +30,12 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <p class="text-success">@ViewBag.StatusMessage</p>
                         <div class="form-group m-form__group"> 
-                            <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            <input class="form-control m-input" type="text" placeholder="Email" name="USER_NAME" autocomplete="off">
+                            @Html.ValidationMessageFor(m => m.USER_NAME, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group m-form__group">
-                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="PASSWORD">
+                            @Html.ValidationMessageFor(m => m.PASSWORD, "", new { @class = "text-danger" })
                          </div>
                         <div class="row m-login__form-sub">
                             <div class="col m--align-left m-login__form-left">

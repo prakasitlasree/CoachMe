@@ -1,6 +1,10 @@
-﻿using System;
+﻿using COACHME.DATASERVICE;
+using COACHME.MODEL.CUSTOM_MODELS;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,10 +12,39 @@ namespace COACHME.WEB_PRESENT.Controllers
 {
     public class TeacherController : Controller
     {
+        private AuthenticationServices service = new AuthenticationServices();
         // GET: Teacher
-        public ActionResult Index()
+        public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
+            ResponseModel resp = new ResponseModel();
+            resp = await service.GetMemberProfile(dto);
+            if (resp.STATUS)
+            {
+                return View(resp.OUTPUT_DATA);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
+        }
+       
+      
+        [HttpPost]
+        public async void UploadFile(HttpPostedFileBase profileImage, MEMBERS dto)
+        {
+            try
+            {
+                ResponseModel resp = new ResponseModel();
+                resp = await service.UpdateProfilePic(profileImage, dto);
+                ViewBag.Message = "File Uploaded Successfully!!";
+                
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Message = "File upload failed!!";
+               
+            }
         }
 
         // GET: Teacher/Details/5

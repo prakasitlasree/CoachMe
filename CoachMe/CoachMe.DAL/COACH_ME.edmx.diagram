@@ -9,11 +9,11 @@
         <EntityTypeShape EntityType="COACH_MEModel.COURSE_PLACE" Width="1.5" PointX="5.25" PointY="0.75" />
         <EntityTypeShape EntityType="COACH_MEModel.COURSES" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="COACH_MEModel.LOGON_ACTIVITY" Width="1.5" PointX="7.75" PointY="5.625" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_LOGON" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_LOGON" Width="1.5" PointX="4.125" PointY="8" />
         <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" Width="1.5" PointX="5.25" PointY="9.625" />
         <EntityTypeShape EntityType="COACH_MEModel.MEMBER_ROLE" Width="1.5" PointX="3" PointY="4.75" />
         <EntityTypeShape EntityType="COACH_MEModel.MEMBER_TEACH_COURSE" Width="1.5" PointX="5.25" PointY="4.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBERS" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBERS" Width="2.625" PointX="0.5" PointY="4.5" />
         <EntityTypeShape EntityType="COACH_MEModel.PLACE" Width="1.5" PointX="3" PointY="12.75" />
         <EntityTypeShape EntityType="COACH_MEModel.RESET_PASSWORD" Width="1.5" PointX="7.75" PointY="9.625" />
         <EntityTypeShape EntityType="COACH_MEModel.ROLE" Width="1.5" PointX="0.75" PointY="1" />

@@ -24,6 +24,5 @@ public partial class MEMBER_LOGON
     public string TOKEN_HASH { get; set; }
     public Nullable<System.DateTime> TOKEN_EXPIRATION { get; set; }
     public Nullable<bool> TOKEN_USED { get; set; }
-
     public virtual MEMBERS MEMBERS { get; set; }
 }
