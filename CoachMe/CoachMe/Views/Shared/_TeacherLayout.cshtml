@@ -27,8 +27,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
     <!-- begin:: Page -->
@@ -543,23 +542,25 @@
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
                                                     <div class="col-7">
-                                                        <div class='input-group date' id='datetimepicker1'>
-                                                            <input type='text' class="form-control" style="height:32px" />
-                                                            <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </span>
+                                                        <div class='input-group date'>
+                                                            <input type='text' id="birthDate" class="form-control" />
                                                         </div>
                                                     </div>
+                                                    @*<div class="col-1">
+                                                        <button type="button" class="btn" id='datetimepicker1' style="border-radius:10px;float:right;width:100%">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </button>
+                                                    </div>*@
                                                 </div>
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
-                                                    <div class="col-7">
+                                                    <div class="col-5">
                                                         <span class="input-group-append">
                                                             <input class="form-control m-input" type="text" value="1557744125141">
-                                                            <label class="btn btn-default">
-                                                                <input id="fileUpload" name="FileUpload" multiple="" type="file" accept="image/png, image/jpeg, image/jpg" />
-                                                            </label>
                                                         </span>
+                                                    </div>
+                                                    <div class="col-2"style="padding-left:0px">
+                                                        <input id="fileUpload" name="FileUpload" multiple="" type="file" accept="image/png, image/jpeg, image/jpg" style="padding-top:9px" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-form__group row">
@@ -1142,14 +1143,13 @@
     <!-- begin::Quick Nav -->
     <!--begin::Global Theme Bundle -->
     @*
-        <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>*@
+    <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>*@
     <script src="~/Content/js/vendors.bundle.js" type="text/javascript"></script>
     @*
 
-        <script src="assets/demo/demo12/base/scripts.bundle.js" type="text/javascript"></script>*@
+    <script src="assets/demo/demo12/base/scripts.bundle.js" type="text/javascript"></script>*@
     <script src="~/Content/js/teacher/scripts.bundle.js" type="text/javascript"></script>
     <script type="text/javascript">
-
         $(function () {
             $('#datetimepicker1').datetimepicker({
                 pickTime: false,
@@ -1160,6 +1160,12 @@
 
         });
 
+        $(document).ready(function () {
+            $('#birthDate').datepicker(
+        {
+            autoclose: true
+        });
+        });
     </script>
     <!--end::Global Theme Bundle -->
 </body>
