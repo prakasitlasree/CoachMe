@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class COURSE_PLACE
+namespace COACHME.MODEL
 {
-    public int AUTO_ID { get; set; }
-    public Nullable<int> COURSE_ID { get; set; }
-    public Nullable<int> PLACE_ID { get; set; }
-    public string DESCRIPTION { get; set; }
-    public string CREATED_BY { get; set; }
-    public Nullable<System.DateTime> CREATED_DATE { get; set; }
-    public string UPDATED_BY { get; set; }
-    public Nullable<System.DateTime> UPDATED_DATE { get; set; }
-
-    public virtual COURSES COURSES { get; set; }
-    public virtual PLACE PLACE { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class COURSE_PLACE
+    {
+        public int AUTO_ID { get; set; }
+        public Nullable<int> COURSE_ID { get; set; }
+        public Nullable<int> PLACE_ID { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string CREATED_BY { get; set; }
+        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public string UPDATED_BY { get; set; }
+        public Nullable<System.DateTime> UPDATED_DATE { get; set; }
+    
+        public virtual COURSES COURSES { get; set; }
+        public virtual PLACE PLACE { get; set; }
+    }
 }
