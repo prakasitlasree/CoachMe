@@ -11,10 +11,10 @@
         <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
             <div class="m-login__container">
                 @*<div class="m-login__logo">
-                    <a href="#">
-                        <img src="~/Content/images/login/login_logo.png">
-                    </a>
-                </div>*@
+                        <a href="#">
+                            <img src="~/Content/images/login/login_logo.png">
+                        </a>
+                    </div>*@
                 @{
                     Html.RenderPartial("_LogoPartial");
                 }
@@ -28,48 +28,62 @@
                     @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="form-group m-form__group">
-                            @if (!string.IsNullOrEmpty(ViewBag.Success))
-                            {
-                                <p class="text-success">@ViewBag.Success<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
-                            }
-                            @if (!string.IsNullOrEmpty(ViewBag.Fail))
-                            {
-                                <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
-                            }
-                            <input class="form-control m-input" type="text" placeholder="Fullname" name="fullname">                         
-                            @Html.ValidationMessageFor(m => m.Fullname, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input" type="password" placeholder="Password" name="password">
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="ConfirmPassword">
-                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="row form-group m-form__group m-login__form-sub">
-                            <div class="col m--align-left">
-                                <label class="m-checkbox m-checkbox--focus">
-                                    <input type="checkbox" name="Agree" value="true" /> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
-                                    @*@Html.CheckBoxFor(o => o.Agree, htmlAttributes: new { @checked = true }) I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>.*@
-                                    <span></span>
-                                </label>
-                                <span class="m-form__help"></span>
-                                <br>@Html.ValidationMessageFor(m => m.Agree, "", new { @class = "text-danger" })
+                       
+                            <div class="form-group m-form__group">
+                                @if (!string.IsNullOrEmpty(ViewBag.Success))
+                                {
+                                    <p class="text-success">@ViewBag.Success<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
+                                }
+                                @if (!string.IsNullOrEmpty(ViewBag.Fail))
+                                {
+                                    <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
+                                }
+                                <input class="form-control m-input" type="text" placeholder="Fullname" name="fullname">
+                                @Html.ValidationMessageFor(m => m.Fullname, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <div class="m-login__form-action">
-                            <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input" type="password" placeholder="Password" name="password">
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="ConfirmPassword">
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-radio">
+                                        <input type="radio" name="Role" value="1"> Teacher
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio" style="margin-left:20px">
+                                        <input type="radio" name="Role" value="2"> Student
+                                        <span></span>
+                                    </label>
+                                    @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-checkbox m-checkbox--focus">
+                                        <input type="checkbox" name="Agree" value="true" /> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
+                                        @*@Html.CheckBoxFor(o => o.Agree, htmlAttributes: new { @checked = true }) I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>.*@
+                                        <span></span>
+                                    </label>
+                                    <span class="m-form__help"></span>
+                                    <br>@Html.ValidationMessageFor(m => m.Agree, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="m-login__form-action">
+                                <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
 
-                            <a href="@Url.Action("Login","Account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
-                            @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
-                                Cancel</button>*@
-                        </div>
+                                <a href="@Url.Action("Login","Account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
+                                @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
+                                    Cancel</button>*@
+                            </div>
                     }
                 </div>
                 <!--End SignUp -->

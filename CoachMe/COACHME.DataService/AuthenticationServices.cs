@@ -77,7 +77,7 @@ namespace COACHME.DATASERVICE
 
                         //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();
-                        memberRole.ROLE_ID = 1;
+                        memberRole.ROLE_ID = dto.Role;
                         memberRole.CREATED_DATE = DateTime.Now;
                         memberRole.CREATED_BY = dto.Fullname;
                         memberRole.UPDATED_DATE = DateTime.Now;
