@@ -1,4 +1,5 @@
 ﻿using COACHME.DATASERVICE;
+using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
 using System.Collections.Generic;

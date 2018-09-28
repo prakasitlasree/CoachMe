@@ -7,22 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class MEMBER_LOGON
+namespace COACHME.MODEL
 {
-    public int AUTO_ID { get; set; }
-    public Nullable<int> MEMBER_ID { get; set; }
-    public string USER_NAME { get; set; }
-    public string PASSWORD { get; set; }
-    public string CREATED_BY { get; set; }
-    public Nullable<System.DateTime> CREATED_DATE { get; set; }
-    public string UPDATED_BY { get; set; }
-    public Nullable<System.DateTime> UPDATED_DATE { get; set; }
-    public Nullable<int> STATUS { get; set; }
-    public string TOKEN_HASH { get; set; }
-    public Nullable<System.DateTime> TOKEN_EXPIRATION { get; set; }
-    public Nullable<bool> TOKEN_USED { get; set; }
-    public virtual MEMBERS MEMBERS { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class MEMBER_LOGON
+    {
+        public int AUTO_ID { get; set; }
+        public Nullable<int> MEMBER_ID { get; set; }
+        public string USER_NAME { get; set; }
+        public string PASSWORD { get; set; }
+        public string CREATED_BY { get; set; }
+        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public string UPDATED_BY { get; set; }
+        public Nullable<System.DateTime> UPDATED_DATE { get; set; }
+        public Nullable<int> STATUS { get; set; }
+        public string TOKEN_HASH { get; set; }
+        public Nullable<System.DateTime> TOKEN_EXPIRATION { get; set; }
+        public Nullable<bool> TOKEN_USED { get; set; }
+    
+        public virtual MEMBERS MEMBERS { get; set; }
+    }
 }

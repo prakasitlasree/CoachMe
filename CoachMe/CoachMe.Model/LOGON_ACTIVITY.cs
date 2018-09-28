@@ -7,16 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class LOGON_ACTIVITY
+namespace COACHME.MODEL
 {
-    public long AUTO_ID { get; set; }
-    public Nullable<System.DateTime> DATE { get; set; }
-    public string ACTION { get; set; }
-    public string FULLNAME { get; set; }
-    public string USER_NAME { get; set; }
-    public string PASSWORD { get; set; }
-    public Nullable<bool> STATUS { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class LOGON_ACTIVITY
+    {
+        public long AUTO_ID { get; set; }
+        public Nullable<System.DateTime> DATE { get; set; }
+        public string ACTION { get; set; }
+        public string FULLNAME { get; set; }
+        public string USER_NAME { get; set; }
+        public string PASSWORD { get; set; }
+        public Nullable<bool> STATUS { get; set; }
+    }
 }

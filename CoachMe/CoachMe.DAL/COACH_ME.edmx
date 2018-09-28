@@ -72,7 +72,7 @@
           <Key>
             <PropertyRef Name="AUTO_ID" />
           </Key>
-          <Property Name="AUTO_ID" Type="int" Nullable="false" />
+          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MEMBER_ROLE_ID" Type="int" />
           <Property Name="COURSE_ID" Type="int" />
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="4000" />
@@ -420,17 +420,17 @@
           <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBER_LOGON" ToRole="MEMBERS" />
           <Property Name="STATUS" Type="Int32" />
           <Property Name="TOKEN_HASH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TOKEN_EXPIRATION" Type="DateTime" Precision="3" />
           <Property Name="TOKEN_USED" Type="Boolean" />
+          <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBER_LOGON" ToRole="MEMBERS" />
         </EntityType>
         <EntityType Name="MEMBER_REGIS_COURSE">
           <Key>
             <PropertyRef Name="AUTO_ID" />
           </Key>
-          <Property Name="AUTO_ID" Type="Int32" Nullable="false" />
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MEMBER_ROLE_ID" Type="Int32" />
           <Property Name="COURSE_ID" Type="Int32" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
@@ -481,12 +481,6 @@
           <Property Name="MOBILE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DATE_OF_BIRTH" Type="DateTime" Precision="0" />
           <Property Name="AGE" Type="Int32" />
-          <Property Name="CREATED_BY" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
-          <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
           <Property Name="ABOUT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PROFILE_IMG_URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ABOUT_IMG_URL1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -494,13 +488,19 @@
           <Property Name="ABOUT_IMG_URL3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ABOUT_IMG_URL4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ABOUT_IMG_URL5" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
+          <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
             <PropertyRef Name="AUTO_ID" />
           </Key>
-          <Property Name="AUTO_ID" Type="Int32" Nullable="false" />
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="COURSE_ID" Type="Int32" />
           <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -748,6 +748,10 @@
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
                 <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
+                <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
+                <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="ABOUT_IMG_URL5" ColumnName="ABOUT_IMG_URL5" />
                 <ScalarProperty Name="ABOUT_IMG_URL4" ColumnName="ABOUT_IMG_URL4" />
                 <ScalarProperty Name="ABOUT_IMG_URL3" ColumnName="ABOUT_IMG_URL3" />
@@ -755,10 +759,6 @@
                 <ScalarProperty Name="ABOUT_IMG_URL1" ColumnName="ABOUT_IMG_URL1" />
                 <ScalarProperty Name="PROFILE_IMG_URL" ColumnName="PROFILE_IMG_URL" />
                 <ScalarProperty Name="ABOUT" ColumnName="ABOUT" />
-                <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
-                <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
-                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
-                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="AGE" ColumnName="AGE" />
                 <ScalarProperty Name="DATE_OF_BIRTH" ColumnName="DATE_OF_BIRTH" />
                 <ScalarProperty Name="MOBILE" ColumnName="MOBILE" />

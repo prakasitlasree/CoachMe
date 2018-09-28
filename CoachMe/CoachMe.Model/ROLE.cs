@@ -7,25 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class ROLE
+namespace COACHME.MODEL
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public ROLE()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class ROLE
     {
-        this.MEMBER_ROLE = new HashSet<MEMBER_ROLE>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ROLE()
+        {
+            this.MEMBER_ROLE = new HashSet<MEMBER_ROLE>();
+        }
+    
+        public int AUTO_ID { get; set; }
+        public string NAME { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string CREATED_BY { get; set; }
+        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public string UPDATED_BY { get; set; }
+        public Nullable<System.DateTime> UPDATED_DATE { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBER_ROLE> MEMBER_ROLE { get; set; }
     }
-
-    public int AUTO_ID { get; set; }
-    public string NAME { get; set; }
-    public string DESCRIPTION { get; set; }
-    public string CREATED_BY { get; set; }
-    public Nullable<System.DateTime> CREATED_DATE { get; set; }
-    public string UPDATED_BY { get; set; }
-    public Nullable<System.DateTime> UPDATED_DATE { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<MEMBER_ROLE> MEMBER_ROLE { get; set; }
 }

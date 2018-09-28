@@ -7,13 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class CONFIGURATION
+namespace COACHME.MODEL
 {
-    public int AUTO_ID { get; set; }
-    public string CONTROLER_NAME { get; set; }
-    public string SETING_NAME { get; set; }
-    public string VALUE { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class CONFIGURATION
+    {
+        public int AUTO_ID { get; set; }
+        public string CONTROLER_NAME { get; set; }
+        public string SETING_NAME { get; set; }
+        public string VALUE { get; set; }
+    }
 }
