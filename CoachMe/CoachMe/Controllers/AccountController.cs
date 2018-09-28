@@ -88,10 +88,10 @@ namespace CoachMe.Controllers
             }
            
             var result = await service.GetLogOnAll(dto);
-            MEMBERS param = result.OUTPUT_DATA;
+            MEMBER_LOGON param = result.OUTPUT_DATA;
             if (result.STATUS)
             {
-                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = param.AUTO_ID });
+                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = param.MEMBER_ID });
             }
             else
             {
@@ -158,7 +158,7 @@ namespace CoachMe.Controllers
         {
             //var registerModel = new RegisterModel();
             var result = await service.RegisterVerify(dto);
-            if (result)
+            if (result.STATUS)
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -184,7 +184,7 @@ namespace CoachMe.Controllers
                 {
 
                     var result = await service.Register(dto);
-                    if (result)
+                    if (result.STATUS)
                     { 
                         ViewBag.Success = "Register complete please check your email in 24Hr.";
                         return View(dto);
@@ -272,7 +272,7 @@ namespace CoachMe.Controllers
 
             // If we got this far, something failed, redisplay form
             //return PartialView(PARTIAL_VIEW_FOLDER);
-            return View(model);
+            return View(dto);
         }
 
         //

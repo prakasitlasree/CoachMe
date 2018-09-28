@@ -19,7 +19,7 @@ namespace COACHME.DATASERVICE
         #region ========= SERVICE&BUSINESS =========
         public async Task<RESPONSE__MODEL> GetLogOnAll(MEMBER_LOGON dto)
         {
-            RESPONSE__MODEL resp = null;
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             var result = false;
             var fullname = string.Empty;
             try
@@ -62,7 +62,7 @@ namespace COACHME.DATASERVICE
 
         public async Task<RESPONSE__MODEL> Register(REGISTER_MODEL dto)
         {
-            RESPONSE__MODEL resp = null;
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             var result = false;
             try
             {
@@ -179,7 +179,7 @@ namespace COACHME.DATASERVICE
 
         public async Task<RESPONSE__MODEL> RegisterVerify(MEMBER_LOGON dto)
         {
-            RESPONSE__MODEL resp = null;
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             var result = false;
             try
             {
@@ -381,7 +381,7 @@ namespace COACHME.DATASERVICE
                             activity.FULLNAME = dto.EMAIL;
                             activity.USER_NAME = dto.EMAIL;
                             activity.PASSWORD = dto.NEW_PASSWORD;
-                            activity.STATUS = result;
+                            activity.STATUS = resp.STATUS;
                             ctx.LOGON_ACTIVITY.Add(activity);
                             #endregion
 
