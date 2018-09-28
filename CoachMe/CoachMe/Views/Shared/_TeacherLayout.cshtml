@@ -416,7 +416,7 @@
                                         <div class="m-card-profile__details">
 
                                             <span class="m-card-profile__name">
-                                               @Url.Content(@Model.FULLNAME)
+                                                @Url.Content(@Model.FULLNAME)
                                                 <button id="fileDialog" type="button" class="btn btn-default" style="border-radius:20px">
                                                     <span class="glyphicon glyphicon-camera"></span>
                                                 </button>
@@ -472,7 +472,7 @@
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.FULLNAME, new { @class = "form-control m-input" })
+                                                            @Html.TextBoxFor(m => m.FULLNAME, new { @class = "form-control m-input", @readonly = true })
                                                             @*<input class="form-control m-input" type="text" name="FULLNAME" id="FULLNAME">*@
                                                         </div>
                                                     </div>
@@ -486,7 +486,7 @@
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.MOBILE, new { @class = "form-control m-input" })
+                                                            @Html.TextBoxFor(m => m.NICKNAME, new { @class = "form-control m-input" })
                                                             @*<input class="form-control m-input" type="text" value="Jenny">*@
                                                         </div>
                                                     </div>
@@ -530,14 +530,33 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
+                                                        <div class="col-7">
+                                                            
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL1)" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+
+
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL2)" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+
+
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL3)" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+
+
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL4)" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
                                                         <div class="col-7">
-                                                            <input class="form-control m-input" type="text" value="+456669067890">
+                                                            @Html.TextBoxFor(m => m.MOBILE, new { @class = "form-control m-input", @readonly = true })
+                                                            @*<input class="form-control m-input" type="text" value="Jenny">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
                                                         <div class="col-7">
+                                                            @Html.TextAreaFor(m => m.ABOUT, new { @class = "form-control m-input", @readonly = true })
                                                             <textarea class="form-control m-input" id="exampleTextarea" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 133px;">สอนศิลปินนักแสดงระดับเวิล์ดคลาส ที่เปิดสอนร้องเพลง เต้น การแสดง บุคลิกภาพ พิธีกร เปียโน กีตาร์ กลอง เบส แต่งเพลง สำหรับนักเรียนอายุ 2 ปีถึงผู้ใหญ่                                                    </textarea>
                                                         </div>
                                                     </div>
@@ -1143,7 +1162,7 @@
             }
         }
 
-       
+
     </script>
     <!--end::Global Theme Bundle -->
 </body>

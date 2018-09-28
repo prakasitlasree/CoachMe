@@ -27,11 +27,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             else
             {
                 return RedirectToAction("Login", "Account");
-            }
-            return View();
+            }           
         }
-       
-      
+
         [HttpPost]
         public async Task<ActionResult> UploadFile(HttpPostedFileBase profileImage, MEMBERS dto)
         {
