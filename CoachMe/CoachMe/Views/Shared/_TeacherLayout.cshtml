@@ -1131,26 +1131,15 @@
 
         function readURL(input) {
 
-            bootbox.confirm({
-                title: "Destroy planet?",
-                message: "Do you want to activate the Deathstar now? This cannot be undone.",
-                buttons: {
-                    cancel: {
-                        label: '<i class="fa fa-times"></i> Cancel'
-                    },
-                    confirm: {
-                        label: '<i class="fa fa-check"></i> Confirm'
-                    }
-                },
-                callback: function (result) {
-                    console.log('This was logged in the callback: ' + result);
-                }
-            });
 
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 $('#btnSubmit').trigger('click');
+
+                $('#btnSubmit').click(function () {
+                    location.reload();
+                });
             }
         }
 

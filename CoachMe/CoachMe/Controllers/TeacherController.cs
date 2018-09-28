@@ -33,19 +33,19 @@ namespace COACHME.WEB_PRESENT.Controllers
        
       
         [HttpPost]
-        public async void UploadFile(HttpPostedFileBase profileImage, MEMBERS dto)
+        public async Task<ActionResult> UploadFile(HttpPostedFileBase profileImage, MEMBERS dto)
         {
             try
             {
                 ResponseModel resp = new ResponseModel();
                 resp = await service.UpdateProfilePic(profileImage, dto);
                 ViewBag.Message = "File Uploaded Successfully!!";
-                
+                return RedirectToAction("Index", "Teacher",new { MEMBER_ID = dto.AUTO_ID});
             }
             catch(Exception ex)
             {
                 ViewBag.Message = "File upload failed!!";
-               
+                return Redirect(Request.Url.AbsoluteUri);
             }
         }
 
