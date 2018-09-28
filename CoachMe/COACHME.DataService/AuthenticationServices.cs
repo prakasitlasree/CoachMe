@@ -16,8 +16,10 @@ namespace COACHME.DATASERVICE
 {
     public class AuthenticationServices
     {
-        public async Task<MEMBER_LOGON> GetLogOnAll(MEMBER_LOGON dto)
+        #region ========= SERVICE&BUSINESS =========
+        public async Task<RESPONSE__MODEL> GetLogOnAll(MEMBER_LOGON dto)
         {
+            RESPONSE__MODEL resp = null;
             var result = false;
             var fullname = string.Empty;
             try
@@ -45,7 +47,10 @@ namespace COACHME.DATASERVICE
                     activity.STATUS = result;
                     ctx.LOGON_ACTIVITY.Add(activity);
                     var act_result = await ctx.SaveChangesAsync();
-                    return member;
+
+                    resp.STATUS = true;
+                    resp.OUTPUT_DATA = member;
+                    return resp;
                 }
 
             }
@@ -55,46 +60,47 @@ namespace COACHME.DATASERVICE
             }
         }
 
-        public async Task<bool> Register(RegisterModel dto)
+        public async Task<RESPONSE__MODEL> Register(REGISTER_MODEL dto)
         {
+            RESPONSE__MODEL resp = null;
             var result = false;
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
                     var member = new MEMBERS();
-                    var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.Email.ToUpper() /*&& x.TOKEN_USED != true*/).FirstOrDefaultAsync();
+                    var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper() /*&& x.TOKEN_USED != true*/).FirstOrDefaultAsync();
                     if (checkMember == null)
                     {
                         #region ==== SET DETAIL ====
                         //1.Master 
-                        member.FULLNAME = dto.Fullname;
-                        member.FIRST_NAME = dto.Fullname;
+                        member.FULLNAME = dto.FULLNAME;
+                        member.FIRST_NAME = dto.FULLNAME;
                         member.CREATED_DATE = DateTime.Now;
-                        member.CREATED_BY = dto.Fullname;
+                        member.CREATED_BY = dto.FULLNAME;
                         member.UPDATED_DATE = DateTime.Now;
-                        member.UPDATED_BY = dto.Fullname;
+                        member.UPDATED_BY = dto.FULLNAME;
 
                         //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();
-                        memberRole.ROLE_ID = dto.Role;
+                        memberRole.ROLE_ID = dto.ROLE;
                         memberRole.CREATED_DATE = DateTime.Now;
-                        memberRole.CREATED_BY = dto.Fullname;
+                        memberRole.CREATED_BY = dto.FULLNAME;
                         memberRole.UPDATED_DATE = DateTime.Now;
-                        memberRole.UPDATED_BY = dto.Fullname;
+                        memberRole.UPDATED_BY = dto.FULLNAME;
 
                         //3. Details 
                         MEMBER_LOGON memberLogon = new MEMBER_LOGON();
-                        memberLogon.USER_NAME = dto.Email.ToUpper();
-                        memberLogon.PASSWORD = dto.Password;
+                        memberLogon.USER_NAME = dto.EMAIL.ToUpper();
+                        memberLogon.PASSWORD = dto.PASSWORD;
                         memberLogon.STATUS = 1;
-                        memberLogon.TOKEN_HASH = GenUniqueKey(dto.Email.ToUpper());
+                        memberLogon.TOKEN_HASH = GenUniqueKey(dto.EMAIL.ToUpper());
                         memberLogon.TOKEN_USED = false;
                         memberLogon.TOKEN_EXPIRATION = DateTime.Now.AddHours(24);
                         memberLogon.CREATED_DATE = DateTime.Now;
-                        memberLogon.CREATED_BY = dto.Fullname;
+                        memberLogon.CREATED_BY = dto.FULLNAME;
                         memberLogon.UPDATED_DATE = DateTime.Now;
-                        memberLogon.UPDATED_BY = dto.Fullname;
+                        memberLogon.UPDATED_BY = dto.FULLNAME;
 
 
                         //4. Add detail to master 
@@ -167,10 +173,13 @@ namespace COACHME.DATASERVICE
                 throw ex;
 
             }
-            return result;
+            resp.STATUS = result;
+            return resp;
         }
-        public async Task<bool> RegisterVerify(MEMBER_LOGON dto)
+
+        public async Task<RESPONSE__MODEL> RegisterVerify(MEMBER_LOGON dto)
         {
+            RESPONSE__MODEL resp = null;
             var result = false;
             try
             {
@@ -205,18 +214,20 @@ namespace COACHME.DATASERVICE
                 result = false;
                 throw ex;
             }
-            return result;
+            resp.STATUS = result;
+            return resp;
         }
 
-        public async Task<bool> ForgotPassword(ForgotPasswordModel email)
+        public async Task<RESPONSE__MODEL> ForgotPassword(FORGOT_PASSWORD_MODEL dto)
         {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             var result = false;
             var resetPassword = new RESET_PASSWORD();
             var act_result = 0;
             using (var ctx = new COACH_MEEntities())
             {
                 //1. Check with exiting email logon
-                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == email.Email.ToUpper()).FirstOrDefaultAsync();
+                var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper()).FirstOrDefaultAsync();
                 if (member != null)
                 {
                     #region ===== Create Mail====
@@ -230,10 +241,10 @@ namespace COACHME.DATASERVICE
                     string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
                     string link = "http://localhost:1935/Account/ResetPassword?";
 
-                    var hash = GenUniqueKey(email.Email);
-                    link = link + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash;
+                    var hash = GenUniqueKey(dto.EMAIL);
+                    link = link + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + hash;
                     //Open When Deploy.  
-                    link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + email.Email + @"&TOKEN_HASH=" + hash; ;
+                    link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.FORGET_PASSWORD_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + hash; ;
 
                     //mail body  
                     string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY.ToString()).FirstOrDefault().VALUE.ToString(), member.USER_NAME, link);
@@ -242,7 +253,7 @@ namespace COACHME.DATASERVICE
                     #region ===== Add Activity====
                     try
                     {
-                        resetPassword.USER_NAME = email.Email.ToUpper();
+                        resetPassword.USER_NAME = dto.EMAIL.ToUpper();
                         resetPassword.TOKEN_HASH = hash;
                         resetPassword.TOKEN_USED = false;
                         resetPassword.TOKEN_EXPIRATION = DateTime.Now.AddMinutes(30);
@@ -258,11 +269,11 @@ namespace COACHME.DATASERVICE
 
                     //2. Send New password to email
                     #region =========SEND EMAIL =========
-                    var emailTo = email;
+                    var emailTo = dto;
 
                     try
                     {
-                        var toAddress = new MailAddress(email.Email);
+                        var toAddress = new MailAddress(dto.EMAIL);
                         var smtp = new SmtpClient
                         {
                             Host = "smtp.gmail.com",
@@ -292,7 +303,7 @@ namespace COACHME.DATASERVICE
                         activity.DATE = DateTime.Now;
                         activity.ACTION = "FORGET PASSWORD";
                         activity.FULLNAME = "SYSTEM";
-                        activity.USER_NAME = email.Email.ToUpper();
+                        activity.USER_NAME = dto.EMAIL.ToUpper();
                         activity.PASSWORD = "SYSTEM";
                         activity.STATUS = result;
                         ctx.LOGON_ACTIVITY.Add(activity);
@@ -311,40 +322,25 @@ namespace COACHME.DATASERVICE
                     result = false;
                 }
             }
-
-            return result;
+            resp.STATUS = result;
+            return resp;
         }
 
-        private string GenUniqueKey(string email)
+        public async Task<RESPONSE__MODEL> ResetPasswordValidate(RESET_PASSWORD_VALIDATE_MODEL dto)
         {
-            string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            string[] reserved = new string[] { ";", "/", "?", ":", "@", "&", "=", "+", ",", "$" };
-            foreach (var item in reserved)
-            {
-                token = token.Replace(item, "");
-            }
-            return token;
-
-            // string str = email + DateTime.Now.ToString();
-            //int hash = str.GetHashCode();
-            //return hash.ToString();
-        }
-
-        public async Task<bool> ResetPasswordValidate(ResetPasswordValidateModel resetPassword)
-        {
-            var result = false;
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             using (var ctx = new COACH_MEEntities())
             {
-                var tokenValidate = await ctx.RESET_PASSWORD.Where(x => x.USER_NAME.ToUpper() == resetPassword.USER_NAME.ToString().ToUpper() && x.TOKEN_HASH == resetPassword.TOKEN_HASH && x.TOKEN_EXPIRATION > DateTime.Now && x.TOKEN_USED == false).FirstOrDefaultAsync();
+                var tokenValidate = await ctx.RESET_PASSWORD.Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToString().ToUpper() && x.TOKEN_HASH == dto.TOKEN_HASH && x.TOKEN_EXPIRATION > DateTime.Now && x.TOKEN_USED == false).FirstOrDefaultAsync();
                 try
                 {
                     if (tokenValidate != null)
                     {
-                        result = true;
+                        resp.STATUS = true;
                     }
                     else
                     {
-                        result = false;
+                        resp.STATUS = false;
                     }
 
                 }
@@ -352,13 +348,13 @@ namespace COACHME.DATASERVICE
                 {
                     throw ex;
                 }
-                return result;
+                return resp;
             }
         }
 
-        public async Task<bool> ResetPassword(ResetPasswordModel dto)
+        public async Task<RESPONSE__MODEL> ResetPassword(RESET_PASSWORD_MODEL dto)
         {
-            var result = false;
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             if (dto != null)
             {
 
@@ -390,11 +386,11 @@ namespace COACHME.DATASERVICE
                             #endregion
 
                             await ctx.SaveChangesAsync();
-                            result = true;
+                            resp.STATUS = true;
                         }
                         else
                         {
-                            result = false;
+                            resp.STATUS = false;
                         }
 
                     }
@@ -402,17 +398,17 @@ namespace COACHME.DATASERVICE
                 }
                 catch (Exception ex)
                 {
-                    result = false;
+                    resp.STATUS = false;
                     throw ex;
 
                 }
             }
-            return result;
+            return resp;
         }
 
-        public async Task<ResponseModel> GetMemberProfile(MEMBER_LOGON dto)
+        public async Task<RESPONSE__MODEL> GetMemberProfile(MEMBER_LOGON dto)
         {
-            ResponseModel resp = new ResponseModel();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
@@ -431,9 +427,9 @@ namespace COACHME.DATASERVICE
 
         }
 
-        public async Task<ResponseModel> UpdateProfilePic(HttpPostedFileBase profileImage, MEMBERS dto)
+        public async Task<RESPONSE__MODEL> UpdateProfilePic(HttpPostedFileBase profileImage, MEMBERS dto)
         {
-            ResponseModel resp = new ResponseModel();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
@@ -455,7 +451,7 @@ namespace COACHME.DATASERVICE
                     //updateMemberProfileUrl
                     var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     int index = path.IndexOf("Content");
-                    member.PROFILE_IMG_URL = "\\"+ path.Substring(index);
+                    member.PROFILE_IMG_URL = "\\" + path.Substring(index);
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
@@ -467,7 +463,9 @@ namespace COACHME.DATASERVICE
             }
             return resp;
         }
+        #endregion
 
+        #region ====== METHOD ======
         private string ReplaceMailBody(string mailbody, string user, string actionUrl)
         {
             mailbody = mailbody.Replace("[Product Name]", "CoachMe");
@@ -476,6 +474,20 @@ namespace COACHME.DATASERVICE
             return mailbody;
         }
 
+        private string GenUniqueKey(string email)
+        {
+            string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            string[] reserved = new string[] { ";", "/", "?", ":", "@", "&", "=", "+", ",", "$" };
+            foreach (var item in reserved)
+            {
+                token = token.Replace(item, "");
+            }
+            return token;
 
+            // string str = email + DateTime.Now.ToString();
+            //int hash = str.GetHashCode();
+            //return hash.ToString();
+        }
+        #endregion
     }
 }

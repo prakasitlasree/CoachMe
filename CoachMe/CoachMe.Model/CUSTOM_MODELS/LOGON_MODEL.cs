@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace COACHME.MODEL.CUSTOM_MODELS
 {
-  public partial class LogonModel
+  public partial class LOGON_MODEL
     {
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
-        public string Email { get; set; }
+        public string EMAIL { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        public string Password { get; set; }
+        public string PASSWORD { get; set; }
 
         [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; } 
+        public bool REMEMBER_ME { get; set; } 
     }
 }

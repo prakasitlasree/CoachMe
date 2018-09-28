@@ -86,10 +86,12 @@ namespace CoachMe.Controllers
             {
                 return View(dto);
             }
+           
             var result = await service.GetLogOnAll(dto);
-            if (result!=null)
+            MEMBERS param = result.OUTPUT_DATA;
+            if (result.STATUS)
             {
-                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = result.MEMBER_ID });
+                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = param.AUTO_ID });
             }
             else
             {
@@ -172,10 +174,10 @@ namespace CoachMe.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
-        public async Task<ActionResult> Register(RegisterModel dto, string buttonType)
+        public async Task<ActionResult> Register(REGISTER_MODEL dto, string buttonType)
         {
             var model = new RegisterViewModel();
-            var source = new RegisterModel();
+            var source = new REGISTER_MODEL();
             if (ModelState.IsValid)
             {
                 if (buttonType == "Save")
@@ -228,24 +230,24 @@ namespace CoachMe.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model, string buttonType)
+        public async Task<ActionResult> ForgotPassword(FORGOT_PASSWORD_MODEL dto, string buttonType)
         {
            
             if (ModelState.IsValid)
             {
                 if (buttonType == "Request")
                 {
-                    var result = await service.ForgotPassword(model);
-                    if (result)
+                    var result = await service.ForgotPassword(dto);
+                    if (result.STATUS)
                     {
                        
                         ViewBag.Success = "Please check your email to reset your password.";
-                        return View(model);
+                        return View(dto);
                     }
                     else
                     {
                         ViewBag.Fail = "This email did not registerd yet.";
-                        return View(model);
+                        return View(dto);
                     }
                 }
                 else
@@ -253,7 +255,7 @@ namespace CoachMe.Controllers
 
                 }
 
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByNameAsync(dto.EMAIL);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
 
@@ -285,17 +287,17 @@ namespace CoachMe.Controllers
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         [OutputCache(NoStore = true, Duration = 0)]      
-        public async Task<ActionResult> ResetPassword(ResetPasswordValidateModel resetPassword, ResetPasswordModel newPassword, string buttonType)
+        public async Task<ActionResult> ResetPassword(RESET_PASSWORD_VALIDATE_MODEL dto_resetPassword, RESET_PASSWORD_MODEL dto_newPassword, string buttonType)
         {
 
-            if (newPassword.NEW_PASSWORD == null)
+            if (dto_newPassword.NEW_PASSWORD == null)
             {
-                var result = await service.ResetPasswordValidate(resetPassword);
-                if (result)
+                var result = await service.ResetPasswordValidate(dto_resetPassword);
+                if (result.STATUS)
                 {
                     ViewBag.FirstCall = true;
-                    newPassword.EMAIL = resetPassword.USER_NAME;                 
-                    return View(newPassword);
+                    dto_newPassword.EMAIL = dto_resetPassword.USER_NAME;                 
+                    return View(dto_newPassword);
                 }
                 else
                 {
@@ -316,12 +318,12 @@ namespace CoachMe.Controllers
        [AllowAnonymous]
        [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
-        public async Task<ActionResult> ResetPassword(ResetPasswordModel newPassword)
+        public async Task<ActionResult> ResetPassword(RESET_PASSWORD_MODEL dto)
         {
             if (ModelState.IsValid)
             {
-                var result = await service.ResetPassword(newPassword);
-                if (result)
+                var result = await service.ResetPassword(dto);
+                if (result.STATUS)
                 {
                     return RedirectToAction("Login", "Account");
                 }
@@ -333,7 +335,7 @@ namespace CoachMe.Controllers
             }
             else
             {
-                return View(newPassword);
+                return View(dto);
             }
 
         }

@@ -1,4 +1,4 @@
-﻿@model COACHME.MODEL.CUSTOM_MODELS.RegisterModel
+﻿@model COACHME.MODEL.CUSTOM_MODELS.REGISTER_MODEL
 @{
 
     ViewBag.Title = "Register new Account";
@@ -39,28 +39,28 @@
                                     <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
                                 }
                                 <input class="form-control m-input" type="text" placeholder="Fullname" name="fullname">
-                                @Html.ValidationMessageFor(m => m.Fullname, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m=>m.FULLNAME, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input" type="password" placeholder="Password" name="password">
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.PASSWORD, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="ConfirmPassword">
-                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.CONFIRM_PASSWORD, "", new { @class = "text-danger" })
                             </div>
                             <div class="row form-group m-form__group m-login__form-sub">
                                 <div class="col m--align-left">
                                     <label class="m-radio">
-                                        <input type="radio" name="Role" value="1"> Teacher
+                                        <input type="radio" name="ROLE" value="1"> Teacher
                                         <span></span>
                                     </label>
                                     <label class="m-radio" style="margin-left:20px">
-                                        <input type="radio" name="Role" value="2"> Student
+                                        <input type="radio" name="ROLE" value="2"> Student
                                         <span></span>
                                     </label>
                                     @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
@@ -74,7 +74,7 @@
                                         <span></span>
                                     </label>
                                     <span class="m-form__help"></span>
-                                    <br>@Html.ValidationMessageFor(m => m.Agree, "", new { @class = "text-danger" })
+                                    <br>@Html.ValidationMessageFor(m => m.AGREE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="m-login__form-action">

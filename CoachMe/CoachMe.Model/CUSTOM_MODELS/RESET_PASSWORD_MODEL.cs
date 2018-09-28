@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace COACHME.MODEL.CUSTOM_MODELS
 {
-    public partial class ResetPasswordModel
+    public partial class RESET_PASSWORD_MODEL
     {
         [Required]
         [EmailAddress]

@@ -18,7 +18,7 @@ namespace COACHME.WEB_PRESENT.Controllers
         // GET: Teacher
         public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
-            ResponseModel resp = new ResponseModel();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             resp = await service.GetMemberProfile(dto);
             if (resp.STATUS)
             {
@@ -35,7 +35,7 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
             try
             {
-                ResponseModel resp = new ResponseModel();
+                RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 resp = await service.UpdateProfilePic(profileImage, dto);
                 ViewBag.Message = "File Uploaded Successfully!!";
                 return RedirectToAction("Index", "Teacher",new { MEMBER_ID = dto.AUTO_ID});

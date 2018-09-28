@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace COACHME.MODEL.CUSTOM_MODELS
 {
-    public partial class ResetPasswordValidateModel
+    public partial class RESET_PASSWORD_VALIDATE_MODEL
     {
         public int AUTO_ID { get; set; }
         public string USER_NAME { get; set; }

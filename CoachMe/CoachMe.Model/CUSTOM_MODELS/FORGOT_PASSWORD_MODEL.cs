@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace COACHME.MODEL.CUSTOM_MODELS
 {
-   public partial class ForgotPasswordModel
+   public partial class FORGOT_PASSWORD_MODEL
     {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string EMAIL { get; set; }
     }
 }
