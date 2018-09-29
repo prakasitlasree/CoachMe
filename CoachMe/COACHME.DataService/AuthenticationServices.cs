@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
+using System.Globalization;
 
 namespace COACHME.DATASERVICE
 {
@@ -461,6 +462,61 @@ namespace COACHME.DATASERVICE
             {
                 resp.STATUS = false;
             }
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> UpdateMemberProfile(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var member = new MEMBERS();
+                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
+                    //Update Profile
+                    if (dto.FULLNAME != null)
+                    {
+                        member.FULLNAME = dto.FULLNAME;
+                    }
+                    if (dto.FIRST_NAME != null)
+                    {
+                        member.FIRST_NAME = dto.FIRST_NAME;
+                    }
+                    if (dto.LAST_NAME != null)
+                    {
+                        member.LAST_NAME = dto.LAST_NAME;
+                    }
+                    if (dto.MOBILE != null)
+                    {
+                        member.MOBILE = dto.MOBILE;
+                    }
+                    if (dto.DATE_OF_BIRTH != null)
+                    {
+                        member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH.Value.ToShortDateString());
+                    }
+                    if (dto.NICKNAME != null)
+                    {
+                        member.NICKNAME = dto.NICKNAME;
+                    }
+                    if (dto.ABOUT != null)
+                    {
+                        member.ABOUT = dto.ABOUT;
+                    }
+
+                    //add activity
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+            }
+
             return resp;
         }
         #endregion

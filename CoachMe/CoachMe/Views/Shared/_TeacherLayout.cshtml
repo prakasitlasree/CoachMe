@@ -453,11 +453,12 @@
                                     </div>
 
                                 </div>
-                                @using (Html.BeginForm("Index", "Teacher", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                                @using (Html.BeginForm("Edit", "Teacher", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
                                 {
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="m_user_profile_tab_1">
                                             <form class="m-form m-form--fit m-form--label-align-right">
+
                                                 <div class="m-portlet__body">
                                                     <div class="form-group m-form__group m--margin-top-10 m--hide">
                                                         <div class="alert m-alert m-alert--default" role="alert">
@@ -466,27 +467,34 @@
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <div class="col-10 ml-auto">
-                                                            <h3 class="m-form__section">ข้อมูลส่วนตัว</h3>
+                                                            <h3 class="m-form__section">
+                                                                ข้อมูลส่วนตัว
+                                                                <button type="button" class="btn btn-default" id="btnUpdate">
+                                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                                </button>
+                                                            </h3>
+
                                                         </div>
                                                     </div>
+                                                    @Html.HiddenFor(m => m.AUTO_ID)
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.FULLNAME, new { @class = "form-control m-input", @readonly = true })
+                                                            @Html.TextBoxFor(m => m.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" name="FULLNAME" id="FULLNAME">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.LAST_NAME, new { @class = "form-control m-input" })
+                                                            @Html.TextBoxFor(m => m.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" value="lawrence">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.NICKNAME, new { @class = "form-control m-input" })
+                                                            @Html.TextBoxFor(m => m.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" value="Jenny">*@
                                                         </div>
                                                     </div>
@@ -494,7 +502,8 @@
                                                         <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
                                                         <div class="col-7">
                                                             <div class='input-group date'>
-                                                                <input type='text' id="birthDate" class="form-control" />
+                                                                @Html.TextBoxFor(m => m.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH",@value = Model.DATE_OF_BIRTH.Value.ToShortDateString(), @class = "form-control m-input", @disabled = "disabled" })
+                                                                @*<input type='text' id="birthDate" class="form-control" />*@
                                                             </div>
                                                         </div>
                                                         @*<div class="col-1">
@@ -532,32 +541,32 @@
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
                                                         <div class="col-7">
-                                                            
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL1)" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL1 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
 
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL2)" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL2 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
 
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL3)" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL3 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
 
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL4)" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL4 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
 
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.MOBILE, new { @class = "form-control m-input", @readonly = true })
+                                                            @Html.TextBoxFor(m => m.MOBILE, new { @id = "MOBILE", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" value="Jenny">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
                                                         <div class="col-7">
-                                                            @*@Html.TextAreaFor(m => m.ABOUT, new { @class = "form-control m-input", @readonly = true })*@
-                                                            <textarea class="form-control m-input" id="exampleTextarea" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 133px;">สอนศิลปินนักแสดงระดับเวิล์ดคลาส ที่เปิดสอนร้องเพลง เต้น การแสดง บุคลิกภาพ พิธีกร เปียโน กีตาร์ กลอง เบส แต่งเพลง สำหรับนักเรียนอายุ 2 ปีถึงผู้ใหญ่                                                    </textarea>
+                                                            @Html.TextAreaFor(m => m.ABOUT, new { @id = "ABOUT", @class = "form-control m-input", @disabled = "disabled" })
+
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
@@ -577,14 +586,16 @@
                                                 </div>
                                                 <div class="m-portlet__foot m-portlet__foot--fit">
                                                     <div class="m-form__actions">
+
                                                         <div class="row">
-                                                            <div class="col-2">
+                                                            <div class="col-4">
                                                             </div>
                                                             <div class="col-7">
-                                                                <button type="reset" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save changes</button>&nbsp;&nbsp;
-                                                                <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>
+                                                                <button type="submit" id="btnUpdateSubmit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save changes</button>&nbsp;&nbsp;
+                                                                <button type="button" id="btnUpdateCancel" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
                                             </form>
@@ -595,6 +606,7 @@
                                         </div>
                                     </div>
                                 }
+
                             </div>
                         </div>
                     </div>
@@ -1133,7 +1145,10 @@
         });
 
         $(document).ready(function () {
-            $('#birthDate').datepicker(
+            $("#btnUpdateSubmit").hide();
+            $("#btnUpdateCancel").hide();
+
+            $('#DATE_OF_BIRTH').datepicker(
         {
             autoclose: true
         });
@@ -1141,6 +1156,22 @@
 
         $('#fileDialog').click(function () {
             $('#imgupload').trigger('click');
+        });
+
+        $('#btnUpdate').click(function () {
+            $("#FULLNAME").prop("disabled", false);
+            $("#FIRST_NAME").prop("disabled", false);
+            $("#LAST_NAME").prop("disabled", false);
+            $("#MOBILE").prop("disabled", false);
+            $("#ABOUT").prop("disabled", false);
+            $("#NICKNAME").prop("disabled", false);
+            $("#DATE_OF_BIRTH").prop("disabled", false);
+            $("#btnUpdateSubmit").show();
+            $("#btnUpdateCancel").show();
+        });
+
+        $('#btnUpdateCancel').click(function () {
+            location.reload();
         });
 
 

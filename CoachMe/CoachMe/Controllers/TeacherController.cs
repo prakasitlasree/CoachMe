@@ -83,17 +83,27 @@ namespace COACHME.WEB_PRESENT.Controllers
 
         // POST: Teacher/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(MEMBERS dto, FormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto);
+                if (result.STATUS)
+                {
+                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.AUTO_ID });
+                }
+                else
+                {
+                    ViewBag.MSG = "Update Field";
+                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.AUTO_ID });
+                }
             }
             catch
             {
-                return View();
+                ViewBag.MSG = "Update Field";
+                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.AUTO_ID });
+                
             }
         }
 
