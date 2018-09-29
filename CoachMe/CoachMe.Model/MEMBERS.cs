@@ -40,6 +40,8 @@ namespace COACHME.MODEL
         public string UPDATED_BY { get; set; }
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
         public string NICKNAME { get; set; }
+        public string ID_CARD { get; set; }
+        public string SEX { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_LOGON> MEMBER_LOGON { get; set; }

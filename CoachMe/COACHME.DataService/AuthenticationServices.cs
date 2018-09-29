@@ -501,6 +501,14 @@ namespace COACHME.DATASERVICE
                     {
                         member.NICKNAME = dto.NICKNAME;
                     }
+                    if (dto.ID_CARD != null)
+                    {
+                        member.ID_CARD = dto.ID_CARD;
+                    }
+                    if (dto.SEX != null)
+                    {
+                        member.SEX = dto.SEX;
+                    }
                     if (dto.ABOUT != null)
                     {
                         member.ABOUT = dto.ABOUT;

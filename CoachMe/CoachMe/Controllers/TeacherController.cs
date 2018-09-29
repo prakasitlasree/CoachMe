@@ -19,10 +19,13 @@ namespace COACHME.WEB_PRESENT.Controllers
         public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();            
             resp = await service.GetMemberProfile(dto);
+            model.MEMBERS = resp.OUTPUT_DATA;
+
             if (resp.STATUS)
             {
-                return View(resp.OUTPUT_DATA);
+                return View(model);
             }
             else
             {
@@ -83,26 +86,26 @@ namespace COACHME.WEB_PRESENT.Controllers
 
         // POST: Teacher/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(MEMBERS dto, FormCollection collection)
+        public async Task<ActionResult> Edit(CONTAINER_MODEL dto, FormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
-                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto);
+                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS);
                 if (result.STATUS)
                 {
-                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.AUTO_ID });
+                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
                     ViewBag.MSG = "Update Field";
-                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.AUTO_ID });
+                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
                 ViewBag.MSG = "Update Field";
-                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.AUTO_ID });
+                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
                 
             }
         }

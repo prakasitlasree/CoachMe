@@ -1,6 +1,6 @@
-﻿@model COACHME.MODEL.MEMBERS
+﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
-    var imagePath = @Model.PROFILE_IMG_URL;
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -403,9 +403,9 @@
                                         {
                                             <div class="m-card-profile__pic">
                                                 <div class="m-card-profile__pic-wrapper">
-                                                    <img src="@Url.Content(@Model.PROFILE_IMG_URL)" alt="" style="height:130px;width:130px" />
+                                                    <img src="@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" alt="" style="height:130px;width:130px" />
                                                 </div>
-                                                @Html.HiddenFor(m => m.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                             </div>
                                             <input type="file" name="profileImage" id="imgupload" style="display:none" />
 
@@ -416,7 +416,7 @@
                                         <div class="m-card-profile__details">
 
                                             <span class="m-card-profile__name">
-                                                @Url.Content(@Model.FULLNAME)
+                                                @Url.Content(@Model.MEMBERS.FULLNAME)
                                                 <button id="fileDialog" type="button" class="btn btn-default" style="border-radius:20px">
                                                     <span class="glyphicon glyphicon-camera"></span>
                                                 </button>
@@ -445,7 +445,13 @@
                                             <li class="nav-item m-tabs__item">
                                                 <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
                                                     <i class="flaticon-share m--hide"></i>
-                                                    Update Profile
+                                                    Profile
+                                                </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item">
+                                                <a class="nav-link m-tabs__link " data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
+                                                    <i class="flaticon-share m--hide"></i>
+                                                    Manage Course
                                                 </a>
                                             </li>
 
@@ -456,6 +462,7 @@
                                 @using (Html.BeginForm("Edit", "Teacher", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
                                 {
                                     <div class="tab-content">
+
                                         <div class="tab-pane active" id="m_user_profile_tab_1">
                                             <form class="m-form m-form--fit m-form--label-align-right">
 
@@ -476,25 +483,25 @@
 
                                                         </div>
                                                     </div>
-                                                    @Html.HiddenFor(m => m.AUTO_ID)
+                                                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input", @disabled = "disabled" })
+                                                            @Html.TextBoxFor(m => m.MEMBERS.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" name="FULLNAME" id="FULLNAME">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input", @disabled = "disabled" })
+                                                            @Html.TextBoxFor(m => m.MEMBERS.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" value="lawrence">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input", @disabled = "disabled" })
+                                                            @Html.TextBoxFor(m => m.MEMBERS.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" value="Jenny">*@
                                                         </div>
                                                     </div>
@@ -502,7 +509,7 @@
                                                         <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
                                                         <div class="col-7">
                                                             <div class='input-group date'>
-                                                                @Html.TextBoxFor(m => m.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH",@value = Model.DATE_OF_BIRTH.Value.ToShortDateString(), @class = "form-control m-input", @disabled = "disabled" })
+                                                                @Html.TextBoxFor(m => m.MEMBERS.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH", @class = "form-control m-input", @disabled = "disabled" })
                                                                 @*<input type='text' id="birthDate" class="form-control" />*@
                                                             </div>
                                                         </div>
@@ -516,7 +523,7 @@
                                                         <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
                                                         <div class="col-5">
                                                             <span class="input-group-append">
-                                                                <input class="form-control m-input" type="text" value="1557744125141">
+                                                                @Html.TextBoxFor(m => m.MEMBERS.ID_CARD, new { @id = "ID_CARD", @class = "form-control m-input", @disabled = "disabled" })
                                                             </span>
                                                         </div>
                                                         <div class="col-2" style="padding-left:0px">
@@ -528,13 +535,14 @@
                                                         <div class="col-7">
                                                             <div class="m-radio-inline">
                                                                 <label class="m-radio">
-                                                                    <input type="radio" name="example_3" value="1"> ชาย
+                                                                    @Html.RadioButtonFor(m => m.MEMBERS.SEX, "1", new { @id = "SEX", disabled = "disabled" })ชาย
                                                                     <span></span>
                                                                 </label>
                                                                 <label class="m-radio">
-                                                                    <input type="radio" name="example_3" value="2"> หญิง
+                                                                    @Html.RadioButtonFor(m => m.MEMBERS.SEX, "2", new { @id = "SEX", disabled = "disabled" })หญิง
                                                                     <span></span>
                                                                 </label>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -542,30 +550,30 @@
                                                         <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
                                                         <div class="col-7">
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL1 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
 
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL2 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
 
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL3 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
 
 
-                                                            <img src="@Url.Content(@Model.ABOUT_IMG_URL4 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
 
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
                                                         <div class="col-7">
-                                                            @Html.TextBoxFor(m => m.MOBILE, new { @id = "MOBILE", @class = "form-control m-input", @disabled = "disabled" })
+                                                            @Html.TextBoxFor(m => m.MEMBERS.MOBILE, new { @id = "MOBILE", @class = "form-control m-input", @disabled = "disabled" })
                                                             @*<input class="form-control m-input" type="text" value="Jenny">*@
                                                         </div>
                                                     </div>
                                                     <div class="form-group m-form__group row">
                                                         <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
                                                         <div class="col-7">
-                                                            @Html.TextAreaFor(m => m.ABOUT, new { @id = "ABOUT", @class = "form-control m-input", @disabled = "disabled" })
+                                                            @Html.TextAreaFor(m => m.MEMBERS.ABOUT, new { @id = "ABOUT", @class = "form-control m-input", @disabled = "disabled" })
 
                                                         </div>
                                                     </div>
@@ -600,6 +608,7 @@
                                                 </div>
                                             </form>
                                         </div>
+
                                         <div class="tab-pane " id="m_user_profile_tab_2">
                                         </div>
                                         <div class="tab-pane " id="m_user_profile_tab_3">
@@ -1166,6 +1175,9 @@
             $("#ABOUT").prop("disabled", false);
             $("#NICKNAME").prop("disabled", false);
             $("#DATE_OF_BIRTH").prop("disabled", false);
+            $("#SEX").prop("disabled", false);
+            $("#ID_CARD").prop("disabled", false);
+
             $("#btnUpdateSubmit").show();
             $("#btnUpdateCancel").show();
         });

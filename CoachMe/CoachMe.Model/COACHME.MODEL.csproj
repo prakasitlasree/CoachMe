@@ -63,6 +63,7 @@
     <Compile Include="COURSE_PLACE.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
+    <Compile Include="CUSTOM_MODELS\CONTAINER_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\FORGOT_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\LOGON_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\REGISTER_MODEL.cs" />
