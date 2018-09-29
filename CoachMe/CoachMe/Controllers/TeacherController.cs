@@ -34,14 +34,14 @@ namespace COACHME.WEB_PRESENT.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UploadFile(HttpPostedFileBase profileImage, MEMBERS dto)
+        public async Task<ActionResult> UploadFile(HttpPostedFileBase profileImage, CONTAINER_MODEL dto)
         {
             try
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
-                resp = await service.UpdateProfilePic(profileImage, dto);
+                resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
-                return RedirectToAction("Index", "Teacher",new { MEMBER_ID = dto.AUTO_ID});
+                return RedirectToAction("Index", "Teacher",new { MEMBER_ID = dto.MEMBERS.AUTO_ID});
             }
             catch(Exception ex)
             {
