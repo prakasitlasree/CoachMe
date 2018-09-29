@@ -17,8 +17,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();            
             resp = await service.GetMemberProfile(dto);
-            model.MEMBERS = resp.OUTPUT_DATA;
-
+            model.MEMBERS = resp.OUTPUT_DATA; 
             if (resp.STATUS)
             {
                 return View(model);

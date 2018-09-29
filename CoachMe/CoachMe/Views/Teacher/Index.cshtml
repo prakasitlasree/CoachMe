@@ -1,6 +1,238 @@
-﻿ 
+﻿ @model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="m-portlet m-portlet--full-height   m-portlet--unair">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            Your Profile
+                        </div>
+                        @using (Html.BeginForm("UploadFile", "Teacher", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="m-card-profile__pic">
+                                <div class="m-card-profile__pic-wrapper">
+                                    <img src="@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" alt="" style="height:130px;width:130px" />
+                                </div>
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                            </div>
+                                            <input type="file" name="profileImage" id="imgupload" style="display:none" />
+
+                                            <button id="btnSubmit" type="submit" class="btn btn-default confirm" style="border-radius:20px;display:none">
+                                                <span class="glyphicon glyphicon-camera"></span>
+                                            </button>
+                        }
+                        <div class="m-card-profile__details">
+
+                            <span class="m-card-profile__name">
+                                @Url.Content(@Model.MEMBERS.FULLNAME)
+                                <button id="fileDialog" type="button" class="btn btn-default" style="border-radius:20px">
+                                    <span class="glyphicon glyphicon-camera"></span>
+                                </button>
+                            </span>
+
+                            <a href="" class="m-card-profile__email m-link">
+                            @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">Section</span>
+                        </li>
+
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8">
+            <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--unair">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
+                                    <i class="flaticon-share m--hide"></i>
+                                    Profile
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link " data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
+                                    <i class="flaticon-share m--hide"></i>
+                                    Manage Course
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+                @using (Html.BeginForm("Edit", "Teacher", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                {
+                    <div class="tab-content">
+
+                        <div class="tab-pane active" id="m_user_profile_tab_1">
+                            <form class="m-form m-form--fit m-form--label-align-right">
+
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group m--margin-top-10 m--hide">
+                                        <div class="alert m-alert m-alert--default" role="alert">
+                                            The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-10 ml-auto">
+                                            <h3 class="m-form__section">
+                                                ข้อมูลส่วนตัว
+                                                <button type="button" class="btn btn-default" id="btnUpdate">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                            </h3>
+
+                                        </div>
+                                    </div>
+                                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
+                                        <div class="col-7">
+                                            @Html.TextBoxFor(m => m.MEMBERS.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input", @disabled = "disabled" })
+                                            @*<input class="form-control m-input" type="text" name="FULLNAME" id="FULLNAME">*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
+                                        <div class="col-7">
+                                            @Html.TextBoxFor(m => m.MEMBERS.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input", @disabled = "disabled" })
+                                            @*<input class="form-control m-input" type="text" value="lawrence">*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
+                                        <div class="col-7">
+                                            @Html.TextBoxFor(m => m.MEMBERS.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input", @disabled = "disabled" })
+                                            @*<input class="form-control m-input" type="text" value="Jenny">*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
+                                        <div class="col-7">
+                                            <div class='input-group date'>
+                                                @Html.TextBoxFor(m => m.MEMBERS.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH", @class = "form-control m-input", @disabled = "disabled" })
+                                                @*<input type='text' id="birthDate" class="form-control" />*@
+                                            </div>
+                                        </div>
+                                        @*<div class="col-1">
+                                                <button type="button" class="btn" id='datetimepicker1' style="border-radius:10px;float:right;width:100%">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </div>*@
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
+                                        <div class="col-5">
+                                            <span class="input-group-append">
+                                                @Html.TextBoxFor(m => m.MEMBERS.ID_CARD, new { @id = "ID_CARD", @class = "form-control m-input", @disabled = "disabled" })
+                                            </span>
+                                        </div>
+                                        <div class="col-2" style="padding-left:0px">
+                                            @*<input id="fileUpload" name="FileUpload" multiple="" type="file" accept="image/png, image/jpeg, image/jpg" style="padding-top:9px" />*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
+                                        <div class="col-7">
+                                            <div class="m-radio-inline">
+                                                <label class="m-radio">
+                                                    @Html.RadioButtonFor(m => m.MEMBERS.SEX, "1", new { @id = "SEX", disabled = "disabled" })ชาย
+                                                    <span></span>
+                                                </label>
+                                                <label class="m-radio">
+                                                    @Html.RadioButtonFor(m => m.MEMBERS.SEX, "2", new { @id = "SEX", disabled = "disabled" })หญิง
+                                                    <span></span>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
+                                        <div class="col-7">
+
+                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+
+
+                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+
+
+                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+
+
+                                            <img src="@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
+                                        <div class="col-7">
+                                            @Html.TextBoxFor(m => m.MEMBERS.MOBILE, new { @id = "MOBILE", @class = "form-control m-input", @disabled = "disabled" })
+                                            @*<input class="form-control m-input" type="text" value="Jenny">*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
+                                        <div class="col-7">
+                                            @Html.TextAreaFor(m => m.MEMBERS.ABOUT, new { @id = "ABOUT", @class = "form-control m-input", @disabled = "disabled" })
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">สถานที่สะดวกสอน</label>
+                                        <div class="col-7">
+                                            <input class="form-control m-input" type="text" value="#บ้าน #office #co-working-space #ร้านกาแฟ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">หมวดหมู่</label>
+                                        <div class="col-7">
+                                            <input class="form-control m-input" type="text" value="#ดนตรี #เปียโน #กีตาร์">
+                                        </div>
+                                    </div>
+                                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                            </div>
+                                            <div class="col-7">
+                                                <button type="submit" id="btnUpdateSubmit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save changes</button>&nbsp;&nbsp;
+                                                <button type="button" id="btnUpdateCancel" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane " id="m_user_profile_tab_2">
+                        </div>
+                        <div class="tab-pane " id="m_user_profile_tab_3">
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
 
