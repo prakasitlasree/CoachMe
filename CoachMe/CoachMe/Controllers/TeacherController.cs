@@ -2,19 +2,15 @@
 using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using COACHME.MODEL;
 
 namespace COACHME.WEB_PRESENT.Controllers
 {
     public class TeacherController : Controller
     {
-        private AuthenticationServices service = new AuthenticationServices();
+        private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Teacher
         public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
