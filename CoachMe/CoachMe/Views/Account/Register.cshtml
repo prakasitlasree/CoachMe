@@ -32,7 +32,7 @@
                             <div class="form-group m-form__group">
                                 @if (!string.IsNullOrEmpty(ViewBag.Success))
                                 {
-                                    <p class="text-success">@ViewBag.Success<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
+                                    <p>@ViewBag.Success<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
                                 }
                                 @if (!string.IsNullOrEmpty(ViewBag.Fail))
                                 {

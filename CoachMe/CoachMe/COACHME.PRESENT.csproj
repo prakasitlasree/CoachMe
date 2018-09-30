@@ -228,16 +228,16 @@
     <Content Include="Content\css\teacher\style.bundle.rtl.css" />
     <Content Include="Content\css\teacher\vendors.bundle.css" />
     <Content Include="Content\css\teacher\vendors.bundle.rtl.css" />
+    <Content Include="Content\images\2018-09-30_18-42-39.png" />
     <Content Include="Content\images\bg-3.jpg" />
     <Content Include="Content\images\Blank-Profile.jpeg" />
     <Content Include="Content\images\Blank-Profile.jpg" />
     <Content Include="Content\images\CM21.png" />
     <Content Include="Content\images\CoachMELogo.png" />
+    <Content Include="Content\images\cool-background.png" />
     <Content Include="Content\images\login\login_logo.png" />
     <Content Include="Content\images\login\login_logo2.png" />
     <Content Include="Content\images\logo.png" />
-    <Content Include="Content\images\Profile\NATCHAPHON2140%40GMAIL.COM\1500892542.jpg" />
-    <Content Include="Content\images\Profile\NATCHAPHON2140%40GMAIL.COM\cesar-couto-420982-unsplash.jpg" />
     <Content Include="Content\images\Profile\sample.png" />
     <Content Include="Content\images\teacher\CM_LOGO.png" />
     <Content Include="Content\images\teacher\logo.png" />
@@ -344,6 +344,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Account\RegisterVerify.cshtml" />
     <Content Include="Views\Shared\_TopBarPartial.cshtml" />
+    <Content Include="Views\Teacher\FindStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

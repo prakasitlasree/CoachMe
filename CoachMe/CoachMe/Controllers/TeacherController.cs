@@ -93,20 +93,26 @@ namespace COACHME.WEB_PRESENT.Controllers
                 if (result.STATUS)
                 {
                     TempData["Message"] = "Profile Updated Successfully";
-                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
+                    return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
-                    TempData["Message"] = "Update Fail";
-                    return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
+                    TempData["Message"] = "Profile Update Fail";
+                    return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
-                TempData["Message"] = "Update Fail";
-                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
+                TempData["Message"] = "Profile Update Fail";
+                return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
 
             }
+        }
+
+       
+        public ActionResult FindStudent(CONTAINER_MODEL dto)
+        {
+            return View();
         }
 
         // GET: Teacher/Delete/5
