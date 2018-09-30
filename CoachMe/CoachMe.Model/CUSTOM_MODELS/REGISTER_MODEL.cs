@@ -11,26 +11,26 @@ namespace COACHME.MODEL.CUSTOM_MODELS
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "EMAIL")]
         public string EMAIL { get; set; }
 
         [Required]
-        [Display(Name = "Fullname")]
+        [Display(Name = "FULLNAME")]
         public string FULLNAME { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "PASSWORD")]
         public string PASSWORD { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "ConfirmPassword")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "CONFIRM_PASSWORD")]
+        [Compare("PASSWORD", ErrorMessage = "The password and confirmation password do not match.")]
         public string CONFIRM_PASSWORD { get; set; }
 
         [Required]
-        [Display(Name = "Agree")]
+        [Display(Name = "AGREE")]
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please read and accept the Terms of use.")]
         public bool AGREE { get; set; }
 
