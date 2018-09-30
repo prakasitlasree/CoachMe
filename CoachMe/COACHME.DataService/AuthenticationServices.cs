@@ -49,7 +49,7 @@ namespace COACHME.DATASERVICE
                     ctx.LOGON_ACTIVITY.Add(activity);
                     var act_result = await ctx.SaveChangesAsync();
 
-                    resp.STATUS = true;
+                    resp.STATUS = result;
                     resp.OUTPUT_DATA = member;
                     return resp;
                 }
@@ -57,6 +57,8 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = result;
                 throw ex;
             }
         }

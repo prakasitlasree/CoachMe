@@ -120,7 +120,7 @@ namespace COACHME.WEB_PRESENT.Controllers
         [HttpPost]
         public ActionResult FindStudent(CONTAINER_MODEL dto)
         {
-            var result = service.FindStudent(dto.MEMBERS);
+            //var result = service.FindStudent(dto.MEMBERS);
             return View();
         }
 
