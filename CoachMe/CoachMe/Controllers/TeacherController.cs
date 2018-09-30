@@ -2,6 +2,7 @@
 using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -15,9 +16,9 @@ namespace COACHME.WEB_PRESENT.Controllers
         public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();            
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
             resp = await service.GetMemberProfile(dto);
-            model.MEMBERS = resp.OUTPUT_DATA; 
+            model.MEMBERS = resp.OUTPUT_DATA;
             if (resp.STATUS)
             {
                 return View(model);
@@ -25,7 +26,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             else
             {
                 return RedirectToAction("Login", "Account");
-            }           
+            }
         }
 
         [HttpPost]
@@ -36,9 +37,9 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
-                return RedirectToAction("Index", "Teacher",new { MEMBER_ID = dto.MEMBERS.AUTO_ID});
+                return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.Message = "File upload failed!!";
                 return Redirect(Request.Url.AbsoluteUri);
@@ -81,27 +82,30 @@ namespace COACHME.WEB_PRESENT.Controllers
 
         // POST: Teacher/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(CONTAINER_MODEL dto, FormCollection collection)
+        public async Task<ActionResult> Edit(CONTAINER_MODEL dto, List<HttpPostedFileBase> about_img)
         {
             try
             {
                 // TODO: Add update logic here
-                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS);
+
+                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS,about_img);
+
                 if (result.STATUS)
                 {
+                    TempData["Message"] = "Profile Updated Successfully";
                     return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
-                    ViewBag.MSG = "Update Field";
+                    TempData["Message"] = "Update Fail";
                     return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
-                ViewBag.MSG = "Update Field";
+                TempData["Message"] = "Update Fail";
                 return RedirectToAction("Index", "Teacher", new { MEMBER_ID = dto.MEMBERS.AUTO_ID });
-                
+
             }
         }
 

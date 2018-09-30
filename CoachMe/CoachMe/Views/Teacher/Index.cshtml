@@ -1,9 +1,33 @@
-﻿ @model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
+﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    var x = ViewBag.Success;
 }
 <div class="m-content">
+
+    @*@if (TempData["Message"] != null)
+    {
+        <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>@TempData["Message"]</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#m_modal_1").modal("show");
+            });
+        </script>
+    }*@
+
+
     <div class="row">
         <div class="col-xl-3 col-lg-4">
             <div class="m-portlet m-portlet--full-height   m-portlet--unair">
@@ -20,23 +44,23 @@
                                 </div>
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                             </div>
-                                            <input type="file" name="profileImage" id="imgupload" style="display:none" />
+                            <input type="file" name="profileImage" id="imgupload" style="display:none" />
 
-                                            <button id="btnSubmit" type="submit" class="btn btn-default confirm" style="border-radius:20px;display:none">
-                                                <span class="glyphicon glyphicon-camera"></span>
-                                            </button>
+                            <button id="btnSubmit" type="submit" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" style="border-radius:20px;display:none">
+                                <i class="fa flaticon-edit"></i>
+                            </button>
                         }
                         <div class="m-card-profile__details">
 
                             <span class="m-card-profile__name">
                                 @Url.Content(@Model.MEMBERS.FULLNAME)
-                                <button id="fileDialog" type="button" class="btn btn-default" style="border-radius:20px">
-                                    <span class="glyphicon glyphicon-camera"></span>
+                                <button id="fileDialog" type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="border-radius:20px">
+                                    <i class="fa fa-camera"></i>
                                 </button>
                             </span>
 
                             <a href="" class="m-card-profile__email m-link">
-                            @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
+                                @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
                             </a>
                         </div>
                     </div>
@@ -74,8 +98,9 @@
                     </div>
 
                 </div>
-                @using (Html.BeginForm("Edit", "Teacher", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                @using (Html.BeginForm("Edit", "Teacher", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
                 {
+
                     <div class="tab-content">
 
                         <div class="tab-pane active" id="m_user_profile_tab_1">
@@ -91,13 +116,18 @@
                                         <div class="col-10 ml-auto">
                                             <h3 class="m-form__section">
                                                 ข้อมูลส่วนตัว
-                                                <button type="button" class="btn btn-default" id="btnUpdate">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate">
+                                                    <i class="fa fa-user-edit"></i>
                                                 </button>
+                                                @if (TempData["Message"] != null)
+                                                {
+                                                    <p class="text-success">อัพเดทโปรไฟล์เรียบร้อย</p>
+                                                }
                                             </h3>
 
                                         </div>
                                     </div>
+
                                     @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
                                     <div class="form-group m-form__group row">
                                         <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
@@ -136,14 +166,12 @@
                                     </div>
                                     <div class="form-group m-form__group row">
                                         <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
-                                        <div class="col-5">
+                                        <div class="col-7">
                                             <span class="input-group-append">
                                                 @Html.TextBoxFor(m => m.MEMBERS.ID_CARD, new { @id = "ID_CARD", @class = "form-control m-input", @disabled = "disabled" })
                                             </span>
                                         </div>
-                                        <div class="col-2" style="padding-left:0px">
-                                            @*<input id="fileUpload" name="FileUpload" multiple="" type="file" accept="image/png, image/jpeg, image/jpg" style="padding-top:9px" />*@
-                                        </div>
+
                                     </div>
                                     <div class="form-group m-form__group row">
                                         <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
@@ -164,18 +192,22 @@
                                     <div class="form-group m-form__group row">
                                         <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
                                         <div class="col-7">
-
-                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
-
-
-                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
-
-
-                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
-
-
-                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "\\Content\\images\\Blank-Profile.jpg")" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
-
+                                            <a id="ChangeAbout_1">
+                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "\\Content\\images\\Blank-Profile.jpg")" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+                                                <input type='file' name="about_img" id="btnAboutImg_1" style="display:none" disabled />
+                                            </a>
+                                            <a id="ChangeAbout_2">
+                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "\\Content\\images\\Blank-Profile.jpg")" id="AboutImg_2" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                <input type='file' name="about_img" id="btnAboutImg_2" style="display:none" disabled />
+                                            </a>
+                                            <a id="ChangeAbout_3">
+                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "\\Content\\images\\Blank-Profile.jpg")" id="AboutImg_3" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                <input type='file' name="about_img" id="btnAboutImg_3" style="display:none" disabled />
+                                            </a>
+                                            <a id="ChangeAbout_4">
+                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "\\Content\\images\\Blank-Profile.jpg")" id="AboutImg_4" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                <input type='file' name="about_img" id="btnAboutImg_4" style="display:none" disabled />
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="form-group m-form__group row">
@@ -192,18 +224,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">สถานที่สะดวกสอน</label>
-                                        <div class="col-7">
-                                            <input class="form-control m-input" type="text" value="#บ้าน #office #co-working-space #ร้านกาแฟ">
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">หมวดหมู่</label>
-                                        <div class="col-7">
-                                            <input class="form-control m-input" type="text" value="#ดนตรี #เปียโน #กีตาร์">
-                                        </div>
-                                    </div>
+
                                     <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
 
                                 </div>
@@ -225,8 +246,41 @@
                         </div>
 
                         <div class="tab-pane " id="m_user_profile_tab_2">
-                        </div>
-                        <div class="tab-pane " id="m_user_profile_tab_3">
+                            <form class="m-form m-form--fit m-form--label-align-right">
+
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group m--margin-top-10 m--hide">
+                                        <div class="alert m-alert m-alert--default" role="alert">
+                                            The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-10 ml-auto">
+                                            <h3 class="m-form__section">
+                                                ข้อมูลส่วนตัว
+                                                <button type="button" class="btn" id="btnUpdate" style="border-radius:100px">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                            </h3>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">สถานที่สะดวกสอน</label>
+                                        <div class="col-7">
+                                            <input class="form-control m-input" type="text" value="#บ้าน #office #co-working-space #ร้านกาแฟ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">หมวดหมู่</label>
+                                        <div class="col-7">
+                                            <input class="form-control m-input" type="text" value="#ดนตรี #เปียโน #กีตาร์">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="tab-pane " id="m_user_profile_tab_3">
+                            </div>
                         </div>
                     </div>
                 }
@@ -234,5 +288,88 @@
             </div>
         </div>
     </div>
-</div>
 
+    <script>
+
+
+
+        function UploadAboutImg_1(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#AboutImg_1').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#btnAboutImg_1").change(function () {
+            UploadAboutImg_1(this);
+        });
+        $('#ChangeAbout_1').click(function () {
+            $('#btnAboutImg_1').trigger('click');
+        });
+
+
+
+
+        function UploadAboutImg_2(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#AboutImg_2').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#btnAboutImg_2").change(function () {
+            UploadAboutImg_2(this);
+        });
+        $('#ChangeAbout_2').click(function () {
+            $('#btnAboutImg_2').trigger('click');
+        });
+
+
+
+        function UploadAboutImg_3(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#AboutImg_3').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#btnAboutImg_3").change(function () {
+            UploadAboutImg_3(this);
+        });
+        $('#ChangeAbout_3').click(function () {
+            $('#btnAboutImg_3').trigger('click');
+        });
+
+        function UploadAboutImg_4(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#AboutImg_4').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#btnAboutImg_4").change(function () {
+            UploadAboutImg_4(this);
+        });
+        $('#ChangeAbout_4').click(function () {
+            $('#btnAboutImg_4').trigger('click');
+        });
+
+    </script>
+
+</div>

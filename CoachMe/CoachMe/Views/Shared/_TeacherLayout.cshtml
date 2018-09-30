@@ -1,6 +1,6 @@
 ﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
-
+    var x = ViewBag.Success;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -28,13 +28,14 @@
     <link href="~/Content/css/teacher/vendors.bundle.css" rel="stylesheet" type="text/css" />
     <!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
     <!--<link href="assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />-->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
     <!-- begin:: Page -->
+
 
     <div class="m-grid m-grid--hor m-grid--root m-page">
         <!-- BEGIN: Header -->
@@ -700,6 +701,7 @@
             $("#btnUpdateSubmit").hide();
             $("#btnUpdateCancel").hide();
 
+
             $('#DATE_OF_BIRTH').datepicker(
         {
             autoclose: true
@@ -720,6 +722,18 @@
             $("#DATE_OF_BIRTH").prop("disabled", false);
             $("#SEX").prop("disabled", false);
             $("#ID_CARD").prop("disabled", false);
+            
+            $("#btnAboutImg_1").prop("disabled", false);
+            $("#AboutImg_1").css('cursor', 'pointer');
+            $("#btnAboutImg_2").prop("disabled", false);
+            $("#AboutImg_2").css('cursor', 'pointer');
+            $("#btnAboutImg_3").prop("disabled", false);
+            $("#AboutImg_3").css('cursor', 'pointer');
+            $("#btnAboutImg_4").prop("disabled", false);
+            $("#AboutImg_4").css('cursor', 'pointer');
+
+
+
 
             $("#btnUpdateSubmit").show();
             $("#btnUpdateCancel").show();
