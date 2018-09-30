@@ -91,7 +91,7 @@ namespace CoachMe.Controllers
             MEMBER_LOGON param = result.OUTPUT_DATA;
             if (result.STATUS)
             {
-                return RedirectToAction("Index", "Teacher", new { MEMBER_ID = param.MEMBER_ID });
+                return RedirectToAction("Index", "Teacher", new { member_id = param.MEMBER_ID });
             }
             else
             {
