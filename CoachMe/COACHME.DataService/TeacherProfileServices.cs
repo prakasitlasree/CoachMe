@@ -32,6 +32,7 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
             }
             return resp;

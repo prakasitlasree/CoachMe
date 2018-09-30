@@ -9,8 +9,12 @@ namespace COACHME.MODEL.CUSTOM_MODELS
     public class RESPONSE__MODEL
     {
         public bool STATUS { get; set; }
+
         public dynamic OUTPUT_DATA { get; set; }
 
-        
+        public string ErrorMessage { get; set; }
+
+        public string InnerException { get; set; }
+
     }
 }
