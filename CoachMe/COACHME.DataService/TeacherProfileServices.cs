@@ -51,12 +51,12 @@ namespace COACHME.DATASERVICE
                     //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
 
                     //Deploy
-                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
+                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
                     string path = "";
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                    string[] FolderProfile = memberUsername.USER_NAME.Split('@');
+                    //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
 
-                    myDir += FolderProfile[0].ToUpper();
+                    myDir += memberUsername.USER_NAME;
                     System.IO.Directory.CreateDirectory(myDir);
 
                     //Upload Pic

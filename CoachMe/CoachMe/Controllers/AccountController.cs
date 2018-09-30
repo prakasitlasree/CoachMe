@@ -86,6 +86,11 @@ namespace CoachMe.Controllers
             {
                 return View(dto);
             }
+            if (string.IsNullOrEmpty(dto.USER_NAME)  || string.IsNullOrEmpty(dto.PASSWORD))
+            {
+                ModelState.AddModelError("", "Please input username/password");
+                return View(dto);
+            }
            
             var result = await service.GetLogOnAll(dto);
             MEMBER_LOGON param = result.OUTPUT_DATA;
