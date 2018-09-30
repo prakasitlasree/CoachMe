@@ -109,9 +109,18 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
-       
+        //// GET:
+        //public ActionResult FindStudent(CONTAINER_MODEL dto)
+        //{
+        //    return View();
+        //}
+
+        // POST:
+
+        [HttpPost]
         public ActionResult FindStudent(CONTAINER_MODEL dto)
         {
+            var result = service.FindStudent(dto.MEMBERS);
             return View();
         }
 

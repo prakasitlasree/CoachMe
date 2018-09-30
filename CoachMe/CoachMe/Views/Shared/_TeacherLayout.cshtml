@@ -1,6 +1,7 @@
 ﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
     var x = ViewBag.Success;
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +67,8 @@
                                 <!-- END -->
                                 <!-- BEGIN: Responsive Header Menu Toggler -->
                                 @*<a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
-                                    <span></span>
-                                </a>*@
+                                        <span></span>
+                                    </a>*@
 
                                 <!-- END -->
                                 <!-- BEGIN: Topbar Toggler -->
@@ -82,10 +83,10 @@
 
                     <!-- END: Brand -->
                     <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
-                         
+
                         <!-- BEGIN: Topbar -->
                         @{
-//Html.RenderPartial("_TopBarPartial");
+                            Html.RenderPartial("_TopBarPartial");
                         }
                         <!-- END: Topbar -->
                     </div>
@@ -101,6 +102,7 @@
             <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
 
                 <!-- BEGIN: Aside Menu -->
+
                 <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
                     <ul class="m-menu__nav ">
                         <li class="m-menu__section m-menu__section--first">
@@ -116,18 +118,25 @@
                         </li>
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="#" class="m-menu__link ">
-                                <span class="m-menu__item-here"></span>
-                                <i class="m-menu__link-icon flaticon-layers"></i>
+                            @using (Html.BeginForm("FindStudent", "Teacher", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                <button type="submit" id="btnFindStudent" style="display:none"></button>
+                            }
+                            <a id="FindStudent" href="#" onclick="$('#btnFindStudent').trigger('click')" class="m-menu__link ">
+                                <span class="m-menu__item-here">
+                                </span>
+                                <i class="m-menu__link-icon flaticon-layers">                                                                            </i>
                                 <span class="m-menu__link-text">นักเรียน</span>
                             </a>
                         </li>
 
+
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="@Url.Action("Index","Purchase")" class="m-menu__link ">
+                            <a href="#" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
                                 <i class="m-menu__link-icon flaticon-suitcase"></i>
-                                <span class="m-menu__link-text">การเงิน</span> 
+                                <span class="m-menu__link-text">การเงิน</span>
                             </a>
                         </li>
 
@@ -153,7 +162,14 @@
             <!-- END: Left Aside -->
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <!-- BEGIN: Subheader -->
-                
+                <div class="m-subheader ">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-auto">
+                            <h3 class="m-subheader__title ">My Profile</h3>
+                        </div>
+
+                    </div>
+                </div>
 
                 <!-- END: Subheader -->
                 @RenderBody()
@@ -699,6 +715,7 @@
         {
             autoclose: true
         });
+
         });
 
         $('#fileDialog').click(function () {
@@ -715,7 +732,7 @@
             $("#DATE_OF_BIRTH").prop("disabled", false);
             $("#SEX").prop("disabled", false);
             $("#ID_CARD").prop("disabled", false);
-            
+
             $("#btnAboutImg_1").prop("disabled", false);
             $("#AboutImg_1").css('cursor', 'pointer');
             $("#btnAboutImg_2").prop("disabled", false);
@@ -735,6 +752,8 @@
         $('#btnUpdateCancel').click(function () {
             location.reload();
         });
+
+
 
 
         $("#imgupload").change(function () {
