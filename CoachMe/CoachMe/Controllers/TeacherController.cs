@@ -118,10 +118,13 @@ namespace COACHME.WEB_PRESENT.Controllers
         // POST:
 
         [HttpPost]
-        public ActionResult FindStudent(CONTAINER_MODEL dto)
+        public async Task<ActionResult> FindStudent(CONTAINER_MODEL dto)
         {
-            //var result = service.FindStudent(dto.MEMBERS);
-            return View();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            resp = await service.GetMemberProfileFromAutoID(dto.MEMBERS);
+            model.MEMBERS = resp.OUTPUT_DATA;
+            return View(model);
         }
 
         // GET: Teacher/Delete/5

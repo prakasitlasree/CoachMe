@@ -133,11 +133,18 @@
 
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="@Url.Action("Index","Purchase")" class="m-menu__link ">
+                            @using (Html.BeginForm("Index", "Purchase", FormMethod.Post))
+                            {
+                                
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                <button type="submit" id="btnPurchase" style="display:none"></button>
+                            }
+                            <a id="Purchase" href="#" onclick="$('#btnPurchase').trigger('click')" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
                                 <i class="m-menu__link-icon flaticon-suitcase"></i>
                                 <span class="m-menu__link-text">การเงิน</span>
                             </a>
+
                         </li>
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">

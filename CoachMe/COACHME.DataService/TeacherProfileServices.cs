@@ -39,6 +39,28 @@ namespace COACHME.DATASERVICE
 
         }
 
+        public async Task<RESPONSE__MODEL> GetMemberProfileFromAutoID(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberProfile = await ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    resp.OUTPUT_DATA = memberProfile;
+                    resp.STATUS = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp;
+
+        }
+
         public async Task<RESPONSE__MODEL> UpdateProfilePic(HttpPostedFileBase profileImage, MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -218,9 +240,10 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> FindStudent(MEMBERS dto, List<HttpPostedFileBase> about_img)
+        public async Task<RESPONSE__MODEL> FindStudent(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
@@ -229,12 +252,17 @@ namespace COACHME.DATASERVICE
                     var memberRole = new MEMBER_ROLE();
                     var memberTeachCourse = new MEMBER_TEACH_COURSE();
                     member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    model.MEMBERS = member;
+
+                    resp.STATUS = true;
+                    resp.OUTPUT_DATA = model;
                 }
             }
             catch(Exception ex)
             {
-                throw ex;
                 resp.STATUS = false;
+                throw ex;
+                
             }
             return resp;
         }
