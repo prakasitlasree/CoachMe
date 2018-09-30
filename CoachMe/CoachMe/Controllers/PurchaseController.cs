@@ -1,6 +1,10 @@
-﻿using System;
+﻿using COACHME.DATASERVICE;
+using COACHME.MODEL;
+using COACHME.MODEL.CUSTOM_MODELS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,10 +12,22 @@ namespace COACHME.WEB_PRESENT.Controllers
 {
     public class PurchaseController : Controller
     {
+        private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Purchase
-        public ActionResult Index()
+        public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
-            return View();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            resp = await service.GetMemberProfile(dto);
+            model.MEMBERS = resp.OUTPUT_DATA;
+            if (resp.STATUS)
+            {
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Purchase/Details/5
