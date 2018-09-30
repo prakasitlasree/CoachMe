@@ -175,7 +175,7 @@
                         <span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
                     </span>
                     <span class="m-topbar__username m--hide">
-                        @Url.Content(@Model.MEMBERS.FULLNAME)
+                        @Url.Content(@Model.MEMBERS.FULLNAME?? "")
                     </span>
                 </a>
                 <div class="m-dropdown__wrapper">
@@ -189,7 +189,7 @@
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">
-                                        @Url.Content(@Model.MEMBERS.FULLNAME)
+                                        @Url.Content(@Model.MEMBERS.FULLNAME?? "")
                                     </span>
                                     <a href="#" class="m-card-user__email m--font-weight-300 m-link">
                                         @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
