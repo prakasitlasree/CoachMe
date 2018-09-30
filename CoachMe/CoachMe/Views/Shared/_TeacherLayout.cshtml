@@ -124,10 +124,10 @@
                         </li>
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="#" class="m-menu__link ">
+                            <a href="@Url.Action("Index","Purchase")" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
                                 <i class="m-menu__link-icon flaticon-suitcase"></i>
-                                <span class="m-menu__link-text">การเงิน</span>
+                                <span class="m-menu__link-text">การเงิน</span> 
                             </a>
                         </li>
 
@@ -153,14 +153,7 @@
             <!-- END: Left Aside -->
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <!-- BEGIN: Subheader -->
-                <div class="m-subheader ">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-auto">
-                            <h3 class="m-subheader__title ">My Profile</h3>
-                        </div>
-
-                    </div>
-                </div>
+                
 
                 <!-- END: Subheader -->
                 @RenderBody()
