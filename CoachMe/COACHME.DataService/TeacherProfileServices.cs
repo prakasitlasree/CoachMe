@@ -211,9 +211,31 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                throw ex;
                 resp.STATUS = false;
             }
 
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> FindStudent(MEMBERS dto, List<HttpPostedFileBase> about_img)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var member = new MEMBERS();
+                    var memberRole = new MEMBER_ROLE();
+                    var memberTeachCourse = new MEMBER_TEACH_COURSE();
+                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+                resp.STATUS = false;
+            }
             return resp;
         }
     }

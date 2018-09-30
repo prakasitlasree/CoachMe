@@ -109,6 +109,12 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+       
+        public ActionResult FindStudent(CONTAINER_MODEL dto)
+        {
+            return View();
+        }
+
         // GET: Teacher/Delete/5
         public ActionResult Delete(int id)
         {
