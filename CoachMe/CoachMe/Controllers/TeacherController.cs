@@ -3,6 +3,7 @@ using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -15,10 +16,13 @@ namespace COACHME.WEB_PRESENT.Controllers
         // GET: Teacher
         public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
+            //เดี๋ยวเปลี่ยนไปใช้ CONTTAINER_MODEL
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
+
             resp = await service.GetMemberProfile(dto);
             model.MEMBERS = resp.OUTPUT_DATA;
+            model.MEMBER_LOGON = model.MEMBERS.MEMBER_LOGON.FirstOrDefault();
             if (resp.STATUS)
             {
                 return View(model);

@@ -135,7 +135,7 @@
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                             @using (Html.BeginForm("Index", "Purchase", FormMethod.Post))
                             {
-                                
+
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                 <button type="submit" id="btnPurchase" style="display:none"></button>
                             }
@@ -153,12 +153,19 @@
                                 <i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">คอร์ส</span>
                             </a>
                         </li>
+
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="#" class="m-menu__link ">
+                            @using (Html.BeginForm("Index", "Teacher", FormMethod.Get))
+                            {
+                                @Html.HiddenFor(m => m.MEMBER_LOGON.AUTO_ID, new { @name = "AUTO_ID" })
+                                <button type="submit" id="btnProfile" style="display:none"></button>
+                            }
+                            <a id="Purchase" href="#" onclick="$('#btnProfile').trigger('click')" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
                                 <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span>
                             </a>
                         </li>
+
 
                     </ul>
                 </div>
