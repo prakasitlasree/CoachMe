@@ -96,7 +96,7 @@ namespace CoachMe.Controllers
             MEMBER_LOGON param = result.OUTPUT_DATA;
             if (result.STATUS)
             {
-                return RedirectToAction("Index", "Teacher", new { member_id = param.MEMBER_ID });
+                return RedirectToAction("index", "teacher", new { member_id = param.MEMBER_ID });
             }
             else
             {
@@ -165,7 +165,7 @@ namespace CoachMe.Controllers
             var result = await service.RegisterVerify(dto);
             if (result.STATUS)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("login", "account");
             }
             else
             {
@@ -203,7 +203,7 @@ namespace CoachMe.Controllers
                 }
                 if (buttonType == "Cancel")
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("login", "account");
                 }
             }
             return View(dto);
@@ -272,7 +272,7 @@ namespace CoachMe.Controllers
             //if (buttonType == "Cancel")
             //{
 
-            //    return RedirectToAction("Login", "Account");
+            //    return RedirectToAction("login", "account");
             //}
 
             // If we got this far, something failed, redisplay form
@@ -306,12 +306,12 @@ namespace CoachMe.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("login", "account");
                 }
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("login", "account");
 
             }
 
@@ -330,11 +330,11 @@ namespace CoachMe.Controllers
                 var result = await service.ResetPassword(dto);
                 if (result.STATUS)
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("login", "account");
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("login", "account");
                 }
 
             }

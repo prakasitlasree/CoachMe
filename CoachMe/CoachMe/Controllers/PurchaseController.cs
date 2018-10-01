@@ -26,7 +26,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("login", "account");
             }
         }
 
@@ -50,7 +50,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
             catch
             {
@@ -72,7 +72,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
             catch
             {
@@ -94,7 +94,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
             catch
             {

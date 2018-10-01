@@ -17,6 +17,16 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
+            var member_id = dto.MEMBER_ID;
+            if (member_id == null || member_id == 0 )
+            {
+                if (dto.MEMBERS == null)
+                { 
+                    return RedirectToAction("login", "account");
+                }
+               
+            }
+             
             resp = await service.GetMemberProfile(dto);
             model.MEMBERS = resp.OUTPUT_DATA;
             if (resp.STATUS)
@@ -25,7 +35,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("login", "account");
             }
         }
 
@@ -37,7 +47,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
-                return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             catch (Exception ex)
             {
@@ -66,7 +76,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
             catch
             {
@@ -93,18 +103,18 @@ namespace COACHME.WEB_PRESENT.Controllers
                 if (result.STATUS)
                 {
                     TempData["Message"] = "Profile Updated Successfully";
-                    return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
                     TempData["Message"] = "Profile Update Fail";
-                    return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
                 TempData["Message"] = "Profile Update Fail";
-                return RedirectToAction("Index", "Teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
 
             }
         }
@@ -141,7 +151,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
             catch
             {
