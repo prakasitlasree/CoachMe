@@ -25,18 +25,18 @@
                         <h3 class="m-login__title">Register new Coach Me account</h3>
                         <div class="m-login__desc">Enter your details to create your account:</div>
                     </div>
-                    @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
+                    @using (Html.BeginForm("register", "account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
                     {
                         @Html.AntiForgeryToken()
                        
                             <div class="form-group m-form__group">
                                 @if (!string.IsNullOrEmpty(ViewBag.Success))
                                 {
-                                    <p>@ViewBag.Success<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
+                                    <p>@ViewBag.Success<a href="@Url.Action("login", "account")" class="m-link">&nbsp; login.</a></p>
                                 }
                                 @if (!string.IsNullOrEmpty(ViewBag.Fail))
                                 {
-                                    <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("Login", "Account")" class="m-link">&nbsp; login.</a></p>
+                                    <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("login", "account")" class="m-link">&nbsp; login.</a></p>
                                 }
                                 <input class="form-control m-input" type="text" placeholder="Fullname" name="FULLNAME">
                                 @Html.ValidationMessageFor(m=>m.FULLNAME, "", new { @class = "text-danger" })
@@ -80,7 +80,7 @@
                             <div class="m-login__form-action">
                                 <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
 
-                                <a href="@Url.Action("Login","Account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
+                                <a href="@Url.Action("login","account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
                                 @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
                                     Cancel</button>*@
                             </div>
