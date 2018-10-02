@@ -119,6 +119,33 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+        public async Task<ActionResult> EditCategory(CONTAINER_MODEL dto)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(dto.MEMBERS);
+
+                if (result.STATUS)
+                {
+                    TempData["MessageCate"] = "Profile Updated Successfully";
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                }
+                else
+                {
+                    TempData["MessageCate"] = "Profile Update Fail";
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                }
+            }
+            catch
+            {
+                TempData["Message"] = "Profile Update Fail" ;
+                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+
+            }
+        }
+
         //// GET:
         //public ActionResult FindStudent(CONTAINER_MODEL dto)
         //{

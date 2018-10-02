@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4292536c1dc344e0b73c480e589fd914" Name="Diagram1">
+      <Diagram DiagramId="4292536c1dc344e0b73c480e589fd914" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="COACH_MEModel.CONFIGURATION" Width="1.5" PointX="5.75" PointY="6.75" />
         <EntityTypeShape EntityType="COACH_MEModel.COURSE_PLACE" Width="1.5" PointX="5.25" PointY="11.375" />
         <EntityTypeShape EntityType="COACH_MEModel.COURSES" Width="1.5" PointX="3" PointY="11.375" />
         <EntityTypeShape EntityType="COACH_MEModel.LOGON_ACTIVITY" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="COACH_MEModel.MEMBER_LOGON" Width="1.5" PointX="3" PointY="6.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" Width="1.75" PointX="0.625" PointY="11.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" Width="1.5" PointX="5.25" PointY="15.125" />
         <EntityTypeShape EntityType="COACH_MEModel.MEMBER_ROLE" Width="1.5" PointX="3" PointY="2.375" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_TEACH_COURSE" Width="2.125" PointX="5.25" PointY="2.375" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBERS" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="COACH_MEModel.PLACE" Width="1.5" PointX="7.625" PointY="11.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_TEACH_COURSE" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBERS" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="COACH_MEModel.PLACE" Width="1.5" PointX="8.875" PointY="12.375" />
         <EntityTypeShape EntityType="COACH_MEModel.RESET_PASSWORD" Width="1.5" PointX="7.75" PointY="4.75" />
         <EntityTypeShape EntityType="COACH_MEModel.ROLE" Width="1.5" PointX="0.75" PointY="8.5" />
         <AssociationConnector Association="COACH_MEModel.FK_COURSE_PLACE_COURSES" />
