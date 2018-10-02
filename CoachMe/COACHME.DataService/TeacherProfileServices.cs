@@ -304,8 +304,13 @@ namespace COACHME.DATASERVICE
                                             .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o=>o.ROLE_ID == 2))
                                             .ToListAsync();
 
+                    //At now only free
+                    listStudent = listStudent.Take(3).ToList();
                     model.LIST_MEMBERS = listStudent;
                     
+                   
+
+
 
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = model;
