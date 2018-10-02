@@ -78,7 +78,7 @@ namespace COACHME.DATASERVICE
                     //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
 
                     //Deploy
-                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
+                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
                     string path = "";
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
@@ -96,7 +96,7 @@ namespace COACHME.DATASERVICE
                     //updateMemberProfileUrl
                     var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     int index = path.IndexOf("Content");
-                    member.PROFILE_IMG_URL = @"\\" + path.Substring(index);
+                    member.PROFILE_IMG_URL = @"\" + path.Substring(index);
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;

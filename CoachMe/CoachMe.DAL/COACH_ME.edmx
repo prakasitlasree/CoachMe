@@ -484,12 +484,8 @@
           <Property Name="LAST_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="MOBILE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DATE_OF_BIRTH" Type="DateTime" Precision="0" />
-          <Property Name="ID_CARD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SEX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AGE" Type="Int32" />
           <Property Name="ABOUT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LOCATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CATEGORY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PROFILE_IMG_URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ABOUT_IMG_URL1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ABOUT_IMG_URL2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -503,6 +499,10 @@
           <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
+          <Property Name="ID_CARD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SEX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LOCATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CATEGORY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -755,6 +755,10 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+                <ScalarProperty Name="SEX" ColumnName="SEX" />
+                <ScalarProperty Name="ID_CARD" ColumnName="ID_CARD" />
                 <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
@@ -766,12 +770,8 @@
                 <ScalarProperty Name="ABOUT_IMG_URL2" ColumnName="ABOUT_IMG_URL2" />
                 <ScalarProperty Name="ABOUT_IMG_URL1" ColumnName="ABOUT_IMG_URL1" />
                 <ScalarProperty Name="PROFILE_IMG_URL" ColumnName="PROFILE_IMG_URL" />
-                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
-                <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
                 <ScalarProperty Name="ABOUT" ColumnName="ABOUT" />
                 <ScalarProperty Name="AGE" ColumnName="AGE" />
-                <ScalarProperty Name="SEX" ColumnName="SEX" />
-                <ScalarProperty Name="ID_CARD" ColumnName="ID_CARD" />
                 <ScalarProperty Name="DATE_OF_BIRTH" ColumnName="DATE_OF_BIRTH" />
                 <ScalarProperty Name="MOBILE" ColumnName="MOBILE" />
                 <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
