@@ -109,7 +109,7 @@
                             <h4 class="m-menu__section-text">Teacher Dashboard</h4>
                             <i class="m-menu__section-icon flaticon-more-v2"></i>
                         </li>
-                        <li class="m-menu__item " aria-haspopup="true">
+                        <li class="m-menu__item  m-menu__item--active " aria-haspopup="true">
                             @using (Html.BeginForm("index", "teacher", FormMethod.Post))
                             {
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
@@ -140,8 +140,8 @@
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                             @using (Html.BeginForm("Index", "purchase", FormMethod.Post))
                             {
-                                
-                               
+
+
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                 <button type="submit" id="btnPurchase" style="display:none"></button>
                             }
@@ -163,10 +163,10 @@
 
                             @using (Html.BeginForm("index", "teacher", FormMethod.Post))
                             {
-                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                 <button type="submit" id="btneditprofile" style="display:none"></button>
                             }
-                            <a id="editprofile" href="#"  onclick="$('#btneditprofile').trigger('click')" class="m-menu__link ">
+                            <a id="editprofile" href="#" onclick="$('#btneditprofile').trigger('click')" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
                                 <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span>
                             </a>
@@ -182,12 +182,12 @@
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <!-- BEGIN: Subheader -->
                 @*<div class="m-subheader ">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-auto">
-                            <h3 class="m-subheader__title ">My Profile</h3>
-                        </div>  
-                    </div>
-                </div>*@
+                        <div class="d-flex align-items-center">
+                            <div class="mr-auto">
+                                <h3 class="m-subheader__title ">My Profile</h3>
+                            </div>
+                        </div>
+                    </div>*@
 
                 <!-- END: Subheader -->
                 @RenderBody()
@@ -256,7 +256,7 @@
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_logs" role="tab">Logs</a>
                 </li>
             </ul>
-             
+
         </div>
     </div>
 
@@ -290,10 +290,7 @@
         });
 
         $(document).ready(function () {
-            $("#btnUpdateSubmit").hide();
-            $("#btnUpdateCancel").hide();
-
-
+             
             $('#DATE_OF_BIRTH').datepicker(
         {
             autoclose: true
@@ -324,13 +321,54 @@
             $("#AboutImg_3").css('cursor', 'pointer');
             $("#btnAboutImg_4").prop("disabled", false);
             $("#AboutImg_4").css('cursor', 'pointer');
+            $("#CATEGORY").prop("disabled", false);
+            $("#LOCATION").prop("disabled", false);
 
             $("#btnUpdateSubmit").show();
             $("#btnUpdateCancel").show();
         });
 
+        $('#btnUpdateCategory').click(function () {
+            $("#CATEGORY").prop("disabled", false);
+            $("#LOCATION").prop("disabled", false);
+
+            $("#btnCateSubmit").show();
+            $("#btnCateCancel").show();
+        });
+
+        $('#btnCateCancel').click(function () {
+            $("#CATEGORY").prop("disabled", true);
+            $("#LOCATION").prop("disabled", true);
+
+            $("#btnCateSubmit").hide();
+            $("#btnCateCancel").hide();
+        });
+
         $('#btnUpdateCancel').click(function () {
-            location.reload();
+            //location.reload();
+            $("#btnUpdateSubmit").hide();
+            $("#btnUpdateCancel").hide();
+            $("#FULLNAME").prop("disabled", true);
+            $("#FIRST_NAME").prop("disabled", true);
+            $("#LAST_NAME").prop("disabled", true);
+            $("#MOBILE").prop("disabled", true);
+            $("#ABOUT").prop("disabled", true);
+            $("#NICKNAME").prop("disabled", true);
+            $("#DATE_OF_BIRTH").prop("disabled", true);
+            $("#SEX").prop("disabled", true);
+            $("#ID_CARD").prop("disabled", true);
+
+            $("#btnAboutImg_1").prop("disabled", true);
+            $("#AboutImg_1").css('cursor', 'pointer');
+            $("#btnAboutImg_2").prop("disabled", true);
+            $("#AboutImg_2").css('cursor', 'pointer');
+            $("#btnAboutImg_3").prop("disabled", true);
+            $("#AboutImg_3").css('cursor', 'pointer');
+            $("#btnAboutImg_4").prop("disabled", true);
+            $("#AboutImg_4").css('cursor', 'pointer');
+            $("#CATEGORY").prop("disabled", true);
+            $("#LOCATION").prop("disabled", true);
+
         });
 
 

@@ -245,6 +245,44 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        public async Task<RESPONSE__MODEL> UpdateMemberCategoryProfile(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL(); 
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                { 
+                    var member = new MEMBERS();
+                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    
+                    #region =====Profile=====
+                    //Update Profile
+                    if (dto.CATEGORY != null)
+                    {
+                        member.CATEGORY = dto.CATEGORY;
+                    }
+                    if (dto.LOCATION != null)
+                    {
+                        member.LOCATION = dto.LOCATION;
+                    }
+                     
+                    #endregion
+                    //add activity
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                resp.ErrorMessage = ex.Message;
+            }
+
+            return resp;
+        }
+
         public async Task<RESPONSE__MODEL> FindStudent(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
