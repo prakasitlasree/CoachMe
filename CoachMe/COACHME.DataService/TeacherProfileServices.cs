@@ -291,11 +291,21 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var member = new MEMBERS();
-                    var memberRole = new MEMBER_ROLE();
-                    var memberTeachCourse = new MEMBER_TEACH_COURSE();
-                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                    model.MEMBERS = member;
+                    
+                    var memberProfile = await ctx.MEMBERS
+                        .Include("MEMBER_LOGON")
+                        .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
+                    model.MEMBERS = memberProfile;
+
+                    var listStudent = await ctx.MEMBERS
+                                            .Include(x => x.MEMBER_ROLE)
+                                            .Include(x=>x.MEMBER_LOGON)
+                                            .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o=>o.ROLE_ID == 2))
+                                            .ToListAsync();
+
+                    model.LIST_MEMBERS = listStudent;
+                    
 
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = model;
