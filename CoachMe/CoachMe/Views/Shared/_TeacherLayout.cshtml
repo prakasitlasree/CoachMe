@@ -109,7 +109,7 @@
                             <h4 class="m-menu__section-text">Teacher Dashboard</h4>
                             <i class="m-menu__section-icon flaticon-more-v2"></i>
                         </li>
-                        <li class="m-menu__item  m-menu__item--active " aria-haspopup="true">
+                        <li class="m-menu__item  m-menu__item " aria-haspopup="true">
                             @using (Html.BeginForm("index", "teacher", FormMethod.Post))
                             {
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })

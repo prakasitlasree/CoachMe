@@ -72,7 +72,7 @@
                                     <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory">
                                         <i class="fa fa-user-edit"></i>
                                     </button>
-                                    @Html.TextAreaFor(m => m.MEMBERS.CATEGORY, new { @id = "CATEGORY", @class = "form-control m-input", @disabled = "disabled" })
+                                    @Html.TextAreaFor(m => m.MEMBERS.CATEGORY, new { @id = "CATEGORY", @class = "form-control m-input",  @rows = "4", @disabled = "disabled" })
                                     @*<textarea id="CATEGORY" class="form-control m-input" cols="20" disabled="disabled" rows="3">#ดนตรี #เปียโน #กีตาร์</textarea>*@
 
                                 </div>
@@ -80,7 +80,7 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <label for="example-text-input" class="col-12 col-form-label m-widget1__title">สถานที่สะดวกสอน</label>
-                                    @Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input", @disabled = "disabled" })
+                                    @Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input",@rows ="4", @disabled = "disabled" })
                                     @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
 
                                 </div>
