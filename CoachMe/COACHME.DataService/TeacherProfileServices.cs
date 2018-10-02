@@ -20,11 +20,16 @@ namespace COACHME.DATASERVICE
         public async Task<RESPONSE__MODEL> GetMemberProfile(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            var member_id = dto.MEMBER_ID;
+            if (member_id == null || member_id == 0)
+            {
+                member_id = dto.MEMBERS.AUTO_ID;
+            }
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memberProfile = await ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.MEMBER_ID).FirstOrDefaultAsync();
+                    var memberProfile = await ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == member_id).FirstOrDefaultAsync();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -125,7 +130,7 @@ namespace COACHME.DATASERVICE
                         string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
