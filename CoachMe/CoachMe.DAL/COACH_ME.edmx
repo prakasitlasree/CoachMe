@@ -120,6 +120,8 @@
           <Property Name="SEX" Type="nvarchar" MaxLength="50" />
           <Property Name="AGE" Type="int" />
           <Property Name="ABOUT" Type="nvarchar(max)" />
+          <Property Name="LOCATION" Type="nvarchar(max)" />
+          <Property Name="CATEGORY" Type="nvarchar(max)" />
           <Property Name="PROFILE_IMG_URL" Type="nvarchar" MaxLength="500" />
           <Property Name="ABOUT_IMG_URL1" Type="nvarchar" MaxLength="500" />
           <Property Name="ABOUT_IMG_URL2" Type="nvarchar" MaxLength="500" />
@@ -499,6 +501,8 @@
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
           <Property Name="ID_CARD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SEX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LOCATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CATEGORY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -751,6 +755,8 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
                 <ScalarProperty Name="SEX" ColumnName="SEX" />
                 <ScalarProperty Name="ID_CARD" ColumnName="ID_CARD" />
                 <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />

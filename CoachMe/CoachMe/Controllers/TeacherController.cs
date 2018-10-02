@@ -137,15 +137,6 @@ namespace COACHME.WEB_PRESENT.Controllers
             return View(model);
         }
 
-        public  ActionResult StudentDetail(int item)
-        {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
-            //resp = await service.FindStudent(dto.MEMBERS);
-            //model = resp.OUTPUT_DATA;
-            return View();
-        }
-
         // GET: Teacher/Delete/5
         public ActionResult Delete(int id)
         {
