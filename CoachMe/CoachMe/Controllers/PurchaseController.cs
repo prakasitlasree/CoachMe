@@ -30,6 +30,22 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> PurchasePackage(CONTAINER_MODEL dto,string btnPlan)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            resp = await service.GetMemberProfileFromAutoID(dto.MEMBERS);
+            model.MEMBERS = resp.OUTPUT_DATA;
+            if (resp.STATUS)
+            {
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
         // GET: Purchase/Details/5
         public ActionResult Details(int id)
         {

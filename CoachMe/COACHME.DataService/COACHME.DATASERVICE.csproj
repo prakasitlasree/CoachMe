@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationServices.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseService.cs" />
     <Compile Include="StandardEnums.cs" />
     <Compile Include="TeacherProfileServices.cs" />
   </ItemGroup>

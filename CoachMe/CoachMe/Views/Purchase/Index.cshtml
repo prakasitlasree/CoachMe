@@ -5,7 +5,7 @@
 
 }
 <div class="m-content">
- 
+
     <!--begin::Portlet-->
     <div class="m-portlet">
         <div class="m-portlet__body m-portlet__body--no-padding">
@@ -15,140 +15,144 @@
                         <h1>รายละเอียดการซื้อ Package สำหรับครู</h1>
                     </div>
                     @*<div class="btn-group nav m-btn-group m-btn-group--pill m-btn-group--air" role="group">
-                        <button type="button" class="btn m-btn--pill  active m-btn--wide m-btn--uppercase m-btn--bolder" data-toggle="tab" href="#m-pricing-table_content1" role="tab" aria-expanded="true">
-                            Annual Plans
-                        </button>
-                        <button type="button" class="btn m-btn--pill  m-btn--wide m-btn--uppercase m-btn--bolder" data-toggle="tab" href="#m-pricing-table_content2" role="tab" aria-expanded="false">
-                            Monthly Plans
-                        </button>
-                    </div>*@
+                            <button type="button" class="btn m-btn--pill  active m-btn--wide m-btn--uppercase m-btn--bolder" data-toggle="tab" href="#m-pricing-table_content1" role="tab" aria-expanded="true">
+                                Annual Plans
+                            </button>
+                            <button type="button" class="btn m-btn--pill  m-btn--wide m-btn--uppercase m-btn--bolder" data-toggle="tab" href="#m-pricing-table_content2" role="tab" aria-expanded="false">
+                                Monthly Plans
+                            </button>
+                        </div>*@
                 </div>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="m-pricing-table_content1" aria-expanded="true">
-                        <div class="m-pricing-table-2__content">
-                            <div class="m-pricing-table-2__container">
-                                <div class="m-pricing-table-2__items row">
-                                    <div class="m-pricing-table-2__item col-lg-4">
-                                        <div class="m-pricing-table-2__visual">
-                                            <div class="m-pricing-table-2__hexagon"></div>
-                                            <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-confetti"></i></span>
+                @using (Html.BeginForm("PurchasePackage", "Purchase", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
+                {
+                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="m-pricing-table_content1" aria-expanded="true">
+                            <div class="m-pricing-table-2__content">
+                                <div class="m-pricing-table-2__container">
+                                    <div class="m-pricing-table-2__items row">
+                                        <div class="m-pricing-table-2__item col-lg-4">
+                                            <div class="m-pricing-table-2__visual">
+                                                <div class="m-pricing-table-2__hexagon"></div>
+                                                <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-confetti"></i></span>
+                                            </div>
+                                            <h2 class="m-pricing-table-2__subtitle">Basic Plan</h2>
+                                            <div class="m-pricing-table-2__features">
+                                                <span>2 Course</span>
+                                                <span>View match 10 student</span>
+                                                @*<span>20 Copies</span>*@
+                                                <span>Free Assets</span>
+                                            </div>
+                                            <span class="m-pricing-table-2__price">200</span>
+                                            <span class="m-pricing-table-2__label">฿</span>
+                                            <div class="m-pricing-table-2__btn">
+                                                <button type="submit" value="basic" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                            </div>
                                         </div>
-                                        <h2 class="m-pricing-table-2__subtitle">Basic Plan</h2>
-                                        <div class="m-pricing-table-2__features">
-                                            <span>2 Course</span>
-                                            <span>View match 10 student</span>
-                                            @*<span>20 Copies</span>*@
-                                            <span>Free Assets</span>
+                                        <div class="m-pricing-table-2__item col-lg-4">
+                                            <div class="m-pricing-table-2__visual">
+                                                <div class="m-pricing-table-2__hexagon"></div>
+                                                <span class="m-pricing-table-2__icon m--font-info"><i class="fa  flaticon-rocket"></i></span>
+                                            </div>
+                                            <h2 class="m-pricing-table-2__subtitle">Professional Plan</h2>
+                                            <div class="m-pricing-table-2__features">
+                                                <span>5 Course</span>
+                                                <span>Unlimited match student</span>
+                                                @*<span>Unlimited Copies</span>*@
+                                                <span>Free Assets</span>
+                                            </div>
+                                            <span class="m-pricing-table-2__price">400</span>
+                                            <span class="m-pricing-table-2__label">฿</span>
+                                            <div class="m-pricing-table-2__btn">
+                                                <button type="submit" value="pro"  name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                            </div>
                                         </div>
-                                        <span class="m-pricing-table-2__price">200</span>
-                                        <span class="m-pricing-table-2__label">฿</span>
-                                        <div class="m-pricing-table-2__btn">
-                                            <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                        <div class="m-pricing-table-2__item col-lg-4">
+                                            <div class="m-pricing-table-2__visual">
+                                                <div class="m-pricing-table-2__hexagon"></div>
+                                                <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-gift"></i></span>
+                                            </div>
+                                            <h2 class="m-pricing-table-2__subtitle">Advance Plan</h2>
+                                            <div class="m-pricing-table-2__features">
+                                                <span>10 Course</span>
+                                                <span>Unlimited match student</span>
+                                                @*<span>Unlimited Copies</span>*@
+                                                <span>Free Assets</span>
+                                            </div>
+                                            <span class="m-pricing-table-2__price">500</span>
+                                            <span class="m-pricing-table-2__label">฿</span>
+                                            <div class="m-pricing-table-2__btn">
+                                                <button type="submit" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="m-pricing-table-2__item col-lg-4">
-                                        <div class="m-pricing-table-2__visual">
-                                            <div class="m-pricing-table-2__hexagon"></div>
-                                            <span class="m-pricing-table-2__icon m--font-info"><i class="fa  flaticon-rocket"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="m-pricing-table_content2" aria-expanded="false">
+                            <div class="m-pricing-table-2__content">
+                                <div class="m-pricing-table-2__container">
+                                    <div class="m-pricing-table-2__items row">
+                                        <div class="m-pricing-table-2__item col-lg-4">
+                                            <div class="m-pricing-table-2__visual">
+                                                <div class="m-pricing-table-2__hexagon"></div>
+                                                <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-confetti"></i></span>
+                                            </div>
+                                            <h2 class="m-pricing-table-2__subtitle">Basic Plan</h2>
+                                            <div class="m-pricing-table-2__features">
+                                                <span>1 Domain</span>
+                                                <span>10 Users</span>
+                                                <span>20 Copies</span>
+                                                <span>Free Assets</span>
+                                            </div>
+                                            <span class="m-pricing-table-2__price">19</span>
+                                            <span class="m-pricing-table-2__label">$</span>
+                                            <div class="m-pricing-table-2__btn">
+                                                <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                            </div>
                                         </div>
-                                        <h2 class="m-pricing-table-2__subtitle">Professional Plan</h2>
-                                        <div class="m-pricing-table-2__features">
-                                            <span>5 Course</span>
-                                            <span>Unlimited match student</span>
-                                            @*<span>Unlimited Copies</span>*@
-                                            <span>Free Assets</span>
+                                        <div class="m-pricing-table-2__item col-lg-4">
+                                            <div class="m-pricing-table-2__visual">
+                                                <div class="m-pricing-table-2__hexagon"></div>
+                                                <span class="m-pricing-table-2__icon m--font-info"><i class="fa  flaticon-rocket"></i></span>
+                                            </div>
+                                            <h2 class="m-pricing-table-2__subtitle">For Business</h2>
+                                            <div class="m-pricing-table-2__features">
+                                                <span>10 Domains</span>
+                                                <span>Unlimited Users</span>
+                                                <span>Unlimited Copies</span>
+                                                <span>Free Assets</span>
+                                            </div>
+                                            <span class="m-pricing-table-2__price">49</span>
+                                            <span class="m-pricing-table-2__label">$</span>
+                                            <div class="m-pricing-table-2__btn">
+                                                <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                            </div>
                                         </div>
-                                        <span class="m-pricing-table-2__price">400</span>
-                                        <span class="m-pricing-table-2__label">฿</span>
-                                        <div class="m-pricing-table-2__btn">
-                                            <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-                                        </div>
-                                    </div>
-                                    <div class="m-pricing-table-2__item col-lg-4">
-                                        <div class="m-pricing-table-2__visual">
-                                            <div class="m-pricing-table-2__hexagon"></div>
-                                            <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-gift"></i></span>
-                                        </div>
-                                        <h2 class="m-pricing-table-2__subtitle">Advance Plan</h2>
-                                        <div class="m-pricing-table-2__features">
-                                            <span>10 Course</span>
-                                            <span>Unlimited match student</span>
-                                            @*<span>Unlimited Copies</span>*@
-                                            <span>Free Assets</span>
-                                        </div>
-                                        <span class="m-pricing-table-2__price">500</span>
-                                        <span class="m-pricing-table-2__label">฿</span>
-                                        <div class="m-pricing-table-2__btn">
-                                            <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                        <div class="m-pricing-table-2__item col-lg-4">
+                                            <div class="m-pricing-table-2__visual">
+                                                <div class="m-pricing-table-2__hexagon"></div>
+                                                <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-gift"></i></span>
+                                            </div>
+                                            <h2 class="m-pricing-table-2__subtitle">Enterprice</h2>
+                                            <div class="m-pricing-table-2__features">
+                                                <span>Unlimited Domain</span>
+                                                <span>Unlimited Users</span>
+                                                <span>Unlimited Copies</span>
+                                                <span>Free Assets</span>
+                                            </div>
+                                            <span class="m-pricing-table-2__price">29</span>
+                                            <span class="m-pricing-table-2__label">$</span>
+                                            <div class="m-pricing-table-2__btn">
+                                                <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="m-pricing-table_content2" aria-expanded="false">
-                        <div class="m-pricing-table-2__content">
-                            <div class="m-pricing-table-2__container">
-                                <div class="m-pricing-table-2__items row">
-                                    <div class="m-pricing-table-2__item col-lg-4">
-                                        <div class="m-pricing-table-2__visual">
-                                            <div class="m-pricing-table-2__hexagon"></div>
-                                            <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-confetti"></i></span>
-                                        </div>
-                                        <h2 class="m-pricing-table-2__subtitle">Basic Plan</h2>
-                                        <div class="m-pricing-table-2__features">
-                                            <span>1 Domain</span>
-                                            <span>10 Users</span>
-                                            <span>20 Copies</span>
-                                            <span>Free Assets</span>
-                                        </div>
-                                        <span class="m-pricing-table-2__price">19</span>
-                                        <span class="m-pricing-table-2__label">$</span>
-                                        <div class="m-pricing-table-2__btn">
-                                            <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-                                        </div>
-                                    </div>
-                                    <div class="m-pricing-table-2__item col-lg-4">
-                                        <div class="m-pricing-table-2__visual">
-                                            <div class="m-pricing-table-2__hexagon"></div>
-                                            <span class="m-pricing-table-2__icon m--font-info"><i class="fa  flaticon-rocket"></i></span>
-                                        </div>
-                                        <h2 class="m-pricing-table-2__subtitle">For Business</h2>
-                                        <div class="m-pricing-table-2__features">
-                                            <span>10 Domains</span>
-                                            <span>Unlimited Users</span>
-                                            <span>Unlimited Copies</span>
-                                            <span>Free Assets</span>
-                                        </div>
-                                        <span class="m-pricing-table-2__price">49</span>
-                                        <span class="m-pricing-table-2__label">$</span>
-                                        <div class="m-pricing-table-2__btn">
-                                            <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-                                        </div>
-                                    </div>
-                                    <div class="m-pricing-table-2__item col-lg-4">
-                                        <div class="m-pricing-table-2__visual">
-                                            <div class="m-pricing-table-2__hexagon"></div>
-                                            <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-gift"></i></span>
-                                        </div>
-                                        <h2 class="m-pricing-table-2__subtitle">Enterprice</h2>
-                                        <div class="m-pricing-table-2__features">
-                                            <span>Unlimited Domain</span>
-                                            <span>Unlimited Users</span>
-                                            <span>Unlimited Copies</span>
-                                            <span>Free Assets</span>
-                                        </div>
-                                        <span class="m-pricing-table-2__price">29</span>
-                                        <span class="m-pricing-table-2__label">$</span>
-                                        <div class="m-pricing-table-2__btn">
-                                            <button type="button" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
