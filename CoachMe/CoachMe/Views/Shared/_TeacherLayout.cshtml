@@ -138,7 +138,7 @@
 
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            @using (Html.BeginForm("Index", "purchase", FormMethod.Post))
+                            @using (Html.BeginForm("index", "purchase", FormMethod.Post))
                             {
 
 
@@ -154,11 +154,18 @@
                         </li>
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="#" class="m-menu__link ">
+
+                            @using (Html.BeginForm("index", "course", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                <button type="submit" id="btneCourse" style="display:none"></button>
+                            }
+                            <a href="#" onclick="$('#btneCourse').trigger('click')" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
                                 <i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">คอร์ส</span>
                             </a>
                         </li>
+
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 
                             @using (Html.BeginForm("index", "teacher", FormMethod.Post))

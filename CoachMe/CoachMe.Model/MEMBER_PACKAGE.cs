@@ -12,25 +12,21 @@ namespace COACHME.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class MEMBER_ROLE
+    public partial class MEMBER_PACKAGE
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MEMBER_ROLE()
-        {
-            this.MEMBER_TEACH_COURSE = new HashSet<MEMBER_TEACH_COURSE>();
-        }
-    
         public int AUTO_ID { get; set; }
         public int MEMBER_ID { get; set; }
-        public int ROLE_ID { get; set; }
-        public string CREATED_BY { get; set; }
+        public string PACKAGE_NAME { get; set; }
+        public string PACKAGE_DETAIL { get; set; }
+        public Nullable<decimal> PRICE { get; set; }
+        public Nullable<System.DateTime> EFFECTIVE_DATE { get; set; }
+        public Nullable<System.DateTime> EXPIRE_DATE { get; set; }
+        public string STATUS { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
-        public string UPDATED_BY { get; set; }
+        public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
+        public string UPDATED_BY { get; set; }
     
         public virtual MEMBERS MEMBERS { get; set; }
-        public virtual ROLE ROLE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MEMBER_TEACH_COURSE> MEMBER_TEACH_COURSE { get; set; }
     }
 }

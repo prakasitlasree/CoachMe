@@ -18,6 +18,7 @@ namespace COACHME.MODEL
         public MEMBERS()
         {
             this.MEMBER_LOGON = new HashSet<MEMBER_LOGON>();
+            this.MEMBER_PACKAGE = new HashSet<MEMBER_PACKAGE>();
             this.MEMBER_ROLE = new HashSet<MEMBER_ROLE>();
         }
     
@@ -27,8 +28,12 @@ namespace COACHME.MODEL
         public string LAST_NAME { get; set; }
         public string MOBILE { get; set; }
         public Nullable<System.DateTime> DATE_OF_BIRTH { get; set; }
+        public string ID_CARD { get; set; }
+        public string SEX { get; set; }
         public Nullable<int> AGE { get; set; }
         public string ABOUT { get; set; }
+        public string LOCATION { get; set; }
+        public string CATEGORY { get; set; }
         public string PROFILE_IMG_URL { get; set; }
         public string ABOUT_IMG_URL1 { get; set; }
         public string ABOUT_IMG_URL2 { get; set; }
@@ -40,13 +45,11 @@ namespace COACHME.MODEL
         public string UPDATED_BY { get; set; }
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
         public string NICKNAME { get; set; }
-        public string ID_CARD { get; set; }
-        public string SEX { get; set; }
-        public string LOCATION { get; set; }
-        public string CATEGORY { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_LOGON> MEMBER_LOGON { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBER_PACKAGE> MEMBER_PACKAGE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_ROLE> MEMBER_ROLE { get; set; }
     }

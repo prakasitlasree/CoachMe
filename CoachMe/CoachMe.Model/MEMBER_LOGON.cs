@@ -15,7 +15,7 @@ namespace COACHME.MODEL
     public partial class MEMBER_LOGON
     {
         public int AUTO_ID { get; set; }
-        public Nullable<int> MEMBER_ID { get; set; }
+        public int MEMBER_ID { get; set; }
         public string USER_NAME { get; set; }
         public string PASSWORD { get; set; }
         public string CREATED_BY { get; set; }

@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
@@ -236,6 +237,10 @@
     <Content Include="Content\images\CM21.png" />
     <Content Include="Content\images\CoachMELogo.png" />
     <Content Include="Content\images\cool-background.png" />
+    <Content Include="Content\images\course\blog1.jpg" />
+    <Content Include="Content\images\course\blog2.jpg" />
+    <Content Include="Content\images\course\course1.png" />
+    <Content Include="Content\images\course\couse2.jpg" />
     <Content Include="Content\images\login\login_logo.png" />
     <Content Include="Content\images\login\login_logo2.png" />
     <Content Include="Content\images\logo.png" />
@@ -347,6 +352,7 @@
     <Content Include="Views\Shared\_TopBarPartial.cshtml" />
     <Content Include="Views\Teacher\FindStudent.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
