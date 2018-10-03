@@ -14,11 +14,20 @@ namespace COACHME.WEB_PRESENT.Controllers
     {
         private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Purchase
-        public async Task<ActionResult> Index(CONTAINER_MODEL dto)
+        public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
-            resp = await service.GetMemberProfileFromAutoID(dto.MEMBERS);
+            var member_id = dto.MEMBER_ID;
+            if (member_id == null || member_id == 0)
+            {
+                if (dto.MEMBERS == null)
+                {
+                    return RedirectToAction("login", "account");
+                }
+            }
+
+            resp = await service.GetMemberProfile(dto);
             model.MEMBERS = resp.OUTPUT_DATA;
             if (resp.STATUS)
             {

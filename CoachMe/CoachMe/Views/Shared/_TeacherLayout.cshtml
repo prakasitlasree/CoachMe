@@ -140,8 +140,6 @@
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                             @using (Html.BeginForm("index", "purchase", FormMethod.Post))
                             {
-
-
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                 <button type="submit" id="btnPurchase" style="display:none"></button>
                             }

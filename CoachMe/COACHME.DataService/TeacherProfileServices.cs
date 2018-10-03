@@ -93,6 +93,17 @@ namespace COACHME.DATASERVICE
                     int index = path.IndexOf("Content");
                     member.PROFILE_IMG_URL = @"\" + path.Substring(index);
 
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Update Profile Pic";
+                    activity.FULLNAME = dto.FULLNAME;
+                    activity.USER_NAME = dto.FULLNAME;
+                    activity.PASSWORD = dto.FULLNAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
+
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
                 }
@@ -225,6 +236,16 @@ namespace COACHME.DATASERVICE
                     }
                     #endregion
                     //add activity
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Update Profile";
+                    activity.FULLNAME = dto.FULLNAME;
+                    activity.USER_NAME = dto.FULLNAME;
+                    activity.PASSWORD = dto.FULLNAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
@@ -260,9 +281,19 @@ namespace COACHME.DATASERVICE
                     {
                         member.LOCATION = dto.LOCATION;
                     }
-                     
+
                     #endregion
                     //add activity
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Update Profile Pic";
+                    activity.FULLNAME = dto.FULLNAME;
+                    activity.USER_NAME = dto.FULLNAME;
+                    activity.PASSWORD = dto.FULLNAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
@@ -300,10 +331,20 @@ namespace COACHME.DATASERVICE
                                             .ToListAsync();
 
                     //At now only free
-                    listStudent = listStudent.Take(3).ToList();
+
+                    listStudent = listStudent.Take(10).ToList();
                     model.LIST_MEMBERS = listStudent;
-                    
-                   
+
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Find Student";
+                    activity.FULLNAME = dto.FULLNAME;
+                    activity.USER_NAME = dto.FULLNAME;
+                    activity.PASSWORD = dto.FULLNAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
 
 
 

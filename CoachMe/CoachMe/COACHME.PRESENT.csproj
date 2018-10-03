@@ -230,6 +230,7 @@
     <Content Include="Content\css\teacher\style.bundle.rtl.css" />
     <Content Include="Content\css\teacher\vendors.bundle.css" />
     <Content Include="Content\css\teacher\vendors.bundle.rtl.css" />
+    <Content Include="Content\images\1533556021909.jpg" />
     <Content Include="Content\images\2018-10-03_0-49-03.png" />
     <Content Include="Content\images\bg-3.jpg" />
     <Content Include="Content\images\Blank-Profile.jpeg" />
@@ -356,6 +357,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

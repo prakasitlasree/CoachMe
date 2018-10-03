@@ -154,6 +154,19 @@ namespace COACHME.DATASERVICE
 
                         #endregion
 
+                        #region === Activity ===
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "Register";
+                        activity.FULLNAME = dto.FULLNAME;
+                        activity.USER_NAME = dto.EMAIL;
+                        activity.PASSWORD = dto.PASSWORD;
+                        activity.STATUS = result;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        #endregion
+
+                        var act_result = await ctx.SaveChangesAsync();
+
                         result = true;
                     }
                     else

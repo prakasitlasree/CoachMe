@@ -1,4 +1,5 @@
 ﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
+@using Newtonsoft.Json
 @{
     ViewBag.Title = "FindStudent";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -6,291 +7,215 @@
 }
 <div class="m-content">
 
+    <div class="row">
 
-
-
-    @using (Html.BeginForm("Edit", "Teacher", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
-    {
-
-        <div class="row">
-
-            @foreach (var item in Model.LIST_MEMBERS)
+        @foreach (var item in Model.LIST_MEMBERS)
             {
-                <div class="modal fade" id="@("MODAL_" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">รายละเอียดนักเรียน</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" class="rounded" style="height:150px;width:150px;margin-right:auto;margin-left:auto;display:block" alt="">
+            <div class="modal fade" id="@("MODAL_" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">รายละเอียดนักเรียน</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" class="rounded" style="height:150px;width:150px;margin-right:auto;margin-left:auto;display:block" alt="">
 
-                                <div class="row" style="margin-top:10px">
-                                    <div class="col-6">
+                            <div class="row" style="margin-top:10px">
+                                <div class="col-6">
 
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">ชื่อ:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.FIRST_NAME" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">ชื่อเล่น:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.NICKNAME" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">รายละเอียดเพิ่มเติม:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.ABOUT" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">เวลาที่สะดวกเรียน:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="17:00:00 - 20:00:00" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">ไลน์:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.MOBILE" readonly>
-                                        </div>
-
-
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">ชื่อ:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.FIRST_NAME" readonly>
                                     </div>
-                                    <div class="col-6">
-
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">นามสกุล:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.LAST_NAME" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">วิชาที่ต้องการเรียน:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.MEMBER_ROLE.FirstOrDefault().AUTO_ID" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">สถานที่:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.LOCATION" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">เบอร์ติดต่อ:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.MOBILE" readonly>
-                                        </div>
-                                        <div class="form-group" style="margin-left:10px">
-                                            <label for="recipient-name" class="form-control-label">อีเมลล์:</label>
-                                            <input type="text" class="form-control" id="recipient-name" placeholder="@item.MEMBER_LOGON.FirstOrDefault().USER_NAME" readonly>
-                                        </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">ชื่อเล่น:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.NICKNAME" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">รายละเอียดเพิ่มเติม:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.ABOUT" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">เวลาที่สะดวกเรียน:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="17:00:00 - 20:00:00" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">ไลน์:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.MOBILE" readonly>
+                                    </div>
 
 
+                                </div>
+                                <div class="col-6">
+
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">นามสกุล:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.LAST_NAME" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">วิชาที่ต้องการเรียน:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.MEMBER_ROLE.FirstOrDefault().AUTO_ID" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">สถานที่:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.LOCATION" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">เบอร์ติดต่อ:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.MOBILE" readonly>
+                                    </div>
+                                    <div class="form-group" style="margin-left:10px">
+                                        <label for="recipient-name" class="form-control-label">อีเมลล์:</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="@item.MEMBER_LOGON.FirstOrDefault().USER_NAME" readonly>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Accept Student</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+       
+
+        @foreach (var item in Model.LIST_MEMBERS)
+            {
+            <div class="col-xl-3">
+                <!--begin:: Widgets/Blog-->
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                    <div class="m-portlet__head m-portlet__head--fit">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action">
+                                <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #1</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="m-widget19">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+                                <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" style="height:350px">
+                                <h3 class="m-widget19__title m--font-light">
+                                    @item.FULLNAME
+                                </h3>
+                                <div class="m-widget19__shadow"></div>
+                            </div>
+                            <div class="m-widget19__content">
+                                <div class="m-widget19__header">
+                                    <div class="m-widget19__user-img">
+                                        <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
+                                    </div>
+                                    <div class="m-widget19__info">
+                                        <span class="m-widget19__username">
+                                            @item.FULLNAME
+                                        </span><br>
+                                        <span class="m-widget19__time">
+                                            @item.NICKNAME
+                                        </span>
+                                    </div>
+                                    <div class="m-widget19__stats">
+                                        <span class="m-widget19__number m--font-brand">
+                                            @item.AGE
+                                        </span>
+                                        <span class="m-widget19__comment">
+                                            Years
+                                        </span>
                                     </div>
                                 </div>
-
-
+                                <div class="m-widget19__body">
+                                    @item.ABOUT
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Accept Student</button>
+                            <div class="m-widget19__action">
+                                <button type="button" class="btn m-btn--pill    btn-primary">Infomation</button>
+                                <button type="button" class="btn m-btn--pill    btn-primary">Match!!!</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
-            <div class="col-xl-12 col-lg-12">
-                <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--unair">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-tools">
-                            <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
-                                        <i class="flaticon-share m--hide"></i>
-                                        Match
-                                    </a>
-                                </li>
-                                <li class="nav-item m-tabs__item">
-                                    @*<a class="nav-link m-tabs__link " data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
-                                            <i class="flaticon-share m--hide"></i>
-                                            Manage Course
-                                        </a>*@
-                                </li>
+                <!--end:: Widgets/Blog-->
+            </div>
+        }
+        <div class="col-xl-3">
 
-                            </ul>
-                        </div>
-
-                    </div>
-
-
-                    <div class="tab-content">
-
-                        <div class="tab-pane active" id="m_user_profile_tab_1">
-                            <form class="m-form m-form--fit m-form--label-align-right">
-                                <div class="m-portlet">
-                                    <div class="col-xl-12">
-                                        <div class="m-portlet__body">
-                                            <!--begin::Section-->
-                                            <div class="m-section">
-                                                <div class="m-section__content">
-                                                    <div class="table-responsive">
-                                                        <table class="table m-table m-table--head-bg-success table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>รูปโปรไฟล์</th>
-                                                                    <th>นักเรียนที่แมทซ์</th>
-                                                                    <th>คอร์ส</th>
-                                                                    <th>เบอร์ติดต่อ</th>
-                                                                    <th>รายละเอียด</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var item in Model.LIST_MEMBERS)
-                                                                {
-
-                                                                    <tr>
-                                                                        <td>
-                                                                            <img class="m-widget3__user-img" src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" style="height:40px;width:40px" alt="">
-                                                                        </td>
-                                                                        <td>@item.FULLNAME</td>
-                                                                        <td>@item.MEMBER_ROLE.Select(o => o.AUTO_ID).FirstOrDefault()</td>
-                                                                        <td>@item.MOBILE</td>
-                                                                        <td>
-                                                                            <a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_"+item.AUTO_ID)">
-                                                                                <span>
-                                                                                    <i class="fa fa-calendar-check-o"></i>
-                                                                                    <span>รายละเอียด</span>
-                                                                                </span>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="m-widget28" style="width:100%">
-                                                            <img src="~/Content/images/2018-10-03_0-49-03.png" style="width:100%" class="img-fluid" alt="Responsive image">
-                                                            <div class="m-widget28__container">
-                                                                <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
-                                                                    <li class="m-widget28__nav-item nav-item">
-                                                                    </li>
-                                                                    <li class="m-widget28__nav-item nav-item" style="color:black">
-                                                                        <a class="nav-link" data-toggle="pill" href="#menu21">
-                                                                            <span>
-                                                                                <i class="fa fa-crown" style="color:black"></i>
-                                                                            </span>
-                                                                            <span style="color:black">
-                                                                                อัพเกรดเพื่อดูนักเรียนแบบไม่จำกัด !!!
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-widget28__nav-item nav-item">
-                                                                    </li>
-                                                                </ul>
-
-                                                            </div>
-                                                        </div>
-                                                        @*<div class="m-widget28" style="width:1500px">
-                                                                <div class="m-widget28__pic m-portlet-fit--sides">
-                                                                    <div class="m-widget27__pic">
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                            </div>*@
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Section-->
-                                        </div>
-
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="tab-pane " id="m_user_profile_tab_2">
-                            <form class="m-form m-form--fit m-form--label-align-right"></form>
-                        </div>
-                        <div class="tab-pane " id="m_user_profile_tab_3">
+            <!--begin:: Widgets/Blog-->
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                <div class="m-portlet__head m-portlet__head--fit">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-action">
+                            <button type="button" class="btn m-btn--pill    btn-primary">Course #1</button>
                         </div>
                     </div>
                 </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget19">
+                        <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+                            <img src="~/Content/images/1533556021909.jpg" alt="">
+                            <h3 class="m-widget19__title m--font-bold"></h3>
+                            <div class="m-widget19__shadow"></div>
+                        </div>
+                        <div class="m-widget19__content">
+                            <div class="m-widget19__header">
+                                <div class="m-widget19__user-img">
+                                    <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
+                                </div>
+                                <div class="m-widget19__info">
+                                    <span class="m-widget19__username">
+                                        ยังมีนักเรียนอีกมากมายรอคุณไปสอนอยู่นะ อัพเกรดสิ!!!
+                                    </span><br>
+                                    <span class="m-widget19__time">
+                                        UX/UI Designer, Google
+                                    </span>
+                                </div>
+                                <div class="m-widget19__stats">
+                                    <span class="m-widget19__number m--font-brand">
+                                        18
+                                    </span>
+                                    <span class="m-widget19__comment">
+                                        Comments
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="m-widget19__body">
+
+                                <br>
+                                Basic Plan
+                                <br>
+                                Professional Plan
+                                <br>
+                                Advance Plan
+                                <br>
 
 
+                            </div>
+                        </div>
+                        <div class="m-widget19__action">
+                            <button type="button" class="btn m-btn--pill    btn-primary btn-lg">Upgrade!!!</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+
+            <!--end:: Widgets/Blog-->
         </div>
-    }
+
+
+
+    </div>
+
 </div>
 
 <script>
 
-
-
-    function UploadAboutImg_1(input) {
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#AboutImg_1').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#btnAboutImg_1").change(function () {
-        UploadAboutImg_1(this);
-    });
-    $('#ChangeAbout_1').click(function () {
-        $('#btnAboutImg_1').trigger('click');
-    });
-
-    function UploadAboutImg_2(input) {
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#AboutImg_2').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#btnAboutImg_2").change(function () {
-        UploadAboutImg_2(this);
-    });
-    $('#ChangeAbout_2').click(function () {
-        $('#btnAboutImg_2').trigger('click');
-    });
-
-
-
-    function UploadAboutImg_3(input) {
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#AboutImg_3').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#btnAboutImg_3").change(function () {
-        UploadAboutImg_3(this);
-    });
-    $('#ChangeAbout_3').click(function () {
-        $('#btnAboutImg_3').trigger('click');
-    });
-
-    function UploadAboutImg_4(input) {
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#AboutImg_4').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#btnAboutImg_4").change(function () {
-        UploadAboutImg_4(this);
-    });
-    $('#ChangeAbout_4').click(function () {
-        $('#btnAboutImg_4').trigger('click');
-    });
-
 </script>
+
