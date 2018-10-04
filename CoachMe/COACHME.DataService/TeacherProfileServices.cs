@@ -7,6 +7,7 @@ using COACHME.MODEL.CUSTOM_MODELS;
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
+using COACHME.DAL;
 
 namespace COACHME.DATASERVICE
 {
