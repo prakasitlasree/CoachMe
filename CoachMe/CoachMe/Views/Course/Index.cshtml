@@ -1,200 +1,156 @@
-﻿
+﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
-}
 
+}
 
 <div class="m-content">
     <!--Begin::Section-->
     <div class="row">
 
-
-        <div class="col-xl-4">
-
-            <!--begin:: Widgets/Blog-->
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-                <div class="m-portlet__head m-portlet__head--fit">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-action">
-                            <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #1</button>
+        @if (Model.LIST_MEMBER_TEACH_COURSE.Count == 0)
+        {
+            <div class="col-xl-4">
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                    <div class="m-portlet__head m-portlet__head--fit">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action">
+                                <button type="button" class="btn btn-sm m-btn--pill  btn-brand">ไม่มีคอร์ส</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget19">
-                        <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                            <img src="~/Content/images/course/course1.png" alt="">
-                            <h3 class="m-widget19__title m--font-light">
-                                Introducing New Feature
-                            </h3>
-                            <div class="m-widget19__shadow"></div>
-                        </div>
-                        <div class="m-widget19__content">
-                            <div class="m-widget19__header">
-                                <div class="m-widget19__user-img">
-                                    <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
-                                </div>
-                                <div class="m-widget19__info">
-                                    <span class="m-widget19__username">
-                                        Anna Krox
-                                    </span><br>
-                                    <span class="m-widget19__time">
-                                        UX/UI Designer, Google
-                                    </span>
-                                </div>
-                                <div class="m-widget19__stats">
-                                    <span class="m-widget19__number m--font-brand">
-                                        18
-                                    </span>
-                                    <span class="m-widget19__comment">
-                                        Comments
-                                    </span>
-                                </div>
+                    <div class="m-portlet__body">
+
+                         
+                        <div class="m-widget19">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 200px">
+                                <img src="~/Content/images/course/New_Course.jpg" alt="">
+                                <h3 class="m-widget19__title m--font-light"></h3>
+                                <div class="m-widget19__shadow"></div>
                             </div>
-                            <div class="m-widget19__body">
-                                ค่าเรียนไวโอลิน
-                                 <br />
-                                คอร์สละ 4 ชั่วโมง 2,900 บาท (725 บาท/ชั่วโมง)
-                                <br />
-                                คอร์สละ 8 ชั่วโมง 5,600 บาท (700 บาท/ชั่วโมง)
-                                <br />
-                                เฉพาะวันพฤหัสบดี-ศุกร์ บ่าย, วันเสาร์-อาทิตย์ เต็มวัน
-                                <br />
-                                หัดเล่นเพลงสั้น ๆ เพราะ ๆ คุ้นหู เล่นได้ในราวแปดชั่วโมงแรก
-                                <br />
-                                <br />
-                                ปูพื้นฐานโดยใช้แบบเรียนของ Suzuki (revised edition) 
-                                 
-                                เพื่อให้นักเรียนเล่นเพลงป๊อป คลาสสิก ได้ง่ายและเร็วขึ้น<br />
-                                นอกจากนี้ยังสอนให้รู้ทฤษฎีดนตรีพื้นฐานไปพร้อมกับปฏิบัติ<br />
-                                สอนให้อ่านโน๊ตจนเป็นทุกคนและเรียนในห้องขนาดใหญ่ไม่อึดอัด<br />
-                                 
-                            </div>
-                        </div>
-                        <div class="m-widget19__action">
-                            <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">Read More</button>
-                        </div>
+                            <div class="m-widget19__content">
+                                <div class="m-widget19__header">
+                                    <div class="m-widget19__user-img">
+                                     </div>
+                                    
+                                </div>
+                                <a href="#" class="btn btn-sm m-btn--pill  btn-brand">เพิ่มฟรี 1 คอร์ส</a>
+                            </div> 
+                        </div> 
                     </div>
                 </div>
             </div>
 
-
-
-
-
-
-
-            <!--end:: Widgets/Blog-->
-        </div>
-
-        <div class="col-xl-4">
-
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-                <div class="m-portlet__head m-portlet__head--fit">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-action">
-                            <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #2</button>
+            <div class="col-xl-4">
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                    <div class="m-portlet__head m-portlet__head--fit">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action">
+                                <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Upgrade Course</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget19">
-                        <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                            <img src="~/Content/images/course/couse2.jpg" alt="">
-                            <h3 class="m-widget19__title m--font-light">
-                                Introducing New Feature
-                            </h3>
-                            <div class="m-widget19__shadow"></div>
-                        </div>
-                        <div class="m-widget19__content">
-                            <div class="m-widget19__header">
-                                <div class="m-widget19__user-img">
-                                    <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
-                                </div>
-                                <div class="m-widget19__info">
-                                    <span class="m-widget19__username">
-                                        Anna Krox
-                                    </span><br>
-                                    <span class="m-widget19__time">
-                                        UX/UI Designer, Google
-                                    </span>
-                                </div>
-                                <div class="m-widget19__stats">
-                                    <span class="m-widget19__number m--font-brand">
-                                        18
-                                    </span>
-                                    <span class="m-widget19__comment">
-                                        Comments
-                                    </span>
-                                </div>
+                    <div class="m-portlet__body">
+                        <div class="m-widget19">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 200px">
+                                <img src="~/Content/images/course/blank_img.jpg" alt="">
+                                <h3 class="m-widget19__title m--font-light">
+                                   
+                                </h3>
+                                <div class="m-widget19__shadow"></div>
                             </div>
-                            <div class="m-widget19__body">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting
-                                industry scrambled dummy text of the printing.
+                            <div class="m-widget19__content">
+                                <div class="m-widget19__header">
+                                    <div class="m-widget19__user-img">
+                                    </div>
+
+                                </div>
+                                <div style="align-content:center"> <a href="#" class="btn btn-sm m-btn--pill  btn-brand">Upgrade</a></div>
                             </div>
-                        </div>
-                        <div class="m-widget19__action">
-                            <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">Read More</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            foreach (var item in Model.LIST_MEMBER_TEACH_COURSE)
+            {
+                <div class="col-xl-4">
+                    <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                        <div class="m-portlet__head m-portlet__head--fit">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-action">
+                                    <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #1</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-widget19">
+                                <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+                                    <img src="~/Content/images/course/course1.png" alt="">
+                                    <h3 class="m-widget19__title m--font-light">
+                                        Introducing New Feature
+                                    </h3>
+                                    <div class="m-widget19__shadow"></div>
+                                </div>
+                                <div class="m-widget19__content">
+                                    <div class="m-widget19__header">
+                                        <div class="m-widget19__user-img">
+                                            <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget19__info">
+                                            <span class="m-widget19__username">
+                                                Anna Krox
+                                            </span><br>
+                                            <span class="m-widget19__time">
+                                                UX/UI Designer, Google
+                                            </span>
+                                        </div>
+                                        <div class="m-widget19__stats">
+                                            <span class="m-widget19__number m--font-brand">
+                                                18
+                                            </span>
+                                            <span class="m-widget19__comment">
+                                                Comments
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="m-widget19__body">
+                                        ค่าเรียนไวโอลิน
+                                        <br />
+                                        คอร์สละ 4 ชั่วโมง 2,900 บาท (725 บาท/ชั่วโมง)
+                                        <br />
+                                        คอร์สละ 8 ชั่วโมง 5,600 บาท (700 บาท/ชั่วโมง)
+                                        <br />
+                                        เฉพาะวันพฤหัสบดี-ศุกร์ บ่าย, วันเสาร์-อาทิตย์ เต็มวัน
+                                        <br />
+                                        หัดเล่นเพลงสั้น ๆ เพราะ ๆ คุ้นหู เล่นได้ในราวแปดชั่วโมงแรก
+                                        <br />
+                                        <br />
+                                        ปูพื้นฐานโดยใช้แบบเรียนของ Suzuki (revised edition)
 
-        <div class="col-xl-4">
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-                <div class="m-portlet__head m-portlet__head--fit">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-action">
-                            <button type="button" class="btn btn-sm m-btn--pill  btn-brand">ADS</button>
+                                        เพื่อให้นักเรียนเล่นเพลงป๊อป คลาสสิก ได้ง่ายและเร็วขึ้น<br />
+                                        นอกจากนี้ยังสอนให้รู้ทฤษฎีดนตรีพื้นฐานไปพร้อมกับปฏิบัติ<br />
+                                        สอนให้อ่านโน๊ตจนเป็นทุกคนและเรียนในห้องขนาดใหญ่ไม่อึดอัด<br />
+                                    </div>
+                                </div>
+                                <div class="m-widget19__action">
+                                    <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">Read More</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget19">
-                        <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                            <img src="~/Content/images/course/blog1.jpg" alt="">
-                            <h3 class="m-widget19__title m--font-light">
-                                Introducing New Feature
-                            </h3>
-                            <div class="m-widget19__shadow"></div>
-                        </div>
-                        <div class="m-widget19__content">
-                            <div class="m-widget19__header">
-                                <div class="m-widget19__user-img">
-                                    <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
-                                </div>
-                                <div class="m-widget19__info">
-                                    <span class="m-widget19__username">
-                                        Anna Krox
-                                    </span><br>
-                                    <span class="m-widget19__time">
-                                        UX/UI Designer, Google
-                                    </span>
-                                </div>
-                                <div class="m-widget19__stats">
-                                    <span class="m-widget19__number m--font-brand">
-                                        18
-                                    </span>
-                                    <span class="m-widget19__comment">
-                                        Comments
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="m-widget19__body">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting
-                                industry scrambled dummy text of the printing.
-                            </div>
-                        </div>
-                        <div class="m-widget19__action">
-                            <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">Read More</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+            }
+        }
+
+
+
+
+
+        <!--End::Section-->
     </div>
-
-    <!--End::Section-->
 </div>

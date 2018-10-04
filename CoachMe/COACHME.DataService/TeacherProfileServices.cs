@@ -16,7 +16,7 @@ namespace COACHME.DATASERVICE
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             var member_id = dto.MEMBER_ID;
-            if (member_id == null || member_id == 0)
+            if ( member_id == 0)
             {
                 member_id = dto.MEMBERS.AUTO_ID;
             }
@@ -73,7 +73,7 @@ namespace COACHME.DATASERVICE
                     //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
 
                     //Deploy
-                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
+                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
                     string path = "";
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
@@ -357,6 +357,32 @@ namespace COACHME.DATASERVICE
                 resp.STATUS = false;
                 throw ex;
                 
+            }
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetCourseByTeacherID(MEMBER_LOGON dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                { 
+                    var listCourse = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == dto.MEMBER_ID).ToListAsync();
+
+                    //At now only free
+                   
+                    resp.STATUS = true;
+                    resp.OUTPUT_DATA = listCourse;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                resp.ErrorMessage = ex.Message;
+                throw ex;
+
             }
             return resp;
         }

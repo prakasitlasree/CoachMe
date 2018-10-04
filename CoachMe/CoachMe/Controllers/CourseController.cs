@@ -19,7 +19,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             var member_id = dto.MEMBER_ID;
-            if (member_id == null || member_id == 0)
+            if (member_id == 0)
             {
                 if (dto.MEMBERS == null)
                 {
@@ -28,7 +28,12 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
 
             resp = await service.GetMemberProfile(dto);
+            
             model.MEMBERS = resp.OUTPUT_DATA;
+            resp = new RESPONSE__MODEL();
+            resp = await service.GetCourseByTeacherID(dto);
+            model.LIST_MEMBER_TEACH_COURSE = resp.OUTPUT_DATA;
+           
             if (resp.STATUS)
             {
                 return View(model);
@@ -109,6 +114,11 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 return View();
             }
+        }
+
+        private void CheckAuthen(MEMBERS dto)
+        {
+
         }
     }
 }
