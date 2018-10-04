@@ -25,7 +25,8 @@
                 </div>
                 @using (Html.BeginForm("PurchasePackage", "Purchase", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
                 {
-                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+
                     <div class="tab-content">
                         <div class="tab-pane active" id="m-pricing-table_content1" aria-expanded="true">
                             <div class="m-pricing-table-2__content">
@@ -152,288 +153,230 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Basic Plan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>วิธีการสมัครแพ๊คเกจ</p>
+                                    <div class="m-demo__preview">
+                                        <div class="m-list-timeline">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน<a href="#" onclick="$('#slip_1').trigger('click')" class="m-link m--font-transform-u">ส่งหลักฐานการโอนเงิน</a></span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    @*<button type="button" class="btn btn-primary" onclick="$('#slip_1').trigger('click')">ส่งหลักการโอนเงิน</button>*@
+                                    <input type="file" name="slipImage" id="slip_1" class="btn btn-primary" style="display:none">
+                                    <button type="submit" id="btnBasicPlan" name="btnPlan" value="basic" class="btn btn-secondary" style="display:none">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="m_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Professional Plan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>วิธีการสมัครแพ๊คเกจ</p>
+                                    <div class="m-demo__preview">
+                                        <div class="m-list-timeline">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน <a href="#" onclick="$('#slip_2').trigger('click')" class="m-link m--font-transform-u">ส่งหลักฐานการโอนเงิน</a></span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    @*<button type="button" class="btn btn-primary" onclick="$('#slip_1').trigger('click')">ส่งหลักการโอนเงิน</button>*@
+                                    <input type="file" name="slipImage" id="slip_2" class="btn btn-primary" style="display:none">
+                                    <button type="submit" id="btnProPlan" name="btnPlan" value="Pro" class="btn btn-secondary" style="display:none">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="m_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Advance Plan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>สิทธิพิเศษของสมาชิกระดับ Advance Plan</p>
+                                    <div class="m-demo__preview">
+                                        <div class="m-list-timeline">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                    <span class="m-list-timeline__text">ลงทะเบียนคอร์สการเรียน 10 คอร์ส</span>
+
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                    <span class="m-list-timeline__text">จับคู่นักเรียนไม่จำกัด</span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <p>วิธีการสมัครแพ๊คเกจ</p>
+                                    <div class="m-demo__preview">
+                                        <div class="m-list-timeline">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน<a href="#" onclick="$('#slip_3').trigger('click')" class="m-link m--font-transform-u">ส่งหลักฐานการโอนเงิน</a></span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    @*<button type="button" class="btn btn-primary" onclick="$('#slip_1').trigger('click')">ส่งหลักการโอนเงิน</button>*@
+                                    <input type="file" name="slipImage" id="slip_3" class="btn btn-primary" style="display:none">
+                                    <button type="submit" id="btnAdvancePlan" name="btnPlan" value="Advance" class="btn btn-secondary" style="display:none">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 }
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Basic Plan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>สิทธิพิเศษของสมาชิกระดับ Basic Plan</p>
-                    <div class="m-demo__preview">
-                        <div class="m-list-timeline">
-                            <div class="m-list-timeline__items">
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                    <span class="m-list-timeline__text">ลงทะเบียนคอร์สการเรียน 2 คอร์ส</span>
-
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                    <span class="m-list-timeline__text">จับคู่นักเรียน 10 คน</span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <p>วิธีการสมัครแพ๊คเกจ</p>
-                    <div class="m-demo__preview">
-                        <div class="m-list-timeline">
-                            <div class="m-list-timeline__items">
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน</span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="$('#cashRecipe').trigger('click')">ส่งหลักการโอนเงิน</button>
-                    <input type="file" id="cashRecipe_2" class="btn btn-primary" style="display:none">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="m_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Professional Plan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>สิทธิพิเศษของสมาชิกระดับ Basic Plan</p>
-                    <div class="m-demo__preview">
-                        <div class="m-list-timeline">
-                            <div class="m-list-timeline__items">
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                    <span class="m-list-timeline__text">ลงทะเบียนคอร์สการเรียน 5 คอร์ส</span>
-
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                    <span class="m-list-timeline__text">จับคู่นักเรียนไม่จำกัด</span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <p>วิธีการสมัครแพ๊คเกจ</p>
-                    <div class="m-demo__preview">
-                        <div class="m-list-timeline">
-                            <div class="m-list-timeline__items">
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน</span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="$('#cashRecipe_2').trigger('click')">ส่งหลักการโอนเงิน</button>
-                    <input type="file" id="cashRecipe_2" class="btn btn-primary" style="display:none">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Advance Plan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>สิทธิพิเศษของสมาชิกระดับ Advance Plan</p>
-                    <div class="m-demo__preview">
-                        <div class="m-list-timeline">
-                            <div class="m-list-timeline__items">
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                    <span class="m-list-timeline__text">ลงทะเบียนคอร์สการเรียน 10 คอร์ส</span>
-
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                    <span class="m-list-timeline__text">จับคู่นักเรียนไม่จำกัด</span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <p>วิธีการสมัครแพ๊คเกจ</p>
-                    <div class="m-demo__preview">
-                        <div class="m-list-timeline">
-                            <div class="m-list-timeline__items">
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน</span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
-                                </div>
-                                <div class="m-list-timeline__item">
-                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="$('#cashRecipe_3').trigger('click')">ส่งหลักการโอนเงิน</button>
-                    <input type="file" id="cashRecipe_3" class="btn btn-primary" style="display:none">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="m_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Advance Plan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="m-portlet__body">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active show" data-toggle="tab" href="#" data-target="#m_tabs_1_1">สิทธิประโยชน์</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_4">วิธีการสมัครแพ๊คเกจ</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div class="tab-pane" id="m_tabs_1_1" role="tabpanel">
-                                <p>สิทธิพิเศษของสมาชิกระดับ Advance Plan</p>
-                                <div class="m-demo__preview">
-                                    <div class="m-list-timeline">
-                                        <div class="m-list-timeline__items">
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                <span class="m-list-timeline__text">ลงทะเบียนคอร์สการเรียน 10 คอร์ส</span>
-
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                <span class="m-list-timeline__text">จับคู่นักเรียนไม่จำกัด</span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="m_tabs_1_4" role="tabpanel">
-                                <p>วิธีการสมัครแพ๊คเกจ</p>
-                                <div class="m-demo__preview">
-                                    <div class="m-list-timeline">
-                                        <div class="m-list-timeline__items">
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="$('#cashRecipe_3').trigger('click')">ส่งหลักการโอนเงิน</button>
-                    <input type="file" id="cashRecipe_3" class="btn btn-primary" style="display:none">
-                </div>
             </div>
         </div>
     </div>
 
     <!--end::Portlet-->
 </div>
+<script>
+
+    $("#slip_1").change(function () {
+        debugger;
+        Slip_1(this);
+    });
+
+    function Slip_1(input) {
+
+        debugger;
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            debugger;
+            $('#btnBasicPlan').trigger('click');
+
+
+        }
+    }
+
+    $("#slip_2").change(function () {
+        debugger;
+        Slip_2(this);
+    });
+
+    function Slip_2(input) {
+
+        debugger;
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            debugger;
+            $('#btnProPlan').trigger('click');
+
+
+        }
+    }
+
+    $("#slip_3").change(function () {
+        debugger;
+        Slip_3(this);
+    });
+
+    function Slip_3(input) {
+
+        debugger;
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            debugger;
+            $('#btnAdvancePlan').trigger('click');
+
+
+        }
+    }
+
+</script>

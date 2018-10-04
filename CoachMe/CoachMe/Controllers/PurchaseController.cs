@@ -13,6 +13,7 @@ namespace COACHME.WEB_PRESENT.Controllers
     public class PurchaseController : Controller
     {
         private TeacherProfileServices service = new TeacherProfileServices();
+        private PurchaseService purchase_service = new PurchaseService();
         // GET: Purchase
         public async Task<ActionResult> Index(MEMBER_LOGON dto)
         {
@@ -40,15 +41,15 @@ namespace COACHME.WEB_PRESENT.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PurchasePackage(CONTAINER_MODEL dto,string btnPlan)
+        public async Task<ActionResult> PurchasePackage(CONTAINER_MODEL dto,string btnPlan,HttpPostedFileBase slipImage)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
-            resp = await service.GetMemberProfileFromAutoID(dto.MEMBERS);
+            resp = await purchase_service.PurchasePackage(dto.MEMBERS,btnPlan,slipImage);
             model.MEMBERS = resp.OUTPUT_DATA;
             if (resp.STATUS)
             {
-                return View(model);
+                return RedirectToAction("index", "purchase", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             else
             {
