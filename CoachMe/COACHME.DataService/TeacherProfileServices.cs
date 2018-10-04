@@ -332,7 +332,7 @@ namespace COACHME.DATASERVICE
 
                     //At now only free
 
-                    listStudent = listStudent.Take(10).ToList();
+                    listStudent = listStudent.Take(5).ToList();
                     model.LIST_MEMBERS = listStudent;
 
                     #region === Activity ===

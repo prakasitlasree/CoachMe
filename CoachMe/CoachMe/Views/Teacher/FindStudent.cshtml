@@ -86,7 +86,7 @@
                 </div>
             </div>
         }
-       
+
 
         @foreach (var item in Model.LIST_MEMBERS)
             {
@@ -96,13 +96,12 @@
                     <div class="m-portlet__head m-portlet__head--fit">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-action">
-                                <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #1</button>
                             </div>
                         </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-widget19">
-                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 286px">
                                 <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" style="height:350px">
                                 <h3 class="m-widget19__title m--font-light">
                                     @item.FULLNAME
@@ -127,7 +126,7 @@
                                             @item.AGE
                                         </span>
                                         <span class="m-widget19__comment">
-                                            Years
+                                            
                                         </span>
                                     </div>
                                 </div>
@@ -136,8 +135,18 @@
                                 </div>
                             </div>
                             <div class="m-widget19__action">
-                                <button type="button" class="btn m-btn--pill    btn-primary">Infomation</button>
-                                <button type="button" class="btn m-btn--pill    btn-primary">Match!!!</button>
+                                <button class="btn btn-info m-btn  	m-btn m-btn--icon m-btn--pill">
+                                    <span>
+                                        <i class="fa flaticon-edit-1"></i>
+                                        <span>Infomation</span>
+                                    </span>
+                                </button>
+                                <button class="btn btn-danger m-btn  	m-btn m-btn--icon m-btn--pill">
+                                    <span>
+                                        <i class="fa flaticon-edit-1"></i>
+                                        <span>Match</span>
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -145,69 +154,70 @@
                 <!--end:: Widgets/Blog-->
             </div>
         }
+
         <div class="col-xl-3">
+            @using (Html.BeginForm("index", "purchase", FormMethod.Post))
+            {
+                <!--begin:: Widgets/Blog-->
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                    <div class="m-portlet__head m-portlet__head--fit">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="m-widget19" >
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 286px">
+                                <img src="~/Content/images/Profile/NATCHAPHON2140@GMAIL.COM/6.jpg" alt="">
+                                <h3 class="m-widget19__title m--font-bold" style="color:black"></h3>
+                                <div class="m-widget19__shadow"></div>
+                            </div>
+                            <div class="m-widget19__content">
+                                <div class="m-widget19__header">
+                                    <div class="m-widget19__user-img">
+                                        <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
+                                    </div>
+                                    <div class="m-widget19__info">
+                                        <span class="m-widget19__username">
 
-            <!--begin:: Widgets/Blog-->
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-                <div class="m-portlet__head m-portlet__head--fit">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-action">
-                            <button type="button" class="btn m-btn--pill    btn-primary">Course #1</button>
+                                        </span><br>
+                                        <span class="m-widget19__time">
+                                            UX/UI Designer, Google
+                                        </span>
+                                    </div>
+                                    <div class="m-widget19__stats">
+                                        <span class="m-widget19__number m--font-brand">
+
+                                        </span>
+                                        <span class="m-widget19__comment">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="m-widget19__body">
+                                    <h3> อัพเกรดเพื่อดูนักเรียนแบบไม่จำกัด</h3>
+                                    <br>
+                                    Basic Plan
+                                    <br>
+                                    Professional Plan
+                                    <br>
+                                    Advance Plan
+                                    <br>
+
+
+                                </div>
+                            </div>
+                            <div class="m-widget19__action">
+                                <button type="submit" class="btn m-btn--pill    btn-primary btn-lg">Upgrade!!!</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget19">
-                        <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                            <img src="~/Content/images/1533556021909.jpg" alt="">
-                            <h3 class="m-widget19__title m--font-bold"></h3>
-                            <div class="m-widget19__shadow"></div>
-                        </div>
-                        <div class="m-widget19__content">
-                            <div class="m-widget19__header">
-                                <div class="m-widget19__user-img">
-                                    <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
-                                </div>
-                                <div class="m-widget19__info">
-                                    <span class="m-widget19__username">
-                                        ยังมีนักเรียนอีกมากมายรอคุณไปสอนอยู่นะ อัพเกรดสิ!!!
-                                    </span><br>
-                                    <span class="m-widget19__time">
-                                        UX/UI Designer, Google
-                                    </span>
-                                </div>
-                                <div class="m-widget19__stats">
-                                    <span class="m-widget19__number m--font-brand">
-                                        18
-                                    </span>
-                                    <span class="m-widget19__comment">
-                                        Comments
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="m-widget19__body">
 
-                                <br>
-                                Basic Plan
-                                <br>
-                                Professional Plan
-                                <br>
-                                Advance Plan
-                                <br>
-
-
-                            </div>
-                        </div>
-                        <div class="m-widget19__action">
-                            <button type="button" class="btn m-btn--pill    btn-primary btn-lg">Upgrade!!!</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            }
             <!--end:: Widgets/Blog-->
         </div>
+
 
 
 
