@@ -58,11 +58,13 @@ namespace COACHME.DATASERVICE
                     }
                     if (plan == "pro")
                     {
-
+                        memberPackage.PACKAGE_NAME = "Professional Plan";
+                        memberPackage.PACKAGE_DETAIL = "Professional Plan Detail";
                     }
                     if (plan == "advance")
                     {
-
+                        memberPackage.PACKAGE_NAME = "Advance Plan";
+                        memberPackage.PACKAGE_DETAIL = "Advance Plan Detail";
                     }
 
                     memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(30);

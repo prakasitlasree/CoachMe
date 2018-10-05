@@ -82,7 +82,7 @@
           <Key>
             <PropertyRef Name="AUTO_ID" />
           </Key>
-          <Property Name="AUTO_ID" Type="int" Nullable="false" />
+          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MEMBER_ID" Type="int" Nullable="false" />
           <Property Name="PACKAGE_NAME" Type="nvarchar" MaxLength="500" />
           <Property Name="PACKAGE_DETAIL" Type="nvarchar" MaxLength="500" />

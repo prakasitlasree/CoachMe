@@ -158,39 +158,21 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Basic Plan</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Basic Plan</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>วิธีการสมัครแพ๊คเกจ</p>
-                                    <div class="m-demo__preview">
-                                        <div class="m-list-timeline">
-                                            <div class="m-list-timeline__items">
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                    <span class="m-list-timeline__text">1.ชำระเงินผ่านช่องทางการโอน </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                    <span class="m-list-timeline__text">นาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                    <span class="m-list-timeline__text">2.ส่งรูปใบเสร็จ/สลิป การชำระเงิน<a href="#" onclick="$('#slip_1').trigger('click')" class="m-link m--font-transform-u">ส่งหลักฐานการโอนเงิน</a></span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                    <span class="m-list-timeline__text">3.รอซักครู่ให้ระบบทำการตรวจสอบ</span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                    <span class="m-list-timeline__text">4.เสร็จสิ้นการสมัครแพ็คเกจ </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                    <h3 class="m--align-center"><span class="m-badge m-badge--brand m-badge--dot"></span>&nbsp วิธีการสมัครแพ๊คเกจ</h3>
+                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp ชำระเงินผ่านช่องทางการโอน</h4>
+                                    <h4 class="m--font-bold m--font-success">&nbspนาย สมชาย ใจดี ธ.กสิกร 214-257-5878 </h4>
+                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp ส่งรูปใบเสร็จ/สลิป การชำระเงิน</h4>
+                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span><a href="#" onclick="$('#slip_1').trigger('click')" class="m-link m--font-transform-u">&nbsp ส่งหลักฐานการโอนเงิน</a></h4>
+                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp รอซักครู่ให้ระบบทำการตรวจสอบ </h4>
+                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp เสร็จสิ้นการสมัครแพ็คเกจ  </h4>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -316,6 +298,31 @@
                         </div>
                     </div>
 
+
+
+                    if (TempData["MessagePurchase"] != null)
+                    {
+                       
+                        <script>
+                            $(document).ready(function () {
+                                $("#m_modal_success").modal('show')
+                            });
+
+                        </script>
+                        <div class="modal fade" id="m_modal_success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp @TempData["MessagePurchase"]</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="close_curr_modal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
                 }
             </div>
         </div>

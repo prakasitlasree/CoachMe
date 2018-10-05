@@ -161,6 +161,10 @@ namespace COACHME.WEB_PRESENT.Controllers
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             resp = await service.FindStudent(dto.MEMBERS);
             model = resp.OUTPUT_DATA;
+            if (model.LIST_MEMBERS.Count>3)
+            {
+                ViewBag.Package = "No Ads";
+            }
             return View(model);
         }
 

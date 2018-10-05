@@ -17,7 +17,7 @@ namespace COACHME.DATASERVICE
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             var member_id = dto.MEMBER_ID;
-            if ( member_id == 0)
+            if (member_id == 0)
             {
                 member_id = dto.MEMBERS.AUTO_ID;
             }
@@ -116,7 +116,7 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> UpdateMemberProfile(MEMBERS dto,List<HttpPostedFileBase> about_img)
+        public async Task<RESPONSE__MODEL> UpdateMemberProfile(MEMBERS dto, List<HttpPostedFileBase> about_img)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
 
@@ -124,14 +124,14 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                   
 
-                   
+
+
                     var member = new MEMBERS();
                     member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
                     #region ===== ABOUT IMAGE ====
-                    for (int i = 0; i<about_img.Count;i++)
+                    for (int i = 0; i < about_img.Count; i++)
                     {
                         var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                         string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
@@ -264,14 +264,14 @@ namespace COACHME.DATASERVICE
 
         public async Task<RESPONSE__MODEL> UpdateMemberCategoryProfile(MEMBERS dto)
         {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL(); 
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
-                { 
+                {
                     var member = new MEMBERS();
                     member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                    
+
                     #region =====Profile=====
                     //Update Profile
                     if (dto.CATEGORY != null)
@@ -318,22 +318,38 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    
+
                     var memberProfile = await ctx.MEMBERS
                         .Include("MEMBER_LOGON")
+                        .Include("MEMBER_PACKAGE")
                         .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
                     model.MEMBERS = memberProfile;
 
                     var listStudent = await ctx.MEMBERS
                                             .Include(x => x.MEMBER_ROLE)
-                                            .Include(x=>x.MEMBER_LOGON)
-                                            .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o=>o.ROLE_ID == 2))
+                                            .Include(x => x.MEMBER_LOGON)
+                                            .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => o.ROLE_ID == 2))
                                             .ToListAsync();
 
                     //At now only free
-
-                    listStudent = listStudent.Take(3).ToList();
+                    var package = memberProfile.MEMBER_PACKAGE.Select(o => o.PACKAGE_NAME).LastOrDefault();
+                    if(package == null)
+                    {
+                        listStudent = listStudent.Take(3).ToList();
+                    }
+                    if (package == "Basic Plan")
+                    {
+                        listStudent = listStudent.Take(5).ToList();
+                    }
+                    if (package == "Pro Plan")
+                    {
+                        listStudent = listStudent.Take(10).ToList();
+                    }
+                    if (package == "Advance Plan")
+                    {
+                        listStudent = listStudent.ToList();
+                    }
                     model.LIST_MEMBERS = listStudent;
 
                     #region === Activity ===
@@ -353,11 +369,11 @@ namespace COACHME.DATASERVICE
                     resp.OUTPUT_DATA = model;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 resp.STATUS = false;
                 throw ex;
-                
+
             }
             return resp;
         }
@@ -369,11 +385,11 @@ namespace COACHME.DATASERVICE
             try
             {
                 using (var ctx = new COACH_MEEntities())
-                { 
+                {
                     var listCourse = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == dto.MEMBER_ID).ToListAsync();
 
                     //At now only free
-                   
+
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = listCourse;
                 }
