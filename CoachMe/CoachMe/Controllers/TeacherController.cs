@@ -36,6 +36,10 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
+                MEMBER_LOGON param = resp.OUTPUT_DATA;
+                 
+                Session["logon"] = null;
+                Session["logon"] = param;
                 return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             catch (Exception ex)

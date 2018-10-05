@@ -70,11 +70,11 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     //Create Directory
-                    string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
-                    //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
+                    //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
+                    string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
 
                     //Deploy
-                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
+                     myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
                     string path = "";
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
@@ -106,6 +106,8 @@ namespace COACHME.DATASERVICE
                     #endregion
 
                     await ctx.SaveChangesAsync();
+                    var memberLogon = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    resp.OUTPUT_DATA = memberLogon;
                     resp.STATUS = true;
                 }
             }
