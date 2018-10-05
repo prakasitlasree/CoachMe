@@ -238,6 +238,7 @@
     <Content Include="Content\images\CM21.png" />
     <Content Include="Content\images\CoachMELogo.png" />
     <Content Include="Content\images\cool-background.png" />
+    <Content Include="Content\images\course\BlankBanner.png" />
     <Content Include="Content\images\course\blank_img.jpg" />
     <Content Include="Content\images\course\blog1.jpg" />
     <Content Include="Content\images\course\blog2.jpg" />

@@ -129,7 +129,7 @@
                     <div class="m-portlet__body">
                         <div class="m-widget19">
                             <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 286px">
-                                <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" >
+                                <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" >
                                 <h3 class="m-widget19__title m--font-light">
                                     @item.FULLNAME
                                 </h3>
@@ -170,7 +170,7 @@
                                         <button class="m-btn m-btn--pill btn btn-success">
                                             <span>
                                                 <i class="fa flaticon-edit-1"></i>
-                                                <span>Accept Student</span>
+                                                <span>Accept</span>
                                             </span>
                                         </button>
                                         <button class="m-btn m-btn--pill btn btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
@@ -236,12 +236,12 @@
                                 </div>
                             </div>
                             <div class="m-widget7__button">
-                                <button class="m-btn m-btn--pill btn btn-danger">
+                                <a href="@Url.Action("index","purchase")" class="m-btn m-btn--pill btn btn-danger">
                                     <span>
                                         <i class="fa fa-crown"></i>
                                         <span> อัพเกรด</span>
                                     </span>
-                                </button>
+                                </a>
 
                             </div>
                         </div>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using COACHME.MODEL;
+using COACHME.MODEL.CUSTOM_MODELS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,19 @@ namespace COACHME.WEB_PRESENT.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            return View();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = new MEMBER_LOGON();
+                memberLogon = (MEMBER_LOGON)Session["logon"];
+                model.MEMBERS = memberLogon.MEMBERS;
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
         }
 
         // GET: Student/Details/5
