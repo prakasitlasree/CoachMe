@@ -169,13 +169,15 @@
                 <a href="#" class="m-nav__link m-dropdown__toggle">
                     <span class="m-topbar__userpic">
                         @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />*@
-                        <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" class="m--img-rounded m--marginless m--img-centered"  alt="" />
+                        <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg" )" class="m--img-rounded m--marginless m--img-centered"  alt="" />
                     </span>
                     <span class="m-nav__link-icon m-topbar__usericon  m--hide">
                         <span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
                     </span>
                     <span class="m-topbar__username m--hide">
                         @Url.Content(@Model.MEMBERS.FULLNAME?? "")
+
+                      
                     </span>
                 </a>
                 <div class="m-dropdown__wrapper">
@@ -185,14 +187,15 @@
                             <div class="m-card-user m-card-user--skin-light">
                                 <div class="m-card-user__pic">
                                     @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless" alt="" />*@
-                                    <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
+                                    <img src="..\\@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">
-                                        @Url.Content(@Model.MEMBERS.FULLNAME?? "")
+                                        @Url.Content(@Model.MEMBERS.FULLNAME?? "") 
                                     </span>
                                     <a href="#" class="m-card-user__email m--font-weight-300 m-link">
                                         @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
+
                                     </a>
                                 </div>
                             </div>
