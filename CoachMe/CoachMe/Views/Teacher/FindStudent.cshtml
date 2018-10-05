@@ -21,94 +21,94 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                           
-                                <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
-                                    <div class="m-portlet__head">
-                                        <div class="m-portlet__head-caption">
-                                            <div class="m-portlet__head-title">
-                                                <h3 class="m-portlet__head-text">
-                                                    @item.FULLNAME
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="m-portlet__head-tools">
-                                            <ul class="nav nav-tabs m-tabs m-tabs-line  m-tabs-line--right" role="tablist">
-                                                <li class="nav-item m-tabs__item">
-                                                    <a class="nav-link m-tabs__link active show" data-toggle="tab" href="#m_tabs_7_1" role="tab" aria-selected="true">
-                                                        Profile
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item m-tabs__item">
-                                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_7_2" role="tab" aria-selected="false">
-                                                        About
-                                                    </a>
-                                                </li>
-                                                
-                                            </ul>
+
+                            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                @item.FULLNAME
+                                            </h3>
                                         </div>
                                     </div>
-                                    <div class="m-portlet__body">
-                                     
-                                        <div class="tab-content">
-                                            <div class="tab-pane active show" id="m_tabs_7_1" role="tabpanel">
-                                                <div class="m-demo__preview">
-                                                    <div class="m-list-timeline">
-                                                        <div class="m-list-timeline__items">
-                                                            <div class="m-list-timeline__item">
-                                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                                <span class="m-list-timeline__icon flaticon-user"></span>
-                                                                <span class="m-list-timeline__text"><span class="m--font-boldest">ชื่อ : </span>@item.FULLNAME</span>
-                                                               
-                                                            </div>
-                                                            <div class="m-list-timeline__item">
-                                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                                <span class="m-list-timeline__icon flaticon-cogwheel-2"></span>
-                                                                <span class="m-list-timeline__text"><span class="m--font-boldest">เพศ : </span>@item.SEX</span>
+                                    <div class="m-portlet__head-tools">
+                                        <ul class="nav nav-tabs m-tabs m-tabs-line  m-tabs-line--right" role="tablist">
+                                            <li class="nav-item m-tabs__item">
+                                                <a class="nav-link m-tabs__link active show" data-toggle="tab" href="#m_tabs_7_1" role="tab" aria-selected="true">
+                                                    Profile
+                                                </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item">
+                                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_7_2" role="tab" aria-selected="false">
+                                                    About
+                                                </a>
+                                            </li>
 
-                                                            </div>
-                                                            <div class="m-list-timeline__item">
-                                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                                <span class="m-list-timeline__icon flaticon-interface-7"></span>
-                                                                <span class="m-list-timeline__text"><span class="m--font-boldest">อายุ : </span>@item.AGE</span>
-                                                                
-                                                            </div>
-                                                            <div class="m-list-timeline__item">
-                                                                <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
-                                                                <span class="m-list-timeline__icon flaticon-placeholder"></span>
-                                                                <span class="m-list-timeline__text"><span class="m--font-boldest">สถานที่ : </span>@item.LOCATION</span>
-                                                               
-                                                            </div>
-                                                            <div class="m-list-timeline__item">
-                                                                <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
-                                                                <span class="m-list-timeline__icon flaticon-share"></span>
-                                                                <span class="m-list-timeline__text"><span class="m--font-boldest">เบอร์โทรศัพท์ : </span>@item.MOBILE </span>
-                                                                
-                                                            </div>
-                                                            <div class="m-list-timeline__item">
-                                                                <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
-                                                                <span class="m-list-timeline__icon flaticon-exclamation-1"></span>
-                                                                <span class="m-list-timeline__text"><span class="m--font-boldest">อีเมลล์ : </span>@item.MEMBER_LOGON.Select(o => o.USER_NAME).FirstOrDefault()</span>
-                                                                
-                                                            </div>
-                                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="m_tabs_7_1" role="tabpanel">
+                                            <div class="m-demo__preview">
+                                                <div class="m-list-timeline">
+                                                    <div class="m-list-timeline__items">
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                            <span class="m-list-timeline__icon flaticon-user"></span>
+                                                            <span class="m-list-timeline__text"><span class="m--font-boldest">ชื่อ : </span>@item.FULLNAME</span>
+
                                                         </div>
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                            <span class="m-list-timeline__icon flaticon-cogwheel-2"></span>
+                                                            <span class="m-list-timeline__text"><span class="m--font-boldest">เพศ : </span>@item.SEX</span>
+
+                                                        </div>
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                                            <span class="m-list-timeline__icon flaticon-interface-7"></span>
+                                                            <span class="m-list-timeline__text"><span class="m--font-boldest">อายุ : </span>@item.AGE</span>
+
+                                                        </div>
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                                            <span class="m-list-timeline__icon flaticon-placeholder"></span>
+                                                            <span class="m-list-timeline__text"><span class="m--font-boldest">สถานที่ : </span>@item.LOCATION</span>
+
+                                                        </div>
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                            <span class="m-list-timeline__icon flaticon-share"></span>
+                                                            <span class="m-list-timeline__text"><span class="m--font-boldest">เบอร์โทรศัพท์ : </span>@item.MOBILE </span>
+
+                                                        </div>
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
+                                                            <span class="m-list-timeline__icon flaticon-exclamation-1"></span>
+                                                            <span class="m-list-timeline__text"><span class="m--font-boldest">อีเมลล์ : </span>@item.MEMBER_LOGON.Select(o => o.USER_NAME).FirstOrDefault()</span>
+
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane" id="m_tabs_7_2" role="tabpanel">
-                                               @item.ABOUT
-                                            </div>
-                                            
                                         </div>
+                                        <div class="tab-pane" id="m_tabs_7_2" role="tabpanel">
+                                            @item.ABOUT
+                                        </div>
+
                                     </div>
                                 </div>
-                            
+                            </div>
+
 
                         </div>
                         @*<div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Accept Student</button>
-                        </div>*@
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Accept Student</button>
+                            </div>*@
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
 
                             <div class="m-widget7__button center">
                                 <div class="row">
-                                    <div class="col-lg-1 col-md-1 col-sm-1">                                 
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10 text-center">
                                         <button class="m-btn m-btn--pill btn btn-success">
@@ -236,18 +236,19 @@
                                 </div>
                             </div>
                             <div class="m-widget7__button">
-                                <a href="@Url.Action("index","purchase")" class="m-btn m-btn--pill btn btn-danger">
+                                <button class="m-btn m-btn--pill btn btn-danger">
                                     <span>
                                         <i class="fa fa-crown"></i>
                                         <span> อัพเกรด</span>
                                     </span>
-                                </a>
+                                </button>
 
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-                </div>
+                }
             }
             <!--end:: Widgets/Blog-->
         </div>
