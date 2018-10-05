@@ -30,6 +30,11 @@ namespace COACHME.WEB_PRESENT.Controllers
 
             resp = await service.GetMemberProfile(dto);
             model.MEMBERS = resp.OUTPUT_DATA;
+            if(model.MEMBERS.MEMBER_PACKAGE.Count > 0)
+            {
+                var hasPackage = model.MEMBERS.MEMBER_PACKAGE.FirstOrDefault().PACKAGE_NAME;
+                TempData["Plan"] = hasPackage;
+            }           
             if (resp.STATUS)
             {
                 return View(model);
