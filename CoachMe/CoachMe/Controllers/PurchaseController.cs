@@ -15,28 +15,14 @@ namespace COACHME.WEB_PRESENT.Controllers
         private TeacherProfileServices service = new TeacherProfileServices();
         private PurchaseService purchase_service = new PurchaseService();
         // GET: Purchase
-        public async Task<ActionResult> Index(MEMBER_LOGON dto)
+        public  ActionResult  Index(MEMBER_LOGON dto)
         {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
-            var member_id = dto.MEMBER_ID;
-            if (member_id == null || member_id == 0)
-            {
-                if (dto.MEMBERS == null)
-                {
-                    return RedirectToAction("login", "account");
-                }
-            }
-
-            resp = await service.GetMemberProfile(dto);
-            model.MEMBERS = resp.OUTPUT_DATA;
-            if(model.MEMBERS.MEMBER_PACKAGE.Count > 0)
-            {
-                var hasPackage = model.MEMBERS.MEMBER_PACKAGE.FirstOrDefault().PACKAGE_NAME;
-                TempData["Plan"] = hasPackage;
-            }           
-            if (resp.STATUS)
-            {
+            
+            if (Session["logon"] != null)
+            { 
+                var model = new CONTAINER_MODEL();
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                model.MEMBERS = memberLogon.MEMBERS;
                 return View(model);
             }
             else

@@ -13,30 +13,19 @@ namespace COACHME.WEB_PRESENT.Controllers
     {
         private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Teacher
-        public async Task<ActionResult> Index(MEMBER_LOGON dto)
-        {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
-            var member_id = dto.MEMBER_ID;
-            if (member_id == null || member_id == 0 )
-            {
-                if (dto.MEMBERS == null)
-                { 
-                    return RedirectToAction("login", "account");
-                }
-               
-            }
-             
-            resp = await service.GetMemberProfile(dto);
-            model.MEMBERS = resp.OUTPUT_DATA;
-            if (resp.STATUS)
-            {
+        public  ActionResult Index(MEMBER_LOGON dto)
+        {  
+            if (Session["logon"] != null)
+            { 
+                CONTAINER_MODEL model = new CONTAINER_MODEL();
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                model.MEMBERS = memberLogon.MEMBERS;
                 return View(model);
             }
             else
             {
                 return RedirectToAction("login", "account");
-            }
+            } 
         }
 
         [HttpPost]
@@ -47,11 +36,15 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
+                MEMBER_LOGON param = resp.OUTPUT_DATA;
+                 
+                Session["logon"] = null;
+                Session["logon"] = param;
                 return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             catch (Exception ex)
             {
-                ViewBag.Message = "File upload failed!!";
+                ViewBag.Message = "File upload failed!!" +"<br>" + ex.Message;
                 return Redirect(Request.Url.AbsoluteUri);
             }
         }

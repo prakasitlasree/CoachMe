@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
- <!-- begin::Head -->
+<!-- begin::Head -->
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
@@ -11,13 +11,23 @@
     <!--begin::Web font -->
     <script src="~/Content/js/webfont.js"></script>
     <script>
-			WebFont.load({
-            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
-            active: function() {
+        WebFont.load({
+            google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+            active: function () {
                 sessionStorage.fonts = true;
             }
-          });
+        });
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122822583-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-122822583-3');
+    </script>
+
     @*<script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>*@
     <!--end::Web font -->
     <!--begin::Global Theme Styles ../../../assets/vendors/base/vendors.bundle.css-->
@@ -33,18 +43,14 @@
 </head>
 
 <!-- end::Head -->
-
- <!-- begin::Body -->
+<!-- begin::Body -->
 <body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
     <!-- begin:: Page -->
-    
+
     @RenderBody()
-   
+
 
     <!-- end:: Page -->
-
-   
-
     <!--begin::Global Theme Bundle -->
     @*<script src="../../../assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>*@
     <script src="~/Content/js/vendors.bundle.js" type="text/javascript"></script>
@@ -56,19 +62,20 @@
     <script src="~/Content/js/login.js" type="text/javascript"></script>
     <!--end::Page Scripts -->
     @*<script type="text/javascript">
-    $(document).ready(function () {
-        alert()
-        $("#formOuter #forgotpassword").click(function (e) {
-            e.preventDefault();
-            var form = $(this).closest('form');
-            alert(form.serialize())
-            $(form).submit();
-        })
-    });
+        $(document).ready(function () {
+            alert()
+            $("#formOuter #forgotpassword").click(function (e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+                alert(form.serialize())
+                $(form).submit();
+            })
+        });
 
-    </script>*@
+        </script>*@
 </body>
- @RenderSection("scripts", required: false)
+
+@RenderSection("scripts", required: false)
 
 
 <!-- end::Body -->
