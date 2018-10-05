@@ -14,13 +14,11 @@ namespace COACHME.WEB_PRESENT.Controllers
         private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Teacher
         public  ActionResult Index(MEMBER_LOGON dto)
-        { 
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
+        {  
             if (Session["logon"] != null)
-            {
-                var memberLogon = new MEMBER_LOGON();
-                memberLogon = (MEMBER_LOGON)Session["logon"];
+            { 
+                CONTAINER_MODEL model = new CONTAINER_MODEL();
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
                 model.MEMBERS = memberLogon.MEMBERS;
                 return View(model);
             }

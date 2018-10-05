@@ -17,12 +17,11 @@ namespace COACHME.WEB_PRESENT.Controllers
         // GET: Purchase
         public  ActionResult  Index(MEMBER_LOGON dto)
         {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            
             if (Session["logon"] != null)
-            {
-                var memberLogon = new MEMBER_LOGON();
-                memberLogon = (MEMBER_LOGON)Session["logon"];
+            { 
+                var model = new CONTAINER_MODEL();
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
                 model.MEMBERS = memberLogon.MEMBERS;
                 return View(model);
             }
