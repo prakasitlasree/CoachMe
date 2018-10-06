@@ -103,12 +103,19 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     //Create Directory
-                    //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
-                    string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
-
                     //Deploy
-                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
+                    #region ==== DEPLOY PATH ====
+                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
+                    #endregion
+                    #region ==== ROCK PATH ====
+                    string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
+                    #endregion
+                    #region ==== P'X PATH ====
+                    //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                    #endregion
+
                     string path = "";
+
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
 
@@ -125,7 +132,7 @@ namespace COACHME.DATASERVICE
                     //updateMemberProfileUrl
                     var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     int index = path.IndexOf("Content");
-                    member.PROFILE_IMG_URL = @"\" + path.Substring(index);
+                    member.PROFILE_IMG_URL = @"//" + path.Substring(index);
 
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
@@ -170,10 +177,10 @@ namespace COACHME.DATASERVICE
                     for (int i = 0; i < about_img.Count; i++)
                     {
                         var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                        string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
+                        string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
@@ -189,7 +196,7 @@ namespace COACHME.DATASERVICE
                                 about_img[0].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL1 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL1 = "//" + path.Substring(index);
                         }
                         if (i == 1 && about_img[1] != null)
                         {

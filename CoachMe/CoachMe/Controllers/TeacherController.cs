@@ -13,19 +13,23 @@ namespace COACHME.WEB_PRESENT.Controllers
     {
         private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Teacher
-        public  ActionResult Index(MEMBER_LOGON dto)
-        {  
+        public ActionResult Index(MEMBER_LOGON dto)
+        {
             if (Session["logon"] != null)
-            { 
+            {
+                RESPONSE__MODEL resp = new RESPONSE__MODEL();
+                resp = service.GetMemberProfileNotAsync(dto);
+
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
-                model.MEMBERS = memberLogon.MEMBERS;
+
+                model.MEMBERS = resp.OUTPUT_DATA;
                 return View(model);
             }
             else
             {
                 return RedirectToAction("login", "account");
-            } 
+            }
         }
 
         [HttpPost]
@@ -37,14 +41,14 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
                 MEMBER_LOGON param = resp.OUTPUT_DATA;
-                 
+
                 Session["logon"] = null;
                 Session["logon"] = param;
                 return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             catch (Exception ex)
             {
-                ViewBag.Message = "File upload failed!!" +"<br>" + ex.Message;
+                ViewBag.Message = "File upload failed!!" + "<br>" + ex.Message;
                 return Redirect(Request.Url.AbsoluteUri);
             }
         }
@@ -91,7 +95,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 // TODO: Add update logic here
 
-                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS,about_img);
+                RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS, about_img);
 
                 if (result.STATUS)
                 {
@@ -133,7 +137,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
             catch
             {
-                TempData["Message"] = "Profile Update Fail" ;
+                TempData["Message"] = "Profile Update Fail";
                 return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
 
             }
@@ -154,7 +158,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             resp = await service.FindStudent(dto.MEMBERS);
             model = resp.OUTPUT_DATA;
-            if (model.LIST_MEMBERS.Count>3)
+            if (model.LIST_MEMBERS.Count > 3)
             {
                 ViewBag.Package = "No Ads";
             }

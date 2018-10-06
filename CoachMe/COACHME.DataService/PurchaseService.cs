@@ -13,7 +13,7 @@ namespace COACHME.DATASERVICE
 {
     public class PurchaseService
     {
-        public async Task<RESPONSE__MODEL> PurchasePackage(MEMBERS dto,string plan ,HttpPostedFileBase slipImage)
+        public async Task<RESPONSE__MODEL> PurchasePackage(MEMBERS dto, string plan, HttpPostedFileBase slipImage)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
 
@@ -21,23 +21,33 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+                    //Create Directory
+                    //Deploy
+                    #region ==== DEPLOY PATH ====
+                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
+                    #endregion
+                   
+                    #region ==== ROCK PATH ====
+                    string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                    #endregion
+                    
+                    #region ==== P'X PATH ====
+                    //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                    #endregion
+
+                    string path = "";
 
                     var member = new MEMBERS();
-                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    member = await ctx.MEMBERS
+                                        .Include("MEMBER_LOGON")
+                                        .Include("MEMBER_PACKAGE")
+                                        .Include("MEMBER_ROLE")
+                                        .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
-                    //Create Directory
-                    string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
-                    //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
-
-                    //Deploy
-                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
-                    string path = "";
-                    var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                    //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
-
-                    myDir += memberUsername.USER_NAME;
+                    #region ==== UPLOAD SLIP ====
+                    var memberUsername = member.MEMBER_LOGON.Select(x => x.USER_NAME).FirstOrDefault();
+                    myDir += memberUsername;
                     System.IO.Directory.CreateDirectory(myDir);
-
                     //Upload Pic
                     if (slipImage.ContentLength > 0)
                     {
@@ -46,12 +56,30 @@ namespace COACHME.DATASERVICE
                         slipImage.SaveAs(path);
                     }
                     //updateMemberProfileUrl
+                    #endregion
+                   
+                    #region ==== UPDATE OLD PACKAGE====
+                    var memberOldPackage = member.MEMBER_PACKAGE
+                                                  .Where(o => o.EXPIRE_DATE > DateTime.Now)
+                                                  .OrderByDescending(p => p.AUTO_ID)
+                                                  .FirstOrDefault();
+
+                    if (memberOldPackage != null)
+                    {
+                        int remainDays = Convert.ToInt32((memberOldPackage.EXPIRE_DATE.Value - memberOldPackage.EFFECTIVE_DATE.Value).TotalDays);
+                        memberOldPackage.EFFECTIVE_DATE = DateTime.Now.AddDays(30);
+                        memberOldPackage.EXPIRE_DATE = DateTime.Now.AddDays(30 + remainDays);
+
+                    }
+                    #endregion
+
+                    #region ==== ADD NEW PACKAGE ====
 
                     var memberPackage = new MEMBER_PACKAGE();
                     memberPackage.MEMBER_ID = dto.AUTO_ID;
                     memberPackage.EFFECTIVE_DATE = DateTime.Now;
                     memberPackage.STATUS = "DRAFT";
-                    if(plan == "basic")
+                    if (plan == "basic")
                     {
                         memberPackage.PACKAGE_NAME = "Basic Plan";
                         memberPackage.PACKAGE_DETAIL = "Basic Plan Detail";
@@ -68,15 +96,14 @@ namespace COACHME.DATASERVICE
                     }
 
                     memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(30);
+
                     var uploadSlip = ctx.MEMBER_PACKAGE.Add(memberPackage);
-
-
-
-                    //add activity
+                    #endregion
+                    
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;
-                    activity.ACTION = "Update Profile";
+                    activity.ACTION = "Purchase Package";
                     activity.FULLNAME = dto.FULLNAME;
                     activity.USER_NAME = dto.FULLNAME;
                     activity.PASSWORD = dto.FULLNAME;
