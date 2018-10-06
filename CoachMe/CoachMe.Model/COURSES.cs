@@ -17,28 +17,30 @@ namespace COACHME.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public COURSES()
         {
+            this.COURSE_COMMENT = new HashSet<COURSE_COMMENT>();
             this.COURSE_PLACE = new HashSet<COURSE_PLACE>();
             this.MEMBER_REGIS_COURSE = new HashSet<MEMBER_REGIS_COURSE>();
             this.MEMBER_TEACH_COURSE = new HashSet<MEMBER_TEACH_COURSE>();
-            this.COURSE_COMMENT = new HashSet<COURSE_COMMENT>();
         }
     
         public int AUTO_ID { get; set; }
         public string NAME { get; set; }
+        public string BANNER_URL { get; set; }
         public string DESCRIPTION { get; set; }
         public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string UPDATED_BY { get; set; }
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
-        public string BANNER_URL { get; set; }
+        public Nullable<decimal> PRICE { get; set; }
+        public Nullable<int> SEQ { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COURSE_COMMENT> COURSE_COMMENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COURSE_PLACE> COURSE_PLACE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_TEACH_COURSE> MEMBER_TEACH_COURSE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COURSE_COMMENT> COURSE_COMMENT { get; set; }
     }
 }

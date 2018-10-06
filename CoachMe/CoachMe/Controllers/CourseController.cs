@@ -24,7 +24,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
                 model.MEMBERS = memberLogon.MEMBERS;
                 resp = await service.GetCourseByTeacherID(memberLogon);
-                model.LIST_MEMBER_TEACH_COURSE = resp.OUTPUT_DATA;
+                model.LIST_COURSES = resp.OUTPUT_DATA;
                 return View(model);
             }
             else
@@ -41,31 +41,31 @@ namespace COACHME.WEB_PRESENT.Controllers
 
         [HttpPost]
         // POST: Course/Create
-        public async Task<ActionResult> Create(CONTAINER_MODEL dto, HttpPostedFileBase banner_img)
+        public async Task<ActionResult> Manage(CONTAINER_MODEL dto, HttpPostedFileBase banner_img )
         {
 
             try
-            {
+            { 
                 // TODO: Add update logic here
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
                 dto.MEMBER_LOGON = memberLogon;
                 dto.MEMBERS = memberLogon.MEMBERS;
-                RESPONSE__MODEL result = await service.CreateCourse(dto, banner_img);
+                RESPONSE__MODEL result = await service.MangeCourse(dto, banner_img);
 
                 if (result.STATUS)
                 {
-                    TempData["Message"] = "Create course successfully";
+                    TempData["Message"] = "Save course successfully";
                     return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
-                    TempData["Message"] = "Create course Fail";
+                    TempData["Message"] = "Save course Fail";
                     return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
-                TempData["Message"] = "Create course Fail";
+                TempData["Message"] = "Save course Fail";
                 return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
 
             } 
@@ -87,10 +87,11 @@ namespace COACHME.WEB_PRESENT.Controllers
         //    }
         //}
 
+        [HttpPost]
         // GET: Course/Edit/5
-        public ActionResult Edit(int id)
+        public  ActionResult Edit(CONTAINER_MODEL dto, HttpPostedFileBase banner_img)
         {
-            return View();
+            return  View();
         }
 
         // POST: Course/Edit/5
