@@ -29,7 +29,7 @@ namespace COACHME.DATASERVICE
                                              .Include("MEMBER_LOGON")
                                              .Include("MEMBER_PACKAGE")
                                              .Where(x => x.AUTO_ID == member_id).FirstOrDefaultAsync();
-                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();//get last package
+                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -42,36 +42,6 @@ namespace COACHME.DATASERVICE
             }
             return resp;
 
-        }
-
-        public RESPONSE__MODEL GetMemberProfileNotAsync(MEMBER_LOGON dto)
-        {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            var member_id = dto.MEMBER_ID;
-            if (member_id == 0)
-            {
-                member_id = dto.MEMBERS.AUTO_ID;
-            }
-            try
-            {
-                using (var ctx = new COACH_MEEntities())
-                {
-                    var memberProfile = ctx.MEMBERS
-                                             .Include("MEMBER_LOGON")
-                                             .Include("MEMBER_PACKAGE")
-                                             .Where(x => x.AUTO_ID == member_id).FirstOrDefault();
-                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();//get last package
-                    resp.OUTPUT_DATA = memberProfile;
-                    resp.STATUS = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                resp.ErrorMessage = ex.Message;
-                resp.STATUS = false;
-            }
-            return resp;
         }
 
         public async Task<RESPONSE__MODEL> GetMemberProfileFromAutoID(MEMBERS dto)
@@ -147,6 +117,7 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
             }
             return resp;
@@ -291,7 +262,7 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
-                throw ex;
+                resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
             }
 
@@ -407,25 +378,23 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
-                throw ex;
-
+               
             }
             return resp;
         }
 
         public async Task<RESPONSE__MODEL> GetCourseByTeacherID(MEMBER_LOGON dto)
         {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL(); 
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listCourse = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == dto.MEMBER_ID).ToListAsync();
-
-                    //At now only free
-
+                    var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
+                    var listCourse = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).ToListAsync();
+ 
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = listCourse;
                 }
@@ -434,13 +403,12 @@ namespace COACHME.DATASERVICE
             {
                 resp.STATUS = false;
                 resp.ErrorMessage = ex.Message;
-                throw ex;
-
+                
             }
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> CreateCourse(CONTAINER_MODEL dto, List<HttpPostedFileBase> banner_img)
+        public async Task<RESPONSE__MODEL> CreateCourse(CONTAINER_MODEL dto, HttpPostedFileBase  banner_img)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
 
@@ -449,6 +417,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var course = new COURSES();
+                    var teachCourse = new MEMBER_TEACH_COURSE();
                     #region ===== COVER IMAGE ====
 
                     //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\course\\";
@@ -459,13 +428,13 @@ namespace COACHME.DATASERVICE
                     myDir += dto.MEMBER_LOGON.USER_NAME;
                     System.IO.Directory.CreateDirectory(myDir);
 
-                    if (banner_img[0] != null)
-                    {
-                        if (banner_img[0].ContentLength > 0)
+                    if (banner_img != null)
+                    { 
+                        if (banner_img.ContentLength > 0)
                         {
-                            string fileName = Path.GetFileName(banner_img[0].FileName);
+                            string fileName = Path.GetFileName(banner_img.FileName);
                             path = Path.Combine(myDir, fileName);
-                            banner_img[0].SaveAs(path);
+                            banner_img.SaveAs(path);
                         }
                         int index = path.IndexOf("Content");
                         course.BANNER_URL = @"\\" + path.Substring(index);
@@ -479,6 +448,11 @@ namespace COACHME.DATASERVICE
                     course.CREATED_DATE = DateTime.Now;
                     course.UPDATED_BY = dto.MEMBERS.FULLNAME;
                     course.UPDATED_DATE = DateTime.Now;
+
+                    teachCourse.COURSES = course; 
+                    var role = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefault();
+                    teachCourse.MEMBER_ROLE_ID = role.AUTO_ID;
+                    ctx.MEMBER_TEACH_COURSE.Add(teachCourse);
                     #endregion
 
                     //add activity
@@ -489,6 +463,8 @@ namespace COACHME.DATASERVICE
                     activity.FULLNAME = dto.MEMBERS.FULLNAME;
                     activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
                     activity.STATUS = resp.STATUS;
+
+                    
                     ctx.LOGON_ACTIVITY.Add(activity);
                     #endregion
 

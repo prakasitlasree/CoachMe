@@ -39,8 +39,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             return View();
         }
 
-        // GET: Course/Create
-        public async Task<ActionResult> Create(CONTAINER_MODEL dto, List<HttpPostedFileBase> banner_img)
+        [HttpPost]
+        // POST: Course/Create
+        public async Task<ActionResult> Create(CONTAINER_MODEL dto, HttpPostedFileBase banner_img)
         {
 
             try
@@ -54,37 +55,37 @@ namespace COACHME.WEB_PRESENT.Controllers
                 if (result.STATUS)
                 {
                     TempData["Message"] = "Create course successfully";
-                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                    return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
                     TempData["Message"] = "Create course Fail";
-                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                    return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
                 TempData["Message"] = "Create course Fail";
-                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
 
             } 
         }
 
-        // POST: Course/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        //// POST: Course/Create
+        //[HttpPost]
+        //public ActionResult Create(FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: Course/Edit/5
         public ActionResult Edit(int id)
