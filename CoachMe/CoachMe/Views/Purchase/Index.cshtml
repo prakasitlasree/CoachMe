@@ -47,7 +47,7 @@
                                             <span class="m-pricing-table-2__price">200</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if ( TempData["Plan"].ToString() == "Basic Plan" || TempData["Plan"].ToString() == "Professional Plan" || TempData["Plan"].ToString() == "Advance Plan")
+                                                @if ( TempData["Plan"].ToString() == "Basic Plan" )
                                                 {
                                                     <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
 
@@ -73,7 +73,7 @@
                                             <span class="m-pricing-table-2__price">400</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if ( TempData["Plan"].ToString() == "Professional Plan" || TempData["Plan"].ToString() == "Advance Plan")
+                                                @if ( TempData["Plan"].ToString() == "Professional Plan")
                                                 {
                                                     <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
                                                 }

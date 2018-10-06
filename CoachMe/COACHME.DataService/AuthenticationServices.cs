@@ -73,7 +73,6 @@ namespace COACHME.DATASERVICE
                         #region ==== SET DETAIL ====
                         //1.Master 
                         member.FULLNAME = dto.FULLNAME;
-                        member.FIRST_NAME = dto.FULLNAME;
                         member.CREATED_DATE = DateTime.Now;
                         member.CREATED_BY = dto.FULLNAME;
                         member.UPDATED_DATE = DateTime.Now;

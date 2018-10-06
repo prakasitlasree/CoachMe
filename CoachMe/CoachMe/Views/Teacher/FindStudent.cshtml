@@ -194,7 +194,7 @@
         <div class="col-xl-3">
             @using (Html.BeginForm("index", "purchase", FormMethod.Post))
             {
-
+                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                 <div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height ">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">

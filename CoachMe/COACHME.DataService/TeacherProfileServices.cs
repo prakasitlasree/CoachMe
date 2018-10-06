@@ -43,6 +43,7 @@ namespace COACHME.DATASERVICE
             return resp;
 
         }
+
         public RESPONSE__MODEL GetMemberProfileNotAsync(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -56,10 +57,17 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberProfile = ctx.MEMBERS
+                                             .Include("MEMBER_ROLE")
                                              .Include("MEMBER_LOGON")
                                              .Include("MEMBER_PACKAGE")
                                              .Where(x => x.AUTO_ID == member_id).FirstOrDefault();
-                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();//get last package
+
+                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE
+                                                   .Where(x => x.STATUS != "DRAFT")
+                                                   .OrderByDescending(x => x.EFFECTIVE_DATE)
+                                                   .Take(1)
+                                                   .ToList();
+
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -375,8 +383,10 @@ namespace COACHME.DATASERVICE
                                             .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => o.ROLE_ID == 2))
                                             .ToListAsync();
 
-                    //At now only free
-                    var package = memberProfile.MEMBER_PACKAGE.Select(o => o.PACKAGE_NAME).LastOrDefault();
+
+                    var package = memberProfile.MEMBER_PACKAGE
+                                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE < DateTime.Now)
+                                                .Select(o => o.PACKAGE_NAME).LastOrDefault();
                     if (package == null)
                     {
                         listStudent = listStudent.Take(3).ToList();
@@ -496,8 +506,8 @@ namespace COACHME.DATASERVICE
                         objEdit.UPDATED_DATE = DateTime.Now;
                         objEdit.PRICE = dto.COURSES.PRICE;
 
-                        if (course.BANNER_URL!= null)
-                        { 
+                        if (course.BANNER_URL != null)
+                        {
                             objEdit.BANNER_URL = course.BANNER_URL;
                         }
                         //add activity
@@ -534,13 +544,13 @@ namespace COACHME.DATASERVICE
                         activity.ACTION = "Create Course";
                         activity.FULLNAME = dto.MEMBERS.FULLNAME;
                         activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
-                        activity.STATUS = resp.STATUS; 
+                        activity.STATUS = resp.STATUS;
                         ctx.LOGON_ACTIVITY.Add(activity);
                         #endregion
 
                     }
                     #endregion
-                     
+
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
 
