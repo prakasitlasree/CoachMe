@@ -160,7 +160,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             model = resp.OUTPUT_DATA;
             if (model.LIST_MEMBERS.Count > 3)
             {
-                ViewBag.Package = "No Ads";
+               TempData["NOADS"] = true;
             }
             return View(model);
         }
