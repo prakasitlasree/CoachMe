@@ -74,7 +74,7 @@ namespace COACHME.DATASERVICE
                     string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
 
                     //Deploy
-                     myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
+                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\";
                     string path = "";
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
@@ -336,7 +336,7 @@ namespace COACHME.DATASERVICE
 
                     //At now only free
                     var package = memberProfile.MEMBER_PACKAGE.Select(o => o.PACKAGE_NAME).LastOrDefault();
-                    if(package == null)
+                    if (package == null)
                     {
                         listStudent = listStudent.Take(3).ToList();
                     }
@@ -405,5 +405,72 @@ namespace COACHME.DATASERVICE
             }
             return resp;
         }
+
+        public async Task<RESPONSE__MODEL> CreateCourse(CONTAINER_MODEL dto, List<HttpPostedFileBase> banner_img)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var course = new COURSES(); 
+                    #region ===== COVER IMAGE ====
+
+                    //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\course\\";
+                    string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\course\\";
+                    //Deploy
+                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\course\\";
+                    string path = "";
+                    myDir += dto.MEMBER_LOGON.USER_NAME;
+                    System.IO.Directory.CreateDirectory(myDir);
+
+                    if (banner_img[0] != null)
+                    { 
+                        if (banner_img[0].ContentLength > 0)
+                        {
+                            string fileName = Path.GetFileName(banner_img[0].FileName);
+                            path = Path.Combine(myDir, fileName);
+                            banner_img[0].SaveAs(path);
+                        }
+                        int index = path.IndexOf("Content");
+                        course.BANNER_URL = @"\\" + path.Substring(index);
+                    }
+                    #endregion
+
+                    #region =====Course===== 
+                    course.NAME = dto.COURSES.NAME;
+                    course.DESCRIPTION = dto.COURSES.DESCRIPTION;
+                    course.CREATED_BY = dto.MEMBERS.FULLNAME;
+                    course.CREATED_DATE = DateTime.Now;
+                    course.UPDATED_BY = dto.MEMBERS.FULLNAME;
+                    course.UPDATED_DATE = DateTime.Now;
+                    #endregion
+
+                    //add activity
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Create Course";
+                    activity.FULLNAME = dto.MEMBERS.FULLNAME;
+                    activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
     }
 }

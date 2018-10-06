@@ -40,9 +40,34 @@ namespace COACHME.WEB_PRESENT.Controllers
         }
 
         // GET: Course/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(CONTAINER_MODEL dto, List<HttpPostedFileBase> banner_img)
         {
-            return View();
+
+            try
+            {
+                // TODO: Add update logic here
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                dto.MEMBER_LOGON = memberLogon;
+                dto.MEMBERS = memberLogon.MEMBERS;
+                RESPONSE__MODEL result = await service.CreateCourse(dto, banner_img);
+
+                if (result.STATUS)
+                {
+                    TempData["Message"] = "Create course successfully";
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                }
+                else
+                {
+                    TempData["Message"] = "Create course Fail";
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                }
+            }
+            catch
+            {
+                TempData["Message"] = "Create course Fail";
+                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+
+            } 
         }
 
         // POST: Course/Create

@@ -104,6 +104,9 @@
     <Compile Include="ROLE.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="COACH_ME.tt">

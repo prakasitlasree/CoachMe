@@ -43,6 +43,7 @@
           </Key>
           <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="BANNER_URL" Type="nvarchar" MaxLength="500" />
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="500" />
           <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="CREATED_DATE" Type="date" />
@@ -198,6 +199,16 @@
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="UPDATED_DATE" Type="date" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <Association Name="FK_COURSE_COMMENT_COURSES">
           <End Role="COURSES" Type="Self.COURSES" Multiplicity="0..1" />
           <End Role="COURSE_COMMENT" Type="Self.COURSE_COMMENT" Multiplicity="*" />
@@ -333,6 +344,7 @@
           <EntitySet Name="PLACE" EntityType="Self.PLACE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESET_PASSWORD" EntityType="Self.RESET_PASSWORD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_COURSE_COMMENT_COURSES" Association="Self.FK_COURSE_COMMENT_COURSES">
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="COURSE_COMMENT" EntitySet="COURSE_COMMENT" />
@@ -433,6 +445,7 @@
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="COURSE_COMMENT" EntitySet="COURSE_COMMENT" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="COACH_MEModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="CONFIGURATION">
           <Key>
@@ -473,6 +486,7 @@
           <NavigationProperty Name="MEMBER_REGIS_COURSE" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COURSES" FromRole="COURSES" ToRole="MEMBER_REGIS_COURSE" />
           <NavigationProperty Name="MEMBER_TEACH_COURSE" Relationship="COACH_MEModel.FK_MEMBER_TEACHER_COURSE_COURSES" FromRole="COURSES" ToRole="MEMBER_TEACH_COURSE" />
           <NavigationProperty Name="COURSE_COMMENT" Relationship="COACH_MEModel.FK_COURSE_COMMENT_COURSES" FromRole="COURSES" ToRole="COURSE_COMMENT" />
+          <Property Name="BANNER_URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LOGON_ACTIVITY">
           <Key>
@@ -767,6 +781,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -800,6 +824,7 @@
           <EntitySetMapping Name="COURSES">
             <EntityTypeMapping TypeName="COACH_MEModel.COURSES">
               <MappingFragment StoreEntitySet="COURSES">
+                <ScalarProperty Name="BANNER_URL" ColumnName="BANNER_URL" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
@@ -977,6 +1002,17 @@
                 <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
                 <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
                 <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="COACH_MEModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

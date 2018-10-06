@@ -29,6 +29,7 @@
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_TEACH_COURSE_MEMBER_ROLE" />
         <EntityTypeShape EntityType="COACH_MEModel.COURSE_COMMENT" Width="2.125" PointX="8.25" PointY="14.125" />
         <AssociationConnector Association="COACH_MEModel.FK_COURSE_COMMENT_COURSES" />
+        <EntityTypeShape EntityType="COACH_MEModel.sysdiagrams" Width="1.5" PointX="11.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

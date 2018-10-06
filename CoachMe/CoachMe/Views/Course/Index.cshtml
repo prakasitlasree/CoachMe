@@ -1,5 +1,5 @@
 ﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
-@using Newtonsoft.Json 
+@using Newtonsoft.Json
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -8,7 +8,7 @@
 
 <div class="m-content">
 
-  
+
     <!--Begin::Section-->
     <div class="row">
 
@@ -20,7 +20,7 @@
                     <div class="m-portlet__head m-portlet__head--fit">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-action">
-                                <button type="button" class="btn m-btn--pill btn-primary m-btn--wide" data-toggle="modal" data-target="#addcourse">เพิ่มคอร์ส</button> 
+                                <button type="button" class="btn m-btn--pill btn-primary m-btn--wide" data-toggle="modal" data-target="#addcourse">เพิ่มคอร์ส</button>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
             </div>
 
 
-           
+
         }
         else
         {
@@ -129,33 +129,54 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <a id="ChangeAbout_1">
-                                <img src="~/Content/images/course/BlankBanner.png" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:200px; width:100%;margin-bottom:15px" />
-                                <input type='file' name="about_img" id="btnAboutImg_1" style="display:none" disabled />
-                            </a>
-                            <div class="form-group">
-                                <label for="recipient-name" class="form-control-label">ชื่อคอร์ส:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="form-control-label">รายละเอียด:</label>
-                                <textarea class="form-control" id="message-text" rows="4"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                       
-                        <button type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                    @using (Html.BeginForm("create", "course", FormMethod.Post, new {  role = "form" }))
+                    {
+                        <div class="modal-body">
+                            <form>
+                                <a id="ChangeBanner" href="#">
+                                    <img src="~/Content/images/course/BlankBanner.png" id="imgCourse" class="img-thumbnail imgZoom" style="height:200px; width:100%;margin-bottom:15px" />
+                                    <input type='file' name="course_img" id="btnUpCoueseBanner" style="display:none" disabled />
+                                </a>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="form-control-label">ชื่อคอร์ส:</label>
+                                    <input type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="form-control-label">รายละเอียด:</label>
+                                    <textarea class="form-control" id="message-text" rows="4"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    }
                 </div>
+
             </div>
         </div>
         <!--end::Modal-->
         <!--End::Section-->
     </div>
+    <script type="text/javascript">
 
-   
+        function UploadCoueseBanner(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgCourse').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#btnUpCoueseBanner").change(function () {
+            UploadCoueseBanner(this);
+        });
+        $('#ChangeBanner').click(function () {
+            alert('xx');
+            $('#btnUpCoueseBanner').trigger('click');
+        });
+    </script>
+
 </div>
