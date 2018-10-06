@@ -64,10 +64,9 @@ namespace COACHME.DATASERVICE
 
                     memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE
                                                    .Where(x => x.STATUS != "DRAFT")
-                                                   .OrderByDescending(x => x.EFFECTIVE_DATE)
-                                                   .Take(1)
+                                                   .OrderBy(x => x.EFFECTIVE_DATE)
                                                    .ToList();
-
+                    
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -385,7 +384,7 @@ namespace COACHME.DATASERVICE
 
 
                     var package = memberProfile.MEMBER_PACKAGE
-                                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE < DateTime.Now)
+                                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
                                                 .Select(o => o.PACKAGE_NAME).LastOrDefault();
                     if (package == null)
                     {
@@ -395,7 +394,7 @@ namespace COACHME.DATASERVICE
                     {
                         listStudent = listStudent.Take(5).ToList();
                     }
-                    if (package == "Pro Plan")
+                    if (package == "Professional Plan")
                     {
                         listStudent = listStudent.Take(10).ToList();
                     }

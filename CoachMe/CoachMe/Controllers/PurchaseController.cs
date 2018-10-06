@@ -22,14 +22,13 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 var model = new CONTAINER_MODEL();
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                //model.MEMBERS = memberLogon.MEMBERS;
-                //getPackage               
+                var memberLogon = (MEMBER_LOGON)Session["logon"]; 
                 resp =  service.GetMemberProfileNotAsync(dto);
                 model.MEMBERS = resp.OUTPUT_DATA;
+
                 if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
                 {
-                    var hasPackage = model.MEMBERS.MEMBER_PACKAGE.FirstOrDefault().PACKAGE_NAME;
+                    var hasPackage = model.MEMBERS.MEMBER_PACKAGE.LastOrDefault().PACKAGE_NAME;
                     if (hasPackage != null)
                     {
                         TempData["Plan"] = hasPackage;
