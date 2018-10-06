@@ -29,7 +29,7 @@ namespace COACHME.DATASERVICE
                                              .Include("MEMBER_LOGON")
                                              .Include("MEMBER_PACKAGE")
                                              .Where(x => x.AUTO_ID == member_id).FirstOrDefaultAsync();
-                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();
+                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();//get last package
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -42,6 +42,36 @@ namespace COACHME.DATASERVICE
             }
             return resp;
 
+        }
+
+        public RESPONSE__MODEL GetMemberProfileNotAsync(MEMBER_LOGON dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            var member_id = dto.MEMBER_ID;
+            if (member_id == 0)
+            {
+                member_id = dto.MEMBERS.AUTO_ID;
+            }
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberProfile = ctx.MEMBERS
+                                             .Include("MEMBER_LOGON")
+                                             .Include("MEMBER_PACKAGE")
+                                             .Where(x => x.AUTO_ID == member_id).FirstOrDefault();
+                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();//get last package
+                    resp.OUTPUT_DATA = memberProfile;
+                    resp.STATUS = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp;
         }
 
         public async Task<RESPONSE__MODEL> GetMemberProfileFromAutoID(MEMBERS dto)
@@ -418,7 +448,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var course = new COURSES(); 
+                    var course = new COURSES();
                     #region ===== COVER IMAGE ====
 
                     //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\course\\";
@@ -430,7 +460,7 @@ namespace COACHME.DATASERVICE
                     System.IO.Directory.CreateDirectory(myDir);
 
                     if (banner_img[0] != null)
-                    { 
+                    {
                         if (banner_img[0].ContentLength > 0)
                         {
                             string fileName = Path.GetFileName(banner_img[0].FileName);

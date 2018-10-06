@@ -19,10 +19,32 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
             
             if (Session["logon"] != null)
-            { 
+            {
+                RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 var model = new CONTAINER_MODEL();
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
-                model.MEMBERS = memberLogon.MEMBERS;
+                //model.MEMBERS = memberLogon.MEMBERS;
+                //getPackage               
+                resp =  service.GetMemberProfileNotAsync(dto);
+                model.MEMBERS = resp.OUTPUT_DATA;
+                if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
+                {
+                    var hasPackage = model.MEMBERS.MEMBER_PACKAGE.FirstOrDefault().PACKAGE_NAME;
+                    if (hasPackage != null)
+                    {
+                        TempData["Plan"] = hasPackage;
+                    }
+                    else
+                    {
+                        TempData["Plan"] = "No Plan";
+                    }
+                }
+                else
+                {
+                    TempData["Plan"] = "No Plan";
+                }
+
+
                 return View(model);
             }
             else
@@ -40,7 +62,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             model.MEMBERS = resp.OUTPUT_DATA;
             if (resp.STATUS)
             {
-                TempData["MessagePurchase"] = "ระบบกำลังตรวจสอบ กรุณารอซักครุ่ จากนั้นรีเฟรชเว็บอีกครั้ง";
+                TempData["MessagePurchase"] = "ระบบกำลังตรวจสอบ กรุณารอซักครุ่";
                 return RedirectToAction("index", "purchase", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             else
