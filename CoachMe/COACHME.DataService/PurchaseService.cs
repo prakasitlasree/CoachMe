@@ -56,12 +56,12 @@ namespace COACHME.DATASERVICE
                         memberPackage.PACKAGE_NAME = "Basic Plan";
                         memberPackage.PACKAGE_DETAIL = "Basic Plan Detail";
                     }
-                    if (plan == "pro")
+                    if (plan == "Pro")
                     {
                         memberPackage.PACKAGE_NAME = "Professional Plan";
                         memberPackage.PACKAGE_DETAIL = "Professional Plan Detail";
                     }
-                    if (plan == "advance")
+                    if (plan == "Advance")
                     {
                         memberPackage.PACKAGE_NAME = "Advance Plan";
                         memberPackage.PACKAGE_DETAIL = "Advance Plan Detail";

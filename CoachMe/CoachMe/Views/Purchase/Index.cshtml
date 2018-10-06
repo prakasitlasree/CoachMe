@@ -47,9 +47,15 @@
                                             <span class="m-pricing-table-2__price">200</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                
-                                                <button type="button" data-toggle="modal" data-target="#m_modal_1" value="basic" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                @if ( TempData["Plan"].ToString() == "Basic Plan" || TempData["Plan"].ToString() == "Professional Plan" || TempData["Plan"].ToString() == "Advance Plan")
+                                                {
+                                                    <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
 
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" data-toggle="modal" data-target="#m_modal_1" value="basic" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                }
                                             </div>
                                         </div>
                                         <div class="m-pricing-table-2__item col-lg-4">
@@ -67,9 +73,15 @@
                                             <span class="m-pricing-table-2__price">400</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-
-                                                <button type="button" data-toggle="modal" data-target="#m_modal_2" value="pro" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-
+                                                @if ( TempData["Plan"].ToString() == "Professional Plan" || TempData["Plan"].ToString() == "Advance Plan")
+                                                {
+                                                    <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" data-toggle="modal" data-target="#m_modal_2" value="pro" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                   
+                                                }
                                             </div>
                                         </div>
                                         <div class="m-pricing-table-2__item col-lg-4">
@@ -87,9 +99,15 @@
                                             <span class="m-pricing-table-2__price">500</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-
-                                                <button type="button" data-toggle="modal" data-target="#m_modal_3" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-
+                                                @if ( TempData["Plan"].ToString() == "Advance Plan")
+                                                {
+                                                    <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" data-toggle="modal" data-target="#m_modal_3" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                   
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -278,14 +296,14 @@
 
     $("#slip_1").change(function () {
         debugger;
-        
+
         Slip_1(this);
     });
 
     function Slip_1(input) {
 
         debugger;
-       
+
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             $("#slip_2").remove();
@@ -297,14 +315,14 @@
 
     $("#slip_2").change(function () {
         debugger;
-       
+
         Slip_2(this);
     });
 
     function Slip_2(input) {
 
         debugger;
-        
+
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             $("#slip_1").remove();
@@ -317,7 +335,7 @@
 
     $("#slip_3").change(function () {
         debugger;
-       
+
         Slip_3(this);
     });
 
