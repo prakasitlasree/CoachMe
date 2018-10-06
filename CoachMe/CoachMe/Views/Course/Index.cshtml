@@ -6,158 +6,196 @@
 }
 
 <div class="m-content">
-
+    
     <!--Begin::Section-->
-    <div class="row">
-       
-
-        @if (Model.LIST_MEMBER_TEACH_COURSE.Count == 0)
-        {
+    <div class="row"> 
+        @foreach (var item in Model.LIST_COURSES)
+            {
             <div class="col-xl-4">
                 <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
                     <div class="m-portlet__head m-portlet__head--fit">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-action">
-                                <button type="button" class="btn m-btn--pill btn-primary m-btn--wide" data-toggle="modal" data-target="#addcourse">เพิ่มคอร์ส</button>
-                                
+                                <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #@item.SEQ</button>
                             </div>
                         </div>
                     </div>
                     <div class="m-portlet__body">
-
                         <div class="m-widget19">
-                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 200px">
-                                <img src="~/Content/images/course/New_Course.jpg" alt="">
-                                <h3 class="m-widget19__title m--font-light"></h3>
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 180px">
+                                @*<img src="~/Content/images/course/BlankBanner.png" alt="">*@
+                                <img src="..//@Url.Content(@item.BANNER_URL ?? @"/Content/images/course/BlankBanner.png")">
+                                <h3 class="m-widget19__title m--font-light">
+                                    @item.NAME
+                                </h3>
 
-                                <div class="m-widget19__shadow"></div>
+                            </div>
+                            <div class="m-widget19__content">
+                                <div class="m-widget19__header">
+                                    @*<div class="m-widget19__user-img">
+                                        @*<img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">*@
 
+                                    @*</div>*@
+                                    <div class="m-widget19__info">
+                                        <span class="m-widget19__username">
+                                            @if (TempData["Message"] != null)
+                                            {
+                                                <p style="text-align:center" class="text-success"> บันทึกข้อมูลเรียบร้อย</p>
+                                            }
+                                            @item.UPDATED_BY
+                                            @item.AUTO_ID
+                                        </span><br>
+                                        <span class="m-widget19__time">
+                                            @item.UPDATED_DATE
+                                        </span>
+                                    </div>
+                                    <div class="m-widget19__stats">
+                                        <span class="m-widget19__number m--font-brand">
+                                            <button type="button" id="@item.AUTO_ID" onclick="ShowAction(this.id, 'Edit','Course')"
+                                                    class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">
+
+                                                <i class="fa fa-user-edit"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="m-widget19__body">
+                                    @item.DESCRIPTION
+                                </div>
+                            </div>
+
+                            <div class="m-widget4__item">
+                                <div class="m-widget4__ext">
+                                    <span class="m-widget4__title">
+                                        ราคา :
+                                    </span>
+                                    <span class="m-widget4__number m--font-danger">@item.PRICE.ToString()฿</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
-        else
-        {
-            foreach (var item in Model.LIST_MEMBER_TEACH_COURSE)
-            {
-                <div class="col-xl-4">
-                    <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-                        <div class="m-portlet__head m-portlet__head--fit">
-                            <div class="m-portlet__head-caption">
-                                <div class="m-portlet__head-action">
-                                    <button type="button" class="btn btn-sm m-btn--pill  btn-brand">Course #1</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-portlet__body">
-                            <div class="m-widget19">
-                                <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                                    <img src="~/Content/images/course/course1.png" alt="">
-                                    <h3 class="m-widget19__title m--font-light">
-                                        Introducing New Feature
-                                    </h3>
-                                    <div class="m-widget19__shadow"></div>
-                                </div>
-                                <div class="m-widget19__content">
-                                    <div class="m-widget19__header">
-                                        <div class="m-widget19__user-img">
-                                            <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
-                                        </div>
-                                        <div class="m-widget19__info">
-                                            <span class="m-widget19__username">
-                                                Anna Krox
-                                            </span><br>
-                                            <span class="m-widget19__time">
-                                                UX/UI Designer, Google
-                                            </span>
-                                        </div>
-                                        <div class="m-widget19__stats">
-                                            <span class="m-widget19__number m--font-brand">
-                                                18
-                                            </span>
-                                            <span class="m-widget19__comment">
-                                                Comments
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="m-widget19__body">
-                                        ค่าเรียนไวโอลิน
-                                        <br />
-                                        คอร์สละ 4 ชั่วโมง 2,900 บาท (725 บาท/ชั่วโมง)
-                                        <br />
-                                        คอร์สละ 8 ชั่วโมง 5,600 บาท (700 บาท/ชั่วโมง)
-                                        <br />
-                                        เฉพาะวันพฤหัสบดี-ศุกร์ บ่าย, วันเสาร์-อาทิตย์ เต็มวัน
-                                        <br />
-                                        หัดเล่นเพลงสั้น ๆ เพราะ ๆ คุ้นหู เล่นได้ในราวแปดชั่วโมงแรก
-                                        <br />
-                                        <br />
-                                        ปูพื้นฐานโดยใช้แบบเรียนของ Suzuki (revised edition)
 
-                                        เพื่อให้นักเรียนเล่นเพลงป๊อป คลาสสิก ได้ง่ายและเร็วขึ้น<br />
-                                        นอกจากนี้ยังสอนให้รู้ทฤษฎีดนตรีพื้นฐานไปพร้อมกับปฏิบัติ<br />
-                                        สอนให้อ่านโน๊ตจนเป็นทุกคนและเรียนในห้องขนาดใหญ่ไม่อึดอัด<br />
-                                    </div>
-                                </div>
-                                <div class="m-widget19__action">
-                                    <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">Read More</button>
-                                </div>
-                            </div>
+        <div class="col-xl-4">
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                <div class="m-portlet__head m-portlet__head--fit">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-action">
+                            <button type="button" class="btn m-btn--pill btn-primary m-btn--wide" data-toggle="modal" onclick="ShowAction(0, 'Add','Course')">เพิ่มคอร์ส</button>
+
                         </div>
                     </div>
                 </div>
+                <div class="m-portlet__body">
 
-            }
-        }
-        @using (Html.BeginForm("Create", "Course", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
-        {
-        <!--begin::Modal-->
-            <div class="modal fade" id="addcourse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">เพิ่มคอร์ส</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <div class="m-widget19">
+                        <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 180px">
+                            <img src="~/Content/images/course/New_Course.jpg" alt="">
+                            <h3 class="m-widget19__title m--font-light"></h3>
+
+
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+
+
+        <!--begin::Modal-->
+        <div class="modal fade" id="addcourse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">จัดการคอร์ส</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @using (Html.BeginForm("manage", "course", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
                         <div class="modal-body">
-                            @*<form>*@
-                            <a id="UploadImg" href="#">
-                                    <img src="~/Content/images/course/BlankBanner.png" id="imgCourse" class="img-thumbnail imgZoom"
-                                         style="height:200px; width:100%;margin-bottom:15px" />
-                                </a>
-                            <div class="form-group">
-                                <label for="recipient-name" class="form-control-label">ชื่อคอร์ส:</label>
-                                @Html.TextBoxFor(m => m.COURSES.NAME, new { @id = "NAME", @class = "form-control m-input" })
-                                @*<input type="text" class="form-control" id="recipient-name">*@
+                            <div class="form-group m-form__group row">
+                                <label for="message-text" class="col-2 col-form-label">รูปประกอบ</label>
+                                <div class="col-10">
+                                    <a id="UploadImg" href="#">
+                                        <img src="~/Content/images/course/BlankBanner.png" id="imgCourse" class="img-thumbnail imgZoom"
+                                             style="height:200px; width:100%;margin-bottom:15px" />
+                                    </a>
+                                    @Html.TextBoxFor(m => m.COURSES.AUTO_ID, new { @id = "cAUTO_ID", @name = "AUTO_ID", @class = "form-control m-input", @style = "display:none;" })
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="message-text" class="form-control-label">รายละเอียด:</label>
-                                @Html.TextAreaFor(m => m.COURSES.DESCRIPTION, new { @id = "DESCRIPTION", @class = "form-control m-input", @rows = "4" })
-                                @*<textarea class="form-control" id="message-text" rows="4"></textarea>*@
+                            <div class="form-group m-form__group row">
+                                <label for="message-text" class="col-2 col-form-label">ชื่อคอร์ส:</label>
+                                <div class="col-10">
+                                    @Html.TextBoxFor(m => m.COURSES.NAME, new { @id = "cNAME", @class = "form-control m-input" })
+                                </div>
                             </div>
-                            @*</form>*@
+                            <div class="form-group m-form__group row">
+                                <label for="message-text" class="col-2 col-form-label">รายละเอียด:</label>
+                                <div class="col-10">
+                                    @Html.TextAreaFor(m => m.COURSES.DESCRIPTION, new { @id = "cDESCRIPTION", @class = "form-control m-input", @rows = "4" })
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="message-text" class="col-2 col-form-label">ราคา:</label>
+                                <div class="col-10">
+                                    @Html.TextBoxFor(m => m.COURSES.PRICE, new { @id = "cPRICE", type = "Number", @class = "form-control m-input" })
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <input name="banner_img" type="file" id="uploadCover"style="display:none;" />
+                            <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save</button>
+                            <button type="button" class="btn btn-secondary m-btn m-btn--air m-btn--custom" data-dismiss="modal">Close</button>
+                            <input name="banner_img" type="file" id="uploadCover" style="display:none;" />
                         </div>
-
-                    </div>
-
+                    }
                 </div>
             </div>
+        </div>
         <!--end::Modal-->
-        }
         <!--End::Section-->
     </div>
 
     <script>
+
+        function ShowAction(id, type,section) {
+
+            if (type == "Add") {
+                if(section == "Course"){
+                    $('#cAUTO_ID').val(0);
+                    $('#cNAME').val('');
+                    $('#cDESCRIPTION').val('');
+                    $('#cPRICE').val(0);
+                    $("#imgCourse").attr("src", "..//Content/images/course/BlankBanner.png");
+                    $('#addcourse').modal('show');
+                }
+
+            }
+            else if (type == "Edit") {
+
+                if (section == "Course") {
+                    var tmpData = @Html.Raw(Json.Encode(Model.LIST_COURSES));
+
+                    for (var i = 0; i < tmpData.length; i++) {
+                        if (tmpData[i].AUTO_ID == id) {
+                            $('#cAUTO_ID').val(id);
+                            $('#cNAME').val(tmpData[i].NAME);
+                            $('#cDESCRIPTION').val(tmpData[i].DESCRIPTION);
+                            $('#cPRICE').val(tmpData[i].PRICE);
+                            $("#imgCourse").attr("src","../"+ tmpData[i].BANNER_URL);
+                            $('#addcourse').modal('show');
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
 
         $("#uploadCover").change(function () {
             debugger;

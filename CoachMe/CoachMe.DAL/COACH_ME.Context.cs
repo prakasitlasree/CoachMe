@@ -29,6 +29,7 @@ namespace COACHME.DAL
         }
     
         public virtual DbSet<CONFIGURATION> CONFIGURATION { get; set; }
+        public virtual DbSet<COURSE_COMMENT> COURSE_COMMENT { get; set; }
         public virtual DbSet<COURSE_PLACE> COURSE_PLACE { get; set; }
         public virtual DbSet<COURSES> COURSES { get; set; }
         public virtual DbSet<LOGON_ACTIVITY> LOGON_ACTIVITY { get; set; }
@@ -41,7 +42,5 @@ namespace COACHME.DAL
         public virtual DbSet<PLACE> PLACE { get; set; }
         public virtual DbSet<RESET_PASSWORD> RESET_PASSWORD { get; set; }
         public virtual DbSet<ROLE> ROLE { get; set; }
-        public virtual DbSet<COURSE_COMMENT> COURSE_COMMENT { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

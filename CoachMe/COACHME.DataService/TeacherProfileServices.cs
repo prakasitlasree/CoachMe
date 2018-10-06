@@ -380,21 +380,26 @@ namespace COACHME.DATASERVICE
             {
                 resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
-               
+
             }
             return resp;
         }
 
         public async Task<RESPONSE__MODEL> GetCourseByTeacherID(MEMBER_LOGON dto)
         {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL(); 
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
-                    var listCourse = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).ToListAsync();
- 
+                    var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).ToListAsync();
+                    var listCourse = new List<COURSES>();
+                    foreach (var item in listTeacher)
+                    {
+                        item.COURSES.MEMBER_TEACH_COURSE = null;
+                        listCourse.Add(item.COURSES);
+                    }
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = listCourse;
                 }
@@ -403,12 +408,12 @@ namespace COACHME.DATASERVICE
             {
                 resp.STATUS = false;
                 resp.ErrorMessage = ex.Message;
-                
+
             }
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> CreateCourse(CONTAINER_MODEL dto, HttpPostedFileBase  banner_img)
+        public async Task<RESPONSE__MODEL> MangeCourse(CONTAINER_MODEL dto, HttpPostedFileBase banner_img)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
 
@@ -429,7 +434,7 @@ namespace COACHME.DATASERVICE
                     System.IO.Directory.CreateDirectory(myDir);
 
                     if (banner_img != null)
-                    { 
+                    {
                         if (banner_img.ContentLength > 0)
                         {
                             string fileName = Path.GetFileName(banner_img.FileName);
@@ -440,34 +445,66 @@ namespace COACHME.DATASERVICE
                         course.BANNER_URL = @"\\" + path.Substring(index);
                     }
                     #endregion
-
+                    var memRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_LOGON.MEMBER_ID).FirstOrDefault();
+                    var memTeach = ctx.MEMBER_TEACH_COURSE.Where(x => x.MEMBER_ROLE_ID == memRole.AUTO_ID).ToList();
                     #region =====Course===== 
-                    course.NAME = dto.COURSES.NAME;
-                    course.DESCRIPTION = dto.COURSES.DESCRIPTION;
-                    course.CREATED_BY = dto.MEMBERS.FULLNAME;
-                    course.CREATED_DATE = DateTime.Now;
-                    course.UPDATED_BY = dto.MEMBERS.FULLNAME;
-                    course.UPDATED_DATE = DateTime.Now;
+                    if (dto.COURSES.AUTO_ID > 0)
+                    {
+                        //Edit
+                        var objEdit = ctx.COURSES.Where(x => x.AUTO_ID == dto.COURSES.AUTO_ID).FirstOrDefault();
+                        objEdit.NAME = dto.COURSES.NAME;
+                        objEdit.DESCRIPTION = dto.COURSES.DESCRIPTION;
+                        objEdit.CREATED_BY = dto.MEMBERS.FULLNAME;
+                        objEdit.CREATED_DATE = DateTime.Now;
+                        objEdit.UPDATED_BY = dto.MEMBERS.FULLNAME;
+                        objEdit.UPDATED_DATE = DateTime.Now;
+                        objEdit.PRICE = dto.COURSES.PRICE;
 
-                    teachCourse.COURSES = course; 
-                    var role = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefault();
-                    teachCourse.MEMBER_ROLE_ID = role.AUTO_ID;
-                    ctx.MEMBER_TEACH_COURSE.Add(teachCourse);
+                        if (course.BANNER_URL!= null)
+                        { 
+                            objEdit.BANNER_URL = course.BANNER_URL;
+                        }
+                        //add activity
+                        #region === Activity ===
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "Update Course";
+                        activity.FULLNAME = dto.MEMBERS.FULLNAME;
+                        activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
+                        activity.STATUS = resp.STATUS;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        #endregion
+                    }
+                    else
+                    {
+                        //Add
+                        course.NAME = dto.COURSES.NAME;
+                        course.DESCRIPTION = dto.COURSES.DESCRIPTION;
+                        course.CREATED_BY = dto.MEMBERS.FULLNAME;
+                        course.CREATED_DATE = DateTime.Now;
+                        course.UPDATED_BY = dto.MEMBERS.FULLNAME;
+                        course.UPDATED_DATE = DateTime.Now;
+                        course.PRICE = dto.COURSES.PRICE;
+                        course.SEQ = memTeach.Count + 1;
+                        teachCourse.COURSES = course;
+                        var role = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefault();
+                        teachCourse.MEMBER_ROLE_ID = role.AUTO_ID;
+                        ctx.MEMBER_TEACH_COURSE.Add(teachCourse);
+
+                        //add activity
+                        #region === Activity ===
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "Create Course";
+                        activity.FULLNAME = dto.MEMBERS.FULLNAME;
+                        activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
+                        activity.STATUS = resp.STATUS; 
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        #endregion
+
+                    }
                     #endregion
-
-                    //add activity
-                    #region === Activity ===
-                    var activity = new LOGON_ACTIVITY();
-                    activity.DATE = DateTime.Now;
-                    activity.ACTION = "Create Course";
-                    activity.FULLNAME = dto.MEMBERS.FULLNAME;
-                    activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
-                    activity.STATUS = resp.STATUS;
-
-                    
-                    ctx.LOGON_ACTIVITY.Add(activity);
-                    #endregion
-
+                     
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
 
