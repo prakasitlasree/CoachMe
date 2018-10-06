@@ -25,7 +25,11 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memberProfile = await ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == member_id).FirstOrDefaultAsync();
+                    var memberProfile = await ctx.MEMBERS
+                                             .Include("MEMBER_LOGON")
+                                             .Include("MEMBER_PACKAGE")
+                                             .Where(x => x.AUTO_ID == member_id).FirstOrDefaultAsync();
+                    memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE.Skip(Math.Max(0, memberProfile.MEMBER_PACKAGE.Count() - 1)).ToList();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
