@@ -66,7 +66,7 @@ namespace COACHME.DATASERVICE
                                                    .Where(x => x.STATUS != "DRAFT")
                                                    .OrderBy(x => x.EFFECTIVE_DATE)
                                                    .ToList();
-                    
+
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -372,14 +372,20 @@ namespace COACHME.DATASERVICE
                     var memberProfile = await ctx.MEMBERS
                         .Include("MEMBER_LOGON")
                         .Include("MEMBER_PACKAGE")
+                        .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
                         .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-
                     model.MEMBERS = memberProfile;
+
+                    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
+                                                        .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
+
+                    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID)).Select(o => o.MEMBER_ROLE_ID).ToList();
+
 
                     var listStudent = await ctx.MEMBERS
                                             .Include(x => x.MEMBER_ROLE)
                                             .Include(x => x.MEMBER_LOGON)
-                                            .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => o.ROLE_ID == 2))
+                                            .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.MEMBER_ID)))
                                             .ToListAsync();
 
 
@@ -403,7 +409,7 @@ namespace COACHME.DATASERVICE
                         listStudent = listStudent.ToList();
                     }
                     model.LIST_MEMBERS = listStudent;
-
+                    
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;
@@ -440,7 +446,7 @@ namespace COACHME.DATASERVICE
                     var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
                     var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
 
-                    var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).OrderByDescending(x=>x.AUTO_ID).ToListAsync();
+                    var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).OrderByDescending(x => x.AUTO_ID).ToListAsync();
                     var listCourse = new List<COURSES>();
                     if (checkPackage != null)
                     {
@@ -452,7 +458,7 @@ namespace COACHME.DATASERVICE
                         }
                     }
                     else
-                    {    
+                    {
                         //แบบฟรี
                         foreach (var item in listTeacher)
                         {
@@ -461,7 +467,7 @@ namespace COACHME.DATASERVICE
                                 break;
                             }
                             else
-                            { 
+                            {
                                 item.COURSES.MEMBER_TEACH_COURSE = null; //alway clear null
                                 listCourse.Add(item.COURSES);
                             }
