@@ -18,7 +18,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             if (Session["logon"] != null)
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
-                
+
 
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
@@ -149,6 +149,23 @@ namespace COACHME.WEB_PRESENT.Controllers
         //    return View();
         //}
 
+        public ActionResult Dashboard()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                resp = service.GetMemberProfileNotAsync(memberLogon);
+                model.MEMBERS = resp.OUTPUT_DATA;
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            } 
+        }
+
         // POST:
 
         [HttpPost]
@@ -156,13 +173,21 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
-            resp = await service.FindStudent(dto.MEMBERS);
-            model = resp.OUTPUT_DATA;
-            if (model.LIST_MEMBERS.Count > 3)
+            if (Session["logon"] != null)
             {
-               TempData["NOADS"] = true;
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                resp = await service.FindStudent(dto.MEMBERS);
+                model = resp.OUTPUT_DATA;
+                if (model.LIST_MEMBERS.Count > 3)
+                {
+                    TempData["NOADS"] = true;
+                }
+                return View(model);
             }
-            return View(model);
+            else
+            {
+                return RedirectToAction("login", "account");
+            } 
         }
 
         // GET: Teacher/Delete/5

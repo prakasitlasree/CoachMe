@@ -131,16 +131,16 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-widget19">
-                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 286px">
-                                <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg") " style="height:300px">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 250px">
+                                <img src="..//@Url.Content(@item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg") " style="height:250px">
                                 <h3 class="m-widget19__title m--font-light">
                                     @item.FULLNAME
                                 </h3>
                                 <div class="m-widget19__shadow"></div>
                             </div>
-                            <div class="m-widget19__content">
+                            @*<div class="m-widget19__content">
                                 <div class="m-widget19__header">
-                                    @*<div class="m-widget19__user-img">
+                                    <div class="m-widget19__user-img">
                                             <img class="m-widget19__img" src="assets/app/media/img//users/user1.jpg" alt="">
                                         </div>
                                         <div class="m-widget19__info">
@@ -158,18 +158,18 @@
                                             <span class="m-widget19__comment">
 
                                             </span>
-                                        </div>*@
+                                        </div>
                                 </div>
                                 <div class="m-widget19__body">
-                                    @*@item.ABOUT*@
+                                     item.ABOUT 
                                 </div>
-                            </div>
-
+                            </div>*@
+                            <br />
                             <div class="m-widget7__button center">
                                 <div class="row">
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-10 text-center">
+                                    @*<div class="col-lg-1 col-md-1 col-sm-1">
+                                    </div>*@
+                                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                                         <button class="m-btn m-btn--pill btn btn-success">
                                             <span>
                                                 <i class="fa fa-check-square"></i>
@@ -183,8 +183,8 @@
                                             </span>
                                         </button>
                                     </div>
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                    </div>
+                                    @*<div class="col-lg-1 col-md-1 col-sm-1">
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -215,14 +215,14 @@
                                         <a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
                                             <i class="la la-ellipsis-h m--font-light"></i>
                                         </a>
-                                        <div class="m-dropdown__wrapper">
+                                        @*<div class="m-dropdown__wrapper">
                                             <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                                             <div class="m-dropdown__inner">
                                                 <div class="m-dropdown__body">
 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </li>
                                 </ul>
                             </div>

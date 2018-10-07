@@ -250,7 +250,9 @@
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\Profile\sample.png" />
     <Content Include="Content\images\teacher\CM_LOGO.png" />
+    <Content Include="Content\images\teacher\dashboard.jpg" />
     <Content Include="Content\images\teacher\logo.png" />
+    <Content Include="Content\images\teacher\reen.jpg" />
     <Content Include="Content\images\teacher\user1.jpg" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\scripts.bundle.js" />
@@ -357,10 +359,12 @@
     <Content Include="Views\Teacher\FindStudent.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Teacher\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
+    <Folder Include="Views\Dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
