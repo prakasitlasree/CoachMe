@@ -112,10 +112,10 @@ namespace COACHME.DATASERVICE
                     //Create Directory
                     //Deploy
                     #region ==== DEPLOY PATH ====
-                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
+                    string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
                     #endregion
                     #region ==== ROCK PATH ====
-                    string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
+                    //string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
                     //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
@@ -187,7 +187,7 @@ namespace COACHME.DATASERVICE
                         string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
@@ -495,7 +495,7 @@ namespace COACHME.DATASERVICE
                     //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\course\\";
                     string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\course\\";
                     //Deploy
-                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\course\\";
+                    myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\course\\";
                     string path = "";
                     myDir += dto.MEMBER_LOGON.USER_NAME;
                     System.IO.Directory.CreateDirectory(myDir);
