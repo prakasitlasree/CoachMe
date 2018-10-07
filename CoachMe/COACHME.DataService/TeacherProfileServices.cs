@@ -374,12 +374,15 @@ namespace COACHME.DATASERVICE
                         .Include("MEMBER_PACKAGE")
                         .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
                         .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
                     model.MEMBERS = memberProfile;
 
                     var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
                                                         .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
 
-                    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID)).Select(o => o.MEMBER_ROLE_ID).ToList();
+                    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
+                                                             .Select(o => o.MEMBER_ROLE_ID)
+                                                             .ToList();
 
 
                     var listStudent = await ctx.MEMBERS
@@ -392,6 +395,7 @@ namespace COACHME.DATASERVICE
                     var package = memberProfile.MEMBER_PACKAGE
                                                 .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
                                                 .Select(o => o.PACKAGE_NAME).LastOrDefault();
+
                     if (package == null)
                     {
                         listStudent = listStudent.Take(3).ToList();
