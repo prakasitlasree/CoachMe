@@ -24,11 +24,11 @@ namespace COACHME.DATASERVICE
                     //Create Directory
                     //Deploy
                     #region ==== DEPLOY PATH ====
-                    //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
+                    string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
                     #endregion
                    
                     #region ==== ROCK PATH ====
-                    string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                    //string myDir = "D:\\PXProject\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
                     #endregion
                     
                     #region ==== P'X PATH ====
@@ -118,8 +118,9 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
-                throw ex;
+                resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
+                throw ex;
             }
 
             return resp;
