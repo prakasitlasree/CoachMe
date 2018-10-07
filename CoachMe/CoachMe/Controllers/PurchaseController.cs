@@ -23,7 +23,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 var model = new CONTAINER_MODEL();
                 var memberLogon = (MEMBER_LOGON)Session["logon"]; 
-                resp =  service.GetMemberProfileNotAsync(dto);
+                resp =  service.GetMemberProfileNotAsync(memberLogon);
                 model.MEMBERS = resp.OUTPUT_DATA;
 
                 if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
