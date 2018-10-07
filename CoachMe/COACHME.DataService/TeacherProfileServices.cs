@@ -438,12 +438,34 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
-                    var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).ToListAsync();
+                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
+
+                    var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).OrderByDescending(x=>x.AUTO_ID).ToListAsync();
                     var listCourse = new List<COURSES>();
-                    foreach (var item in listTeacher)
+                    if (checkPackage != null)
                     {
-                        item.COURSES.MEMBER_TEACH_COURSE = null;
-                        listCourse.Add(item.COURSES);
+                        //แบบซื้อ package แล้ว
+                        foreach (var item in listTeacher)
+                        {
+                            item.COURSES.MEMBER_TEACH_COURSE = null; //alway clear null
+                            listCourse.Add(item.COURSES);
+                        }
+                    }
+                    else
+                    {    
+                        //แบบฟรี
+                        foreach (var item in listTeacher)
+                        {
+                            if (listCourse.Count == 2)
+                            {
+                                break;
+                            }
+                            else
+                            { 
+                                item.COURSES.MEMBER_TEACH_COURSE = null; //alway clear null
+                                listCourse.Add(item.COURSES);
+                            }
+                        }
                     }
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = listCourse;
