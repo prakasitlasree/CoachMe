@@ -83,19 +83,22 @@ namespace COACHME.DATASERVICE
                     {
                         memberPackage.PACKAGE_NAME = "Basic Plan";
                         memberPackage.PACKAGE_DETAIL = "Basic Plan Detail";
+                        memberPackage.PRICE = 200;
                     }
                     if (plan == "Pro")
                     {
                         memberPackage.PACKAGE_NAME = "Professional Plan";
                         memberPackage.PACKAGE_DETAIL = "Professional Plan Detail";
+                        memberPackage.PRICE = 400;
                     }
                     if (plan == "Advance")
                     {
                         memberPackage.PACKAGE_NAME = "Advance Plan";
                         memberPackage.PACKAGE_DETAIL = "Advance Plan Detail";
+                        memberPackage.PRICE = 500;
                     }
 
-                    memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(30);
+                    memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(120);
 
                     var uploadSlip = ctx.MEMBER_PACKAGE.Add(memberPackage);
                     #endregion
