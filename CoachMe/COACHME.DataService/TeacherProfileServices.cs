@@ -384,12 +384,40 @@ namespace COACHME.DATASERVICE
                                                              .Select(o => o.MEMBER_ROLE_ID)
                                                              .ToList();
 
+                    var courseName = await ctx.COURSES
+                                              .Where(o => teachCourse.Contains(o.AUTO_ID)).ToListAsync();
 
                     var listStudent = await ctx.MEMBERS
-                                            .Include(x => x.MEMBER_ROLE)
-                                            .Include(x => x.MEMBER_LOGON)
-                                            .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.MEMBER_ID)))
-                                            .ToListAsync();
+                                                .Include(x => x.MEMBER_ROLE.Select(o => o.MEMBER_REGIS_COURSE))
+                                                .Include(x => x.MEMBER_LOGON)
+                                                .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
+                                                .ToListAsync();
+
+                    List<MEMBERS> listStu = new List<MEMBERS>();
+
+                    //foreach (var item in listStudent)
+                    //{
+                    //    var role = item.MEMBER_ROLE;
+                    //    foreach (var p in role)
+                    //    {
+                    //        var regisCouse = p.MEMBER_REGIS_COURSE;
+                    //        foreach (var z in regisCouse)
+                    //        {
+                    //            MEMBERS student = new MEMBERS();
+                    //            student.AUTO_ID = item.AUTO_ID;
+                    //            student.PROFILE_IMG_URL = item.PROFILE_IMG_URL ?? null;
+                    //            student.SEX = item.SEX ?? null;
+                    //            student.AGE = item.AGE ?? null;
+                    //            student.LOCATION = item.LOCATION ?? null;
+                    //            student.MEMBER_LOGON.FirstOrDefault().USER_NAME = item.MEMBER_LOGON.FirstOrDefault().USER_NAME ?? null;
+                    //            student.ABOUT = item.ABOUT ?? null;
+                    //            student.MEMBER_ROLE.FirstOrDefault().MEMBER_REGIS_COURSE.FirstOrDefault().COURSES.NAME = z.COURSES.NAME ?? "ยังไม่มีชื่อ";
+                    //            listStu.Add(student);
+                    //        }
+
+                    //    }
+
+                    //}
 
 
                     var package = memberProfile.MEMBER_PACKAGE
@@ -413,7 +441,7 @@ namespace COACHME.DATASERVICE
                         listStudent = listStudent.ToList();
                     }
                     model.LIST_MEMBERS = listStudent;
-                    
+
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;
