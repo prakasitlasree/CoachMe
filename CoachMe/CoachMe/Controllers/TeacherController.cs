@@ -18,11 +18,11 @@ namespace COACHME.WEB_PRESENT.Controllers
             if (Session["logon"] != null)
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
-                resp = service.GetMemberProfileNotAsync(dto);
+                
 
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
-
+                resp = service.GetMemberProfileNotAsync(memberLogon);
                 model.MEMBERS = resp.OUTPUT_DATA;
                 return View(model);
             }
