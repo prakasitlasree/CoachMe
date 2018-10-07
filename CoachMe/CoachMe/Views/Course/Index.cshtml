@@ -1,12 +1,15 @@
 ﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @using Newtonsoft.Json
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "CoachME";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
 <div class="m-content">
-
+    @if (TempData["Message"] != null)
+    {
+        <p style="text-align:center" class="text-success"> บันทึกข้อมูลเรียบร้อย</p>
+    }
     <!--Begin::Section-->
     <div class="row">
         @foreach (var item in Model.LIST_COURSES)
@@ -38,12 +41,9 @@
                                     @*</div>*@
                                     <div class="m-widget19__info">
                                         <span class="m-widget19__username">
-                                            @if (TempData["Message"] != null)
-                                            {
-                                                <p style="text-align:center" class="text-success"> บันทึกข้อมูลเรียบร้อย</p>
-                                            }
+                                            
                                             @item.UPDATED_BY
-                                            @item.AUTO_ID
+                                            @*@item.AUTO_ID*@
                                         </span><br>
                                         <span class="m-widget19__time">
                                             @item.UPDATED_DATE
@@ -79,7 +79,7 @@
         }
 
         @if (Model.LIST_COURSES.Count <= 1)
-        { 
+        {
             <div class="col-xl-4">
                 <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
                     <div class="m-portlet__head m-portlet__head--fit">
@@ -104,30 +104,60 @@
         }
         @if (Model.LIST_COURSES.Count == 2)
         {
-            <div class="m-portlet__body">
-                <div class="m-widget7 m-widget7--skin-dark">
-                    <div class="m-widget7__desc">
-                        สามารถเปิดคอร์สในการสอนเพิ่มได้ อัพเกรดแพ็คเกจของคุณสิ
-                    </div>
-                    <div class="m-widget7__user">
-                        <div class="m-widget7__user-img">
-                            @*<img class="m-widget7__img" src="./assets/app/media/img//users/100_3.jpg" alt="">*@
+            <div class="col-xl-4">
+                <div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height ">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    ADS
+                                </h3>
+                            </div>
                         </div>
-                        <div class="m-widget7__info">
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
+                                    <a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
+                                        <i class="la la-ellipsis-h m--font-light"></i>
+                                    </a>
+                                    @*<div class="m-dropdown__wrapper">
+                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                        <div class="m-dropdown__inner">
+                                            <div class="m-dropdown__body">
 
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="m-widget7__button">
-                        <button class="m-btn m-btn--pill btn btn-danger">
-                            <span>
-                                <i class="fa fa-crown"></i>
-                                <span> อัพเกรด</span>
-                            </span>
-                        </button>
+                    <div class="m-portlet__body">
+                        <div class="m-widget7 m-widget7--skin-dark">
+                            <div class="m-widget7__desc">
+                                มีนักเรียนอีกมากมายรอคุณอยู่ อัพเกรดแพ็คเกจของคุณสิ
+                            </div>
+                            <div class="m-widget7__user">
+                                <div class="m-widget7__user-img">
+                                    <img class="m-widget7__img" src="./assets/app/media/img//users/100_3.jpg" alt="">
+                                </div>
+                                <div class="m-widget7__info">
+
+                                </div>
+                            </div>
+                            <div class="m-widget7__button">
+                                <a class="m-btn m-btn--pill btn btn-danger" href="/purchase/index">
+                                    <span>
+                                        <i class="fa fa-crown"></i>
+                                        <span> อัพเกรด</span>
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
 
                     </div>
                 </div>
-
             </div>
         }
 
@@ -173,11 +203,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save</button>
-                            <button type="button" class="btn btn-secondary m-btn m-btn--air m-btn--custom" data-dismiss="modal">Close</button>
-                            <input name="banner_img" type="file" id="uploadCover" style="display:none;" />
-                        </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save</button>
+                                    <button type="button" class="btn btn-secondary m-btn m-btn--air m-btn--custom" data-dismiss="modal">Close</button>
+                                    <input name="banner_img" type="file" id="uploadCover" style="display:none;" />
+                                </div>
                     }
                 </div>
             </div>
