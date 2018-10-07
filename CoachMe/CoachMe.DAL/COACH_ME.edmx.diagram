@@ -5,27 +5,28 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4292536c1dc344e0b73c480e589fd914" Name="Diagram1" ZoomLevel="34">
-        <EntityTypeShape EntityType="COACH_MEModel.CONFIGURATION" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.COURSE_COMMENT" Width="1.5" PointX="3" PointY="5.25" />
-        <EntityTypeShape EntityType="COACH_MEModel.COURSE_PLACE" Width="1.5" PointX="3" PointY="8.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.COURSES" Width="1.5" PointX="0.75" PointY="6.375" />
-        <EntityTypeShape EntityType="COACH_MEModel.LOGON_ACTIVITY" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_LOGON" Width="1.5" PointX="3.75" PointY="27" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_PACKAGE" Width="1.5" PointX="3.75" PointY="31.25" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" Width="1.5" PointX="3" PointY="15.5" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_ROLE" Width="1.5" PointX="3.75" PointY="22.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_TEACH_COURSE" Width="1.5" PointX="6" PointY="6.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.MEMBERS" Width="1.5" PointX="1.5" PointY="22.875" />
-        <EntityTypeShape EntityType="COACH_MEModel.PLACE" Width="1.5" PointX="0.75" PointY="10.875" />
-        <EntityTypeShape EntityType="COACH_MEModel.RESET_PASSWORD" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="COACH_MEModel.ROLE" Width="1.5" PointX="1.5" PointY="19.5" />
-        <AssociationConnector Association="COACH_MEModel.FK_COURSE_COMMENT_COURSES" />
+        <EntityTypeShape EntityType="COACH_MEModel.CONFIGURATION" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.COURSE_PLACE" Width="1.5" PointX="8.25" PointY="1" />
+        <EntityTypeShape EntityType="COACH_MEModel.COURSES" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.LOGON_ACTIVITY" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_LOGON" Width="1.5" PointX="3" PointY="9.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_PACKAGE" Width="1.5" PointX="3" PointY="13.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" Width="1.5" PointX="8.25" PointY="4.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_REGIS_COURSE_COMMENT" Width="1.5" PointX="10.5" PointY="5.375" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_ROLE" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBER_TEACH_COURSE" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="COACH_MEModel.MEMBERS" Width="1.5" PointX="0.75" PointY="6.5" />
+        <EntityTypeShape EntityType="COACH_MEModel.PLACE" Width="1.5" PointX="6" PointY="9.125" />
+        <EntityTypeShape EntityType="COACH_MEModel.RESET_PASSWORD" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="COACH_MEModel.ROLE" Width="1.5" PointX="0.75" PointY="2.25" />
         <AssociationConnector Association="COACH_MEModel.FK_COURSE_PLACE_COURSES" />
         <AssociationConnector Association="COACH_MEModel.FK_COURSE_PLACE_PLACE" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COURSES" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_TEACHER_COURSE_COURSES" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_PACKAGE_MEMBERS" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COMMENT_MEMBER_REGIS_COURSE" />
+        <AssociationConnector Association="COACH_MEModel.FK_MEMBER_REGIS_COURSE_MEMBER_ROLE" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_ROLE_ROLE" />
         <AssociationConnector Association="COACH_MEModel.FK_MEMBER_TEACH_COURSE_MEMBER_ROLE" />

@@ -14,9 +14,15 @@ namespace COACHME.MODEL
     
     public partial class MEMBER_REGIS_COURSE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MEMBER_REGIS_COURSE()
+        {
+            this.MEMBER_REGIS_COURSE_COMMENT = new HashSet<MEMBER_REGIS_COURSE_COMMENT>();
+        }
+    
         public int AUTO_ID { get; set; }
-        public Nullable<int> MEMBER_ROLE_ID { get; set; }
-        public Nullable<int> COURSE_ID { get; set; }
+        public int MEMBER_ROLE_ID { get; set; }
+        public int COURSE_ID { get; set; }
         public string DESCRIPTION { get; set; }
         public Nullable<System.DateTime> START_DATE { get; set; }
         public Nullable<System.DateTime> END_DATE { get; set; }
@@ -26,5 +32,8 @@ namespace COACHME.MODEL
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
     
         public virtual COURSES COURSES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBER_REGIS_COURSE_COMMENT> MEMBER_REGIS_COURSE_COMMENT { get; set; }
+        public virtual MEMBER_ROLE MEMBER_ROLE { get; set; }
     }
 }
