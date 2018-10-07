@@ -60,9 +60,6 @@
     <Compile Include="COURSES.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
-    <Compile Include="COURSE_COMMENT.cs">
-      <DependentUpon>COACH_ME.tt</DependentUpon>
-    </Compile>
     <Compile Include="COURSE_PLACE.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
@@ -86,6 +83,9 @@
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="MEMBER_REGIS_COURSE.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MEMBER_REGIS_COURSE_COMMENT.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="MEMBER_ROLE.cs">

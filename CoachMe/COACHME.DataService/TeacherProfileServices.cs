@@ -566,6 +566,10 @@ namespace COACHME.DATASERVICE
                         teachCourse.COURSES = course;
                         var role = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefault();
                         teachCourse.MEMBER_ROLE_ID = role.AUTO_ID;
+                        teachCourse.CREATED_BY = dto.MEMBERS.FULLNAME;
+                        teachCourse.CREATED_DATE = DateTime.Now;
+                        teachCourse.UPDATED_BY = dto.MEMBERS.FULLNAME;
+                        teachCourse.UPDATED_DATE = DateTime.Now;
                         ctx.MEMBER_TEACH_COURSE.Add(teachCourse);
 
                         //add activity
