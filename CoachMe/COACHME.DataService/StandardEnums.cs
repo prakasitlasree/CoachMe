@@ -21,5 +21,10 @@ namespace COACHME.DATASERVICE
             MAIL_BODY_REGISTER,
             MAIL_FOOTER_REGISTER
         }
+
+        public enum SurveyType
+        {
+            Interest 
+        }
     }
 }

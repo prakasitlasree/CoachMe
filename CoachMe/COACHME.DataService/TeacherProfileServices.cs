@@ -80,6 +80,37 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        public async Task<RESPONSE__MODEL> ManageSurvey(MEMBER_LOGON dto)
+        {
+            var resp = new RESPONSE__MODEL();
+            var member_id = dto.MEMBER_ID;
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberProfile = await ctx.MEMBERS.Where(x => x.AUTO_ID == member_id).FirstOrDefaultAsync();
+
+                    var obj = new SURVEYS();
+                    obj.NAME = StandardEnums.SurveyType.Interest.ToString();
+                    obj.RESPONSE_TYPE = "Survey";
+                    obj.DESCRIPTION = "Dashboard-Announcements";
+                    obj.RESPONSE_BY = memberProfile.FULLNAME;
+                    obj.RESPONSE_DATE = DateTime.Now;
+                    obj.RESPONSE_COUNT = 1;
+                    ctx.SURVEYS.Add(obj);
+                    var result = await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp;
+        }
+
         public async Task<RESPONSE__MODEL> GetMemberProfileFromAutoID(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();

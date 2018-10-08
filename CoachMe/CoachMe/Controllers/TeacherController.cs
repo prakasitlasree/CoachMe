@@ -163,7 +163,26 @@ namespace COACHME.WEB_PRESENT.Controllers
             else
             {
                 return RedirectToAction("login", "account");
-            } 
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult>  Survey()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                resp = await service.ManageSurvey(memberLogon);
+                //model.MEMBERS = resp.OUTPUT_DATA;
+                TempData["Message"] = "Success";
+                return RedirectToAction("dashboard", "teacher");
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
         }
 
         // POST:
@@ -187,7 +206,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             else
             {
                 return RedirectToAction("login", "account");
-            } 
+            }
         }
 
         // GET: Teacher/Delete/5
