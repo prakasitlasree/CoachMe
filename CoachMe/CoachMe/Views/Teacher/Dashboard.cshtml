@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
@@ -16,7 +15,8 @@
     <!--Begin::Section-->
     <div class="row">
         <div class="col-xl-4">
-
+            @using (Html.BeginForm("survey", "teacher", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
             <!--begin:: Widgets/Announcements 1-->
             <div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height ">
                 <div class="m-portlet__head">
@@ -33,7 +33,7 @@
                                 <a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
                                     <i class="la la-ellipsis-h m--font-light"></i>
                                 </a>
-                                 
+
                             </li>
                         </ul>
                     </div>
@@ -43,7 +43,7 @@
                     <!--begin::Widget 7-->
                     <div class="m-widget7 m-widget7--skin-dark">
                         <div class="m-widget7__desc">
-                            เรากำลังพัฒนาเมนูภาพรวม แสดงจำนวนครั้งที่สอน จำนวนผู้เรียน รายได้ วิเคราะห์สถิติ  
+                            เรากำลังพัฒนาเมนูภาพรวม แสดงจำนวนครั้งที่สอน จำนวนผู้เรียน รายได้ วิเคราะห์สถิติ
                         </div>
                         <div class="m-widget7__user">
                             <div class="m-widget7__user-img">
@@ -52,19 +52,28 @@
                             <div class="m-widget7__info">
                                 <span class="m-widget7__username">
                                     <br />
-                                   HOT-LINE : 082-524-4830
-                                </span> 
+                                    HOT-LINE : 082-524-4830
+                                </span>
+                                @*@if (TempData["Message"] != null)
+                                {
+                                <br />
+                                <div class="class="m-alert__text"">
+                                    <strong>บันทึกข้อมูลเรียบร้อย</strong><br />
+                                    <p style="text-align:center" > ขอบคุณที่สนใจ!!!</p>
+                                </div>
+                                }*@
                             </div>
                         </div>
+
                         <div class="m-widget7__button">
-                            <a class="m-btn m-btn--pill btn btn-danger" href="#" role="button">สนใจ คลิ๊ก!!!</a>
+                            <button type="submit" id ="SubmitSurvey" class="m-btn m-btn--pill btn btn-danger" href="#" role="button">สนใจ คลิ๊ก!!!</button>
                         </div>
                     </div>
 
                     <!--end::Widget 7-->
                 </div>
             </div>
-
+            }
             <!--end:: Widgets/Announcements 1-->
         </div>
         <div class="col-xl-4">
@@ -74,7 +83,7 @@
                 <div class="m-portlet__head m-portlet__head--fit">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-action">
-                          
+
                         </div>
                     </div>
                 </div>
@@ -97,25 +106,25 @@
                                         Reen Srisuplee
                                     </span><br>
                                     <span class="m-widget19__time">
-                                       CEO, CoachME.asia
+                                        CEO, CoachME.asia
                                     </span>
                                 </div>
                                 <div class="m-widget19__stats">
                                     <span class="m-widget19__number m--font-brand">
-                                         
+
                                     </span>
                                     <span class="m-widget19__comment">
-                                        
+
                                     </span>
                                 </div>
                             </div>
                             <div class="m-widget19__body">
-                             
+
                                 เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
                                 สอนดนตรี ศิลปะ การแสดง เขียนโปรแกรม ทำหุ่นยนต์ การเงิน
                                 ไม่มีค่าธรรมเนียม ไม่มีค่านายหน้า จบครบในเว็บเดียว
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,7 +149,7 @@
                                 <a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
                                     <i class="la la-ellipsis-h m--font-light"></i>
                                 </a>
-                                 
+
                             </li>
                         </ul>
                     </div>
@@ -152,16 +161,16 @@
                         <div class="m-widget7__desc">
                             1.ผู้สอนสร้างโปรไฟล์ <br />
                             2.ผู้เรียนติดต่อ CoachME<br />
-                            3.ผู้เรียนชำระเงินผ่าน CoachME  
+                            3.ผู้เรียนชำระเงินผ่าน CoachME
 
                         </div>
                         <div class="m-widget7__user">
-                             
+
                             <div class="m-widget7__info">
                                 <span class="m-widget7__username">
-                                   
-                                  Email: info@coachme.asia
-                                </span> 
+
+                                    Email: info@coachme.asia
+                                </span>
                             </div>
                         </div>
                         <div class="m-widget7__button">
