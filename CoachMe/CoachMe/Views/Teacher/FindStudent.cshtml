@@ -9,7 +9,7 @@
 
     <div class="row">
 
-        @foreach (var item in Model.LIST_MEMBERS)
+        @foreach (var item in Model.LIST_CUSTOM_MEMBERS)
             {
             <div class="modal fade" id="@("MODAL_" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -79,7 +79,7 @@
 
                                     <span>
                                         <i class="fa fa-comment"></i>
-                                        <span> อีเมลล์ : &nbsp @item.MEMBER_LOGON.Select(o => o.USER_NAME).FirstOrDefault() </span>
+                                        <span> อีเมลล์ : &nbsp @item.USER_NAME </span>
                                     </span>
                                 </h4>
                                 <h4 class="m--font-bold m--font-bold">
@@ -96,8 +96,7 @@
                                         <h3 class="m--font-brand">
                                             <i class="fa fa-flag"></i>
                                             <span>
-                                                คอร์สที่สนใจ &nbsp @Url.Content(item.MEMBER_ROLE.FirstOrDefault()
-                                            .MEMBER_REGIS_COURSE.Select(o => o.COURSES).FirstOrDefault().NAME ?? "ยังไม่มีชื่อ")
+                                                คอร์สที่สนใจ &nbsp @Url.Content(item.COURSE ?? "ยังไม่มีชื่อ")
                                             </span>
                                         </h3>
                                         <span></span>
@@ -105,12 +104,16 @@
                                     </div>
                                 </div>
                                 <br>
-                                <h4 class="m--font-bold m--font-bold">
-                                    <span>
-                                        <i class="fa fa-comment"></i>
-                                        <span>ขอครูสอนสนุกเข้าใจง่ายครับ ขอแบบฝึกหัดเยอะ เวลา 17:00-20:00</span>
-                                    </span>
-                                </h4>
+                                @foreach (var comment in item.LIST_STUDENT_COMMENT)
+                                {
+                                    <h4 class="m--font-bold m--font-bold">
+                                        <span>
+                                            <i class="fa fa-comment"></i>
+                                            <span>@comment</span>
+                                        </span>
+                                    </h4>
+                                }
+                                
 
                             </div>
 

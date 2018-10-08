@@ -178,7 +178,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 var memberLogon = (MEMBER_LOGON)Session["logon"];
                 resp = await service.FindStudent(dto.MEMBERS);
                 model = resp.OUTPUT_DATA;
-                if (model.LIST_MEMBERS.Count > 3)
+                if (service.package != null)
                 {
                     TempData["NOADS"] = true;
                 }

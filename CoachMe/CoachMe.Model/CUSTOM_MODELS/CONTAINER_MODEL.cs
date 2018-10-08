@@ -19,7 +19,6 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public RESET_PASSWORD RESET_PASSWORD { get; set; }
         public ROLE ROLE { get; set; }
         public COURSE_PLACE COURSE_PLACE { get; set; }
-
         public List<CONFIGURATION> LIST_CONFIGURATION { get; set; }
         public List<COURSES> LIST_COURSES { get; set; }
         public List<MEMBERS> LIST_MEMBERS { get; set; }
@@ -31,5 +30,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<RESET_PASSWORD> LIST_RESET_PASSWORD { get; set; }
         public List<ROLE> LIST_ROLE { get; set; }
         public List<COURSE_PLACE> LIST_COURSE_PLACE { get; set; }
+
+        public List<CUSTOM_MEMBERS> LIST_CUSTOM_MEMBERS { get; set; }
     }
 }

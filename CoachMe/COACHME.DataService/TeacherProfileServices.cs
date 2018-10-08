@@ -13,6 +13,7 @@ namespace COACHME.DATASERVICE
 {
     public class TeacherProfileServices
     {
+        public string package = "";
         public async Task<RESPONSE__MODEL> GetMemberProfile(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -368,17 +369,43 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-
                     var memberProfile = await ctx.MEMBERS
-                        .Include("MEMBER_LOGON")
-                        .Include("MEMBER_PACKAGE")
-                        .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
-                        .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-
-                    model.MEMBERS = memberProfile;
+                       .Include("MEMBER_LOGON")
+                       .Include("MEMBER_PACKAGE")
+                       .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
+                       .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
                     var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
                                                         .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
+
+
+                    var listStu = await (from a in ctx.MEMBER_REGIS_COURSE.Include("MEMBER_REGIS_COURSE_COMMENT")
+                                         join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
+                                         join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
+                                         join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
+                                         join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
+                                         where teachCourse.Contains(d.AUTO_ID)
+                                         select new CUSTOM_MEMBERS
+                                         {
+                                             AUTO_ID = c.AUTO_ID,
+                                             FULLNAME = c.FULLNAME ?? "",
+                                             SEX = c.SEX == "1" ? "ชาย" : "หญิง",
+                                             AGE = c.AGE,
+                                             LOCATION = c.LOCATION ?? "",
+                                             MOBILE = c.MOBILE ?? "",
+                                             USER_NAME = f.USER_NAME ?? "",
+                                             COURSE = d.NAME ?? "",
+                                             ABOUT = c.ABOUT ?? "",
+                                             LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
+
+
+                                         }).ToListAsync();
+
+
+                    model.LIST_CUSTOM_MEMBERS = listStu;
+                    model.MEMBERS = memberProfile;
+
+
 
                     var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
                                                              .Select(o => o.MEMBER_ROLE_ID)
@@ -393,34 +420,9 @@ namespace COACHME.DATASERVICE
                                                 .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
                                                 .ToListAsync();
 
-                    List<MEMBERS> listStu = new List<MEMBERS>();
-
-                    //foreach (var item in listStudent)
-                    //{
-                    //    var role = item.MEMBER_ROLE;
-                    //    foreach (var p in role)
-                    //    {
-                    //        var regisCouse = p.MEMBER_REGIS_COURSE;
-                    //        foreach (var z in regisCouse)
-                    //        {
-                    //            MEMBERS student = new MEMBERS();
-                    //            student.AUTO_ID = item.AUTO_ID;
-                    //            student.PROFILE_IMG_URL = item.PROFILE_IMG_URL ?? null;
-                    //            student.SEX = item.SEX ?? null;
-                    //            student.AGE = item.AGE ?? null;
-                    //            student.LOCATION = item.LOCATION ?? null;
-                    //            student.MEMBER_LOGON.FirstOrDefault().USER_NAME = item.MEMBER_LOGON.FirstOrDefault().USER_NAME ?? null;
-                    //            student.ABOUT = item.ABOUT ?? null;
-                    //            student.MEMBER_ROLE.FirstOrDefault().MEMBER_REGIS_COURSE.FirstOrDefault().COURSES.NAME = z.COURSES.NAME ?? "ยังไม่มีชื่อ";
-                    //            listStu.Add(student);
-                    //        }
-
-                    //    }
-
-                    //}
 
 
-                    var package = memberProfile.MEMBER_PACKAGE
+                    package = memberProfile.MEMBER_PACKAGE
                                                 .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
                                                 .Select(o => o.PACKAGE_NAME).LastOrDefault();
 

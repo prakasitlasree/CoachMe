@@ -64,12 +64,14 @@
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="CUSTOM_MODELS\CONTAINER_MODEL.cs" />
+    <Compile Include="CUSTOM_MODELS\CUSTOM_MEMBERS.cs" />
     <Compile Include="CUSTOM_MODELS\FORGOT_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\LOGON_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\REGISTER_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESET_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESET_PASSWORD_VALIDATE_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESPONSE__MODEL.cs" />
+    <Compile Include="CUSTOM_MODELS\STUDENT_COMMENT.cs" />
     <Compile Include="LOGON_ACTIVITY.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
