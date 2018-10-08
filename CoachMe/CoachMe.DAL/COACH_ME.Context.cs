@@ -42,5 +42,6 @@ namespace COACHME.DAL
         public virtual DbSet<PLACE> PLACE { get; set; }
         public virtual DbSet<RESET_PASSWORD> RESET_PASSWORD { get; set; }
         public virtual DbSet<ROLE> ROLE { get; set; }
+        public virtual DbSet<SURVEYS> SURVEYS { get; set; }
     }
 }

@@ -201,6 +201,20 @@
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="UPDATED_DATE" Type="date" />
         </EntityType>
+        <EntityType Name="SURVEYS">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+          <Property Name="CREATED_DATE" Type="datetime" />
+          <Property Name="CREATED_BY" Type="nvarchar" MaxLength="100" />
+          <Property Name="RESPONSE_TYPE" Type="nvarchar(max)" />
+          <Property Name="RESPONSE_COUNT" Type="int" />
+          <Property Name="RESPONSE_BY" Type="nvarchar" MaxLength="50" />
+          <Property Name="RESPONSE_DATE" Type="datetime" />
+        </EntityType>
         <Association Name="FK_COURSE_PLACE_COURSES">
           <End Role="COURSES" Type="Self.COURSES" Multiplicity="0..1" />
           <End Role="COURSE_PLACE" Type="Self.COURSE_PLACE" Multiplicity="*" />
@@ -348,6 +362,7 @@
           <EntitySet Name="PLACE" EntityType="Self.PLACE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESET_PASSWORD" EntityType="Self.RESET_PASSWORD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SURVEYS" EntityType="Self.SURVEYS" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_COURSE_PLACE_COURSES" Association="Self.FK_COURSE_PLACE_COURSES">
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="COURSE_PLACE" EntitySet="COURSE_PLACE" />
@@ -412,6 +427,7 @@
           <EntitySet Name="PLACE" EntityType="COACH_MEModel.PLACE" />
           <EntitySet Name="RESET_PASSWORD" EntityType="COACH_MEModel.RESET_PASSWORD" />
           <EntitySet Name="ROLE" EntityType="COACH_MEModel.ROLE" />
+          <EntitySet Name="SURVEYS" EntityType="COACH_MEModel.SURVEYS" />
           <AssociationSet Name="FK_COURSE_PLACE_COURSES" Association="COACH_MEModel.FK_COURSE_PLACE_COURSES">
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="COURSE_PLACE" EntitySet="COURSE_PLACE" />
@@ -674,6 +690,20 @@
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_ROLE" FromRole="ROLE" ToRole="MEMBER_ROLE" />
+        </EntityType>
+        <EntityType Name="SURVEYS">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RESPONSE_TYPE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RESPONSE_COUNT" Type="Int32" />
+          <Property Name="RESPONSE_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RESPONSE_DATE" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_COURSE_PLACE_COURSES">
           <End Type="COACH_MEModel.COURSES" Role="COURSES" Multiplicity="0..1" />
@@ -1017,6 +1047,21 @@
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SURVEYS">
+            <EntityTypeMapping TypeName="COACH_MEModel.SURVEYS">
+              <MappingFragment StoreEntitySet="SURVEYS">
+                <ScalarProperty Name="RESPONSE_DATE" ColumnName="RESPONSE_DATE" />
+                <ScalarProperty Name="RESPONSE_BY" ColumnName="RESPONSE_BY" />
+                <ScalarProperty Name="RESPONSE_COUNT" ColumnName="RESPONSE_COUNT" />
+                <ScalarProperty Name="RESPONSE_TYPE" ColumnName="RESPONSE_TYPE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
