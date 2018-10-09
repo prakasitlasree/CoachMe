@@ -60,7 +60,7 @@ namespace COACHME.DATASERVICE
                    
                     #region ==== UPDATE OLD PACKAGE====
                     var memberOldPackage = member.MEMBER_PACKAGE
-                                                  .Where(o => o.EXPIRE_DATE > DateTime.Now)
+                                                  .Where(o => o.EXPIRE_DATE > DateTime.Now && o.STATUS == "ACTIVE")
                                                   .OrderByDescending(p => p.AUTO_ID)
                                                   .FirstOrDefault();
 
@@ -69,6 +69,7 @@ namespace COACHME.DATASERVICE
                         int remainDays = Convert.ToInt32((memberOldPackage.EXPIRE_DATE.Value - memberOldPackage.EFFECTIVE_DATE.Value).TotalDays);
                         memberOldPackage.EFFECTIVE_DATE = DateTime.Now.AddDays(30);
                         memberOldPackage.EXPIRE_DATE = DateTime.Now.AddDays(30 + remainDays);
+                        memberOldPackage.STATUS = "HOLD";
 
                     }
                     #endregion

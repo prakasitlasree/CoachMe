@@ -47,10 +47,14 @@
                                             <span class="m-pricing-table-2__price">200</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if ( TempData["Plan"].ToString() == "Basic Plan" )
+                                                @if (TempData["Plan"].ToString() == "Basic Plan")
                                                 {
                                                     <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
 
+                                                }
+                                                else if (TempData["Plan"].ToString() == "Professional Plan" || TempData["Plan"].ToString() == "Advance Plan")
+                                                {
+                                                    <button type="button" class="btn m-btn--pill  btn-brand m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Hold</button>
                                                 }
                                                 else
                                                 {
@@ -73,14 +77,18 @@
                                             <span class="m-pricing-table-2__price">400</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if ( TempData["Plan"].ToString() == "Professional Plan")
+                                                @if (TempData["Plan"].ToString() == "Professional Plan")
                                                 {
                                                     <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
+                                                }
+                                                else if (TempData["Plan"].ToString() == "Advance Plan")
+                                                {
+                                                    <button type="button" class="btn m-btn--pill  btn-brand m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Hold</button>
                                                 }
                                                 else
                                                 {
                                                     <button type="button" data-toggle="modal" data-target="#m_modal_2" value="pro" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-                                                   
+
                                                 }
                                             </div>
                                         </div>
@@ -99,14 +107,14 @@
                                             <span class="m-pricing-table-2__price">500</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if ( TempData["Plan"].ToString() == "Advance Plan")
+                                                @if (TempData["Plan"].ToString() == "Advance Plan")
                                                 {
                                                     <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
                                                 }
                                                 else
                                                 {
                                                     <button type="button" data-toggle="modal" data-target="#m_modal_3" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-                                                   
+
                                                 }
                                             </div>
                                         </div>
@@ -114,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                         
+
                     </div>
 
                     <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -128,11 +136,13 @@
                                 </div>
                                 <div class="modal-body">
 
- 
+
                                     <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp ชำระเงินผ่านช่องทางการโอน</h4>
-                                    <h4 class="m--font-bold m--font-success"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp SCB CoachME 214-257-5878 </h4> 
-                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span><a href="#" onclick="$('#slip_1').trigger('click')"
-                                                                                                                                         class="m-link m--font-transform-u">&nbsp Upload หลักฐานการชำระเงิน คลิก!!!</a></h4>
+                                    <h4 class="m--font-bold m--font-success"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp SCB CoachME 214-257-5878 </h4>
+                                    <h4 class="m--font-bold m--font-bold">
+                                        <span class="m-badge m-badge--success m-badge--dot"></span><a href="#" onclick="$('#slip_1').trigger('click')"
+                                                                                                      class="m-link m--font-transform-u">&nbsp Upload หลักฐานการชำระเงิน คลิก!!!</a>
+                                    </h4>
                                     <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp CoachME admin ยืนยันการสั่งซื้อ </h4>
                                     <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp ใช้งานตามสิทธิ์  </h4>
 
@@ -155,7 +165,7 @@
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <div class="modal-body"> 
+                                <div class="modal-body">
                                     <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp ชำระเงินผ่านช่องทางการโอน</h4>
                                     <h4 class="m--font-bold m--font-success"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp SCB CoachME 214-257-5878 </h4>
                                     <h4 class="m--font-bold m--font-bold">

@@ -28,10 +28,11 @@ namespace COACHME.WEB_PRESENT.Controllers
 
                 if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
                 {
-                    var hasPackage = model.MEMBERS.MEMBER_PACKAGE.LastOrDefault().PACKAGE_NAME;
+                    var hasPackage = model.MEMBERS.MEMBER_PACKAGE.OrderByDescending(o=>o.AUTO_ID).FirstOrDefault();
                     if (hasPackage != null)
                     {
-                        TempData["Plan"] = hasPackage;
+                        TempData["Plan"] =  hasPackage.PACKAGE_NAME;
+
                     }
                     else
                     {
