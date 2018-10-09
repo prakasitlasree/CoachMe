@@ -1844,7 +1844,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'next siblings': function() {
     /// <signature>
-    ///   <summary>Selects all sibling elements that follow after the "prev" element, have the same parent, and match the filtering "siblings" selector.</summary>
+    ///   <summary>Selects all sibling elements that Activate after the "prev" element, have the same parent, and match the filtering "siblings" selector.</summary>
     ///   <param name="prev" type="String">Any valid selector.</param>
     ///   <param name="siblings" type="String">A selector to filter elements that are the following siblings of the first selector.</param>
     /// </signature>
