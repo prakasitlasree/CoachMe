@@ -1,4 +1,5 @@
-﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
+﻿
+@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @using Newtonsoft.Json
 @{
     ViewBag.Title = "FindStudent";
@@ -113,7 +114,7 @@
                                         </span>
                                     </h4>
                                 }
-                                
+
 
                             </div>
 
@@ -122,18 +123,52 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="m-btn m-btn--pill btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
 
                     </div>
 
                 </div>
             </div>
+            
+            <div class="modal fade" id="@("MODAL_ACCEPT_" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    @using (Html.BeginForm("acceptstudent", "findstudent", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(x => x.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="m-portlet__body">
+                                    <div class="m-demo__preview m-demo__preview--badge">
+               
+                                        <h4 class="m--font-bold m--font-bold">
+                                            <span>
+                                                <i class="fa fa-address-card"></i>
+                                                <span> เลือกนักเรียนคนนี้ ?</span>
+                                            </span>
+
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="m-btn m-btn--pill btn btn-success" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                    <span>
+                                        <i class="fa fa-check-square"></i>
+                                        <span>Confirm</span>
+                                    </span>
+                                </button>
+                                <button type="button" class="m-btn m-btn--pill btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         }
 
 
-        @foreach (var item in Model.LIST_MEMBERS)
-            {
+        @foreach (var item in Model.LIST_CUSTOM_MEMBERS)
+        {
             <div class="col-xl-3">
                 <!--begin:: Widgets/Blog-->
                 <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
@@ -184,18 +219,25 @@
                                     @*<div class="col-lg-1 col-md-1 col-sm-1">
                                         </div>*@
                                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                                        <button class="m-btn m-btn--pill btn btn-success">
-                                            <span>
-                                                <i class="fa fa-check-square"></i>
-                                                <span>Accept</span>
-                                            </span>
-                                        </button>
-                                        <button class="m-btn m-btn--pill btn btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
-                                            <span>
-                                                <i class="fa flaticon-edit-1"></i>
-                                                <span>Info</span>
-                                            </span>
-                                        </button>
+                                        @using (Html.BeginForm("acceptstudent", "findstudent", FormMethod.Post))
+                                        {
+                                            if (item.STATUS != "ACTIVE")
+                                            {                                             
+                                                <button class="m-btn m-btn--pill btn btn-success" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.AUTO_ID)">
+                                                    <span>
+                                                        <i class="fa fa-check-square"></i>
+                                                        <span>Accept Student</span>
+                                                    </span>
+                                                </button>
+                                            }
+                                            <button class="m-btn m-btn--pill btn btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
+                                                <span>
+                                                    <i class="fa flaticon-edit-1"></i>
+                                                    <span>Info</span>
+                                                </span>
+                                            </button>
+                                        }
+
                                     </div>
                                     @*<div class="col-lg-1 col-md-1 col-sm-1">
                                         </div>*@
@@ -282,4 +324,5 @@
 <script>
 
 </script>
+
 

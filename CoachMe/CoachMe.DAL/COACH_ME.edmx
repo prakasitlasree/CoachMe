@@ -96,6 +96,7 @@
           <Property Name="MEMBER_ROLE_ID" Type="int" Nullable="false" />
           <Property Name="COURSE_ID" Type="int" Nullable="false" />
           <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
           <Property Name="START_DATE" Type="datetime" />
           <Property Name="END_DATE" Type="datetime" />
           <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
@@ -580,6 +581,7 @@
           <NavigationProperty Name="COURSES" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COURSES" FromRole="MEMBER_REGIS_COURSE" ToRole="COURSES" />
           <NavigationProperty Name="MEMBER_REGIS_COURSE_COMMENT" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COMMENT_MEMBER_REGIS_COURSE" FromRole="MEMBER_REGIS_COURSE" ToRole="MEMBER_REGIS_COURSE_COMMENT" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_MEMBER_ROLE" FromRole="MEMBER_REGIS_COURSE" ToRole="MEMBER_ROLE" />
+          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MEMBER_REGIS_COURSE_COMMENT">
           <Key>
@@ -935,6 +937,7 @@
           <EntitySetMapping Name="MEMBER_REGIS_COURSE">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBER_REGIS_COURSE">
               <MappingFragment StoreEntitySet="MEMBER_REGIS_COURSE">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
