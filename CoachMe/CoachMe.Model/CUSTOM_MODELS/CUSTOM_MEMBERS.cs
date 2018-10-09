@@ -29,6 +29,9 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string COURSE { get; set; }
         public string USER_NAME { get; set; }      
         public List<string> LIST_STUDENT_COMMENT { get; set; }
+        public string STATUS { get; set; }
+        
+        public int REGIS_COURSE_ID { get; set; }
 
     }
 }

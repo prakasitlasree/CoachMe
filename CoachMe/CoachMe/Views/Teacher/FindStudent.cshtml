@@ -113,7 +113,7 @@
                                         </span>
                                     </h4>
                                 }
-                                
+
 
                             </div>
 
@@ -132,7 +132,7 @@
         }
 
 
-        @foreach (var item in Model.LIST_MEMBERS)
+        @foreach (var item in Model.LIST_CUSTOM_MEMBERS)
             {
             <div class="col-xl-3">
                 <!--begin:: Widgets/Blog-->
@@ -184,18 +184,26 @@
                                     @*<div class="col-lg-1 col-md-1 col-sm-1">
                                         </div>*@
                                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                                        <button class="m-btn m-btn--pill btn btn-success">
-                                            <span>
-                                                <i class="fa fa-check-square"></i>
-                                                <span>Accept</span>
-                                            </span>
-                                        </button>
-                                        <button class="m-btn m-btn--pill btn btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
-                                            <span>
-                                                <i class="fa flaticon-edit-1"></i>
-                                                <span>Info</span>
-                                            </span>
-                                        </button>
+                                        @using (Html.BeginForm("AcceptStudent", "teacher", FormMethod.Post))
+                                        {
+                                            if (item.STATUS != "ACTIVE")
+                                            {
+                                                @Html.HiddenFor(x=>x.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                                <button class="m-btn m-btn--pill btn btn-success" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                    <span>
+                                                        <i class="fa fa-check-square"></i>
+                                                        <span>Accept</span>
+                                                    </span>
+                                                </button>
+                                            }
+                                            <button class="m-btn m-btn--pill btn btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
+                                                <span>
+                                                    <i class="fa flaticon-edit-1"></i>
+                                                    <span>Info</span>
+                                                </span>
+                                            </button>
+                                        }
+                                       
                                     </div>
                                     @*<div class="col-lg-1 col-md-1 col-sm-1">
                                         </div>*@

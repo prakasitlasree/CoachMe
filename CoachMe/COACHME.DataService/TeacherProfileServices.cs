@@ -419,6 +419,8 @@ namespace COACHME.DATASERVICE
                                          select new CUSTOM_MEMBERS
                                          {
                                              AUTO_ID = c.AUTO_ID,
+                                             PROFILE_IMG_URL = c.PROFILE_IMG_URL,
+                                             STATUS = a.STATUS,
                                              FULLNAME = c.FULLNAME ?? "",
                                              SEX = c.SEX == "1" ? "ชาย" : "หญิง",
                                              AGE = c.AGE,
@@ -428,7 +430,7 @@ namespace COACHME.DATASERVICE
                                              COURSE = d.NAME ?? "",
                                              ABOUT = c.ABOUT ?? "",
                                              LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
-
+                                             REGIS_COURSE_ID = a.AUTO_ID
 
                                          }).ToListAsync();
 
@@ -496,6 +498,47 @@ namespace COACHME.DATASERVICE
             {
                 resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
+
+            }
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> AcceptStudent(CONTAINER_MODEL dto, string AcceptStudent)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            int ID = Convert.ToInt32(AcceptStudent);
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var regisCourse = await ctx.MEMBER_REGIS_COURSE.Where(o => o.AUTO_ID == ID).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBERS
+                                        .Include("MEMBER_LOGON")
+                                        .Where(o => o.AUTO_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();
+                    regisCourse.STATUS = "ACTIVE";
+                    regisCourse.CREATED_BY = member.FULLNAME;
+                    regisCourse.CREATED_DATE = DateTime.Now;
+
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Update Profile Pic";
+                    activity.FULLNAME = member.FULLNAME;
+                    activity.USER_NAME = member.MEMBER_LOGON.Select(x=>x.USER_NAME).FirstOrDefault();
+                    activity.PASSWORD = member.MEMBER_LOGON.Select(x => x.PASSWORD).FirstOrDefault();
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                resp.ErrorMessage = ex.Message;
 
             }
             return resp;

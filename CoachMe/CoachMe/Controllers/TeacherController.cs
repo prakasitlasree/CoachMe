@@ -209,6 +209,27 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+        public async Task<ActionResult> AcceptStudent(CONTAINER_MODEL dto, string AcceptStudent)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                resp = await service.AcceptStudent(dto,AcceptStudent);
+                if (resp.STATUS)
+                {
+                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                }
+                return RedirectToAction("login", "account");
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+
         // GET: Teacher/Delete/5
         public ActionResult Delete(int id)
         {
