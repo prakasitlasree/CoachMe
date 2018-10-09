@@ -172,7 +172,15 @@
                                 <div class="m-widget4__item">
                                     <div class="m-widget4__img m-widget4__img--pic">
                                         @*<img src="~/Content/images/Blank-Profile.jpg" alt="">*@
-                                        <img src="../@item.MEMBERS.PROFILE_IMG_URL" alt="">
+                                        @if (item.MEMBERS.PROFILE_IMG_URL != null)
+                                        {
+                                            <img src="../@item.MEMBERS.PROFILE_IMG_URL" alt="">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Content/images/Blank-Profile.jpg" alt="">
+                                        }
+
                                     </div>
                                     <div class="m-widget4__info">
                                         <span class="m-widget4__title">
@@ -231,18 +239,18 @@
     </div>
 
     <!--begin::Modal-->
-@using (Html.BeginForm("manage", "admin", FormMethod.Post))
-{
-    <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirm purchase package</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-               
+    @using (Html.BeginForm("manage", "admin", FormMethod.Post))
+    {
+        <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirm purchase package</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
                     <div class="modal-body">
                         <form>
 
@@ -255,11 +263,11 @@
                         <button type="submit" class="btn btn-primary">Activate</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-              
+
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
     <!--end::Modal-->
 
     <script>
@@ -269,11 +277,11 @@
             for (var i = 0; i < tmpData.length; i++) {
                 if (tmpData[i].AUTO_ID == id) {
                     $('#cAUTO_ID').val(id);
-                    
+
                     $('#m_modal_5').modal('show');
                 }
             }
-           
+
         }
     </script>
 </div>
