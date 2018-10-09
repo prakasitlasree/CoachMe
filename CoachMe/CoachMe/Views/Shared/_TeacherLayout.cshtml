@@ -130,9 +130,9 @@
                         </li>
 
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            @using (Html.BeginForm("findstudent", "teacher", FormMethod.Post))
+                            @using (Html.BeginForm("index", "findstudent", FormMethod.Post))
                             {
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "MEMBER_ID", @name = "MEMBER_ID" })
                                 <button type="submit" id="btnFindStudent" style="display:none"></button>
                             }
                             <a id="FindStudent" href="#" onclick="$('#btnFindStudent').trigger('click')" class="m-menu__link ">

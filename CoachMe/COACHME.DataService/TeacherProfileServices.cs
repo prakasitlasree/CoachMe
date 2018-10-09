@@ -503,6 +503,108 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        public RESPONSE__MODEL FindStudent_new(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberProfile = ctx.MEMBERS
+                        .Include("MEMBER_LOGON")
+                        .Include("MEMBER_PACKAGE")
+                        .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
+                        .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
+
+                    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
+                                                        .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
+
+
+                    var listStu = (from a in ctx.MEMBER_REGIS_COURSE.Include("MEMBER_REGIS_COURSE_COMMENT")
+                                   join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
+                                   join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
+                                   join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
+                                   join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
+                                   where teachCourse.Contains(d.AUTO_ID)
+                                   select new CUSTOM_MEMBERS
+                                   {
+                                       AUTO_ID = c.AUTO_ID,
+                                       PROFILE_IMG_URL = c.PROFILE_IMG_URL,
+                                       STATUS = a.STATUS,
+                                       FULLNAME = c.FULLNAME ?? "",
+                                       SEX = c.SEX == "1" ? "ชาย" : "หญิง",
+                                       AGE = c.AGE,
+                                       LOCATION = c.LOCATION ?? "",
+                                       MOBILE = c.MOBILE ?? "",
+                                       USER_NAME = f.USER_NAME ?? "",
+                                       COURSE = d.NAME ?? "",
+                                       ABOUT = c.ABOUT ?? "",
+                                       LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
+                                       REGIS_COURSE_ID = a.AUTO_ID
+
+                                   }).ToList();
+
+
+                    model.LIST_CUSTOM_MEMBERS = listStu;
+                    model.MEMBERS = memberProfile;
+
+
+
+                    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
+                                                             .Select(o => o.MEMBER_ROLE_ID)
+                                                             .ToList();
+
+                    var courseName = ctx.COURSES
+                                              .Where(o => teachCourse.Contains(o.AUTO_ID)).ToList();
+
+                    var listStudent = ctx.MEMBERS
+                                                .Include(x => x.MEMBER_ROLE.Select(o => o.MEMBER_REGIS_COURSE))
+                                                .Include(x => x.MEMBER_LOGON)
+                                                .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
+                                                .ToList();
+
+
+
+                    package = memberProfile.MEMBER_PACKAGE
+                                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
+                                                .Select(o => o.PACKAGE_NAME).LastOrDefault();
+
+                    if (package == null)
+                    {
+                        listStudent = listStudent.Take(3).ToList();
+                    }
+                    if (package == "Basic Plan")
+                    {
+                        listStudent = listStudent.Take(5).ToList();
+                    }
+                    if (package == "Professional Plan")
+                    {
+                        listStudent = listStudent.Take(10).ToList();
+                    }
+                    if (package == "Advance Plan")
+                    {
+                        listStudent = listStudent.ToList();
+                    }
+                    model.LIST_MEMBERS = listStudent;
+
+
+
+
+
+                    resp.STATUS = true;
+                    resp.OUTPUT_DATA = model;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+
+            }
+            return resp;
+        }
+
         public async Task<RESPONSE__MODEL> AcceptStudent(CONTAINER_MODEL dto, string AcceptStudent)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -525,7 +627,7 @@ namespace COACHME.DATASERVICE
                     activity.DATE = DateTime.Now;
                     activity.ACTION = "Update Profile Pic";
                     activity.FULLNAME = member.FULLNAME;
-                    activity.USER_NAME = member.MEMBER_LOGON.Select(x=>x.USER_NAME).FirstOrDefault();
+                    activity.USER_NAME = member.MEMBER_LOGON.Select(x => x.USER_NAME).FirstOrDefault();
                     activity.PASSWORD = member.MEMBER_LOGON.Select(x => x.PASSWORD).FirstOrDefault();
                     activity.STATUS = resp.STATUS;
                     ctx.LOGON_ACTIVITY.Add(activity);
