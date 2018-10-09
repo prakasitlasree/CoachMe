@@ -67,6 +67,7 @@
     <Compile Include="CUSTOM_MODELS\CUSTOM_MEMBERS.cs" />
     <Compile Include="CUSTOM_MODELS\FORGOT_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\LOGON_MODEL.cs" />
+    <Compile Include="CUSTOM_MODELS\MEMBER_PACKAGE.cs" />
     <Compile Include="CUSTOM_MODELS\REGISTER_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESET_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESET_PASSWORD_VALIDATE_MODEL.cs" />
