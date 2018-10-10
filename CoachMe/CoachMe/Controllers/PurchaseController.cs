@@ -22,7 +22,8 @@ namespace COACHME.WEB_PRESENT.Controllers
             { 
                 var model = new CONTAINER_MODEL();
                 var member = (MEMBERS)Session["logon"];  
-                model.MEMBERS = member;
+                var course = service.GetMemberProfileNotAsync(member.MEMBER_LOGON.FirstOrDefault());
+                model.MEMBERS = course.OUTPUT_DATA;
 
                 if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
                 {

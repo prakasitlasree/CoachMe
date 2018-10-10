@@ -28,7 +28,10 @@ namespace COACHME.DATASERVICE
                     if (member != null)
                     {
                         fullname = member.MEMBERS.FULLNAME;
-                        memberObj = ctx.MEMBERS.Include("MEMBER_ROLE").Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault(); 
+                        memberObj = ctx.MEMBERS
+                                       .Include("MEMBER_ROLE")
+                                       .Include("MEMBER_PACKAGE")
+                                       .Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault(); 
                         result = true;
                     }
                     else

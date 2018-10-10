@@ -147,10 +147,10 @@ namespace COACHME.DATASERVICE
                     string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
                     #endregion
                     #region ==== ROCK PATH ====
-                    //string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
+                    //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
-                    //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                    // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
                     #endregion
 
                     string path = "";
@@ -185,7 +185,13 @@ namespace COACHME.DATASERVICE
                     #endregion
 
                     await ctx.SaveChangesAsync();
-                    var memberLogon = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
+                    var memberLogon = await ctx.MEMBERS
+                                        .Include("MEMBER_ROLE")
+                                        .Include("MEMBER_PACKAGE")
+                                        .Include("MEMBER_LOGON")
+                                        .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
                     resp.OUTPUT_DATA = memberLogon;
                     resp.STATUS = true;
                 }
@@ -210,7 +216,11 @@ namespace COACHME.DATASERVICE
 
 
                     var member = new MEMBERS();
-                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    member = await ctx.MEMBERS
+                                        .Include("MEMBER_ROLE")
+                                        .Include("MEMBER_PACKAGE")
+                                        .Include("MEMBER_LOGON")
+                                        .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
                     #region ===== ABOUT IMAGE ====
                     for (int i = 0; i < about_img.Count; i++)
@@ -332,7 +342,7 @@ namespace COACHME.DATASERVICE
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
-
+                    resp.OUTPUT_DATA = member;
                 }
             }
             catch (Exception ex)

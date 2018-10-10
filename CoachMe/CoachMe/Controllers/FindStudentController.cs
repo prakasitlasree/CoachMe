@@ -21,10 +21,10 @@ namespace COACHME.WEB_PRESENT.Controllers
           
             if (Session["logon"] != null)
             {
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                resp =  service.GetMemberProfileNotAsync(memberLogon);
-                model.MEMBERS = resp.OUTPUT_DATA;
-                resp =  service.FindStudent_new(model.MEMBERS);
+                var memberLogon = (MEMBERS)Session["logon"];
+                //resp =  service.GetMemberProfileNotAsync(memberLogon);
+                //model.MEMBERS = resp.OUTPUT_DATA;
+                resp =  service.FindStudent_new(memberLogon);
                 model = resp.OUTPUT_DATA;
                 if (service.package != null)
                 {

@@ -1,11 +1,17 @@
-﻿
-@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
+﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @using Newtonsoft.Json
 @{
     ViewBag.Title = "FindStudent";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 
 }
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title ">Student</h3>
+        </div>
+    </div>
+</div>
 <div class="m-content">
 
     <div class="row">
@@ -36,7 +42,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <h4 class="m--font-bold m--font-bold">
+                                <h4 class="m--font-bold m--font-bold m--align-left">
                                     <span>
                                         <i class="fa fa-address-card"></i>
                                         <span> ชื่อ :  &nbsp @item.FULLNAME</span>
@@ -123,7 +129,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="m-btn m-btn--pill btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn--pill m-btn--air btn-secondary" data-dismiss="modal">Close</button>
                         </div>
 
                     </div>
@@ -144,7 +150,7 @@
                                         <h4 class="m--font-bold m--font-bold">
                                             <span>
                                                 <i class="fa fa-address-card"></i>
-                                                <span> เลือกนักเรียนคนนี้ ?</span>
+                                                <span> คุณจะเลือกนักเรียน @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
                                             </span>
 
                                         </h4>
@@ -152,13 +158,13 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="m-btn m-btn--pill btn btn-success" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
                                     <span>
                                         <i class="fa fa-check-square"></i>
                                         <span>Confirm</span>
                                     </span>
                                 </button>
-                                <button type="button" class="m-btn m-btn--pill btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     }
@@ -223,14 +229,14 @@
                                         {
                                             if (item.STATUS != "ACTIVE")
                                             {                                             
-                                                <button class="m-btn m-btn--pill btn btn-success" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.AUTO_ID)">
+                                                <button class="btn m-btn--pill m-btn--air btn-primary" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.AUTO_ID)">
                                                     <span>
                                                         <i class="fa fa-check-square"></i>
                                                         <span>Accept Student</span>
                                                     </span>
                                                 </button>
                                             }
-                                            <button class="m-btn m-btn--pill btn btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
+                                            <button class="btn m-btn--pill m-btn--air btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
                                                 <span>
                                                     <i class="fa flaticon-edit-1"></i>
                                                     <span>Info</span>

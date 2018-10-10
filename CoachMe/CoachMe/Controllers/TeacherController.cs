@@ -39,7 +39,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
-                MEMBER_LOGON param = resp.OUTPUT_DATA;
+                MEMBERS param = resp.OUTPUT_DATA;
 
                 Session["logon"] = null;
                 Session["logon"] = param;
@@ -90,26 +90,33 @@ namespace COACHME.WEB_PRESENT.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(CONTAINER_MODEL dto, List<HttpPostedFileBase> about_img)
         {
+            MEMBERS param = new MEMBERS();
             try
             {
                 // TODO: Add update logic here
 
                 RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS, about_img);
-
+                 param = result.OUTPUT_DATA;
                 if (result.STATUS)
                 {
                     TempData["Message"] = "Profile Updated Successfully";
+                    Session["logon"] = null;
+                    Session["logon"] = param;
                     return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
                     TempData["Message"] = "Profile Update Fail";
+                    Session["logon"] = null;
+                    Session["logon"] = param;
                     return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
             }
             catch
             {
                 TempData["Message"] = "Profile Update Fail";
+                Session["logon"] = null;
+                Session["logon"] = param;
                 return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
 
             }
@@ -154,9 +161,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             if (Session["logon"] != null)
             {
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                resp = service.GetMemberProfileNotAsync(memberLogon);
-                model.MEMBERS = resp.OUTPUT_DATA;
+                var memberLogon = (MEMBERS)Session["logon"];
+                //resp = service.GetMemberProfileNotAsync(memberLogon);
+                model.MEMBERS = memberLogon;
                 return View(model);
             }
             else
