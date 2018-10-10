@@ -21,8 +21,8 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 var resp = new RESPONSE__MODEL();
                 var model = new CONTAINER_MODEL(); 
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                model.MEMBERS = memberLogon.MEMBERS;
+                var memberLogon = (MEMBERS)Session["logon"];
+                model.MEMBERS = memberLogon;
                 resp = await service.GetCourseByTeacherID(memberLogon);
                 model.LIST_COURSES = resp.OUTPUT_DATA;
                 return View(model);
@@ -47,9 +47,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             try
             { 
                 // TODO: Add update logic here
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                dto.MEMBER_LOGON = memberLogon;
-                dto.MEMBERS = memberLogon.MEMBERS;
+                var member = (MEMBERS)Session["logon"];
+                //dto.MEMBER_LOGON = member.MEMBER_LOGON;
+                dto.MEMBERS = member;
                 RESPONSE__MODEL result = await service.MangeCourse(dto, banner_img);
 
                 if (result.STATUS)

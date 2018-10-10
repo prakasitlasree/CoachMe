@@ -93,11 +93,11 @@ namespace CoachMe.Controllers
             }
            
             var result = await service.GetLogOnAll(dto);
-            MEMBER_LOGON param = result.OUTPUT_DATA;
+            MEMBERS param = result.OUTPUT_DATA;
             if (result.STATUS)
             {
                 Session["logon"] = param;
-                return RedirectToAction("index", "teacher", new { member_id = param.MEMBER_ID });
+                return RedirectToAction("index", "teacher");
             }
             else
             {

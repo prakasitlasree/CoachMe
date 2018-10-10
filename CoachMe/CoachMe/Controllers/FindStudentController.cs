@@ -41,16 +41,15 @@ namespace COACHME.WEB_PRESENT.Controllers
         [HttpPost]
         public async Task<ActionResult> AcceptStudent(CONTAINER_MODEL dto, string AcceptStudent)
         {
-            RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            RESPONSE__MODEL resp = new RESPONSE__MODEL(); 
 
             if (Session["logon"] != null)
             {
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                var member = (MEMBERS)Session["logon"];
                 resp = await service.AcceptStudent(dto, AcceptStudent);
                 if (resp.STATUS)
                 {
-                    return RedirectToAction("index", "findstudent", new { MEMBERS = dto.MEMBERS});
+                    return RedirectToAction("index", "findstudent", new { MEMBERS = member });
                 }
                 return RedirectToAction("login", "account");
             }

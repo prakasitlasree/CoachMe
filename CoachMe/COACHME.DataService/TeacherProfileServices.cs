@@ -646,15 +646,15 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> GetCourseByTeacherID(MEMBER_LOGON dto)
+        public async Task<RESPONSE__MODEL> GetCourseByTeacherID(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
-                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.MEMBER_ID).FirstOrDefault();
+                    var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefault();
+                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefault();
 
                     var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).OrderByDescending(x => x.AUTO_ID).ToListAsync();
                     var listCourse = new List<COURSES>();

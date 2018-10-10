@@ -15,11 +15,10 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
            
             if (Session["logon"] != null)
-            {
-                var resp = new RESPONSE__MODEL();
+            { 
                 var model = new CONTAINER_MODEL();
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                model.MEMBERS = memberLogon.MEMBERS;
+                var memberLogon = (MEMBERS)Session["logon"];
+                model.MEMBERS = memberLogon;
                 return View(model);
             }
             else

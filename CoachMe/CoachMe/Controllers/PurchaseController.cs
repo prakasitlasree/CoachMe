@@ -19,12 +19,10 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
             
             if (Session["logon"] != null)
-            {
-                RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            { 
                 var model = new CONTAINER_MODEL();
-                var memberLogon = (MEMBER_LOGON)Session["logon"]; 
-                resp =  service.GetMemberProfileNotAsync(memberLogon);
-                model.MEMBERS = resp.OUTPUT_DATA;
+                var member = (MEMBERS)Session["logon"];  
+                model.MEMBERS = member;
 
                 if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
                 {

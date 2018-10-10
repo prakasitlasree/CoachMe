@@ -22,18 +22,15 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                  
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                var memberLogon = (MEMBERS)Session["logon"];
                 resp = await service.GetMemberPackage();
                 model.LIST_MEMBER_PACKAGE = resp.OUTPUT_DATA;
                 foreach (var item in model.LIST_MEMBER_PACKAGE)
                 {
                      
                 }
-                resp = new RESPONSE__MODEL();
-                resp = teacherservice.GetMemberProfileNotAsync(memberLogon);
-                MEMBERS member = resp.OUTPUT_DATA;
                  
-                model.MEMBERS = resp.OUTPUT_DATA;
+                model.MEMBERS = memberLogon;
                 model.MEMBERS.MEMBER_PACKAGE = null;
                 return View(model);
             }

@@ -13,7 +13,7 @@ namespace COACHME.WEB_PRESENT.Controllers
     {
         private TeacherProfileServices service = new TeacherProfileServices();
         // GET: Teacher
-        public ActionResult Index(MEMBER_LOGON dto)
+        public ActionResult Index()
         {
             if (Session["logon"] != null)
             {
@@ -21,9 +21,8 @@ namespace COACHME.WEB_PRESENT.Controllers
 
 
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
-                resp = service.GetMemberProfileNotAsync(memberLogon);
-                model.MEMBERS = resp.OUTPUT_DATA;
+                var memeber = (MEMBERS)Session["logon"]; 
+                model.MEMBERS = memeber;
                 return View(model);
             }
             else

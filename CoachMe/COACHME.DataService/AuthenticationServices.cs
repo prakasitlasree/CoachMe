@@ -16,6 +16,7 @@ namespace COACHME.DATASERVICE
         public async Task<RESPONSE__MODEL> GetLogOnAll(MEMBER_LOGON dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            var memberObj = new MEMBERS();
             var result = false;
             var fullname = string.Empty;
             try
@@ -27,6 +28,7 @@ namespace COACHME.DATASERVICE
                     if (member != null)
                     {
                         fullname = member.MEMBERS.FULLNAME;
+                        memberObj = ctx.MEMBERS.Include("MEMBER_ROLE").Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault(); 
                         result = true;
                     }
                     else
@@ -45,7 +47,7 @@ namespace COACHME.DATASERVICE
                     var act_result = await ctx.SaveChangesAsync();
 
                     resp.STATUS = result;
-                    resp.OUTPUT_DATA = member;
+                    resp.OUTPUT_DATA = memberObj;
                     return resp;
                 }
 
