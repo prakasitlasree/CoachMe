@@ -166,11 +166,13 @@ namespace CoachMe.Controllers
             var result = await service.RegisterVerify(dto);
             if (result.STATUS)
             {
+                TempData["RegisterVerify"] = "Your accout has been verified.";
                 return RedirectToAction("login", "account");
             }
             else
             {
-                return View();
+                
+                return RedirectToAction("errorpage", "home");
             }
         }
 
@@ -197,8 +199,7 @@ namespace CoachMe.Controllers
                     }
                     else
                     {
-                        ViewBag.Fail = "This email address has already been registered. ";
-                        return View(dto);
+                        return RedirectToAction("ErrorPage", "home");
                     }
                     
                 }

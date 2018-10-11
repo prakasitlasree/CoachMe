@@ -1,0 +1,53 @@
+﻿
+@model COACHME.MODEL.MEMBER_LOGON
+@{
+    ViewBag.Title = "Ops! Someting wrong";
+}
+<div class="m-grid m-grid--hor m-grid--root m-page">
+
+
+
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../Content/images/bg-3.jpg);">
+        <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
+            <div class="m-login__container">
+                @*<div class="m-login__logo">
+                        <a href="#">
+                            <img src="~/Content/images/login/login_logo.png">
+                        </a>
+                    </div>*@
+                @{
+                    Html.RenderPartial("_LogoPartial");
+                }
+                <!--Start  LOGIN -->
+                <div class="m-login__signin">
+                    <div class="m-login__head">
+                        <h2 class="m-login__title">Ops! Someting Wrong.</h2>
+                    </div>
+                    @*<form class="m-login__form m-form" >*@
+                    @using (Html.BeginForm("index", "home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
+                    {
+
+                        <div class="m-login__form-action">
+                            <button type="submit" value="Login" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">Back to home</button>
+                        </div>
+                    }
+                    @*</form>*@
+                </div>
+                <!--End  LOGIN -->
+                @*@{Html.RenderPartial("ForgotPasswordPartial");}*@
+
+
+                @*@{Html.RenderAction("Register");}*@
+
+                <!--Start Footer Sign up -->
+                <!--End Footer Sign up -->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
