@@ -26,5 +26,10 @@ namespace CoachMe.Controllers
 
             return View();
         }
+
+        public ActionResult ErrorPage()
+        {
+            return View();
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD /*&& x.STATUS != 1*/).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD && x.STATUS != 1).FirstOrDefaultAsync();
                     if (member != null)
                     {
                         fullname = member.MEMBERS.FULLNAME;
@@ -115,47 +115,47 @@ namespace COACHME.DATASERVICE
                         #endregion
 
                         #region === SEND VERIFY MAIL ===
-                        //var listConfig = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
-                        //string smtpAcc = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_ACCOUNT.ToString()).FirstOrDefault().VALUE.ToString();
-                        //var fromAddress = new MailAddress(smtpAcc, "No-reply@CoachMe.asia");//Create Mail
-                        //string smtpPassword = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_PASSWORD.ToString()).FirstOrDefault().VALUE.ToString();
-                        //string from = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SENDER.ToString()).FirstOrDefault().VALUE.ToString();
-                        //string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT_REGISTER.ToString()).FirstOrDefault().VALUE.ToString();
-                        //string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
-                        //string link = "http://localhost:1935/Account/RegisterVerify?";                  
-                        //link = link + @"USER_NAME=" + dto.Email + @"&TOKEN_HASH=" + memberLogon.TOKEN_HASH;
-                        ////Open When Deploy.  
-                        ////link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.Email + @"&TOKEN_HASH=" + dto; 
-                        //string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY_REGISTER.ToString()).FirstOrDefault().VALUE.ToString(), dto.Email, link);
-                        //try
-                        //{
-                        //    var toAddress = new MailAddress(dto.Email);
-                        //    var smtp = new SmtpClient
-                        //    {
-                        //        Host = "smtp.gmail.com",
-                        //        Port = 587,
-                        //        EnableSsl = true,
-                        //        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        //        UseDefaultCredentials = false,
-                        //        Credentials = new NetworkCredential(fromAddress.Address, smtpPassword)
-                        //    };
+                        var listConfig = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
+                        string smtpAcc = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_ACCOUNT.ToString()).FirstOrDefault().VALUE.ToString();
+                        var fromAddress = new MailAddress(smtpAcc, "No-reply@CoachMe.asia");//Create Mail
+                        string smtpPassword = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_PASSWORD.ToString()).FirstOrDefault().VALUE.ToString();
+                        string from = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SENDER.ToString()).FirstOrDefault().VALUE.ToString();
+                        string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT_REGISTER.ToString()).FirstOrDefault().VALUE.ToString();
+                        string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
+                        string link = "http://localhost:1935/Account/RegisterVerify?";
+                        link = link + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + memberLogon.TOKEN_HASH;
+                        //Open When Deploy.  
+                        //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.Email + @"&TOKEN_HASH=" + dto; 
+                        string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY_REGISTER.ToString()).FirstOrDefault().VALUE.ToString(), dto.EMAIL, link);
+                        try
+                        {
+                            var toAddress = new MailAddress(dto.EMAIL);
+                            var smtp = new SmtpClient
+                            {
+                                Host = "smtp.gmail.com",
+                                Port = 587,
+                                EnableSsl = true,
+                                DeliveryMethod = SmtpDeliveryMethod.Network,
+                                UseDefaultCredentials = false,
+                                Credentials = new NetworkCredential(fromAddress.Address, smtpPassword)
+                            };
 
-                        //    using (var message = new MailMessage(fromAddress, toAddress)
-                        //    {
-                        //        Subject = subject,
-                        //        Body = body,
-                        //        IsBodyHtml = true
-                        //    })
-                        //    {
-                        //        smtp.Send(message);
-                        //    }
+                            using (var message = new MailMessage(fromAddress, toAddress)
+                            {
+                                Subject = subject,
+                                Body = body,
+                                IsBodyHtml = true
+                            })
+                            {
+                                smtp.Send(message);
+                            }
 
-                        //}
-                        //catch(Exception ex)
-                        //{
-                        //    result = false;
-                        //    throw ex;
-                        //}
+                        }
+                        catch (Exception ex)
+                        {
+                            result = false;
+                            throw ex;
+                        }
 
                         #endregion
 
@@ -209,6 +209,7 @@ namespace COACHME.DATASERVICE
                         if (checkMember != null)
                         {
                             checkMember.STATUS = 2;
+                            checkMember.TOKEN_USED = true;
                             await ctx.SaveChangesAsync();
                             result = true;
                         }
