@@ -86,18 +86,30 @@ namespace CoachMe.Controllers
             {
                 return View(dto);
             }
-            if (string.IsNullOrEmpty(dto.USER_NAME)  || string.IsNullOrEmpty(dto.PASSWORD))
+            if (string.IsNullOrEmpty(dto.USER_NAME) || string.IsNullOrEmpty(dto.PASSWORD))
             {
                 ModelState.AddModelError("", "Please input username/password");
                 return View(dto);
             }
-           
+
             var result = await service.GetLogOnAll(dto);
             MEMBERS param = result.OUTPUT_DATA;
             if (result.STATUS)
             {
                 Session["logon"] = param;
-                return RedirectToAction("index", "teacher");
+                if (param.MEMBER_ROLE.FirstOrDefault() != null)
+                {
+                    //if (param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                    //{
+                    //    return RedirectToAction("index", "teacher");
+                    //}
+                    //else if (param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
+                    //{
+                    //    return RedirectToAction("index", "admin");
+                    //} 
+                    return RedirectToAction("index", "teacher");
+                } 
+                return View(dto);
             }
             else
             {
@@ -191,7 +203,7 @@ namespace CoachMe.Controllers
 
                     var result = await service.Register(dto);
                     if (result.STATUS)
-                    { 
+                    {
                         ViewBag.Success = "Register complete please check your email in 24Hr.";
                         return View(dto);
                     }
@@ -200,7 +212,7 @@ namespace CoachMe.Controllers
                         ViewBag.Fail = "This email address has already been registered. ";
                         return View(dto);
                     }
-                    
+
                 }
                 if (buttonType == "Cancel")
                 {
@@ -238,7 +250,7 @@ namespace CoachMe.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(FORGOT_PASSWORD_MODEL dto, string buttonType)
         {
-           
+
             if (ModelState.IsValid)
             {
                 if (buttonType == "Request")
@@ -246,7 +258,7 @@ namespace CoachMe.Controllers
                     var result = await service.ForgotPassword(dto);
                     if (result.STATUS)
                     {
-                       
+
                         ViewBag.Success = "Please check your email to reset your password.";
                         return View(dto);
                     }
@@ -292,7 +304,7 @@ namespace CoachMe.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        [OutputCache(NoStore = true, Duration = 0)]      
+        [OutputCache(NoStore = true, Duration = 0)]
         public async Task<ActionResult> ResetPassword(RESET_PASSWORD_VALIDATE_MODEL dto_resetPassword, RESET_PASSWORD_MODEL dto_newPassword, string buttonType)
         {
 
@@ -302,7 +314,7 @@ namespace CoachMe.Controllers
                 if (result.STATUS)
                 {
                     ViewBag.FirstCall = true;
-                    dto_newPassword.EMAIL = dto_resetPassword.USER_NAME;                 
+                    dto_newPassword.EMAIL = dto_resetPassword.USER_NAME;
                     return View(dto_newPassword);
                 }
                 else
@@ -319,10 +331,10 @@ namespace CoachMe.Controllers
             return View();
 
         }
-      
-       [HttpPost]
-       [AllowAnonymous]
-       [ValidateAntiForgeryToken]
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
         public async Task<ActionResult> ResetPassword(RESET_PASSWORD_MODEL dto)
         {

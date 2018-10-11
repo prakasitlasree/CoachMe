@@ -27,7 +27,7 @@ namespace COACHME.DATASERVICE
             Interest 
         }
 
-        public enum ActivatePurchaseStatus
+        public enum PurchaseStatus
         {
             DRAFT,
             ACTIVE

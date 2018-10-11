@@ -179,7 +179,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             if (Session["logon"] != null)
             {
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                var memberLogon = (MEMBERS)Session["logon"];
                 resp = await service.ManageSurvey(memberLogon);
                 //model.MEMBERS = resp.OUTPUT_DATA;
                 TempData["Message"] = "Success";
@@ -200,7 +200,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             if (Session["logon"] != null)
             {
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                var memberLogon = (MEMBERS)Session["logon"];
                 resp = await service.FindStudent(dto.MEMBERS);
                 model = resp.OUTPUT_DATA;
                 if (service.package != null)
@@ -222,7 +222,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             
             if (Session["logon"] != null)
             {
-                var memberLogon = (MEMBER_LOGON)Session["logon"];
+                var memberLogon = (MEMBERS)Session["logon"];
                 resp = await service.AcceptStudent(dto,AcceptStudent);
                 if (resp.STATUS)
                 {
