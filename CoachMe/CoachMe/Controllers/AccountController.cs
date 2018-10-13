@@ -79,7 +79,7 @@ namespace CoachMe.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(MEMBER_LOGON dto, string returnUrl)
         {
             if (!ModelState.IsValid)

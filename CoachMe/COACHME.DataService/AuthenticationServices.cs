@@ -82,6 +82,7 @@ namespace COACHME.DATASERVICE
                         member.CREATED_BY = dto.FULLNAME;
                         member.UPDATED_DATE = DateTime.Now;
                         member.UPDATED_BY = dto.FULLNAME;
+                        member.SEX = dto.GENDER;
 
                         //2. Details 
                         MEMBER_ROLE memberRole = new MEMBER_ROLE();

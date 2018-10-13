@@ -24,6 +24,12 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         [Display(Name = "PASSWORD")]
         public string PASSWORD { get; set; }
 
+        [Required]
+        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "PASSWORD")]
+        public string GENDER { get; set; }
+
         [DataType(DataType.Password)]
         [Display(Name = "CONFIRM_PASSWORD")]
         [Compare("PASSWORD", ErrorMessage = "The password and confirmation password do not match.")]

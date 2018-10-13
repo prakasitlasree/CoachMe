@@ -26,7 +26,7 @@
                     @*<form class="m-login__form m-form" >*@
                     @using (Html.BeginForm("login", "account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
                     {
-                        @Html.AntiForgeryToken()
+                        //Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         if (TempData["RegisterVerify"] != null)
                         {

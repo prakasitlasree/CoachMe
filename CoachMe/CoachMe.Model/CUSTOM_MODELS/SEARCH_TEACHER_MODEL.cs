@@ -17,5 +17,9 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<string> STUDENT_LEVEL { get; set; }
         
         public List<CUSTOM_MEMBERS> LIST_MEMBERS { get; set; }
+        public List<string> LIST_COURSE { get; set; }
+        public List<string> LIST_PROVINCE { get; set; }
+
+        
     }
 }
