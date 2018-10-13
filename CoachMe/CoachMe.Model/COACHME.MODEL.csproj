@@ -72,6 +72,7 @@
     <Compile Include="CUSTOM_MODELS\RESET_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESET_PASSWORD_VALIDATE_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\RESPONSE__MODEL.cs" />
+    <Compile Include="CUSTOM_MODELS\SEARCH_TEACHER_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\STUDENT_COMMENT.cs" />
     <Compile Include="LOGON_ACTIVITY.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>

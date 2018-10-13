@@ -1,8 +1,10 @@
-﻿using COACHME.MODEL;
+﻿using COACHME.DATASERVICE;
+using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +12,8 @@ namespace COACHME.WEB_PRESENT.Controllers
 {
     public class StudentController : Controller
     {
+        RESPONSE__MODEL resp = new RESPONSE__MODEL();
+        StudentServices service = new StudentServices();
         // GET: Student
         public ActionResult Index()
         {
@@ -99,7 +103,19 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
-        public ActionResult FindTeacher()
+        public async Task<ActionResult> FindTeacher(SEARCH_TEACHER_MODEL dto)
+        {
+            if (dto.COURSE_NAME != null)
+            {
+                SEARCH_TEACHER_MODEL model = new SEARCH_TEACHER_MODEL();
+                
+                resp = await service.FindTeacher(dto);
+                model.LIST_MEMBERS = resp.OUTPUT_DATA;
+                return View(model);
+            }
+            return View(dto);
+        }
+        public ActionResult SearchTeacher (SEARCH_TEACHER_MODEL dto)
         {
             return View();
         }
