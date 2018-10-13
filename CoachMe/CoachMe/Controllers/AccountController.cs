@@ -308,12 +308,12 @@ namespace CoachMe.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("login", "account");
+                    return RedirectToAction("errorpage", "home");
                 }
             }
             else
             {
-                return RedirectToAction("login", "account");
+                return RedirectToAction("errorpage", "home");
 
             }
 

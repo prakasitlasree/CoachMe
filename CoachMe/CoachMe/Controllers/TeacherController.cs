@@ -18,8 +18,6 @@ namespace COACHME.WEB_PRESENT.Controllers
             if (Session["logon"] != null)
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
-
-
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
                 var memeber = (MEMBERS)Session["logon"]; 
                 model.MEMBERS = memeber;
