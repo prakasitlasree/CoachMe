@@ -98,5 +98,10 @@ namespace COACHME.WEB_PRESENT.Controllers
                 return View();
             }
         }
+
+        public ActionResult FindTeacher()
+        {
+            return View();
+        }
     }
 }
