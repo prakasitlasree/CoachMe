@@ -50,7 +50,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memPackage = await ctx.MEMBER_PACKAGE.Where(x => x.AUTO_ID == dto.MEMBER_PACKAGE.AUTO_ID).FirstOrDefaultAsync();
-                    memPackage.STATUS = StandardEnums.ActivatePurchaseStatus.ACTIVE.ToString();
+                    memPackage.STATUS = StandardEnums.PurchaseStatus.ACTIVE.ToString();
 
                    var output = await ctx.SaveChangesAsync();
                     resp.OUTPUT_DATA = memPackage;
@@ -65,6 +65,51 @@ namespace COACHME.DATASERVICE
             }
             return resp;
 
+        }
+
+
+        public async Task<RESPONSE__MODEL> GetTotalMember()
+        {
+            var resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memAll = await ctx.MEMBER_ROLE.ToListAsync();
+                    
+                    resp.OUTPUT_DATA = memAll;
+                    resp.STATUS = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp; 
+        }
+
+        public async Task<RESPONSE__MODEL> GetTotalTeacherThisMonth()
+        {
+            var resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var obj = await ctx.MEMBER_PACKAGE.Where(x => x.EFFECTIVE_DATE.Value.Month >= DateTime.Now.Month).ToListAsync();
+
+                    resp.OUTPUT_DATA = obj;
+                    resp.STATUS = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp;
         }
     }
 }

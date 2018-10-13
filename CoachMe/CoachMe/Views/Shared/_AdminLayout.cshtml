@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <title>CoachME</title>
-    <meta name="description" content="CoachMe, เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
+    <meta name="description" content="CoachME, เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
 สอนดนตรี ศิลปะ การแสดง เขียนโปรแกรม ทำหุ่นยนต์ การเงิน
 ไม่มีค่าธรรมเนียม ไม่มีค่านายหน้า จบครบในเว็บเดียว">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
@@ -114,91 +114,19 @@
                 <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
                     <ul class="m-menu__nav ">
                         <li class="m-menu__section m-menu__section--first">
-                            <h4 class="m-menu__section-text">Teacher Dashboard</h4>
+                            <h4 class="m-menu__section-text" >Admin Dashboard</h4>
                             <i class="m-menu__section-icon flaticon-more-v2"></i>
                         </li>
 
-                        @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault() != null)
-                        {
-                            if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
-                            {
-                                <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                                    <a id="admin" href="/admin/index" class="m-menu__link ">
-                                        <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">Activate Purchase</span>
-                                    </a>
-                                </li>
-                            }
-                        }
-
-                        <li class="m-menu__item  m-menu__item " aria-haspopup="true">
-                            @using (Html.BeginForm("dashboard", "teacher", FormMethod.Post))
-                            {
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
-                                <button type="submit" id="btnOverall" style="display:none"></button>
-                            }
-                            <a href="#" onclick="$('#btnOverall').trigger('click')" class="m-menu__link ">
-                                <span class="m-menu__item-here"></span>
-                                <i class="m-menu__link-icon flaticon-line-graph"></i>
-                                <span class="m-menu__link-text">ภาพรวม</span>
-                            </a>
-                        </li>
-
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            @using (Html.BeginForm("index", "findstudent", FormMethod.Post))
-                            {
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "MEMBER_ID", @name = "MEMBER_ID" })
-                                <button type="submit" id="btnFindStudent" style="display:none"></button>
-                            }
-                            <a id="FindStudent" href="#" onclick="$('#btnFindStudent').trigger('click')" class="m-menu__link ">
-                                <span class="m-menu__item-here">
-                                </span>
-                                <i class="m-menu__link-icon flaticon-layers">                                                                            </i>
-                                <span class="m-menu__link-text">นักเรียน</span>
-                            </a>
-                        </li>
-
-
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            @using (Html.BeginForm("index", "purchase", FormMethod.Post))
-                            {
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
-                                <button type="submit" id="btnPurchase" style="display:none"></button>
-                            }
-                            <a id="purchase" href="#" onclick="$('#btnPurchase').trigger('click')" class="m-menu__link ">
-                                <span class="m-menu__item-here"></span>
-                                <i class="m-menu__link-icon flaticon-suitcase"></i>
-                                <span class="m-menu__link-text">การเงิน</span>
-                            </a>
-
-                        </li>
-
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 
-                            @using (Html.BeginForm("index", "course", FormMethod.Post))
-                            {
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
-                                <button type="submit" id="btneCourse" style="display:none"></button>
-                            }
-                            <a href="#" onclick="$('#btneCourse').trigger('click')" class="m-menu__link ">
+
+                            <a id="admin" href="/admin/index" class="m-menu__link ">
                                 <span class="m-menu__item-here"></span>
-                                <i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">คอร์ส</span>
+                                <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">Activate Purchase</span>
                             </a>
                         </li>
-
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-
-                            @using (Html.BeginForm("index", "teacher", FormMethod.Post))
-                            {
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
-                                <button type="submit" id="btneditprofile" style="display:none"></button>
-                            }
-                            <a id="editprofile" href="#" onclick="$('#btneditprofile').trigger('click')" class="m-menu__link ">
-                                <span class="m-menu__item-here"></span>
-                                <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span>
-                            </a>
-                        </li>
-                        
+                         
                     </ul>
                 </div>
 

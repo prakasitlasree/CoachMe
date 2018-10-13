@@ -81,10 +81,10 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> ManageSurvey(MEMBER_LOGON dto)
+        public async Task<RESPONSE__MODEL> ManageSurvey(MEMBERS dto)
         {
             var resp = new RESPONSE__MODEL();
-            var member_id = dto.MEMBER_ID;
+            var member_id = dto.AUTO_ID;
             try
             {
                 using (var ctx = new COACH_MEEntities())
@@ -723,7 +723,8 @@ namespace COACHME.DATASERVICE
                     //Deploy
                     myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\course\\";
                     string path = "";
-                    myDir += dto.MEMBER_LOGON.USER_NAME;
+                    var name = ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefault();
+                    myDir += name.USER_NAME;
                     System.IO.Directory.CreateDirectory(myDir);
 
                     if (banner_img != null)
@@ -738,7 +739,7 @@ namespace COACHME.DATASERVICE
                         course.BANNER_URL = @"\\" + path.Substring(index);
                     }
                     #endregion
-                    var memRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBER_LOGON.MEMBER_ID).FirstOrDefault();
+                    var memRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefault();
                     var memTeach = ctx.MEMBER_TEACH_COURSE.Where(x => x.MEMBER_ROLE_ID == memRole.AUTO_ID).ToList();
                     #region =====Course===== 
                     if (dto.COURSES.AUTO_ID > 0)
@@ -794,7 +795,7 @@ namespace COACHME.DATASERVICE
                         activity.DATE = DateTime.Now;
                         activity.ACTION = "Create Course";
                         activity.FULLNAME = dto.MEMBERS.FULLNAME;
-                        activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
+                        activity.USER_NAME = dto.MEMBERS.FIRST_NAME;
                         activity.STATUS = resp.STATUS;
                         ctx.LOGON_ACTIVITY.Add(activity);
                         #endregion
