@@ -16,9 +16,9 @@ namespace COACHME.WEB_PRESENT.Controllers
         StudentServices service = new StudentServices();
         public ActionResult Index()
         {
-           
+
             if (Session["logon"] != null)
-            { 
+            {
                 var model = new CONTAINER_MODEL();
                 var memberLogon = (MEMBERS)Session["logon"];
                 model.MEMBERS = memberLogon;
@@ -33,7 +33,7 @@ namespace COACHME.WEB_PRESENT.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> GetTeacher(SEARCH_TEACHER_MODEL dto)
         {
-            
+
 
             SEARCH_TEACHER_MODEL model = new SEARCH_TEACHER_MODEL();
             resp = await service.GetListCourse();
@@ -49,7 +49,7 @@ namespace COACHME.WEB_PRESENT.Controllers
 
             }
             if (dto.LIST_COURSE != null)
-            {              
+            {
                 resp = await service.FindTeacher(dto);
                 model.LIST_MEMBERS = resp.OUTPUT_DATA;
                 return View(model);
@@ -60,8 +60,22 @@ namespace COACHME.WEB_PRESENT.Controllers
                 model.LIST_MEMBERS = resp.OUTPUT_DATA;
                 return View(model);
             }
-            
+
         }
-       
+
+        public async Task<ActionResult> AcceptTeacher(SEARCH_TEACHER_MODEL dto)
+        {
+            resp = await service.AcceptTeacher(dto);
+            if (resp.STATUS)
+            {
+                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+            }
+            else
+            {
+                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+            }
+        }
+
+
     }
 }

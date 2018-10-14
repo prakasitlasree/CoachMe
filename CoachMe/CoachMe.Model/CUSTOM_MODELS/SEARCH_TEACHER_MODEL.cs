@@ -11,7 +11,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 
         public MEMBERS MEMBERS { get; set; }
 
-        public string COURSE_NAME { get; set; }
+       
         public string PROVINCE { get; set; }
         public string AREA { get; set; }
         public  string TEACH_TYPE { get; set; }
@@ -23,6 +23,14 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<string> LIST_COURSE { get; set; }
         public List<string> LIST_PROVINCE { get; set; }
 
-        
+        #region ======= course model =======
+ 
+        public int COURSE_ID { get; set; }
+        public string COURSE_NAME { get; set; }
+        public int MEMBER_ROLE_ID { get; set; }
+     
+        #endregion
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using COACHME.DAL;
+using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace COACHME.DATASERVICE
                                          join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                          join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
                                          join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                         where dto.TEACH_GENDER.Contains(c.SEX) && dto.LIST_COURSE.Contains(d.NAME) && (b.ROLE_ID == 1 && f.STATUS ==2)
+                                         where dto.TEACH_GENDER.Contains(c.SEX) && dto.LIST_COURSE.Contains(d.NAME) && (b.ROLE_ID == 1 && f.STATUS == 2)
                                          select new CUSTOM_MEMBERS
                                          {
                                              AUTO_ID = c.AUTO_ID,
@@ -55,6 +56,34 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        public async Task<RESPONSE__MODEL> AcceptTeacher(SEARCH_TEACHER_MODEL dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var  memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();
+                    var regisCourse = new MEMBER_REGIS_COURSE();
+                    regisCourse.MEMBER_ROLE_ID = memberRole.AUTO_ID;
+                    regisCourse.COURSE_ID = dto.COURSE_ID;
+                    regisCourse.DESCRIPTION = dto.COURSE_NAME;
+
+                    ctx.MEMBER_REGIS_COURSE.Add(regisCourse);
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
         public async Task<RESPONSE__MODEL> GetListTeacher()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -74,7 +103,8 @@ namespace COACHME.DATASERVICE
                                                  ROLE = b.ROLE_ID.ToString(),
                                                  AUTO_ID = c.AUTO_ID,
                                                  PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                                 //STATUS = a.STATUS,
+                                                 COURSE_ID = d.AUTO_ID,
+                                                 MEMBER_ROLE_ID = b.AUTO_ID,
                                                  FULLNAME = c.FULLNAME ?? "ไม่ระบุ",
                                                  SEX = c.SEX == "1" ? "ชาย" : "หญิง",
                                                  AGE = c.AGE,
@@ -107,11 +137,11 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listCourse = await ctx.COURSES.Select(o=>o.NAME).ToListAsync();
-                    listCourse = listCourse.Distinct().OrderBy(o=>o).ToList();
+                    var listCourse = await ctx.COURSES.Select(o => o.NAME).ToListAsync();
+                    listCourse = listCourse.Distinct().OrderBy(o => o).ToList();
                     resp.OUTPUT_DATA = listCourse;
                 }
-               
+
             }
             catch (Exception ex)
             {
