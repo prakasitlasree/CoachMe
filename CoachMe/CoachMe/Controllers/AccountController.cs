@@ -99,16 +99,13 @@ namespace CoachMe.Controllers
                 Session["logon"] = param;
                 if (param.MEMBER_ROLE.FirstOrDefault() != null)
                 {
-                    //if (param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
-                    //{
-                    //    return RedirectToAction("index", "teacher");
-                    //}
-                    //else if (param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
-                    //{
-                    //    return RedirectToAction("index", "admin");
-                    //} 
                     return RedirectToAction("index", "teacher");
                 }
+                return View(dto);
+            }
+            else if(result.STATUS == false && result.Message == "not active")
+            {
+                ViewBag.ActiveFail = "This email has been register. Do you want to send active mail again ?";
                 return View(dto);
             }
             else

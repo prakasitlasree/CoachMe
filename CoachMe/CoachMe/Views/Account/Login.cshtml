@@ -32,6 +32,10 @@
                         {
                             <p class="text-warning">@TempData["RegisterVerify"].ToString()</p>
                         }
+                        if (!string.IsNullOrEmpty(ViewBag.ActiveFail))
+                        {
+                            <p class="text-danger">@ViewBag.ActiveFail<a href="@Url.Action("SendMailConfirm", "account",new {EMAIL = Model.USER_NAME})" class="m-link">&nbsp; send mail.</a></p>
+                        }
                         <p class="text-success">@ViewBag.StatusMessage</p>
                         <div class="form-group m-form__group">
                             <input class="form-control m-input" type="text" placeholder="Email" name="USER_NAME" autocomplete="off">

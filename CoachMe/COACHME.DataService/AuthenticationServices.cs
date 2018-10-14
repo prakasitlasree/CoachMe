@@ -24,8 +24,8 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD && x.STATUS != 1).FirstOrDefaultAsync();
-                    if (member != null)
+                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD).FirstOrDefaultAsync();
+                    if (member != null && member.STATUS == 2)
                     {
                         fullname = member.MEMBERS.FULLNAME;
                         memberObj = ctx.MEMBERS
@@ -34,8 +34,14 @@ namespace COACHME.DATASERVICE
                                        .Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault();
                         result = true;
                     }
+                    else if(member != null && member.STATUS == 1)
+                    {
+                        result = false;
+                        resp.Message = "not active";
+                    }
                     else
                     {
+                        
                         result = false;
                     }
 
