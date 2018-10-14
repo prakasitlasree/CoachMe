@@ -80,12 +80,17 @@
           <Property Name="PACKAGE_NAME" Type="nvarchar" MaxLength="500" />
           <Property Name="PACKAGE_DETAIL" Type="nvarchar" MaxLength="500" />
           <Property Name="PRICE" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="EFFECTIVE_DATE" Type="date" />
-          <Property Name="EXPIRE_DATE" Type="date" />
+          <Property Name="EFFECTIVE_DATE" Type="datetime" />
+          <Property Name="EXPIRE_DATE" Type="datetime" />
+          <Property Name="SLIP_URL1" Type="nvarchar" MaxLength="500" />
+          <Property Name="SLIP_URL2" Type="nvarchar" MaxLength="500" />
+          <Property Name="SLIP_URL3" Type="nvarchar" MaxLength="500" />
+          <Property Name="SLIP_URL4" Type="nvarchar" MaxLength="500" />
+          <Property Name="SLIP_URL5" Type="nvarchar" MaxLength="500" />
           <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
-          <Property Name="CREATED_DATE" Type="date" />
+          <Property Name="CREATED_DATE" Type="datetime" />
           <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
-          <Property Name="UPDATED_DATE" Type="date" />
+          <Property Name="UPDATED_DATE" Type="datetime" />
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MEMBER_REGIS_COURSE">
@@ -555,12 +560,17 @@
           <Property Name="PACKAGE_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PACKAGE_DETAIL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PRICE" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="EFFECTIVE_DATE" Type="DateTime" Precision="0" />
-          <Property Name="EXPIRE_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EFFECTIVE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="EXPIRE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="SLIP_URL1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SLIP_URL2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SLIP_URL3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SLIP_URL4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SLIP_URL5" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
           <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="UPDATED_DATE" Type="DateTime" Precision="3" />
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBER_PACKAGE_MEMBERS" FromRole="MEMBER_PACKAGE" ToRole="MEMBERS" />
         </EntityType>
@@ -572,6 +582,7 @@
           <Property Name="MEMBER_ROLE_ID" Type="Int32" Nullable="false" />
           <Property Name="COURSE_ID" Type="Int32" Nullable="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="START_DATE" Type="DateTime" Precision="3" />
           <Property Name="END_DATE" Type="DateTime" Precision="3" />
           <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -581,7 +592,6 @@
           <NavigationProperty Name="COURSES" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COURSES" FromRole="MEMBER_REGIS_COURSE" ToRole="COURSES" />
           <NavigationProperty Name="MEMBER_REGIS_COURSE_COMMENT" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_COMMENT_MEMBER_REGIS_COURSE" FromRole="MEMBER_REGIS_COURSE" ToRole="MEMBER_REGIS_COURSE_COMMENT" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_MEMBER_ROLE" FromRole="MEMBER_REGIS_COURSE" ToRole="MEMBER_ROLE" />
-          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MEMBER_REGIS_COURSE_COMMENT">
           <Key>
@@ -924,6 +934,11 @@
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="SLIP_URL5" ColumnName="SLIP_URL5" />
+                <ScalarProperty Name="SLIP_URL4" ColumnName="SLIP_URL4" />
+                <ScalarProperty Name="SLIP_URL3" ColumnName="SLIP_URL3" />
+                <ScalarProperty Name="SLIP_URL2" ColumnName="SLIP_URL2" />
+                <ScalarProperty Name="SLIP_URL1" ColumnName="SLIP_URL1" />
                 <ScalarProperty Name="EXPIRE_DATE" ColumnName="EXPIRE_DATE" />
                 <ScalarProperty Name="EFFECTIVE_DATE" ColumnName="EFFECTIVE_DATE" />
                 <ScalarProperty Name="PRICE" ColumnName="PRICE" />
@@ -937,13 +952,13 @@
           <EntitySetMapping Name="MEMBER_REGIS_COURSE">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBER_REGIS_COURSE">
               <MappingFragment StoreEntitySet="MEMBER_REGIS_COURSE">
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
                 <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
                 <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
                 <ScalarProperty Name="MEMBER_ROLE_ID" ColumnName="MEMBER_ROLE_ID" />

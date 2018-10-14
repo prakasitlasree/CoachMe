@@ -24,7 +24,7 @@ namespace COACHME.DATASERVICE
                     //Create Directory
                     //Deploy
                     #region ==== DEPLOY PATH ====
-                    string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
+                    string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//Slip//";
                     #endregion
                    
                     #region ==== ROCK PATH ====
@@ -32,7 +32,7 @@ namespace COACHME.DATASERVICE
                     #endregion
                     
                     #region ==== P'X PATH ====
-                    //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                     myDir = @"C://Users//Prakasit//Source//Repos//CoachMe//CoachMe//CoachMe//Content//images//Profile//Slip//";
                     #endregion
 
                     string path = "";
@@ -47,6 +47,7 @@ namespace COACHME.DATASERVICE
                     #region ==== UPLOAD SLIP ====
                     var memberUsername = member.MEMBER_LOGON.Select(x => x.USER_NAME).FirstOrDefault();
                     myDir += memberUsername;
+                    int index = 0;
                     System.IO.Directory.CreateDirectory(myDir);
                     //Upload Pic
                     if (slipImage.ContentLength > 0)
@@ -54,6 +55,8 @@ namespace COACHME.DATASERVICE
                         string fileName = Path.GetFileName(slipImage.FileName);
                         path = Path.Combine(myDir, fileName);
                         slipImage.SaveAs(path);
+                        index = path.IndexOf("Content");
+                       
                     }
                     //updateMemberProfileUrl
                     #endregion
@@ -79,6 +82,7 @@ namespace COACHME.DATASERVICE
                     var memberPackage = new MEMBER_PACKAGE();
                     memberPackage.MEMBER_ID = dto.AUTO_ID;
                     memberPackage.EFFECTIVE_DATE = DateTime.Now;
+                    memberPackage.SLIP_URL1 = "//" + path.Substring(index);
                     memberPackage.STATUS = "DRAFT";
                     if (plan == "basic")
                     {

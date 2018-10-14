@@ -21,6 +21,11 @@ namespace COACHME.MODEL
         public Nullable<decimal> PRICE { get; set; }
         public Nullable<System.DateTime> EFFECTIVE_DATE { get; set; }
         public Nullable<System.DateTime> EXPIRE_DATE { get; set; }
+        public string SLIP_URL1 { get; set; }
+        public string SLIP_URL2 { get; set; }
+        public string SLIP_URL3 { get; set; }
+        public string SLIP_URL4 { get; set; }
+        public string SLIP_URL5 { get; set; }
         public string STATUS { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
