@@ -24,23 +24,23 @@ namespace COACHME.DATASERVICE
                                          join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                          join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
                                          join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                         where dto.TEACH_GENDER.Contains(c.SEX) && dto.LIST_COURSE.Contains(d.NAME) && b.ROLE_ID == 1
+                                         where dto.TEACH_GENDER.Contains(c.SEX) && dto.LIST_COURSE.Contains(d.NAME) && (b.ROLE_ID == 1 && f.STATUS ==2)
                                          select new CUSTOM_MEMBERS
                                          {
                                              AUTO_ID = c.AUTO_ID,
                                              PROFILE_IMG_URL = c.PROFILE_IMG_URL,
                                              //STATUS = a.STATUS,
-                                             FULLNAME = c.FULLNAME ?? "Noting",
+                                             FULLNAME = c.FULLNAME ?? "ไม่ระบุ",
                                              SEX = c.SEX == "1" ? "ชาย" : "หญิง",
                                              AGE = c.AGE,
-                                             LOCATION = c.LOCATION ?? "Noting",
-                                             MOBILE = c.MOBILE ?? "Noting",
-                                             USER_NAME = f.USER_NAME ?? "Noting",
-                                             COURSE = d.NAME ?? "Noting",
-                                             ABOUT = c.ABOUT ?? "Noting",
+                                             LOCATION = c.LOCATION ?? "ไม่ระบุ",
+                                             MOBILE = c.MOBILE ?? "ไม่ระบุ",
+                                             USER_NAME = f.USER_NAME ?? "ไม่ระบุ",
+                                             COURSE = d.NAME ?? "ไม่ระบุ",
+                                             ABOUT = c.ABOUT ?? "ไม่ระบุ",
                                              //LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
                                              REGIS_COURSE_ID = a.AUTO_ID,
-                                             CATEGORY = "Noting",
+                                             CATEGORY = "ไม่ระบุ",
                                          }).ToListAsync();
 
                     resp.OUTPUT_DATA = listStu;
@@ -68,24 +68,24 @@ namespace COACHME.DATASERVICE
                                              join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                              join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
                                              join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                             where b.ROLE_ID == 1
+                                             where b.ROLE_ID == 1 && f.STATUS == 2
                                              select new CUSTOM_MEMBERS
                                              {
                                                  ROLE = b.ROLE_ID.ToString(),
                                                  AUTO_ID = c.AUTO_ID,
                                                  PROFILE_IMG_URL = c.PROFILE_IMG_URL,
                                                  //STATUS = a.STATUS,
-                                                 FULLNAME = c.FULLNAME ?? "Noting",
+                                                 FULLNAME = c.FULLNAME ?? "ไม่ระบุ",
                                                  SEX = c.SEX == "1" ? "ชาย" : "หญิง",
                                                  AGE = c.AGE,
-                                                 LOCATION = c.LOCATION ?? "Noting",
-                                                 MOBILE = c.MOBILE ?? "Noting",
-                                                 USER_NAME = f.USER_NAME ?? "Noting",
-                                                 COURSE = d.NAME ?? "Noting",
-                                                 ABOUT = c.ABOUT ?? "Noting",
+                                                 LOCATION = c.LOCATION ?? "ไม่ระบุ",
+                                                 MOBILE = c.MOBILE ?? "ไม่ระบุ",
+                                                 USER_NAME = f.USER_NAME ?? "ไม่ระบุ",
+                                                 COURSE = d.NAME ?? "ไม่ระบุ",
+                                                 ABOUT = c.ABOUT ?? "ไม่ระบุ",
                                                  //LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
                                                  REGIS_COURSE_ID = a.AUTO_ID,
-                                                 CATEGORY = "Noting",
+                                                 CATEGORY = "ไม่ระบุ",
                                              }).ToListAsync();
 
                     resp.OUTPUT_DATA = listTeacher;
