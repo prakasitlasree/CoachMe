@@ -61,7 +61,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             model.MEMBERS = resp.OUTPUT_DATA;
             if (resp.STATUS)
             {
-                TempData["MessagePurchase"] = "ระบบกำลังตรวจสอบ กรุณารอซักครุ่";
+                TempData["MessagePurchase"] = "CoachME กำลังตรวจสอบหลักฐานการโอนเงิน กรุณารอซักครุ่";
                 return RedirectToAction("index", "purchase", new { member_id = dto.MEMBERS.AUTO_ID });
             }
             else
