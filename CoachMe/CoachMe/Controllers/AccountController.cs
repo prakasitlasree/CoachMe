@@ -108,7 +108,7 @@ namespace CoachMe.Controllers
                     //    return RedirectToAction("index", "admin");
                     //} 
                     return RedirectToAction("index", "teacher");
-                } 
+                }
                 return View(dto);
             }
             else
@@ -183,7 +183,7 @@ namespace CoachMe.Controllers
             }
             else
             {
-                
+
                 return RedirectToAction("errorpage", "home");
             }
         }
@@ -202,26 +202,48 @@ namespace CoachMe.Controllers
             {
                 if (buttonType == "Save")
                 {
-
                     var result = await service.Register(dto);
                     if (result.STATUS)
                     {
-                        ViewBag.Success = "Register complete please check your email in 24Hr.";
+                        ViewBag.Success = "Register complete please check your email in 3Hr.";
                         return View(dto);
                     }
-                    else
+                    else if (result.STATUS == false && result.Message == "active")
                     {
-                        return RedirectToAction("ErrorPage", "home");
+                        ViewBag.Fail = "This email has been register.";
+                        return View(dto);
                     }
-
+                    else if (result.STATUS == false && result.Message == "not active")
+                    {
+                        ViewBag.ActiveFail = "This email has been register. Do you want to send active mail again ?";
+                        return View(dto);
+                    }
+                    return View(dto);
                 }
+
                 if (buttonType == "Cancel")
                 {
                     return RedirectToAction("login", "account");
                 }
+            
             }
             return View(dto);
         }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> SendMailConfirm(REGISTER_MODEL dto)
+        {
+            var result = await service.SendMailConfirm(dto);
+            if (result.STATUS)
+            {
+                return RedirectToAction("login", "account");
+            }
+            else
+            {
+                return RedirectToAction("errorpage", "home");
+            }
+        }
+
 
         //
         // GET: /Account/ConfirmEmail

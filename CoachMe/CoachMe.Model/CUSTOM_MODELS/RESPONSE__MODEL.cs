@@ -16,7 +16,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 
         public string InnerException { get; set; }
 
-        public string Path { get; set; }
+        public string Message { get; set; }
 
     }
 }
