@@ -8,9 +8,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>CoachME, เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
-สอนดนตรี ศิลปะ การแสดง เขียนโปรแกรม ทำหุ่นยนต์ การเงิน
-ไม่มีค่าธรรมเนียม ไม่มีค่านายหน้า จบครบในเว็บเดียว</title>
+    <title>
+        CoachME, เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
+        สอนดนตรี ศิลปะ การแสดง เขียนโปรแกรม ทำหุ่นยนต์ การเงิน
+        ไม่มีค่าธรรมเนียม ไม่มีค่านายหน้า จบครบในเว็บเดียว
+    </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
@@ -76,24 +78,29 @@
                     <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
 
                         <!-- BEGIN: Topbar -->
+                        @if (Session["logon"] != null)
+                        {
 
-                        <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
-                            <div class="m-stack__item m-topbar__nav-wrapper">
-                                <ul class="m-topbar__nav m-nav m-nav--inline">
-                                    <li class="m-nav__item">
-                                        <a href="@Url.Action("login", "account")" class="m-nav__link" >
-                                            <span class="m-nav__link-text" style="color:white">Login</span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__item">
-                                        <a href="@Url.Action("register", "account")" class="m-nav__link">                                          
-                                            <span class="m-nav__link-text" style="color:white">Register</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                        }
+                        else
+                        {
+                            <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                                <div class="m-stack__item m-topbar__nav-wrapper">
+                                    <ul class="m-topbar__nav m-nav m-nav--inline">
+                                        <li class="m-nav__item">
+                                            <a href="@Url.Action("login", "account")" class="m-nav__link">
+                                                <span class="m-nav__link-text" style="color:white">Login</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="@Url.Action("register", "account")" class="m-nav__link">
+                                                <span class="m-nav__link-text" style="color:white">Register</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-
+                        }
                         <!-- END: Topbar -->
                     </div>
                 </div>
@@ -231,7 +238,7 @@
                                     foreach (var item in Model.LIST_MEMBERS)
                                     {
                                         <div class="m-portlet m-portlet--rounded">
-                                            
+
                                             <div class="m-portlet__body">
                                                 <div class="row">
                                                     <div class="col-md-3">
