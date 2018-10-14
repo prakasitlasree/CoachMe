@@ -32,7 +32,7 @@ namespace COACHME.DATASERVICE
                     #endregion
                     
                     #region ==== P'X PATH ====
-                     myDir = @"C://Users//Prakasit//Source//Repos//CoachMe//CoachMe//CoachMe//Content//images//Profile//Slip//";
+                    // myDir = @"C://Users//Prakasit//Source//Repos//CoachMe//CoachMe//CoachMe//Content//images//Profile//Slip//";
                     #endregion
 
                     string path = "";
@@ -82,6 +82,10 @@ namespace COACHME.DATASERVICE
                     var memberPackage = new MEMBER_PACKAGE();
                     memberPackage.MEMBER_ID = dto.AUTO_ID;
                     memberPackage.EFFECTIVE_DATE = DateTime.Now;
+                    memberPackage.CREATED_DATE = DateTime.Now;
+                    memberPackage.UPDATED_DATE = DateTime.Now;
+                    memberPackage.CREATED_BY = member.FULLNAME;
+                    memberPackage.UPDATED_BY = member.FULLNAME;
                     memberPackage.SLIP_URL1 = "//" + path.Substring(index);
                     memberPackage.STATUS = "DRAFT";
                     if (plan == "basic")

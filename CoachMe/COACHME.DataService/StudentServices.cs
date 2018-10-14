@@ -68,6 +68,7 @@ namespace COACHME.DATASERVICE
                                              join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                              join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
                                              join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
+                                              
                                              select new CUSTOM_MEMBERS
                                              {
                                                  AUTO_ID = c.AUTO_ID,

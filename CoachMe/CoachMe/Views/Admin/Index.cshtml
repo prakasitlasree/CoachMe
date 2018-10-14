@@ -142,26 +142,7 @@
                             รายชื่อคนซื้อ แพ็คเกจ
                         </h3>
                     </div>
-                </div>
-                @*<div class="m-portlet__head-tools">
-                        <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
-                                    Today
-                                </a>
-                            </li>
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
-                                    Week
-                                </a>
-                            </li>
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
-                                    Month
-                                </a>
-                            </li>
-                        </ul>
-                    </div>*@
+                </div> 
             </div>
             <div class="m-portlet__body">
                 <div class="tab-content">
@@ -274,18 +255,16 @@
                                     @Html.TextBoxFor(m => m.MEMBER_PACKAGE.PRICE, new { @id = "cPRICE", @name = "PRICE", @class = "form-control m-input", @disabled = "disabled", @style = "display: ;" })
                                 </div>
                             </div>
-
-                            @*<div class="form-group m-form__group row">
-                                <label for="message-text" class="col-4 col-form-label">Upload Slip Date:</label>
+                            <div class="form-group m-form__group row">
+                                <label for="message-text" class="col-4 col-form-label">Slip โอนเงิน</label>
                                 <div class="col-8">
-                                    
-                                        @Html.TextBoxFor(m => m.LIST_MEMBER_PACKAGE.FirstOrDefault().EFFECTIVE_DATE.Value.ToString("yyyy-MM-dd"), new { @id = "cEFFECTIVE_DATE", @name = "EFFECTIVE_DATE", @class = "form-control m-input", @disabled = "disabled", @style = "display: ;" })
+                                   
+                                        <img src="~/Content/images/course/BlankBanner.png" id="imgSlip" class="img-thumbnail imgZoom"
+                                             style=" width:100%;margin-top:15px" />
+                                   
                                     
                                 </div>
-                            </div>*@
-                          
-                           
-                            
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -310,6 +289,7 @@
                     $('#cPACKAGE_DETAIL').val(tmpData[i].PACKAGE_DETAIL);
                     $('#cPRICE').val(tmpData[i].PRICE);
                     $('#cEFFECTIVE_DATE').val(tmpData[i].EFFECTIVE_DATE);
+                    $("#imgSlip").attr("src","../"+ tmpData[i].SLIP_URL1);
                     $('#m_modal_5').modal('show');
                 }
             }
