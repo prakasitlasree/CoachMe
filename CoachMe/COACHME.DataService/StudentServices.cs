@@ -19,7 +19,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listStu = await (from a in ctx.MEMBER_REGIS_COURSE.Include("MEMBER_REGIS_COURSE_COMMENT")
+                    var listStu = await (from a in ctx.MEMBER_TEACH_COURSE
                                          join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
                                          join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                          join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
@@ -29,7 +29,7 @@ namespace COACHME.DATASERVICE
                                          {
                                              AUTO_ID = c.AUTO_ID,
                                              PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                             STATUS = a.STATUS,
+                                             //STATUS = a.STATUS,
                                              FULLNAME = c.FULLNAME ?? "Noting",
                                              SEX = c.SEX == "1" ? "ชาย" : "หญิง",
                                              AGE = c.AGE,
@@ -38,7 +38,7 @@ namespace COACHME.DATASERVICE
                                              USER_NAME = f.USER_NAME ?? "Noting",
                                              COURSE = d.NAME ?? "Noting",
                                              ABOUT = c.ABOUT ?? "Noting",
-                                             LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
+                                             //LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
                                              REGIS_COURSE_ID = a.AUTO_ID,
                                              CATEGORY = "Noting",
                                          }).ToListAsync();
@@ -63,7 +63,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listTeacher = await (from a in ctx.MEMBER_REGIS_COURSE.Include("MEMBER_REGIS_COURSE_COMMENT")
+                    var listTeacher = await (from a in ctx.MEMBER_TEACH_COURSE
                                              join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
                                              join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                              join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
@@ -71,9 +71,10 @@ namespace COACHME.DATASERVICE
                                              where b.ROLE_ID == 1
                                              select new CUSTOM_MEMBERS
                                              {
+                                                 ROLE = b.ROLE_ID.ToString(),
                                                  AUTO_ID = c.AUTO_ID,
                                                  PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                                 STATUS = a.STATUS,
+                                                 //STATUS = a.STATUS,
                                                  FULLNAME = c.FULLNAME ?? "Noting",
                                                  SEX = c.SEX == "1" ? "ชาย" : "หญิง",
                                                  AGE = c.AGE,
@@ -82,7 +83,7 @@ namespace COACHME.DATASERVICE
                                                  USER_NAME = f.USER_NAME ?? "Noting",
                                                  COURSE = d.NAME ?? "Noting",
                                                  ABOUT = c.ABOUT ?? "Noting",
-                                                 LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
+                                                 //LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
                                                  REGIS_COURSE_ID = a.AUTO_ID,
                                                  CATEGORY = "Noting",
                                              }).ToListAsync();

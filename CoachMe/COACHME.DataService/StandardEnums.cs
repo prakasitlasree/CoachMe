@@ -19,7 +19,8 @@ namespace COACHME.DATASERVICE
             FORGET_PASSWORD_URL,
             MAIL_SUBJECT_REGISTER,
             MAIL_BODY_REGISTER,
-            MAIL_FOOTER_REGISTER
+            MAIL_FOOTER_REGISTER,
+            REGISTER_VERIFY_URL
         }
 
         public enum SurveyType

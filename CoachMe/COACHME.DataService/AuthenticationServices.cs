@@ -123,10 +123,10 @@ namespace COACHME.DATASERVICE
                         string from = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SENDER.ToString()).FirstOrDefault().VALUE.ToString();
                         string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT_REGISTER.ToString()).FirstOrDefault().VALUE.ToString();
                         string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
-                        string link = "http://localhost:1935/Account/RegisterVerify?";
-                        link = link + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + memberLogon.TOKEN_HASH;
+                        //string link = "http://localhost:1935/Account/RegisterVerify?";
+                        //link = link + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + memberLogon.TOKEN_HASH;
                         //Open When Deploy.  
-                        //link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.Email + @"&TOKEN_HASH=" + dto; 
+                        string link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + memberLogon.TOKEN_HASH; 
                         string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY_REGISTER.ToString()).FirstOrDefault().VALUE.ToString(), dto.EMAIL, link);
                         try
                         {

@@ -33,5 +33,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         
         public int REGIS_COURSE_ID { get; set; }
 
+        public string ROLE { get; set; }
+
     }
 }
