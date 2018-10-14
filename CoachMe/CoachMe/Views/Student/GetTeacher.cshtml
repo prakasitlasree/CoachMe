@@ -336,9 +336,8 @@
                         </div>
 
                         <div class="col-xl-9 col-lg-8">
-                            @using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
-                            {
-                                if (Model.LIST_MEMBERS != null)
+                           
+                                @if (Model.LIST_MEMBERS != null)
                                 {
                                     foreach (var item in Model.LIST_MEMBERS)
                                     {
@@ -361,7 +360,12 @@
                                                         <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
                                                         @if (Session["logon"] == null)
                                                         {
-                                                            <a href="@Url.Action("login","account")" class="btn m-btn--pill m-btn--air btn-primary">เลือกครูคนนี้</a>
+                                                            <a href="@Url.Action("login","account")" class="btn m-btn--pill m-btn--air btn-primary">
+                                                                <span>
+                                                                    <i class="fa fa-check-square"></i>
+                                                                    <span>Accept Teacher</span>
+                                                                </span>
+                                                            </a>
                                                         }
                                                         else
                                                         {
@@ -372,39 +376,43 @@
                                                                 </span>
                                                             </button>
 
-                                                            <div class="modal fade" id="@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">
-                                                                            <div class="m-portlet__body">
-                                                                                <div class="m-demo__preview m-demo__preview--badge">
+                                                            using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                            {
+                                                                <div class="modal fade" id="@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-body">
+                                                                                <div class="m-portlet__body">
+                                                                                    <div class="m-demo__preview m-demo__preview--badge">
 
-                                                                                    <h4 class="m--font-bold m--font-bold">
-                                                                                        <span>
-                                                                                            <i class="fa fa-address-card"></i>
-                                                                                            @Html.Hidden("COURSE_ID", item.COURSE_ID)
-                                                                                            @Html.Hidden("COURSE_NAME", item.COURSE)
-                                                                                            @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
-                                                                                            <span> คุณจะเลือกครู @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
-                                                                                        </span>
+                                                                                        <h4 class="m--font-bold m--font-bold">
+                                                                                            <span>
+                                                                                                <i class="fa fa-address-card"></i>
+                                                                                                @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                                @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
+                                                                                                @Html.HiddenFor(m=>m.MEMBERS.AUTO_ID)
+                                                                                                <span> คุณจะเลือกครู @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
+                                                                                            </span>
 
-                                                                                    </h4>
+                                                                                        </h4>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                    <span>
+                                                                                        <i class="fa fa-check-square"></i>
+                                                                                        <span>Confirm</span>
+                                                                                    </span>
+                                                                                </button>
+                                                                                <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="modal-footer">
-                                                                            <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
-                                                                                <span>
-                                                                                    <i class="fa fa-check-square"></i>
-                                                                                    <span>Confirm</span>
-                                                                                </span>
-                                                                            </button>
-                                                                            <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
-                                                                        </div>
-                                                                    </div>
 
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            }
                                                         }
                                                     </div>
                                                 </div>
@@ -412,7 +420,7 @@
                                         </div>
                                     }
                                 }
-                            }
+                            
 
                         </div>
                     </div>
