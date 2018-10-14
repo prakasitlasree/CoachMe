@@ -35,7 +35,7 @@
                 </div>
             </li>
 
-            <li class="m-nav__item m-topbar__notifications m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1">
+            @*<li class="m-nav__item m-topbar__notifications m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1">
                 <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
                     <span class="m-nav__link-icon">
                         <span class="m-nav__link-icon-wrapper"><i class="flaticon-alarm"></i></span>
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li>*@
 
             <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                 <a href="#" class="m-nav__link m-dropdown__toggle">
@@ -218,9 +218,9 @@
                                         </a>
                                     </li>
                                     <li class="m-nav__item">
-                                        <a href="#" class="m-nav__link">
+                                        <a  href="@Url.Action("getteacher","student")"  class="m-nav__link">
                                             <i class="m-nav__link-icon flaticon-share"></i>
-                                            <span class="m-nav__link-text">Activity</span>
+                                            <span class="m-nav__link-text">หน้าแรก</span>
                                         </a>
                                     </li>
 
@@ -232,16 +232,16 @@
                                             <span class="m-nav__link-text">FAQ</span>
                                         </a>
                                     </li>*@
-                                    <li class="m-nav__item">
+                                    @*<li class="m-nav__item">
                                         <a href="#" class="m-nav__link">
                                             <i class="m-nav__link-icon flaticon-lifebuoy"></i>
                                             <span class="m-nav__link-text">Support</span>
                                         </a>
-                                    </li>
+                                    </li>*@
                                     <li class="m-nav__separator m-nav__separator--fit">
                                     </li>
                                     <li class="m-nav__item">
-                                        <a href="@Url.Action("Login","Account")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                        <a href="@Url.Action("getteacher","student")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
                                     </li>
                                 </ul>
                             </div>

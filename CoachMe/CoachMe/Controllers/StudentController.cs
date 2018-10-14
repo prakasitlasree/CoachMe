@@ -33,13 +33,21 @@ namespace COACHME.WEB_PRESENT.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> GetTeacher(SEARCH_TEACHER_MODEL dto)
         {
+            
+
             SEARCH_TEACHER_MODEL model = new SEARCH_TEACHER_MODEL();
             resp = await service.GetListCourse();
             model.LIST_COURSE = resp.OUTPUT_DATA;
 
             model.LIST_PROVINCE = new List<string>() { "กรุงเทพมหานคร", "สมุทรปราการ", "นนทบุรี" };
 
+            if (Session["logon"] != null)
+            {
+                var modelc = new CONTAINER_MODEL();
+                var memberLogon = (MEMBERS)Session["logon"];
+                model.MEMBERS = memberLogon;
 
+            }
             if (dto.LIST_COURSE != null)
             {              
                 resp = await service.FindTeacher(dto);

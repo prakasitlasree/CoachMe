@@ -8,6 +8,9 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 {
     public class SEARCH_TEACHER_MODEL
     {
+
+        public MEMBERS MEMBERS { get; set; }
+
         public string COURSE_NAME { get; set; }
         public string PROVINCE { get; set; }
         public string AREA { get; set; }
