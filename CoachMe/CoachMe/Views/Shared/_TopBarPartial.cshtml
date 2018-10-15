@@ -187,7 +187,7 @@
                             <div class="m-card-user m-card-user--skin-light">
                                 <div class="m-card-user__pic">
                                     @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless" alt="" />*@
-                                    <img src="..\\@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
+                                    <img src="..\\@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">
@@ -212,7 +212,7 @@
                                             <span class="m-nav__link-title">
                                                 <span class="m-nav__link-wrap">
                                                     <span class="m-nav__link-text">My Profile</span>
-                                                    <span class="m-nav__link-badge"><span class="m-badge m-badge--success">2</span></span>
+                                                    <span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>
                                                 </span>
                                             </span>
                                         </a>
@@ -241,7 +241,9 @@
                                     <li class="m-nav__separator m-nav__separator--fit">
                                     </li>
                                     <li class="m-nav__item">
-                                        <a href="@Url.Action("getteacher","student")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                        
+                                        <a href="@Url.Action("logoff","account")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                      
                                     </li>
                                 </ul>
                             </div>

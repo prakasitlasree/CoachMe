@@ -103,7 +103,7 @@ namespace CoachMe.Controllers
                 }
                 return View(dto);
             }
-            else if(result.STATUS == false && result.Message == "not active")
+            else if (result.STATUS == false && result.Message == "not active")
             {
                 ViewBag.ActiveFail = "This email has been register. Do you want to send active mail again ?";
                 return View(dto);
@@ -142,7 +142,7 @@ namespace CoachMe.Controllers
                 {
                     return RedirectToAction("login", "account");
                 }
-                
+
             }
             else if (result.STATUS == false && result.Message == "not active")
             {
@@ -263,7 +263,7 @@ namespace CoachMe.Controllers
                 {
                     return RedirectToAction("login", "account");
                 }
-            
+
             }
             return View(dto);
         }
@@ -546,11 +546,13 @@ namespace CoachMe.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
+         
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            //return RedirectToAction("Index", "Home");
+            Session["logon"] = null;
+            return RedirectToAction("getteacher", "student");
         }
 
         //
