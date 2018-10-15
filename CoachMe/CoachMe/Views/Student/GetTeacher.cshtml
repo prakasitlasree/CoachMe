@@ -45,7 +45,7 @@
                     <div class="m-stack__item m-brand  m-brand--skin-dark ">
                         <div class="m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                                <a href="#" class="m-brand__logo-wrapper">
+                                <a href="/" class="m-brand__logo-wrapper">
                                     <img alt="" src="/Content/images/teacher/logo.png">
                                 </a>
                             </div>
@@ -155,15 +155,19 @@
                                                                     <span class="m-nav__section-text">Section</span>
                                                                 </li>
                                                                 <li class="m-nav__item">
-                                                                    <a href="#" class="m-nav__link">
-                                                                        <i class="m-nav__link-icon flaticon-profile-1"></i>
-                                                                        <span class="m-nav__link-title">
-                                                                            <span class="m-nav__link-wrap">
-                                                                                <span class="m-nav__link-text">My Profile</span>
-                                                                                <span class="m-nav__link-badge"><span class="m-badge m-badge--success">2</span></span>
+                                                                    @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                                                                    {
+                                                                        <a href="/teacher/index" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                                            <span class="m-nav__link-title">
+                                                                                <span class="m-nav__link-wrap">
+                                                                                    <span class="m-nav__link-text">My Profile</span>
+                                                                                    <span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>
+                                                                                </span>
                                                                             </span>
-                                                                        </span>
-                                                                    </a>
+                                                                        </a>
+
+                                                                    }
                                                                 </li>
                                                                 <li class="m-nav__item">
                                                                     <a href="@Url.Action("getteacher","student")" class="m-nav__link">
@@ -174,7 +178,7 @@
                                                                 <li class="m-nav__separator m-nav__separator--fit">
                                                                 </li>
                                                                 <li class="m-nav__item">
-                                                                    <a href="@Url.Action("LogOff","account")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                                                    <a href="@Url.Action("getteacher","student")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -326,7 +330,7 @@
                                             <div class="row align-items-center">
                                                 <div class="col-lg-12">
                                                     <button type="submit" class="btn btn-brand m-btn--pill m-btn--air">Search</button>
-                                                    <button type="submit"class="btn btn-secondary m-btn--pill m-btn--air" name="SEARCH_TEACHER_MODEL" value="">Search All</button>
+                                                    <button type="submit" class="btn btn-secondary m-btn--pill m-btn--air" name="SEARCH_TEACHER_MODEL" value="">Search All</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -347,23 +351,27 @@
                                         <div class="m-portlet__body">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <div class="m-card-profile__pic-wrapper">
-                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" class="img-thumbnail">
+                                                    <div class="m-card-profile">
+                                                        <div class="m-card-profile__pic">
+                                                            <div class="m-card-profile__pic-wrapper">
+                                                                <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
+                                                            </div>
+                                                            <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
+                                                        </div>
                                                     </div>
-                                                    <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <p><i class="fa fa-male"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
                                                     <p><i class="fa fa-plus"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
                                                     @*<p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>*@
                                                     <p><i class="fa fa-book"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
-                                                    <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
+                                                    @*<p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>*@
                                                     @if (Session["logon"] == null)
                                                     {
                                                         <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_6">
                                                             <span>
                                                                 <i class="fa fa-check-square"></i>
-                                                                <span>Accept Teacher</span>
+                                                                <span>สมัครเรียนกับครูคนนี้</span>
                                                             </span>
                                                         </a>
 
@@ -384,11 +392,12 @@
                                                                         <div class="form-group m-form__group">
                                                                             <label for="exampleInputEmail1">Username</label>
                                                                             <input type="email" class="form-control m-input" name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
-                                                                            @Html.ValidationMessageFor(m => m.MEMBER_LOGON.USER_NAME, "", new { @class = "text-danger" })
+
                                                                         </div>
                                                                         <div class="form-group m-form__group">
                                                                             <label for="exampleInputPassword1">Password</label>
-                                                                            <input type="password" class="form-control m-input" name="PASSWORD" placeholder="Password" />
+                                                                            <input type="password" class="form-control m-input" name="PASSWORD" placeholder="Password">
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -405,7 +414,7 @@
                                                         <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
                                                             <span>
                                                                 <i class="fa fa-check-square"></i>
-                                                                <span>Accept Teacher</span>
+                                                                <span>สมัครเรียนกับครูคนนี้</span>
                                                             </span>
                                                         </button>
 
@@ -514,24 +523,6 @@
 
     <!-- end:: Page -->
     <!-- begin::Quick Sidebar -->
-    <div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
-        <div class="m-quick-sidebar__content m--hide">
-            <span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
-            <ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
-                <li class="nav-item m-tabs__item">
-                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_quick_sidebar_tabs_messenger" role="tab">Messages</a>
-                </li>
-                <li class="nav-item m-tabs__item">
-                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_settings" role="tab">Settings</a>
-                </li>
-                <li class="nav-item m-tabs__item">
-                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_logs" role="tab">Logs</a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-
     <!-- end::Quick Sidebar -->
     <!-- begin::Scroll Top -->
     <div id="m_scroll_top" class="m-scroll-top">
