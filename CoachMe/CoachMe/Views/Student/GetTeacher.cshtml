@@ -155,15 +155,19 @@
                                                                     <span class="m-nav__section-text">Section</span>
                                                                 </li>
                                                                 <li class="m-nav__item">
-                                                                    <a href="#" class="m-nav__link">
+                                                                    @if(Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                                                                    {
+                                                                    <a href="/teacher/index" class="m-nav__link">
                                                                         <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                                         <span class="m-nav__link-title">
                                                                             <span class="m-nav__link-wrap">
                                                                                 <span class="m-nav__link-text">My Profile</span>
-                                                                                <span class="m-nav__link-badge"><span class="m-badge m-badge--success">2</span></span>
+                                                                                <span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>
                                                                             </span>
                                                                         </span>
                                                                     </a>
+
+                                                                    }  
                                                                 </li>
                                                                 <li class="m-nav__item">
                                                                     <a href="@Url.Action("getteacher","student")" class="m-nav__link">
@@ -515,23 +519,7 @@
 
     <!-- end:: Page -->
     <!-- begin::Quick Sidebar -->
-    <div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
-        <div class="m-quick-sidebar__content m--hide">
-            <span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
-            <ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
-                <li class="nav-item m-tabs__item">
-                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_quick_sidebar_tabs_messenger" role="tab">Messages</a>
-                </li>
-                <li class="nav-item m-tabs__item">
-                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_settings" role="tab">Settings</a>
-                </li>
-                <li class="nav-item m-tabs__item">
-                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_logs" role="tab">Logs</a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
+    
 
     <!-- end::Quick Sidebar -->
     <!-- begin::Scroll Top -->
