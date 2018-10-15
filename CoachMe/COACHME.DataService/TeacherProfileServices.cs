@@ -144,13 +144,13 @@ namespace COACHME.DATASERVICE
                     //Create Directory
                     //Deploy
                     #region ==== DEPLOY PATH ====
-                    string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\Profile\\Slip\\";
+                    string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//";
                     #endregion
                     #region ==== ROCK PATH ====
                     //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
-                    // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\Slip\\";
+                    // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
                     #endregion
 
                     string path = "";
