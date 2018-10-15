@@ -134,9 +134,13 @@ namespace CoachMe.Controllers
             if (result.STATUS)
             {
                 Session["logon"] = param;
-                if (param.MEMBER_ROLE.FirstOrDefault() != null)
+                if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 2)
                 {
                     return RedirectToAction("GetTeacher", "student");
+                }
+                else if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                {
+                    return RedirectToAction("GetTeacher", "student");//return RedirectToAction("index", "teacher");
                 }
                 else
                 {
@@ -545,12 +549,13 @@ namespace CoachMe.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            Session["logon"] = null;
+            return RedirectToAction("getteacher", "student");
         }
 
         //
