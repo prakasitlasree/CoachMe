@@ -582,25 +582,22 @@ namespace COACHME.DATASERVICE
 
                     if (package == null)
                     {
-                        listStudent = listStudent.Take(3).ToList();
+                        listStu = listStu.Take(3).ToList();
                     }
                     if (package == "Basic Plan")
                     {
-                        listStudent = listStudent.Take(5).ToList();
+                        listStu = listStu.Take(5).ToList();
                     }
                     if (package == "Professional Plan")
                     {
-                        listStudent = listStudent.Take(10).ToList();
+                        listStu = listStu.Take(10).ToList();
                     }
                     if (package == "Advance Plan")
                     {
-                        listStudent = listStudent.ToList();
+                        listStu = listStu.ToList();
                     }
-                    model.LIST_MEMBERS = listStudent;
-
-
-
-
+                    model.LIST_CUSTOM_MEMBERS = listStu;
+                    //model.LIST_MEMBERS = listStudent;
 
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = model;
