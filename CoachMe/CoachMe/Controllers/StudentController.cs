@@ -31,35 +31,51 @@ namespace COACHME.WEB_PRESENT.Controllers
         }
 
         //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> GetTeacher(SEARCH_TEACHER_MODEL dto)
+        public async Task<ActionResult> GetTeacher(CONTAINER_MODEL dto)
         {
-
-
+            CONTAINER_MODEL contianer = new CONTAINER_MODEL();
             SEARCH_TEACHER_MODEL model = new SEARCH_TEACHER_MODEL();
-            resp = await service.GetListCourse();
-            model.LIST_COURSE = resp.OUTPUT_DATA;
 
             model.LIST_PROVINCE = new List<string>() { "กรุงเทพมหานคร", "สมุทรปราการ", "นนทบุรี" };
+            resp = await service.GetListCourse();
+            model.LIST_COURSE = resp.OUTPUT_DATA;
+            contianer.SEARCH_TEACHER_MODEL = model;
 
             if (Session["logon"] != null)
             {
-                var modelc = new CONTAINER_MODEL();
                 var memberLogon = (MEMBERS)Session["logon"];
-                model.MEMBERS = memberLogon;
+                dto.MEMBERS = memberLogon;
+                contianer.MEMBERS = memberLogon;
+                if (dto.SEARCH_TEACHER_MODEL == null)
+                {
+                    resp = await service.GetListTeacherFromAutoID(dto);
+                    contianer.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+                    return View(contianer);
+                }
+                else
+                {
+                    resp = await service.FindTeacherFromAutoID(dto);
+                    contianer.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;                  
+                    return View(contianer);
+                }
 
             }
-            if (dto.LIST_COURSE != null)
-            {
-                resp = await service.FindTeacher(dto);
-                model.LIST_MEMBERS = resp.OUTPUT_DATA;
-                return View(model);
-            }
             else
-            {
-                resp = await service.GetListTeacher();
-                model.LIST_MEMBERS = resp.OUTPUT_DATA;
-                return View(model);
+            {               
+                if (dto.SEARCH_TEACHER_MODEL == null)
+                {
+                    resp = await service.GetListTeacher();
+                    contianer.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+                    return View(contianer);
+                }
+                else
+                {
+                    resp = await service.FindTeacher(dto);
+                    contianer.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+                    return View(contianer);
+                }
             }
+
 
         }
 
@@ -68,11 +84,11 @@ namespace COACHME.WEB_PRESENT.Controllers
             resp = await service.AcceptTeacher(dto);
             if (resp.STATUS)
             {
-                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                return RedirectToAction("getteacher", "student");
             }
             else
             {
-                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                return RedirectToAction("errorpage", "index");
             }
         }
 

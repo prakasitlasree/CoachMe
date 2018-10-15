@@ -1,4 +1,4 @@
-﻿@model COACHME.MODEL.CUSTOM_MODELS.SEARCH_TEACHER_MODEL
+﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
 @{
     Layout = null;
 }
@@ -244,11 +244,11 @@
                                                 <option>คอร์ส</option>
                                             </select>
                                             <label for="exampleSelect1">วิชา</label>
-                                            @Html.DropDownListFor(m => m.LIST_COURSE, new SelectList(Model.LIST_COURSE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_COURSE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
                                         </div>
                                         <div class="form-group m-form__group">
                                             <label for="exampleSelect1">จังหวัด</label>
-                                            @Html.DropDownListFor(m => m.LIST_PROVINCE, new SelectList(Model.LIST_PROVINCE), new { @class = "form-control m-input m-input--air m-input--pill" })
+                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), new { @class = "form-control m-input m-input--air m-input--pill" })
                                         </div>
                                         <div class="form-group m-form__group">
                                             <label for="exampleSelect1">เขต</label>
@@ -294,11 +294,11 @@
                                             <label for="">เพศ</label>
                                             <div class="m-checkbox-list">
                                                 <label class="m-checkbox">
-                                                    <input type="checkbox" value="1" name="TEACH_GENDER"> ชาย
+                                                    <input type="checkbox" value="1" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> ชาย
                                                     <span></span>
                                                 </label>
                                                 <label class="m-checkbox">
-                                                    <input type="checkbox" value="2" name="TEACH_GENDER"> หญิง
+                                                    <input type="checkbox" value="2" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> หญิง
                                                     <span></span>
                                                 </label>
 
@@ -326,7 +326,7 @@
                                             <div class="row align-items-center">
                                                 <div class="col-lg-12">
                                                     <button type="submit" class="btn btn-brand m-btn--pill m-btn--air">Search</button>
-                                                    <button type="submit" class="btn btn-secondary m-btn--pill m-btn--air">Reset</button>
+                                                    <button type="submit"class="btn btn-secondary m-btn--pill m-btn--air" name="SEARCH_TEACHER_MODEL" value="">Search All</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -336,91 +336,125 @@
                         </div>
 
                         <div class="col-xl-9 col-lg-8">
-                           
-                                @if (Model.LIST_MEMBERS != null)
+
+                            @if (Model.LIST_CUSTOM_MEMBERS != null)
+                            {
+                                foreach (var item in Model.LIST_CUSTOM_MEMBERS)
                                 {
-                                    foreach (var item in Model.LIST_MEMBERS)
-                                    {
 
-                                        <div class="m-portlet m-portlet--rounded">
+                                    <div class="m-portlet m-portlet--rounded">
 
-                                            <div class="m-portlet__body">
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <div class="m-card-profile__pic-wrapper">
-                                                            <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" class="img-thumbnail">
-                                                        </div>
-                                                        <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
+                                        <div class="m-portlet__body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="m-card-profile__pic-wrapper">
+                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg")" class="img-thumbnail">
                                                     </div>
-                                                    <div class="col-md-8">
-                                                        <p><i class="fa fa-male"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
-                                                        <p><i class="fa fa-plus"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
-                                                        @*<p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>*@
-                                                        <p><i class="fa fa-book"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
-                                                        <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
-                                                        @if (Session["logon"] == null)
-                                                        {
-                                                            <a href="@Url.Action("login","account")" class="btn m-btn--pill m-btn--air btn-primary">
-                                                                <span>
-                                                                    <i class="fa fa-check-square"></i>
-                                                                    <span>Accept Teacher</span>
-                                                                </span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <button class="btn m-btn--pill m-btn--air btn-primary" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
-                                                                <span>
-                                                                    <i class="fa fa-check-square"></i>
-                                                                    <span>Accept Teacher</span>
-                                                                </span>
-                                                            </button>
+                                                    <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <p><i class="fa fa-male"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
+                                                    <p><i class="fa fa-plus"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
+                                                    @*<p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>*@
+                                                    <p><i class="fa fa-book"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
+                                                    <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
+                                                    @if (Session["logon"] == null)
+                                                    {
+                                                        <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_6">
+                                                            <span>
+                                                                <i class="fa fa-check-square"></i>
+                                                                <span>Accept Teacher</span>
+                                                            </span>
+                                                        </a>
 
-                                                            using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
-                                                            {
-                                                                <div class="modal fade" id="@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-lg" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-body">
-                                                                                <div class="m-portlet__body">
-                                                                                    <div class="m-demo__preview m-demo__preview--badge">
+                                                        @*<button type="button" class="btn btn-focus" data-toggle="modal" data-target="#m_modal_6">Launch Modal</button>*@
 
-                                                                                        <h4 class="m--font-bold m--font-bold">
-                                                                                            <span>
-                                                                                                <i class="fa fa-address-card"></i>
-                                                                                                @Html.Hidden("COURSE_ID", item.COURSE_ID)
-                                                                                                @Html.Hidden("COURSE_NAME", item.COURSE)
-                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
-                                                                                                @Html.HiddenFor(m=>m.MEMBERS.AUTO_ID)
-                                                                                                <span> คุณจะเลือกครู @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
-                                                                                            </span>
-
-                                                                                        </h4>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
-                                                                                    <span>
-                                                                                        <i class="fa fa-check-square"></i>
-                                                                                        <span>Confirm</span>
-                                                                                    </span>
-                                                                                </button>
-                                                                                <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
-                                                                            </div>
+                                                    using (Html.BeginForm("ChooseTeacherLogin", "account", FormMethod.Post))
+                                                    {
+                                                        <div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">×</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group m-form__group">
+                                                                            <label for="exampleInputEmail1">Username</label>
+                                                                            <input type="email" class="form-control m-input" name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
+                                                                            
                                                                         </div>
-
+                                                                        <div class="form-group m-form__group">
+                                                                            <label for="exampleInputPassword1">Password</label>
+                                                                            <input type="password" class="form-control m-input" name="PASSWORD" placeholder="Password">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">Login</button>
                                                                     </div>
                                                                 </div>
-                                                            }
+                                                            </div>
+                                                        </div>
                                                         }
-                                                    </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
+                                                            <span>
+                                                                <i class="fa fa-check-square"></i>
+                                                                <span>Accept Teacher</span>
+                                                            </span>
+                                                        </button>
+
+                                                        using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                        {
+                                                            <div class="modal fade" id="@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body">
+                                                                            <div class="m-portlet__body">
+                                                                                <div class="m-demo__preview m-demo__preview--badge">
+
+                                                                                    <h4 class="m--font-bold m--font-bold">
+                                                                                        <span>
+                                                                                            <i class="fa fa-address-card"></i>
+                                                                                            @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                            @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                            @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
+                                                                                            @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                                                                            <span> คุณจะเลือกครู @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
+                                                                                        </span>
+
+                                                                                    </h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                <span>
+                                                                                    <i class="fa fa-check-square"></i>
+                                                                                    <span>Confirm</span>
+                                                                                </span>
+                                                                            </button>
+                                                                            <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
-                            
+                            }
+
 
                         </div>
                     </div>

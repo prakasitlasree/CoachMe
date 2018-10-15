@@ -115,6 +115,47 @@ namespace CoachMe.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ChooseTeacherLogin(MEMBER_LOGON dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("login", "account");
+            }
+            if (string.IsNullOrEmpty(dto.USER_NAME) || string.IsNullOrEmpty(dto.PASSWORD))
+            {
+                ModelState.AddModelError("", "Please input username/password");
+                return View(dto);
+            }
+
+            var result = await service.Login(dto);
+            MEMBERS param = result.OUTPUT_DATA;
+            if (result.STATUS)
+            {
+                Session["logon"] = param;
+                if (param.MEMBER_ROLE.FirstOrDefault() != null)
+                {
+                    return RedirectToAction("GetTeacher", "student");
+                }
+                else
+                {
+                    return RedirectToAction("login", "account");
+                }
+                
+            }
+            else if (result.STATUS == false && result.Message == "not active")
+            {
+                ViewBag.ActiveFail = "This email has been register. Do you want to send active mail again ?";
+                return RedirectToAction("login", "account");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return RedirectToAction("login", "account");
+            }
+        }
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]

@@ -18,11 +18,14 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<string> TEACH_LOCATE { get; set; }
         public List<string> TEACH_GENDER { get; set; }
         public List<string> STUDENT_LEVEL { get; set; }
-        
-        public List<CUSTOM_MEMBERS> LIST_MEMBERS { get; set; }
         public List<string> LIST_COURSE { get; set; }
         public List<string> LIST_PROVINCE { get; set; }
 
+
+        //public List<CUSTOM_MEMBERS> LIST_MEMBERS { get; set; }
+        
+
+    
         #region ======= course model =======
  
         public int COURSE_ID { get; set; }

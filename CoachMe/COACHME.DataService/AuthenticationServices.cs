@@ -491,6 +491,63 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        public async Task<RESPONSE__MODEL> Login(MEMBER_LOGON dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            var memberObj = new MEMBERS();
+            var result = false;
+            var fullname = string.Empty;
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+
+                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD).FirstOrDefaultAsync();
+                    if (member != null && member.STATUS == 2)
+                    {
+                        fullname = member.MEMBERS.FULLNAME;
+                        memberObj = ctx.MEMBERS
+                                       .Include("MEMBER_ROLE")
+                                       .Include("MEMBER_PACKAGE")
+                                       .Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault();
+                        result = true;
+                    }
+                    else if (member != null && member.STATUS == 1)
+                    {
+                        result = false;
+                        resp.Message = "not active";
+                    }
+                    else
+                    {
+
+                        result = false;
+                    }
+
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "LOGON";
+                    activity.FULLNAME = fullname;
+                    activity.USER_NAME = dto.USER_NAME;
+                    activity.PASSWORD = dto.PASSWORD;
+                    activity.STATUS = result;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    var act_result = await ctx.SaveChangesAsync();
+
+                    resp.STATUS = result;
+                    resp.OUTPUT_DATA = memberObj;
+                    return resp;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = result;
+                throw ex;
+            }
+
+        }
+
 
         #endregion
 

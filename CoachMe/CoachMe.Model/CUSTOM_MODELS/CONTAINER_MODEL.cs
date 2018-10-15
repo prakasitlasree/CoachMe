@@ -15,13 +15,19 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public MEMBER_LOGON MEMBER_LOGON { get; set; }
         public MEMBER_REGIS_COURSE MEMBER_REGIS_COURSE { get; set; }
         public MEMBER_ROLE MEMBER_ROLE { get; set; }
-
+        public SEARCH_TEACHER_MODEL SEARCH_TEACHER_MODEL { get; set; }
         public MEMBER_PACKAGE MEMBER_PACKAGE { get; set; }
-
         public PLACE PLACE { get; set; }
         public RESET_PASSWORD RESET_PASSWORD { get; set; }
         public ROLE ROLE { get; set; }
         public COURSE_PLACE COURSE_PLACE { get; set; }
+
+
+
+
+
+
+
         public List<CONFIGURATION> LIST_CONFIGURATION { get; set; }
         public List<COURSES> LIST_COURSES { get; set; }
         public List<MEMBERS> LIST_MEMBERS { get; set; }
