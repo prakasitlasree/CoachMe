@@ -34,14 +34,13 @@ namespace COACHME.DATASERVICE
                                        .Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault();
                         result = true;
                     }
-                    else if(member != null && member.STATUS == 1)
+                    else if (member != null && member.STATUS == 1)
                     {
                         result = false;
                         resp.Message = "not active";
                     }
                     else
                     {
-                        
                         result = false;
                     }
 
@@ -78,8 +77,10 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var member = new MEMBERS();
-                    var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper()).FirstOrDefaultAsync();
-                    if (checkMember == null )
+                    var checkMember = await ctx.MEMBER_LOGON
+                                                .Include("MEMBERS")
+                                                .Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper()).FirstOrDefaultAsync();
+                    if (checkMember == null)
                     {
                         #region ==== SET DETAIL ====
                         //1.Master 
@@ -179,10 +180,95 @@ namespace COACHME.DATASERVICE
 
                         var act_result = await ctx.SaveChangesAsync();
 
-                       
+
                         result = true;
                     }
-                    else if(checkMember != null && checkMember.TOKEN_USED == true)
+                    else if (checkMember != null && checkMember.TOKEN_USED == false && checkMember.TOKEN_EXPIRATION < DateTime.Now)
+                    {
+                        
+                        #region ==== SET DETAIL ====
+                        //1.Master 
+                        checkMember.MEMBERS.FULLNAME = dto.FULLNAME;
+                        checkMember.MEMBERS.CREATED_DATE = DateTime.Now;
+                        checkMember.MEMBERS.CREATED_BY = dto.FULLNAME;
+                        checkMember.MEMBERS.UPDATED_DATE = DateTime.Now;
+                        checkMember.MEMBERS.UPDATED_BY = dto.FULLNAME;
+                        checkMember.MEMBERS.SEX = dto.GENDER;
+
+                        checkMember.USER_NAME = dto.EMAIL.ToUpper();
+                        checkMember.PASSWORD = dto.PASSWORD;
+                        checkMember.STATUS = 1;
+                        checkMember.TOKEN_HASH = GenUniqueKey(dto.EMAIL.ToUpper());
+                        checkMember.TOKEN_USED = false;
+                        checkMember.TOKEN_EXPIRATION = DateTime.Now.AddHours(3);
+                        checkMember.CREATED_DATE = DateTime.Now;
+                        checkMember.CREATED_BY = dto.FULLNAME;
+                        checkMember.UPDATED_DATE = DateTime.Now;
+                        checkMember.UPDATED_BY = dto.FULLNAME;
+
+
+                        await ctx.SaveChangesAsync();
+                        #endregion
+
+                        #region === SEND VERIFY MAIL ===
+                        var listConfig = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
+                        string smtpAcc = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_ACCOUNT.ToString()).FirstOrDefault().VALUE.ToString();
+                        var fromAddress = new MailAddress(smtpAcc, "No-reply@CoachMe.asia");//Create Mail
+                        string smtpPassword = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_PASSWORD.ToString()).FirstOrDefault().VALUE.ToString();
+                        string from = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SENDER.ToString()).FirstOrDefault().VALUE.ToString();
+                        string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT_REGISTER.ToString()).FirstOrDefault().VALUE.ToString();
+                        string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
+                        //string link = "http://localhost:1935/Account/RegisterVerify?";
+                        //link = link + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + memberLogon.TOKEN_HASH;
+                        //Open When Deploy.  
+                        string link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + checkMember.TOKEN_HASH;
+                        string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY_REGISTER.ToString()).FirstOrDefault().VALUE.ToString(), dto.EMAIL, link);
+                        try
+                        {
+                            var toAddress = new MailAddress(dto.EMAIL);
+                            var smtp = new SmtpClient
+                            {
+                                Host = "smtp.gmail.com",
+                                Port = 587,
+                                EnableSsl = true,
+                                DeliveryMethod = SmtpDeliveryMethod.Network,
+                                UseDefaultCredentials = false,
+                                Credentials = new NetworkCredential(fromAddress.Address, smtpPassword)
+                            };
+
+                            using (var message = new MailMessage(fromAddress, toAddress)
+                            {
+                                Subject = subject,
+                                Body = body,
+                                IsBodyHtml = true
+                            })
+                            {
+                                smtp.Send(message);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            result = false;
+                            throw ex;
+                        }
+
+                        #endregion
+
+                        #region === Activity ===
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "Register but not active in 3hrs";
+                        activity.FULLNAME = dto.FULLNAME;
+                        activity.USER_NAME = dto.EMAIL;
+                        activity.PASSWORD = dto.PASSWORD;
+                        activity.STATUS = result;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        #endregion
+
+                        result = true;
+                    }
+                    else if (checkMember != null && checkMember.TOKEN_USED == true)
                     {
                         resp.Message = "active";
                         result = false;
