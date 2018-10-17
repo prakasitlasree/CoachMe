@@ -20,7 +20,8 @@ namespace COACHME.DATASERVICE
             MAIL_SUBJECT_REGISTER,
             MAIL_BODY_REGISTER,
             MAIL_FOOTER_REGISTER,
-            REGISTER_VERIFY_URL
+            REGISTER_VERIFY_URL,
+            MAIL_SUBJECT_CONFIRM
         }
 
         public enum SurveyType

@@ -185,7 +185,7 @@ namespace COACHME.DATASERVICE
                     }
                     else if (checkMember != null && checkMember.TOKEN_USED == false && checkMember.TOKEN_EXPIRATION < DateTime.Now)
                     {
-                        
+
                         #region ==== SET DETAIL ====
                         //1.Master 
                         checkMember.MEMBERS.FULLNAME = dto.FULLNAME;
@@ -527,19 +527,27 @@ namespace COACHME.DATASERVICE
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             using (var ctx = new COACH_MEEntities())
             {
-                var checkMember = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper() && x.TOKEN_USED != true).FirstOrDefaultAsync();
+                var checkMember = await ctx.MEMBER_LOGON
+                                            .Include("MEMBDERS")
+                                            .Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper() && x.TOKEN_USED != true).FirstOrDefaultAsync();
+                #region ====RESET TOKEN=====
+                checkMember.TOKEN_HASH = GenUniqueKey(checkMember.USER_NAME.ToUpper());
+                checkMember.TOKEN_EXPIRATION = DateTime.Now.AddHours(3);
+               
+                #endregion
+                
                 #region === SEND VERIFY MAIL ===
                 var listConfig = await ctx.CONFIGURATION.Where(x => x.CONTROLER_NAME == "AccountController").ToListAsync();
                 string smtpAcc = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_ACCOUNT.ToString()).FirstOrDefault().VALUE.ToString();
                 var fromAddress = new MailAddress(smtpAcc, "No-reply@CoachMe.asia");//Create Mail
                 string smtpPassword = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.SMTP_PASSWORD.ToString()).FirstOrDefault().VALUE.ToString();
                 string from = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SENDER.ToString()).FirstOrDefault().VALUE.ToString();
-                string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT_REGISTER.ToString()).FirstOrDefault().VALUE.ToString();
+                string subject = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_SUBJECT_CONFIRM.ToString()).FirstOrDefault().VALUE.ToString();
                 string footer = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_FOOTER.ToString()).FirstOrDefault().VALUE.ToString();
                 //string link = "http://localhost:1935/Account/RegisterVerify?";
                 //link = link + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + checkMember.TOKEN_HASH;
                 //Open When Deploy.
-                string link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + dto.EMAIL + @"&TOKEN_HASH=" + checkMember.TOKEN_HASH;
+                string link = listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.REGISTER_VERIFY_URL.ToString()).FirstOrDefault().VALUE + @"USER_NAME=" + checkMember.USER_NAME + @"&TOKEN_HASH=" + checkMember.TOKEN_HASH;
                 string body = ReplaceMailBody(listConfig.Where(x => x.SETING_NAME == StandardEnums.ConfigurationSettingName.MAIL_BODY_REGISTER.ToString()).FirstOrDefault().VALUE.ToString(), dto.EMAIL, link);
                 try
                 {
@@ -572,6 +580,18 @@ namespace COACHME.DATASERVICE
                 }
 
                 #endregion
+
+                #region =========Add Activity=========
+                var activity = new LOGON_ACTIVITY();
+                activity.DATE = DateTime.Now;
+                activity.ACTION = "Send Mail confirm";
+                activity.FULLNAME = checkMember.MEMBERS.FULLNAME;
+                activity.USER_NAME = checkMember.USER_NAME;
+                activity.PASSWORD = checkMember.PASSWORD;
+                activity.STATUS = resp.STATUS;
+                ctx.LOGON_ACTIVITY.Add(activity);
+                #endregion
+                await ctx.SaveChangesAsync();
             }
 
             return resp;
@@ -591,11 +611,22 @@ namespace COACHME.DATASERVICE
                     var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD).FirstOrDefaultAsync();
                     if (member != null && member.STATUS == 2)
                     {
-                        fullname = member.MEMBERS.FULLNAME;
                         memberObj = ctx.MEMBERS
                                        .Include("MEMBER_ROLE")
                                        .Include("MEMBER_PACKAGE")
                                        .Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault();
+                        
+                        #region Activity
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "LOGON";
+                        activity.FULLNAME = member.MEMBERS.FULLNAME;
+                        activity.USER_NAME = member.USER_NAME;
+                        activity.PASSWORD = member.PASSWORD;
+                        activity.STATUS = result;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        #endregion
+
                         result = true;
                     }
                     else if (member != null && member.STATUS == 1)
@@ -609,16 +640,9 @@ namespace COACHME.DATASERVICE
                         result = false;
                     }
 
-                    var activity = new LOGON_ACTIVITY();
-                    activity.DATE = DateTime.Now;
-                    activity.ACTION = "LOGON";
-                    activity.FULLNAME = fullname;
-                    activity.USER_NAME = dto.USER_NAME;
-                    activity.PASSWORD = dto.PASSWORD;
-                    activity.STATUS = result;
-                    ctx.LOGON_ACTIVITY.Add(activity);
-                    var act_result = await ctx.SaveChangesAsync();
+                    
 
+                    var act_result = await ctx.SaveChangesAsync();
                     resp.STATUS = result;
                     resp.OUTPUT_DATA = memberObj;
                     return resp;
