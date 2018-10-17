@@ -265,7 +265,7 @@
                                                         <option>ครู</option>
                                                         <option>คอร์ส</option>
                                                     </select>
-                                                    <label for="exampleSelect1">วิชา</label>
+                                                    <label for="exampleSelect1">หมวดหมู่</label>
                                                     @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_COURSE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
                                                 </div>
                                                 <div class="form-group m-form__group">
@@ -273,7 +273,7 @@
                                                     @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), new { @class = "form-control m-input m-input--air m-input--pill" })
                                                 </div>
                                                 <div class="form-group m-form__group">
-                                                    <label for="exampleSelect1">เขต</label>
+                                                    <label for="exampleSelect1">เขต/อำเภอ</label>
                                                     <select class="form-control m-input m-input--air m-input--pill" name="AREA" id="exampleSelect1">
                                                         <option>ปทุมวัน</option>
                                                         <option>บางนา</option>
@@ -315,7 +315,7 @@
                                                 </div>
 
                                                 <div class="m-form__group form-group">
-                                                    <label for="">เพศ</label>
+                                                    <label for="">ข้อมูลทั่วไป (เพศของครู)</label>
                                                     <div class="m-checkbox-list">
                                                         <label class="m-checkbox">
                                                             <input type="checkbox" value="1" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> ชาย
@@ -377,16 +377,17 @@
                                                             <div class="m-card-profile__pic-wrapper">
                                                                 <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
                                                             </div>
+                                                            <p><i class="fa fa-address-book"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
                                                             <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p><i class="fa fa-address-book"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
+                                                    
                                                     <p><i class="fa fa-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
-                                                    @*<p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>*@
+                                                    <p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>
                                                     <p><i class="fa fa-location-arrow"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
-                                                    @*<p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>*@
+                                                    <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
                                                     @if (Session["logon"] == null)
                                                     {
 

@@ -412,101 +412,91 @@ namespace COACHME.DATASERVICE
             CONTAINER_MODEL model = new CONTAINER_MODEL();
             try
             {
-                using (var ctx = new COACH_MEEntities())
-                {
-                    var memberProfile = await ctx.MEMBERS
-                       .Include("MEMBER_LOGON")
-                       .Include("MEMBER_PACKAGE")
-                       .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
-                       .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                //using (var ctx = new COACH_MEEntities())
+                //{
+                //    var memberProfile = await ctx.MEMBERS
+                //       .Include("MEMBER_LOGON")
+                //       .Include("MEMBER_PACKAGE")
+                //       .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
+                //       .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
-                    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
-                                                        .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
+                //    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
+                //                                        .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
+                
+                //    var listStu = await (from a in ctx.MEMBER_REGIS_COURSE
+                //                         join b in ctx.MEMBER_ROLE on a.REGISTER_ID equals b.AUTO_ID
+                //                         join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
+                //                         //join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
+                //                         join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
+                //                         where teachCourse.Contains(d.AUTO_ID)
+                //                         select new CUSTOM_MEMBERS
+                //                         {
+                //                             AUTO_ID = c.AUTO_ID,
+                //                             PROFILE_IMG_URL = c.PROFILE_IMG_URL,
+                //                             STATUS = a.STATUS,
+                //                             FULLNAME = c.FULLNAME ?? "",
+                //                             SEX = c.SEX == "1" ? "ชาย" : "หญิง",
+                //                             AGE = c.AGE,
+                //                             LOCATION = c.LOCATION ?? "",
+                //                             MOBILE = c.MOBILE ?? "",
+                //                             USER_NAME = f.USER_NAME ?? "",
+                //                             COURSE = d.NAME ?? "",
+                //                             ABOUT = c.ABOUT ?? "",
+                //                             //LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
+                //                             REGIS_COURSE_ID = a.AUTO_ID 
+                //                         }).ToListAsync(); 
+                //    model.LIST_CUSTOM_MEMBERS = listStu;
+                //    model.MEMBERS = memberProfile;
+                 
+                //    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
+                //                                             .Select(o => o.MEMBER_ROLE_ID)
+                //                                             .ToList();
 
+                //    var courseName = await ctx.COURSES
+                //                              .Where(o => teachCourse.Contains(o.AUTO_ID)).ToListAsync();
 
-                    var listStu = await (from a in ctx.MEMBER_REGIS_COURSE.Include("MEMBER_REGIS_COURSE_COMMENT")
-                                         join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
-                                         join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
-                                         join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
-                                         join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                         where teachCourse.Contains(d.AUTO_ID)
-                                         select new CUSTOM_MEMBERS
-                                         {
-                                             AUTO_ID = c.AUTO_ID,
-                                             PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                             STATUS = a.STATUS,
-                                             FULLNAME = c.FULLNAME ?? "",
-                                             SEX = c.SEX == "1" ? "ชาย" : "หญิง",
-                                             AGE = c.AGE,
-                                             LOCATION = c.LOCATION ?? "",
-                                             MOBILE = c.MOBILE ?? "",
-                                             USER_NAME = f.USER_NAME ?? "",
-                                             COURSE = d.NAME ?? "",
-                                             ABOUT = c.ABOUT ?? "",
-                                             LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
-                                             REGIS_COURSE_ID = a.AUTO_ID
+                //    var listStudent = await ctx.MEMBERS
+                //                                .Include(x => x.MEMBER_ROLE.Select(o => o.MEMBER_REGIS_COURSE))
+                //                                .Include(x => x.MEMBER_LOGON)
+                //                                .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
+                //                                .ToListAsync();
+                 
+                //    package = memberProfile.MEMBER_PACKAGE
+                //                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
+                //                                .Select(o => o.PACKAGE_NAME).LastOrDefault();
 
-                                         }).ToListAsync();
+                //    if (package == null)
+                //    {
+                //        listStudent = listStudent.Take(3).ToList();
+                //    }
+                //    if (package == "Basic Plan")
+                //    {
+                //        listStudent = listStudent.Take(5).ToList();
+                //    }
+                //    if (package == "Professional Plan")
+                //    {
+                //        listStudent = listStudent.Take(10).ToList();
+                //    }
+                //    if (package == "Advance Plan")
+                //    {
+                //        listStudent = listStudent.ToList();
+                //    }
+                //    model.LIST_MEMBERS = listStudent;
 
-
-                    model.LIST_CUSTOM_MEMBERS = listStu;
-                    model.MEMBERS = memberProfile;
-
-
-
-                    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
-                                                             .Select(o => o.MEMBER_ROLE_ID)
-                                                             .ToList();
-
-                    var courseName = await ctx.COURSES
-                                              .Where(o => teachCourse.Contains(o.AUTO_ID)).ToListAsync();
-
-                    var listStudent = await ctx.MEMBERS
-                                                .Include(x => x.MEMBER_ROLE.Select(o => o.MEMBER_REGIS_COURSE))
-                                                .Include(x => x.MEMBER_LOGON)
-                                                .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
-                                                .ToListAsync();
-
-
-
-                    package = memberProfile.MEMBER_PACKAGE
-                                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
-                                                .Select(o => o.PACKAGE_NAME).LastOrDefault();
-
-                    if (package == null)
-                    {
-                        listStudent = listStudent.Take(3).ToList();
-                    }
-                    if (package == "Basic Plan")
-                    {
-                        listStudent = listStudent.Take(5).ToList();
-                    }
-                    if (package == "Professional Plan")
-                    {
-                        listStudent = listStudent.Take(10).ToList();
-                    }
-                    if (package == "Advance Plan")
-                    {
-                        listStudent = listStudent.ToList();
-                    }
-                    model.LIST_MEMBERS = listStudent;
-
-                    #region === Activity ===
-                    var activity = new LOGON_ACTIVITY();
-                    activity.DATE = DateTime.Now;
-                    activity.ACTION = "Find Student";
-                    activity.FULLNAME = dto.FULLNAME;
-                    activity.USER_NAME = dto.FULLNAME;
-                    activity.PASSWORD = dto.FULLNAME;
-                    activity.STATUS = resp.STATUS;
-                    ctx.LOGON_ACTIVITY.Add(activity);
-                    #endregion
-
-
-
-                    resp.STATUS = true;
-                    resp.OUTPUT_DATA = model;
-                }
+                //    #region === Activity ===
+                //    var activity = new LOGON_ACTIVITY();
+                //    activity.DATE = DateTime.Now;
+                //    activity.ACTION = "Find Student";
+                //    activity.FULLNAME = dto.FULLNAME;
+                //    activity.USER_NAME = dto.FULLNAME;
+                //    activity.PASSWORD = dto.FULLNAME;
+                //    activity.STATUS = resp.STATUS;
+                //    ctx.LOGON_ACTIVITY.Add(activity);
+                //    #endregion
+                 
+                //    resp.STATUS = true;
+                //    resp.OUTPUT_DATA = model;
+                //}
             }
             catch (Exception ex)
             {
@@ -530,78 +520,63 @@ namespace COACHME.DATASERVICE
                         .Include("MEMBER_PACKAGE")
                         .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
                         .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
+                    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault();
 
-                    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
-                                                        .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
+                    var listStudent = ctx.MEMBERS.ToList();
 
+                    var listCustom = new List<CUSTOM_MEMBERS>();
 
-                    var listStu = (from a in ctx.MEMBER_REGIS_COURSE.Include("MEMBER_REGIS_COURSE_COMMENT")
-                                   join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
-                                   join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
-                                   join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
-                                   join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                   where teachCourse.Contains(d.AUTO_ID)
-                                   select new CUSTOM_MEMBERS
-                                   {
-                                       AUTO_ID = c.AUTO_ID,
-                                       PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                       STATUS = a.STATUS,
-                                       FULLNAME = c.FULLNAME ?? "",
-                                       SEX = c.SEX == "1" ? "ชาย" : "หญิง",
-                                       AGE = c.AGE,
-                                       LOCATION = c.LOCATION ?? "",
-                                       MOBILE = c.MOBILE ?? "",
-                                       USER_NAME = f.USER_NAME ?? "",
-                                       COURSE = d.NAME ?? "",
-                                       ABOUT = c.ABOUT ?? "",
-                                       LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
-                                       REGIS_COURSE_ID = a.AUTO_ID
+                    if (teachCourse != null)
+                    {
+                        foreach (var item in teachCourse.MEMBER_TEACH_COURSE)
+                        {
+                            var registerList = ctx.MEMBER_REGIS_COURSE.Where(x => x.TEACHER_ID == item.AUTO_ID).ToList();
+                            foreach (var register in registerList)
+                            {
+                                var obj = new CUSTOM_MEMBERS();
+                                obj.AUTO_ID = register.REGISTER_ID;
+                                var student = ctx.MEMBER_ROLE.Where(x => x.AUTO_ID == register.REGISTER_ID).FirstOrDefault(); 
+                                obj.PROFILE_IMG_URL = student.MEMBERS.PROFILE_IMG_URL;
+                                obj.STATUS = register.STATUS;
+                                obj.FULLNAME = student.MEMBERS.FULLNAME ?? "";
+                                obj.SEX = student.MEMBERS.SEX == "1" ? "ชาย" : "หญิง";
+                                obj.AGE = student.MEMBERS.AGE;
+                                obj.LOCATION = student.MEMBERS.LOCATION ?? "";
+                                obj.MOBILE = student.MEMBERS.MOBILE ?? "";
+                                var course = ctx.COURSES.Where(x => x.AUTO_ID == item.COURSE_ID).FirstOrDefault();
+                                obj.COURSE = course.NAME ?? "";
+                                obj.ABOUT = student.MEMBERS.ABOUT ?? "";
+                                obj.LIST_STUDENT_COMMENT = ctx.COURSE_COMMENT.Where(x => x.COURSE_ID == item.COURSE_ID && x.USER_ROLE_ID == student.AUTO_ID).Select(p => p.COMMENT).ToList();
+                                obj.REGIS_COURSE_ID = register.AUTO_ID;
 
-                                   }).ToList();
-
-
-                    model.LIST_CUSTOM_MEMBERS = listStu;
-                    model.MEMBERS = memberProfile;
-
-
-
-                    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
-                                                             .Select(o => o.MEMBER_ROLE_ID)
-                                                             .ToList();
-
-                    var courseName = ctx.COURSES
-                                              .Where(o => teachCourse.Contains(o.AUTO_ID)).ToList();
-
-                    var listStudent = ctx.MEMBERS
-                                                .Include(x => x.MEMBER_ROLE.Select(o => o.MEMBER_REGIS_COURSE))
-                                                .Include(x => x.MEMBER_LOGON)
-                                                .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
-                                                .ToList();
-
-
-
+                                listCustom.Add(obj);
+                            }
+                        }
+                    } 
+                    model.MEMBERS = memberProfile; 
+                     
                     package = memberProfile.MEMBER_PACKAGE
                                                 .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
                                                 .Select(o => o.PACKAGE_NAME).LastOrDefault();
 
                     if (package == null)
                     {
-                        listStu = listStu.Take(3).ToList();
+                        listCustom = listCustom.Take(3).ToList();
                     }
                     if (package == "Basic Plan")
                     {
-                        listStu = listStu.Take(5).ToList();
+                        listCustom = listCustom.Take(5).ToList();
                     }
                     if (package == "Professional Plan")
                     {
-                        listStu = listStu.Take(10).ToList();
+                        listCustom = listCustom.Take(10).ToList();
                     }
                     if (package == "Advance Plan")
                     {
-                        listStu = listStu.ToList();
+                        listCustom = listCustom.ToList();
                     }
-                    model.LIST_CUSTOM_MEMBERS = listStu;
-                    //model.LIST_MEMBERS = listStudent;
+                    model.LIST_CUSTOM_MEMBERS = listCustom;
+                    model.LIST_MEMBERS = listStudent;
 
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = model;

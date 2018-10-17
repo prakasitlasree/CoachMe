@@ -12,14 +12,16 @@ namespace COACHME.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class MEMBER_REGIS_COURSE_COMMENT
+    public partial class COURSE_COMMENT
     {
         public int AUTO_ID { get; set; }
-        public Nullable<int> MEMBER_REGIS_COURSE_ID { get; set; }
+        public Nullable<int> USER_ROLE_ID { get; set; }
+        public Nullable<int> COURSE_ID { get; set; }
         public string COMMENT { get; set; }
         public string COMMENT_BY { get; set; }
         public Nullable<System.DateTime> COMMENT_DATE { get; set; }
     
-        public virtual MEMBER_REGIS_COURSE MEMBER_REGIS_COURSE { get; set; }
+        public virtual COURSES COURSES { get; set; }
+        public virtual MEMBER_ROLE MEMBER_ROLE { get; set; }
     }
 }
