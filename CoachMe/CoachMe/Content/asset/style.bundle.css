@@ -42,7 +42,7 @@
 }
 
 html {
-    font-family: sans-serif;
+     font-family: 'Mitr', sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -11775,7 +11775,7 @@ a.text-dark:hover, a.text-dark:focus {
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-    font-family: sans-serif;
+     font-family: 'Mitr', sans-serif;
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -11790,7 +11790,7 @@ html, body {
     padding: 0px;
     font-size: 13px;
     font-weight: 300;
-    font-family: Poppins;
+    font-family: 'Mitr', sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

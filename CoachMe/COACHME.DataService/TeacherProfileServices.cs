@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Web;
 using System.IO;
 using COACHME.DAL;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace COACHME.DATASERVICE
 {
@@ -147,7 +149,7 @@ namespace COACHME.DATASERVICE
                     string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//";
                     #endregion
                     #region ==== ROCK PATH ====
-                    //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
+                    myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
                     // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
@@ -167,6 +169,8 @@ namespace COACHME.DATASERVICE
                         string fileName = Path.GetFileName(profileImage.FileName);
                         path = Path.Combine(myDir, fileName);
                         profileImage.SaveAs(path);
+                        Bitmap bimage = new Bitmap(path);
+                        resizeImage(bimage, path);
                     }
                     //updateMemberProfileUrl
                     var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
@@ -814,7 +818,21 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        
+        private void resizeImage(Image imgToResize, string path)
+        {
+            try
+            {
+                var imageResized = new Bitmap(imgToResize, 800, 500);
+                imgToResize.Dispose();
+                imgToResize = null;
+                imageResized.Save(path, ImageFormat.Jpeg);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
 
     }
 }
