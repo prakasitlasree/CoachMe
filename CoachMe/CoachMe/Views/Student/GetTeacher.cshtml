@@ -247,7 +247,7 @@
                                                 <option>ครู</option>
                                                 <option>คอร์ส</option>
                                             </select>
-                                            <label for="exampleSelect1">วิชา</label>
+                                            <label for="exampleSelect1">หมวดหมู่</label>
                                             @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_COURSE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
                                         </div>
                                         <div class="form-group m-form__group">
@@ -255,7 +255,7 @@
                                             @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), new { @class = "form-control m-input m-input--air m-input--pill" })
                                         </div>
                                         <div class="form-group m-form__group">
-                                            <label for="exampleSelect1">เขต</label>
+                                            <label for="exampleSelect1">เขต/อำเภอ</label>
                                             <select class="form-control m-input m-input--air m-input--pill" name="AREA" id="exampleSelect1">
                                                 <option>ปทุมวัน</option>
                                                 <option>บางนา</option>
@@ -293,22 +293,6 @@
                                                 </label>
                                             </div>
                                         </div>
-
-                                        <div class="m-form__group form-group">
-                                            <label for="">เพศ</label>
-                                            <div class="m-checkbox-list">
-                                                <label class="m-checkbox">
-                                                    <input type="checkbox" value="1" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> ชาย
-                                                    <span></span>
-                                                </label>
-                                                <label class="m-checkbox">
-                                                    <input type="checkbox" value="2" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> หญิง
-                                                    <span></span>
-                                                </label>
-
-                                            </div>
-                                        </div>
-
                                         <div class="m-form__group form-group">
                                             <label for="">ระดับผู้เรียน</label>
                                             <div class="m-checkbox-list">
@@ -326,6 +310,22 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <div class="m-form__group form-group">
+                                            <label for="">เงื่อนใขอื่นๆ (เพศของครู)</label>
+                                            <div class="m-checkbox-list">
+                                                <label class="m-checkbox">
+                                                    <input type="checkbox" value="1" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> ชาย
+                                                    <span></span>
+                                                </label>
+                                                <label class="m-checkbox">
+                                                    <input type="checkbox" value="2" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> หญิง
+                                                    <span></span>
+                                                </label>
+
+                                            </div>
+                                        </div>
+
+
                                         <div class="m-portlet__foot">
                                             <div class="row align-items-center">
                                                 <div class="col-lg-12">
@@ -362,10 +362,10 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <p><i class="fa fa-male"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
-                                                    <p><i class="fa fa-plus"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
+                                                    <p><i class="fa fa-plus"></i>&nbsp หมวดหมู่ : @Url.Content(item.COURSE)</p><br>
                                                     @*<p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>*@
                                                     <p><i class="fa fa-book"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
-                                                    @*<p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>*@
+                                                    <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
                                                     @if (Session["logon"] == null)
                                                     {
                                                         <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_6">
@@ -403,7 +403,7 @@
                                                                     <div class="modal-footer">
                                                                         <button type="submit" class="btn m-btn--pill    btn-brand">Login</button>
                                                                         <button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">Close</button>
-                                                                   
+
                                                                     </div>
                                                                 </div>
                                                             </div>
