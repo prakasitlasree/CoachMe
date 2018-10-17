@@ -740,7 +740,7 @@ namespace COACHME.DATASERVICE
                         activity.DATE = DateTime.Now;
                         activity.ACTION = "Update Course";
                         activity.FULLNAME = dto.MEMBERS.FULLNAME;
-                        activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
+                        //activity.USER_NAME = dto.MEMBER_LOGON.USER_NAME;
                         activity.STATUS = resp.STATUS;
                         ctx.LOGON_ACTIVITY.Add(activity);
                         #endregion
