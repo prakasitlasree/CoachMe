@@ -79,7 +79,7 @@
                                             <div class="m-pricing-table-2__btn">
                                                 @if (TempData["Plan"].ToString() == "Professional Plan")
                                                 {
-                                                    <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
+                                                    <button type="button" id="ProBTN" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
                                                 }
                                                 else if (TempData["Plan"].ToString() == "Advance Plan")
                                                 {
@@ -87,7 +87,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" data-toggle="modal" data-target="#m_modal_2" value="pro" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                    <button type="button" id="ProBTN" data-toggle="modal" data-target="#m_modal_2" value="pro" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
 
                                                 }
                                             </div>
@@ -109,11 +109,11 @@
                                             <div class="m-pricing-table-2__btn">
                                                 @if (TempData["Plan"].ToString() == "Advance Plan")
                                                 {
-                                                    <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
+                                                    <button type="button" id="AdvanceBTN" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" data-toggle="modal" data-target="#m_modal_3" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                    <button type="button" id="AdvanceBTN" data-toggle="modal" data-target="#m_modal_3" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
 
                                                 }
                                             </div>
@@ -305,5 +305,9 @@
 
         }
     }
+    $(document).ready(function () {
+        $("#ProBTN").hide();
+        $("#AdvanceBTN").hide();
+    });
 
 </script>
