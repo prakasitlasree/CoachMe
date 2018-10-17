@@ -83,6 +83,9 @@
     <Compile Include="MEMBERS.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
+    <Compile Include="MEMBER_CATEGORY.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
     <Compile Include="MEMBER_LOGON.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>

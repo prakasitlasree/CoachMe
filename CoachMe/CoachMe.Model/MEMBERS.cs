@@ -17,6 +17,7 @@ namespace COACHME.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MEMBERS()
         {
+            this.MEMBER_CATEGORY = new HashSet<MEMBER_CATEGORY>();
             this.MEMBER_LOGON = new HashSet<MEMBER_LOGON>();
             this.MEMBER_PACKAGE = new HashSet<MEMBER_PACKAGE>();
             this.MEMBER_ROLE = new HashSet<MEMBER_ROLE>();
@@ -46,6 +47,8 @@ namespace COACHME.MODEL
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
         public string NICKNAME { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBER_CATEGORY> MEMBER_CATEGORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_LOGON> MEMBER_LOGON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

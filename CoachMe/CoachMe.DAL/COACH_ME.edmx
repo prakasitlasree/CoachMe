@@ -65,6 +65,18 @@
           <Property Name="PASSWORD" Type="nvarchar" MaxLength="500" />
           <Property Name="STATUS" Type="bit" />
         </EntityType>
+        <EntityType Name="MEMBER_CATEGORY">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="int" Nullable="false" />
+          <Property Name="MEMBER_ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATED_DATE" Type="datetime" />
+          <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
+          <Property Name="UPDATED_DATE" Type="datetime" />
+        </EntityType>
         <EntityType Name="MEMBER_LOGON">
           <Key>
             <PropertyRef Name="AUTO_ID" />
@@ -270,6 +282,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MEMBER_CATEGORY_MEMBERS">
+          <End Role="MEMBERS" Type="Self.MEMBERS" Multiplicity="1" />
+          <End Role="MEMBER_CATEGORY" Type="Self.MEMBER_CATEGORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBERS">
+              <PropertyRef Name="AUTO_ID" />
+            </Principal>
+            <Dependent Role="MEMBER_CATEGORY">
+              <PropertyRef Name="MEMBER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MEMBER_LOGON_MEMBERS">
           <End Role="MEMBERS" Type="Self.MEMBERS" Multiplicity="1" />
           <End Role="MEMBER_LOGON" Type="Self.MEMBER_LOGON" Multiplicity="*" />
@@ -372,6 +396,7 @@
           <EntitySet Name="COURSE_PLACE" EntityType="Self.COURSE_PLACE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COURSES" EntityType="Self.COURSES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOGON_ACTIVITY" EntityType="Self.LOGON_ACTIVITY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MEMBER_CATEGORY" EntityType="Self.MEMBER_CATEGORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_LOGON" EntityType="Self.MEMBER_LOGON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_PACKAGE" EntityType="Self.MEMBER_PACKAGE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_REGIS_COURSE" EntityType="Self.MEMBER_REGIS_COURSE" Schema="dbo" store:Type="Tables" />
@@ -397,6 +422,10 @@
           <AssociationSet Name="FK_COURSE_PLACE_PLACE" Association="Self.FK_COURSE_PLACE_PLACE">
             <End Role="PLACE" EntitySet="PLACE" />
             <End Role="COURSE_PLACE" EntitySet="COURSE_PLACE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEMBER_CATEGORY_MEMBERS" Association="Self.FK_MEMBER_CATEGORY_MEMBERS">
+            <End Role="MEMBERS" EntitySet="MEMBERS" />
+            <End Role="MEMBER_CATEGORY" EntitySet="MEMBER_CATEGORY" />
           </AssociationSet>
           <AssociationSet Name="FK_MEMBER_LOGON_MEMBERS" Association="Self.FK_MEMBER_LOGON_MEMBERS">
             <End Role="MEMBERS" EntitySet="MEMBERS" />
@@ -441,6 +470,7 @@
           <EntitySet Name="COURSE_PLACE" EntityType="COACH_MEModel.COURSE_PLACE" />
           <EntitySet Name="COURSES" EntityType="COACH_MEModel.COURSES" />
           <EntitySet Name="LOGON_ACTIVITY" EntityType="COACH_MEModel.LOGON_ACTIVITY" />
+          <EntitySet Name="MEMBER_CATEGORY" EntityType="COACH_MEModel.MEMBER_CATEGORY" />
           <EntitySet Name="MEMBER_LOGON" EntityType="COACH_MEModel.MEMBER_LOGON" />
           <EntitySet Name="MEMBER_PACKAGE" EntityType="COACH_MEModel.MEMBER_PACKAGE" />
           <EntitySet Name="MEMBER_REGIS_COURSE" EntityType="COACH_MEModel.MEMBER_REGIS_COURSE" />
@@ -470,6 +500,10 @@
           <AssociationSet Name="FK_MEMBER_TEACHER_COURSE_COURSES" Association="COACH_MEModel.FK_MEMBER_TEACHER_COURSE_COURSES">
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="MEMBER_TEACH_COURSE" EntitySet="MEMBER_TEACH_COURSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEMBER_CATEGORY_MEMBERS" Association="COACH_MEModel.FK_MEMBER_CATEGORY_MEMBERS">
+            <End Role="MEMBERS" EntitySet="MEMBERS" />
+            <End Role="MEMBER_CATEGORY" EntitySet="MEMBER_CATEGORY" />
           </AssociationSet>
           <AssociationSet Name="FK_MEMBER_LOGON_MEMBERS" Association="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS">
             <End Role="MEMBERS" EntitySet="MEMBERS" />
@@ -566,6 +600,19 @@
           <Property Name="USER_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PASSWORD" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="STATUS" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="MEMBER_CATEGORY">
+          <Key>
+            <PropertyRef Name="AUTO_ID" />
+          </Key>
+          <Property Name="AUTO_ID" Type="Int32" Nullable="false" />
+          <Property Name="MEMBER_ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UPDATED_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBER_CATEGORY_MEMBERS" FromRole="MEMBER_CATEGORY" ToRole="MEMBERS" />
         </EntityType>
         <EntityType Name="MEMBER_LOGON">
           <Key>
@@ -686,6 +733,7 @@
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MEMBER_CATEGORY" Relationship="COACH_MEModel.FK_MEMBER_CATEGORY_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_CATEGORY" />
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
           <NavigationProperty Name="MEMBER_PACKAGE" Relationship="COACH_MEModel.FK_MEMBER_PACKAGE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_PACKAGE" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
@@ -798,6 +846,18 @@
             </Principal>
             <Dependent Role="MEMBER_TEACH_COURSE">
               <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEMBER_CATEGORY_MEMBERS">
+          <End Type="COACH_MEModel.MEMBERS" Role="MEMBERS" Multiplicity="1" />
+          <End Type="COACH_MEModel.MEMBER_CATEGORY" Role="MEMBER_CATEGORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBERS">
+              <PropertyRef Name="AUTO_ID" />
+            </Principal>
+            <Dependent Role="MEMBER_CATEGORY">
+              <PropertyRef Name="MEMBER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -952,6 +1012,19 @@
                 <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
                 <ScalarProperty Name="ACTION" ColumnName="ACTION" />
                 <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEMBER_CATEGORY">
+            <EntityTypeMapping TypeName="COACH_MEModel.MEMBER_CATEGORY">
+              <MappingFragment StoreEntitySet="MEMBER_CATEGORY">
+                <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
+                <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="MEMBER_ID" ColumnName="MEMBER_ID" />
                 <ScalarProperty Name="AUTO_ID" ColumnName="AUTO_ID" />
               </MappingFragment>
             </EntityTypeMapping>
