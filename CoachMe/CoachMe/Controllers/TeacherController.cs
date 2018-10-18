@@ -19,7 +19,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
-                var memeber = (MEMBERS)Session["logon"]; 
+                var memeber = (MEMBERS)Session["logon"];
                 model.MEMBERS = memeber;
                 return View(model);
             }
@@ -94,7 +94,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 // TODO: Add update logic here
 
                 RESPONSE__MODEL result = await service.UpdateMemberProfile(dto.MEMBERS, about_img);
-                 param = result.OUTPUT_DATA;
+                param = result.OUTPUT_DATA;
                 if (result.STATUS)
                 {
                     TempData["Message"] = "Profile Updated Successfully";
@@ -120,8 +120,12 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
-        public async Task<ActionResult> EditCategory(CONTAINER_MODEL dto)
+        public async Task<ActionResult> EditCategory(CONTAINER_MODEL dto,int[] categoryID)
         {
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+            }
             try
             {
                 // TODO: Add update logic here
@@ -171,7 +175,7 @@ namespace COACHME.WEB_PRESENT.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult>  Survey()
+        public async Task<ActionResult> Survey()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
@@ -217,11 +221,11 @@ namespace COACHME.WEB_PRESENT.Controllers
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
-            
+
             if (Session["logon"] != null)
             {
                 var memberLogon = (MEMBERS)Session["logon"];
-                resp = await service.AcceptStudent(dto,AcceptStudent);
+                resp = await service.AcceptStudent(dto, AcceptStudent);
                 if (resp.STATUS)
                 {
                     return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
