@@ -120,35 +120,41 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
-        public async Task<ActionResult> EditCategory(CONTAINER_MODEL dto,int[] categoryID)
+        public async Task<ActionResult> EditCategory(string[] category)
         {
             if (Session["logon"] != null)
             {
+                CONTAINER_MODEL container = new CONTAINER_MODEL();
                 var memberLogon = (MEMBERS)Session["logon"];
-            }
-            try
-            {
-                // TODO: Add update logic here
+                
+                try
+                {                 
+                    RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(memberLogon,category);
 
-                RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(dto.MEMBERS);
-
-                if (result.STATUS)
-                {
-                    TempData["MessageCate"] = "Profile Updated Successfully";
-                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                    if (result.STATUS)
+                    {
+                        TempData["MessageCate"] = "Profile Updated Successfully";
+                        return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
+                    }
+                    else
+                    {
+                        TempData["MessageCate"] = "Profile Update Fail";
+                        return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
+                    }
                 }
-                else
+                catch
                 {
-                    TempData["MessageCate"] = "Profile Update Fail";
-                    return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                    TempData["Message"] = "Profile Update Fail";
+                    return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
+
                 }
             }
-            catch
+            else
             {
-                TempData["Message"] = "Profile Update Fail";
-                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
-
+                
+                return RedirectToAction("errorpage", "home");
             }
+            
         }
 
         //// GET:

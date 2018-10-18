@@ -358,33 +358,31 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> UpdateMemberCategoryProfile(MEMBERS dto)
+        public async Task<RESPONSE__MODEL> UpdateMemberCategoryProfile(MEMBERS dto, string[] category)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var member = new MEMBERS();
-                    member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-
-                    #region =====Profile=====
-                    //Update Profile
-                    if (dto.CATEGORY != null)
+                    foreach (var item in category)
                     {
-                        member.CATEGORY = dto.CATEGORY;
+                        var memberCategory = new MEMBER_CATEGORY();
+                        memberCategory.MEMBER_ID = dto.AUTO_ID;
+                        memberCategory.NAME = item;
+                        memberCategory.CREATED_BY = dto.AUTO_ID.ToString();
+                        memberCategory.UPDATED_BY = dto.AUTO_ID.ToString();
+                        memberCategory.CREATED_DATE = DateTime.Now;
+                        memberCategory.UPDATED_DATE = DateTime.Now;
+                        ctx.MEMBER_CATEGORY.Add(memberCategory);
                     }
-                    if (dto.LOCATION != null)
-                    {
-                        member.LOCATION = dto.LOCATION;
-                    }
-
-                    #endregion
+                   
+                                    
                     //add activity
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;
-                    activity.ACTION = "Update Profile Pic";
+                    activity.ACTION = "Update Member Category";
                     activity.FULLNAME = dto.FULLNAME;
                     activity.USER_NAME = dto.FULLNAME;
                     activity.PASSWORD = dto.FULLNAME;

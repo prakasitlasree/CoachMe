@@ -28,6 +28,10 @@ namespace COACHME.DATASERVICE
         {
             Interest 
         }
+        public enum Category
+        {
+            
+        }
 
         public enum PurchaseStatus
         {

@@ -77,17 +77,17 @@
                                     </button>
                                     <br>
 
-                                    @*@Html.TextAreaFor(m => m.MEMBERS.CATEGORY, new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
+                                    @*@Html.TextAreaFor(Model.MEMBERS.MEMBER_CATEGORY.Select(o=>o.NAME).ToList(), new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
                                     
-                                    <select class="form-control m-input  m-input--pill" id="m_select2_3" name="categoryID" multiple="multiple">                      
+                                    <select class="form-control m-input  m-input--pill"  name="category" multiple="multiple" >                      
                                         <optgroup label="เลือกหมวดหมู่">
-                                            <option value="1">ดนตรี</option>
-                                            <option value="2" >ภาษา</option>
-                                            <option value="3">ธุรกิจและการเงิน</option>
-                                            <option value="4">ศิลปะ</option>
-                                            <option value="5">เทคโนโลยี</option>
-                                            <option value="6">วิชาชีพ/หลักสูตรพิเศษ</option>
-                                            <option value="7">สุขภาพ/ความงาม</option>
+                                            <option value="ดนตรี">ดนตรี</option>
+                                            <option value="ภาษา" >ภาษา</option>
+                                            <option value="ธุรกิจและการเงิน">ธุรกิจและการเงิน</option>
+                                            <option value="ธุรกิจและการเงิน">ศิลปะ</option>
+                                            <option value="เทคโนโลยี">เทคโนโลยี</option>
+                                            <option value="วิชาชีพ/หลักสูตรพิเศษ">วิชาชีพ/หลักสูตรพิเศษ</option>
+                                            <option value="สุขภาพ/ความงาม">สุขภาพ/ความงาม</option>
                                         </optgroup> 
                                     </select>
 
