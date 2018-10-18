@@ -14,10 +14,19 @@ namespace COACHME.MODEL
     
     public partial class AMPHUR
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AMPHUR()
+        {
+            this.MEMBERS = new HashSet<MEMBERS>();
+        }
+    
         public int AMPHUR_ID { get; set; }
         public string AMPHUR_CODE { get; set; }
         public string AMPHUR_NAME { get; set; }
         public Nullable<int> GEO_ID { get; set; }
         public Nullable<int> PROVINCE_ID { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBERS> MEMBERS { get; set; }
     }
 }

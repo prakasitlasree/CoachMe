@@ -212,6 +212,9 @@
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="UPDATED_DATE" Type="date" />
           <Property Name="NICKNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMPHUR_ID" Type="int" />
+          <Property Name="TEACHING_TYPE" Type="int" />
+          <Property Name="STUDENT_LEVEL" Type="int" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -427,6 +430,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MEMBERS_AMPHUR">
+          <End Role="AMPHUR" Type="Self.AMPHUR" Multiplicity="0..1" />
+          <End Role="MEMBERS" Type="Self.MEMBERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AMPHUR">
+              <PropertyRef Name="AMPHUR_ID" />
+            </Principal>
+            <Dependent Role="MEMBERS">
+              <PropertyRef Name="AMPHUR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="COACH_MEModelStoreContainer">
           <EntitySet Name="AMPHUR" EntityType="Self.AMPHUR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONFIGURATION" EntityType="Self.CONFIGURATION" Schema="dbo" store:Type="Tables" />
@@ -500,6 +515,10 @@
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="MEMBER_TEACH_COURSE" EntitySet="MEMBER_TEACH_COURSE" />
           </AssociationSet>
+          <AssociationSet Name="FK_MEMBERS_AMPHUR" Association="Self.FK_MEMBERS_AMPHUR">
+            <End Role="AMPHUR" EntitySet="AMPHUR" />
+            <End Role="MEMBERS" EntitySet="MEMBERS" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -526,6 +545,10 @@
           <EntitySet Name="RESET_PASSWORD" EntityType="COACH_MEModel.RESET_PASSWORD" />
           <EntitySet Name="ROLE" EntityType="COACH_MEModel.ROLE" />
           <EntitySet Name="SURVEYS" EntityType="COACH_MEModel.SURVEYS" />
+          <AssociationSet Name="FK_MEMBERS_AMPHUR" Association="COACH_MEModel.FK_MEMBERS_AMPHUR">
+            <End Role="AMPHUR" EntitySet="AMPHUR" />
+            <End Role="MEMBERS" EntitySet="MEMBERS" />
+          </AssociationSet>
           <AssociationSet Name="FK_COURSE_COMMENT_COURSES" Association="COACH_MEModel.FK_COURSE_COMMENT_COURSES">
             <End Role="COURSES" EntitySet="COURSES" />
             <End Role="COURSE_COMMENT" EntitySet="COURSE_COMMENT" />
@@ -588,6 +611,7 @@
           <Property Name="AMPHUR_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="GEO_ID" Type="Int32" />
           <Property Name="PROVINCE_ID" Type="Int32" />
+          <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBERS_AMPHUR" FromRole="AMPHUR" ToRole="MEMBERS" />
         </EntityType>
         <EntityType Name="CONFIGURATION">
           <Key>
@@ -806,6 +830,10 @@
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMPHUR_ID" Type="Int32" />
+          <Property Name="TEACHING_TYPE" Type="Int32" />
+          <Property Name="STUDENT_LEVEL" Type="Int32" />
+          <NavigationProperty Name="AMPHUR" Relationship="COACH_MEModel.FK_MEMBERS_AMPHUR" FromRole="MEMBERS" ToRole="AMPHUR" />
           <NavigationProperty Name="MEMBER_CATEGORY" Relationship="COACH_MEModel.FK_MEMBER_CATEGORY_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_CATEGORY" />
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
           <NavigationProperty Name="MEMBER_PACKAGE" Relationship="COACH_MEModel.FK_MEMBER_PACKAGE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_PACKAGE" />
@@ -871,6 +899,18 @@
           <Property Name="RESPONSE_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RESPONSE_DATE" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="FK_MEMBERS_AMPHUR">
+          <End Type="COACH_MEModel.AMPHUR" Role="AMPHUR" Multiplicity="0..1" />
+          <End Type="COACH_MEModel.MEMBERS" Role="MEMBERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AMPHUR">
+              <PropertyRef Name="AMPHUR_ID" />
+            </Principal>
+            <Dependent Role="MEMBERS">
+              <PropertyRef Name="AMPHUR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_COURSE_COMMENT_COURSES">
           <End Type="COACH_MEModel.COURSES" Role="COURSES" Multiplicity="0..1" />
           <End Type="COACH_MEModel.COURSE_COMMENT" Role="COURSE_COMMENT" Multiplicity="*" />
@@ -1230,6 +1270,9 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="STUDENT_LEVEL" ColumnName="STUDENT_LEVEL" />
+                <ScalarProperty Name="TEACHING_TYPE" ColumnName="TEACHING_TYPE" />
+                <ScalarProperty Name="AMPHUR_ID" ColumnName="AMPHUR_ID" />
                 <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
                 <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
