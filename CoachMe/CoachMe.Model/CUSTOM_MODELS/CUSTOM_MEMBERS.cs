@@ -34,7 +34,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string STATUS { get; set; }
         public bool REGISTER_STATUS { get; set; }
         public int REGIS_COURSE_ID { get; set; }
-
+        public string COURSE_BANNER { get; set; }
         public string ROLE { get; set; }
 
     }

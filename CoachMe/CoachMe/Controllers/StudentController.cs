@@ -73,7 +73,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
                             container.SEARCH_TEACHER_MODEL.TEACH_TYPE = "คอร์ส";
                             resp = await service.GetListAllCourseAfterLogin(dto);
-                            container.LIST_MEMBER_TEACH_COURSE = resp.OUTPUT_DATA;
+                            container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                             return View(container);
                         }
                     }
@@ -89,8 +89,8 @@ namespace COACHME.WEB_PRESENT.Controllers
                         else//ค้นหาบางคอร์สทหลังล๊อกอิน
                         {
                             container.SEARCH_TEACHER_MODEL.TEACH_TYPE = "คอร์ส";
-                            resp = await service.GetListAllCourseAfterLogin(dto);//*****************************ยังไม่ได้แก้
-                            container.LIST_MEMBER_TEACH_COURSE = resp.OUTPUT_DATA;
+                            resp = await service.GetListSomeCourseAfterLogin(dto);//ค้นหาบางคอร์สหลังล็อกอิน
+                            container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                             return View(container);
                         }
                     }
@@ -124,7 +124,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                         else
                         {
                             resp = await service.GetListAllCourseBeforeLogin();
-                            container.LIST_MEMBER_TEACH_COURSE = resp.OUTPUT_DATA;
+                            container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                             return View(container);
                         }
                     }
@@ -141,7 +141,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
 
                             resp = await service.GetListSomeCourseBeforeLogin(dto);
-                            container.LIST_MEMBER_TEACH_COURSE = resp.OUTPUT_DATA;
+                            container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                             return View(container);
                         }
                     }

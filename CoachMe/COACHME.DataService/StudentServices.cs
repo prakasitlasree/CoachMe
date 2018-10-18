@@ -119,10 +119,23 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listTeachCourse = await ctx.MEMBER_TEACH_COURSE
+                    var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
                                                     .ToListAsync();
+
+                    var listTeachCourse = (from item in listAllTeachCourse
+                                           select new CUSTOM_MEMBERS
+                                           {
+                                               COURSE_BANNER = item.COURSES.BANNER_URL,
+                                               COURSE = item.COURSES.NAME,
+                                               FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME,
+                                               AGE = item.MEMBER_ROLE.MEMBERS.AGE,
+                                               ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
+                                               REGISTER_STATUS = false
+
+                                           }).ToList();
+
                     resp.OUTPUT_DATA = listTeachCourse;
                 }
 
@@ -141,9 +154,23 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listTeachCourse = await ctx.MEMBER_TEACH_COURSE
+                    var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
+                                                     .Include(x => x.COURSES)
                                                     .Where(o => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(o.DESCRIPTION)).ToListAsync();
+
+                    var listTeachCourse = (from item in listAllTeachCourse
+                                           select new CUSTOM_MEMBERS
+                                           {
+                                               COURSE_BANNER = item.COURSES.BANNER_URL,
+                                               COURSE = item.COURSES.NAME,
+                                               FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME,
+                                               AGE = item.MEMBER_ROLE.MEMBERS.AGE,
+                                               ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
+                                               REGISTER_STATUS = false
+
+                                           }).ToList();
+
                     resp.OUTPUT_DATA = listTeachCourse;
                 }
 
@@ -248,7 +275,7 @@ namespace COACHME.DATASERVICE
                                                  REGIS_COURSE_ID = a.AUTO_ID,
                                                  CATEGORY = "ไม่ระบุ",
                                                  REGISTER_STATUS = (memberRegisCourse.Contains(a.AUTO_ID)) ? true : false
-                                             }).OrderByDescending(o=>o.REGISTER_STATUS).ToListAsync();
+                                             }).OrderByDescending(o => o.REGISTER_STATUS).ToListAsync();
 
                     resp.OUTPUT_DATA = listTeacher;
                 }
@@ -276,12 +303,27 @@ namespace COACHME.DATASERVICE
                                                      .Where(o => o.MEMBER_ROLE.AUTO_ID == memberRole.AUTO_ID)
                                                      .Select(p => p.TEACH_COURSE_ID).ToListAsync();
 
-                    var listTeachCourse = await ctx.MEMBER_TEACH_COURSE
+                    var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
-                                                    .Include(x => x.MEMBER_REGIS_COURSE)
                                                     .ToListAsync();
-                    resp.OUTPUT_DATA = listTeachCourse;
+
+                    var listTeachCourse = (from item in listAllTeachCourse
+                                           select new CUSTOM_MEMBERS
+                                           {
+                                               AUTO_ID = item.AUTO_ID,
+                                               COURSE_BANNER = item.COURSES.BANNER_URL,
+                                               COURSE = item.COURSES.NAME,
+                                               COURSE_ID = item.COURSES.AUTO_ID,
+                                               FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME,
+                                               AGE = item.MEMBER_ROLE.MEMBERS.AGE,
+                                               ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
+                                               REGISTER_STATUS = (memberRegisCourse.Contains(item.AUTO_ID)) ? true : false
+
+                                           }).ToList();
+
+
+                        resp.OUTPUT_DATA = listTeachCourse;
                 }
 
             }
@@ -351,7 +393,49 @@ namespace COACHME.DATASERVICE
         }
         public async Task<RESPONSE__MODEL> GetListSomeCourseAfterLogin(CONTAINER_MODEL dto)
         {
-            return  null;
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();
+
+                    var memberRegisCourse = await ctx.MEMBER_REGIS_COURSE
+                                                     .Where(o => o.MEMBER_ROLE.AUTO_ID == memberRole.AUTO_ID)
+                                                     .Select(p => p.TEACH_COURSE_ID).ToListAsync();
+
+                    var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
+                                                    .Include(x => x.MEMBER_ROLE.MEMBERS)
+                                                    .Include(x => x.COURSES)
+                                                     .Where(o => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(o.DESCRIPTION))
+                                                     .ToListAsync();
+                                                    
+
+                    var listTeachCourse = (from item in listAllTeachCourse
+                                           select new CUSTOM_MEMBERS
+                                           {
+                                               AUTO_ID = item.AUTO_ID,
+                                               COURSE_BANNER = item.COURSES.BANNER_URL,
+                                               COURSE = item.COURSES.NAME,
+                                               COURSE_ID = item.COURSES.AUTO_ID,
+                                               FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME,
+                                               AGE = item.MEMBER_ROLE.MEMBERS.AGE,
+                                               ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
+                                               REGISTER_STATUS = (memberRegisCourse.Contains(item.AUTO_ID)) ? true : false
+
+                                           }).ToList();
+
+
+                    resp.OUTPUT_DATA = listTeachCourse;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return resp;
         }
         #endregion
     }

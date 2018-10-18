@@ -462,12 +462,12 @@
                                                             </button>
                                                             if (item.REGISTER_STATUS == false)
                                                             {
-                                                            <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
-                                                                <span>
-                                                                    <i class="fa fa-check-square"></i>
-                                                                    <span>สมัครเรียนกับครูคนนี้</span>
-                                                                </span>
-                                                            </button>
+                                                                <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
+                                                                    <span>
+                                                                        <i class="fa fa-check-square"></i>
+                                                                        <span>สมัครเรียนกับครูคนนี้</span>
+                                                                    </span>
+                                                                </button>
                                                             }
                                                             else
                                                             {
@@ -585,65 +585,159 @@
                         {
                             <div class="col-xl-9 col-lg-8">
                                 <div class="row">
-                                    @if (Model.LIST_MEMBER_TEACH_COURSE != null)
-                                {
-                                    foreach (var item in Model.LIST_MEMBER_TEACH_COURSE)
+                                    @if (Model.LIST_CUSTOM_MEMBERS != null)
                                     {
-                                <div class="col-xl-4">
-                                    <!--begin:: Widgets/Blog-->
-                                    <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-                                        <div class="m-portlet__head m-portlet__head--fit">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="m-portlet__head-action">
+                                        foreach (var item in Model.LIST_CUSTOM_MEMBERS)
+                                        {
+                                            <div class="col-xl-4">
+                                                <!--begin:: Widgets/Blog-->
+                                                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                                                    <div class="m-portlet__head m-portlet__head--fit">
+                                                        <div class="m-portlet__head-caption">
+                                                            <div class="m-portlet__head-action">
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="m-portlet__body">
-                                            <div class="m-widget19">
-                                                <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                                                    <img src="..//@Url.Content(item.COURSES.BANNER_URL ?? "//Content//images//Blank-Book2.jpg" )" style="width:100%;height:286px" />
-                                                    <h3 class="m-widget19__title m--font-light">
-                                                        @item.COURSES.NAME
-                                                    </h3>
-                                                    <div class="m-widget19__shadow"></div>
-                                                </div>
-                                                <div class="m-widget19__content">
-                                                    <div class="m-widget19__header">
-                                                        <div class="m-widget19__user-img">
-                                                            @*<img class="m-widget19__img" src="./assets/app/media/img//users/user1.jpg" alt="">*@
-                                                        </div>
-                                                        <div class="m-widget19__info">
-                                                            <span class="m-widget19__username">
-                                                                @item.MEMBER_ROLE.MEMBERS.FULLNAME
-                                                            </span><br>
-                                                            <span class="m-widget19__time">
-                                                                @*UX/UI Designer, Google*@
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget19__stats">
-                                                            <span class="m-widget19__number m--font-brand">
-                                                                @item.MEMBER_ROLE.MEMBERS.AGE
-                                                            </span>
-                                                            <span class="m-widget19__comment">
-                                                                @*Comments*@
-                                                            </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="m-widget19__body">
-                                                        @item.MEMBER_ROLE.MEMBERS.ABOUT
+                                                    <div class="m-portlet__body">
+                                                        <div class="m-widget19">
+                                                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+                                                                <img src="..//@Url.Content(item.COURSE_BANNER ?? "//Content//images//Blank-Book2.jpg" )" style="width:100%;height:286px" />
+                                                                <h3 class="m-widget19__title m--font-light">
+                                                                    @item.COURSE
+                                                                </h3>
+                                                                <div class="m-widget19__shadow"></div>
+                                                            </div>
+                                                            <div class="m-widget19__content">
+                                                                <div class="m-widget19__header">
+                                                                    <div class="m-widget19__user-img">
+                                                                        @*<img class="m-widget19__img" src="./assets/app/media/img//users/user1.jpg" alt="">*@
+                                                                    </div>
+                                                                    <div class="m-widget19__info">
+                                                                        <span class="m-widget19__username">
+                                                                            @item.FULLNAME
+                                                                        </span><br>
+                                                                        <span class="m-widget19__time">
+                                                                            @*UX/UI Designer, Google*@
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget19__stats">
+                                                                        <span class="m-widget19__number m--font-brand">
+                                                                            @item.AGE
+                                                                        </span>
+                                                                        <span class="m-widget19__comment">
+                                                                            @*Comments*@
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="m-widget19__body">
+                                                                    @item.ABOUT
+                                                                </div>
+                                                            </div>
+                                                            @if (Session["logon"] == null)
+                                                            {
+                                                                <div class="m-widget19__action">
+                                                                    <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_7">
+                                                                        <span>
+                                                                            <i class="fa fa-check-square"></i>
+                                                                            <span>สมัครเรียนคอร์สนี้</span>
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                                using (Html.BeginForm("ChooseTeacherLogin", "account", FormMethod.Post))
+                                                                {
+                                                                    <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="form-group m-form__group">
+                                                                                        <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
+                                                                                        <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
+
+                                                                                    </div>
+                                                                                    <div class="form-group m-form__group">
+                                                                                        <label for="exampleInputPassword1">รหัสผ่าน</label>
+                                                                                        <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="submit" class="btn m-btn--pill    btn-brand">ล็อกอิน</button>
+                                                                                    <button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">ปิด</button>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (item.REGISTER_STATUS == false)
+                                                                {
+                                                                    <div class="m-widget19__action">
+                                                                        <button type="button" class="btn m-btn--pill btn-brand m-btn--air m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">สมัครเรียน</button>
+                                                                    </div>
+                                                                    using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                                    {
+                                                                        <div class="modal fade" id="@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-body">
+                                                                                        <div class="m-portlet__body">
+                                                                                            <div class="m-demo__preview m-demo__preview--badge">
+
+                                                                                                <h4 class="m--font-bold m--font-bold">
+                                                                                                    <span>
+                                                                                                        <i class="fa fa-address-card"></i>
+                                                                                                        @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                                        @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                                        @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
+                                                                                                        @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                                                                                        <span> คุณจะเลือกคอร์ส @Url.Content(item.COURSE) ใช่หรือไม่ ?</span>
+                                                                                                    </span>
+
+                                                                                                </h4>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                            <span>
+                                                                                                <i class="fa fa-check-square"></i>
+                                                                                                <span>ตกลง</span>
+                                                                                            </span>
+                                                                                        </button>
+                                                                                        <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">ปิด</button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="m-widget19__action">
+                                                                        <button type="button" class="btn m-btn--pill btn-success m-btn--air m-btn--custom">
+                                                                            <i class="flaticon-star"></i>สมัครเรียบร้อย
+                                                                        </button>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="m-widget19__action">
-                                                    <button type="button" class="btn m-btn--pill btn-brand m-btn--air m-btn--custom">สมัครเรียน</button>
-                                                </div>
+                                                <!--end:: Widgets/Blog-->
                                             </div>
-                                        </div>
-                                    </div>
-                                    <!--end:: Widgets/Blog-->
-                                </div>
+                                        }
                                     }
-                                }
 
 
                                 </div>
