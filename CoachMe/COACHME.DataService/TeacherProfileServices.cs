@@ -530,7 +530,7 @@ namespace COACHME.DATASERVICE
                     {
                         foreach (var item in teachCourse.MEMBER_TEACH_COURSE)
                         {
-                            var registerList = ctx.MEMBER_REGIS_COURSE.Where(x => x.TEACHER_ID == item.AUTO_ID).ToList();
+                            var registerList = ctx.MEMBER_REGIS_COURSE.Where(x => x.TEACH_COURSE_ID == item.AUTO_ID).ToList();
                             foreach (var register in registerList)
                             {
                                 var obj = new CUSTOM_MEMBERS();

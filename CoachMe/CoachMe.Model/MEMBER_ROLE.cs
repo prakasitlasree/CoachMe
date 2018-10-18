@@ -18,8 +18,8 @@ namespace COACHME.MODEL
         public MEMBER_ROLE()
         {
             this.COURSE_COMMENT = new HashSet<COURSE_COMMENT>();
-            this.MEMBER_REGIS_COURSE = new HashSet<MEMBER_REGIS_COURSE>();
             this.MEMBER_TEACH_COURSE = new HashSet<MEMBER_TEACH_COURSE>();
+            this.MEMBER_REGIS_COURSE = new HashSet<MEMBER_REGIS_COURSE>();
         }
     
         public int AUTO_ID { get; set; }
@@ -32,11 +32,11 @@ namespace COACHME.MODEL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COURSE_COMMENT> COURSE_COMMENT { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
         public virtual MEMBERS MEMBERS { get; set; }
         public virtual ROLE ROLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_TEACH_COURSE> MEMBER_TEACH_COURSE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
     }
 }

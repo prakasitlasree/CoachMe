@@ -21,7 +21,6 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public RESET_PASSWORD RESET_PASSWORD { get; set; }
         public ROLE ROLE { get; set; }
         public COURSE_PLACE COURSE_PLACE { get; set; }
-
         public MEMBER_CATEGORY MEMBER_CATEGORY { get; set; }
          
         public List<MEMBER_CATEGORY> LIST_MEMBER_CATEGORY { get; set; }

@@ -237,6 +237,8 @@
     <Content Include="Content\datatables\datatables.bundle.js" />
     <Content Include="Content\datatables\datatables.bundle.rtl.css" />
     <Content Include="Content\images\bg-3.jpg" />
+    <Content Include="Content\images\Blank-Book.jpg" />
+    <Content Include="Content\images\Blank-Book2.jpg" />
     <Content Include="Content\images\Blank-Profile.jpeg" />
     <Content Include="Content\images\Blank-Profile.jpg" />
     <Content Include="Content\images\CM21.png" />
@@ -371,6 +373,7 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\ErrorPage.cshtml" />
     <Content Include="Views\Student\GetTeacher.cshtml" />
+    <Content Include="Views\Student\_FirstPageLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,7 +36,6 @@ namespace COACHME.DAL
         public virtual DbSet<MEMBER_CATEGORY> MEMBER_CATEGORY { get; set; }
         public virtual DbSet<MEMBER_LOGON> MEMBER_LOGON { get; set; }
         public virtual DbSet<MEMBER_PACKAGE> MEMBER_PACKAGE { get; set; }
-        public virtual DbSet<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
         public virtual DbSet<MEMBER_ROLE> MEMBER_ROLE { get; set; }
         public virtual DbSet<MEMBER_TEACH_COURSE> MEMBER_TEACH_COURSE { get; set; }
         public virtual DbSet<MEMBERS> MEMBERS { get; set; }
@@ -44,5 +43,6 @@ namespace COACHME.DAL
         public virtual DbSet<RESET_PASSWORD> RESET_PASSWORD { get; set; }
         public virtual DbSet<ROLE> ROLE { get; set; }
         public virtual DbSet<SURVEYS> SURVEYS { get; set; }
+        public virtual DbSet<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
     }
 }
