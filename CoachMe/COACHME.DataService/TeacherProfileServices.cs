@@ -534,8 +534,8 @@ namespace COACHME.DATASERVICE
                             foreach (var register in registerList)
                             {
                                 var obj = new CUSTOM_MEMBERS();
-                                obj.AUTO_ID = register.REGISTER_ID;
-                                var student = ctx.MEMBER_ROLE.Where(x => x.AUTO_ID == register.REGISTER_ID).FirstOrDefault(); 
+                                obj.AUTO_ID = register.REGIS_MEMBER_ROLE_ID;
+                                var student = ctx.MEMBER_ROLE.Where(x => x.AUTO_ID == register.REGIS_MEMBER_ROLE_ID).FirstOrDefault(); 
                                 obj.PROFILE_IMG_URL = student.MEMBERS.PROFILE_IMG_URL;
                                 obj.STATUS = register.STATUS;
                                 obj.FULLNAME = student.MEMBERS.FULLNAME ?? "";

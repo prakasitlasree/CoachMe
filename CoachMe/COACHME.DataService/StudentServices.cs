@@ -48,7 +48,7 @@ namespace COACHME.DATASERVICE
                     var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();
                     var teachCourse = await ctx.MEMBER_TEACH_COURSE.Where(x => x.COURSE_ID == dto.COURSE_ID).FirstOrDefaultAsync();
                     var regisCourse = new MEMBER_REGIS_COURSE();
-                    regisCourse.REGISTER_ID = memberRole.AUTO_ID;
+                    regisCourse.REGIS_MEMBER_ROLE_ID = memberRole.AUTO_ID;
                     regisCourse.TEACH_COURSE_ID = teachCourse.AUTO_ID;
                     regisCourse.DESCRIPTION = dto.COURSE_NAME;
 

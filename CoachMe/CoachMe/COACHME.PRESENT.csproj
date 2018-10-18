@@ -260,8 +260,10 @@
     <Content Include="Content\images\teacher\logo.png" />
     <Content Include="Content\images\teacher\reen.jpg" />
     <Content Include="Content\images\teacher\user1.jpg" />
+    <Content Include="Content\js\bootstrap-select.js" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\scripts.bundle.js" />
+    <Content Include="Content\js\select2.js" />
     <Content Include="Content\js\SweetAlert.js" />
     <Content Include="Content\js\teacher\scripts.bundle.js" />
     <Content Include="Content\js\teacher\vendors.bundle.js" />

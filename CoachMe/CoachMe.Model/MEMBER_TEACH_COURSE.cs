@@ -30,8 +30,8 @@ namespace COACHME.MODEL
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
     
         public virtual COURSES COURSES { get; set; }
-        public virtual MEMBER_ROLE MEMBER_ROLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
+        public virtual MEMBER_ROLE MEMBER_ROLE { get; set; }
     }
 }

@@ -77,7 +77,19 @@
                                     </button>
                                     <br>
                                     @Html.TextAreaFor(m => m.MEMBERS.CATEGORY, new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
-                                    @*<textarea id="CATEGORY" class="form-control m-input" cols="20" disabled="disabled" rows="3">#ดนตรี #เปียโน #กีตาร์</textarea>*@
+                                    
+                                    <select class="form-control m-input m-input--pill" id="m_select2_3" name="param" multiple="multiple">
+                                         
+                                        <optgroup label="เลือกหมวดหมู่">
+                                            <option value="1">ดนตรี</option>
+                                            <option value="2" >ภาษา</option>
+                                            <option value="3">ธุรกิจและการเงิน</option>
+                                            <option value="4">ศิลปะ</option>
+                                            <option value="5">เทคโนโลยี</option>
+                                            <option value="6">วิชาชีพ/หลักสูตรพิเศษ</option>
+                                            <option value="7">สุขภาพ/ความงาม</option>
+                                        </optgroup> 
+                                    </select>
 
                                 </div>
                             </div>
@@ -195,15 +207,14 @@
                                                 </button>
                                             </div>*@
                                     </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
-                                        <div class="col-7">
-                                            <span class="input-group-append">
-                                                @Html.TextBoxFor(m => m.MEMBERS.ID_CARD, new { @id = "ID_CARD", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
-                                            </span>
-                                        </div>
-
-                                    </div>
+                                    @*<div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
+                                            <div class="col-7">
+                                                <span class="input-group-append">
+                                                    @Html.TextBoxFor(m => m.MEMBERS.ID_CARD, new { @id = "ID_CARD", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
+                                                </span>
+                                            </div>
+                                        </div>*@
                                     <div class="form-group m-form__group row">
                                         <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
                                         <div class="col-7">
@@ -257,19 +268,19 @@
                                     </div>
 
                                     @*<div class="m-portlet__foot m-portlet__foot--fit">
-                                        <div class="m-form__actions">
+                                            <div class="m-form__actions">
 
-                                            <div class="row">
-                                                <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <button type="submit" style="display:none" id="btnUpdateSubmit" class="btn m-btn--pill m-btn--air btn-primary">Save </button>&nbsp;&nbsp;
+                                                        <button type="button" style="display:none" id="btnUpdateCancel" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom">Cancel</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-7">
-                                                    <button type="submit" style="display:none" id="btnUpdateSubmit" class="btn m-btn--pill m-btn--air btn-primary">Save </button>&nbsp;&nbsp;
-                                                    <button type="button" style="display:none" id="btnUpdateCancel" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom">Cancel</button>
-                                                </div>
+
                                             </div>
-
-                                        </div>
-                                    </div>*@
+                                        </div>*@
 
                                     @*<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>*@
 

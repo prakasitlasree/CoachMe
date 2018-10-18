@@ -15,7 +15,7 @@ namespace COACHME.MODEL
     public partial class MEMBER_REGIS_COURSE
     {
         public int AUTO_ID { get; set; }
-        public int REGISTER_ID { get; set; }
+        public int REGIS_MEMBER_ROLE_ID { get; set; }
         public Nullable<int> TEACH_COURSE_ID { get; set; }
         public string DESCRIPTION { get; set; }
         public string STATUS { get; set; }
