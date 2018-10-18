@@ -29,13 +29,14 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string COURSE { get; set; }
         public int COURSE_ID { get; set; }
         public int MEMBER_ROLE_ID { get; set; }
-        public string USER_NAME { get; set; }      
-        public List<string> LIST_STUDENT_COMMENT { get; set; }
+        public string USER_NAME { get; set; }             
         public string STATUS { get; set; }
         public bool REGISTER_STATUS { get; set; }
         public int REGIS_COURSE_ID { get; set; }
         public string COURSE_BANNER { get; set; }
         public string ROLE { get; set; }
 
+        public List<int> LIST_MEMBER_CETEGORY { get; set; }
+        public List<string> LIST_STUDENT_COMMENT { get; set; }
     }
 }
