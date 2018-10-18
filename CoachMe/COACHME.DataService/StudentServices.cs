@@ -96,7 +96,7 @@ namespace COACHME.DATASERVICE
                                                  MOBILE = c.MOBILE ?? "ไม่ระบุ",
                                                  USER_NAME = f.USER_NAME ?? "ไม่ระบุ",
                                                  COURSE = d.NAME ?? "ไม่ระบุ",
-                                                 ABOUT = c.ABOUT ?? "ไม่ระบุ",
+                                                 ABOUT = c.ABOUT,
                                                  REGIS_COURSE_ID = a.AUTO_ID,
                                                  CATEGORY = "ไม่ระบุ",
                                              }).ToListAsync();

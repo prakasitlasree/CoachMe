@@ -14,6 +14,7 @@ namespace COACHME.WEB_PRESENT.Controllers
     {
         RESPONSE__MODEL resp = new RESPONSE__MODEL();
         StudentServices service = new StudentServices();
+        CommonServices commonService = new CommonServices();
         public ActionResult Index()
         {
 
@@ -38,10 +39,14 @@ namespace COACHME.WEB_PRESENT.Controllers
 
            
             resp = await service.GetListCourseName();
-            model.LIST_COURSE = resp.OUTPUT_DATA;
-            model.LIST_PROVINCE = new List<string>() { "กรุงเทพมหานคร", "สมุทรปราการ", "นนทบุรี" };
+            model.LIST_COURSE = resp.OUTPUT_DATA; 
+
+            resp = await commonService.GetListProvince();
+            model.LIST_PROVINCE = resp.OUTPUT_DATA;
+
             model.LIST_SEARCH_TYPE = new List<string>() { "ครู", "คอร์ส" };
             container.SEARCH_TEACHER_MODEL = model;
+
             #region ===== SESSION NOT NUll หลัง LOGIN ====== 
             if (Session["logon"] != null)
             {
