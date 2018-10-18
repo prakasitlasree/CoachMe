@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="AdminServices.cs" />
     <Compile Include="AuthenticationServices.cs" />
+    <Compile Include="CommonServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseService.cs" />
     <Compile Include="StandardEnums.cs" />

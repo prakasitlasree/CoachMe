@@ -264,11 +264,11 @@
                                                     <label for="exampleSelect1">ประเภท</label>
                                                     @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
                                                     <label for="exampleSelect1">หมวดหมู่</label>
-                                                    @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_COURSE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                    @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_COURSE), "-เลือกทั้งหมด-", new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">จังหวัด</label>
-                                                    @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), new { @class = "form-control m-input m-input--air m-input--pill" })
+                                                    @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), "-เลือกทั้งหมด-", new { @class = "form-control m-input m-input--air m-input--pill" })
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">เขต/อำเภอ</label>
@@ -386,8 +386,16 @@
 
                                                         <p><i class="fa fa-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
                                                         <p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>
-                                                        <p><i class="fa fa-location-arrow"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
-                                                        <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
+                                                        @if (item.LOCATION != null)
+                                                        {
+                                                            <p><i class="fa fa-location-arrow"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
+                                                        }
+                                                       
+                                                        @if (item.ABOUT != null)
+                                                        { 
+                                                             <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
+                                                        }
+                                                       
                                                         @if (Session["logon"] == null)
                                                         {
 
