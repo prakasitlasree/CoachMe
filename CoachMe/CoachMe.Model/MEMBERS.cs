@@ -47,6 +47,8 @@ namespace COACHME.MODEL
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
         public string NICKNAME { get; set; }
         public Nullable<int> AMPHUR_ID { get; set; }
+        public Nullable<int> TEACHING_TYPE { get; set; }
+        public Nullable<int> STUDENT_LEVEL { get; set; }
     
         public virtual AMPHUR AMPHUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -22,7 +22,13 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public ROLE ROLE { get; set; }
         public COURSE_PLACE COURSE_PLACE { get; set; }
         public MEMBER_CATEGORY MEMBER_CATEGORY { get; set; }
-         
+        public AMPHUR AMPHUR { get; set; }
+        public PROVINCE PROVINCE { get; set; }
+        public GEOGRAPHY GEOGRAPHY { get; set; }
+
+        public List<GEOGRAPHY> LIST_GEOGRAPHY { get; set; }
+        public List<PROVINCE> LIST_PROVINCE { get; set; }
+        public List<AMPHUR> LIST_AMPHUR { get; set; }
         public List<MEMBER_CATEGORY> LIST_MEMBER_CATEGORY { get; set; }
         public List<CONFIGURATION> LIST_CONFIGURATION { get; set; }
         public List<COURSES> LIST_COURSES { get; set; }

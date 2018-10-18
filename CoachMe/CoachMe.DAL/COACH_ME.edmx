@@ -213,6 +213,8 @@
           <Property Name="UPDATED_DATE" Type="date" />
           <Property Name="NICKNAME" Type="nvarchar" MaxLength="50" />
           <Property Name="AMPHUR_ID" Type="int" />
+          <Property Name="TEACHING_TYPE" Type="int" />
+          <Property Name="STUDENT_LEVEL" Type="int" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -829,6 +831,8 @@
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AMPHUR_ID" Type="Int32" />
+          <Property Name="TEACHING_TYPE" Type="Int32" />
+          <Property Name="STUDENT_LEVEL" Type="Int32" />
           <NavigationProperty Name="AMPHUR" Relationship="COACH_MEModel.FK_MEMBERS_AMPHUR" FromRole="MEMBERS" ToRole="AMPHUR" />
           <NavigationProperty Name="MEMBER_CATEGORY" Relationship="COACH_MEModel.FK_MEMBER_CATEGORY_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_CATEGORY" />
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
@@ -1266,6 +1270,8 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="STUDENT_LEVEL" ColumnName="STUDENT_LEVEL" />
+                <ScalarProperty Name="TEACHING_TYPE" ColumnName="TEACHING_TYPE" />
                 <ScalarProperty Name="AMPHUR_ID" ColumnName="AMPHUR_ID" />
                 <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
                 <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
