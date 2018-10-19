@@ -126,10 +126,10 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 CONTAINER_MODEL container = new CONTAINER_MODEL();
                 var memberLogon = (MEMBERS)Session["logon"];
-                
+
                 try
-                {                 
-                    RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(memberLogon,categoryList);
+                {
+                    RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(memberLogon, categoryList);
 
                     if (result.STATUS)
                     {
@@ -151,10 +151,10 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
             else
             {
-                
+
                 return RedirectToAction("errorpage", "home");
             }
-            
+
         }
 
         //// GET:
@@ -266,6 +266,8 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+
+
         public async Task<JsonResult> GetListTeacherCategory()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -281,14 +283,14 @@ namespace COACHME.WEB_PRESENT.Controllers
                 {
                     resp.STATUS = false;
                     return Json(resp, JsonRequestBehavior.AllowGet);
-                }              
+                }
             }
             else
             {
                 resp.STATUS = false;
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
-           
+
         }
         public async Task<JsonResult> GetListAvailableCategory()
         {
@@ -320,7 +322,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             if (Session["logon"] != null)
             {
                 var memberLogon = (MEMBERS)Session["logon"];
-                resp = await service.UpdateMemberCategoryProfile(memberLogon,categoryList);
+                resp = await service.UpdateMemberCategoryProfile(memberLogon, categoryList);
                 if (resp.STATUS)
                 {
                     return Json(resp, JsonRequestBehavior.AllowGet);
@@ -337,6 +339,148 @@ namespace COACHME.WEB_PRESENT.Controllers
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
         }
+        public async Task<JsonResult> GetTeacherProfile()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetTeacherProfile(memberLogon);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                dto.AUTO_ID = memberLogon.AUTO_ID;
+                resp = await service.UpdateMemberProfile(dto);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public async Task<JsonResult> GetGeography()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetGeography();
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public async Task<JsonResult> GetListProvince(int geoID)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetListProvince(geoID);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public async Task<JsonResult> GetListAmphur(int provinceID)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetListAmphur(provinceID);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public async Task<ActionResult> UpdateMemberProfileAboutImg(List<HttpPostedFileBase> about_img)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+               
+                resp = await service.UpdateMemberProfileAboutImg(memberLogon, about_img);
+                if (resp.STATUS)
+                {
+                    return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return RedirectToAction("errorpage", "home");
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return RedirectToAction("errorpage", "home");
+            }
+        }
+
 
 
     }

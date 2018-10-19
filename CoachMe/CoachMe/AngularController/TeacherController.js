@@ -6,9 +6,121 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.ListCourse = [];
     $scope.TempListCourse = [];
+    $scope.TeacherProfile = [];
     $scope.ListCategoryAvailable = [];
     $scope.selectedCategory;
     $scope.chkCategory = {};
+
+    $scope.ListGeography = [];
+    $scope.ListProvince = [];
+    $scope.ListAmphur = [];
+
+    $scope.geography
+    $scope.provinceID
+    $scope.amphurID
+    $scope.TEACHING_TYPE
+    $scope.STUDENT_LEVEL
+
+
+    $scope.TEACHING_TYPE;
+    $scope.STUDENT_LEVEL;
+    $scope.FULLNAME;
+    $scope.FIRST_NAME;
+    $scope.LAST_NAME;
+    $scope.MOBILE;
+    $scope.NICKNAME;
+    $scope.DATE_OF_BIRTH;
+    $scope.SEX;
+    $scope.ABOUT;
+   
+    
+    
+
+    $scope.GetComponent = function () {
+        $("#LOCATE").prop("disabled", false);
+        $("#TEACHING_TYPE").prop("disabled", false);
+        $("#STUDENT_LEVEL").prop("disabled", false);
+        $('#editAddress').show();
+       
+        $http({
+            url: "http://localhost:1935/teacher/GetGeography",
+            method: "GET",
+            //params: { OrderID: $scope.orderId }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.ListGeography = response.data.OUTPUT_DATA;
+                $scope.RenderGeographyDrp()
+            }
+        });
+    }
+
+    $scope.RenderGeographyDrp = function () {
+        $('#geography').empty();
+        debugger;
+        var html = "";
+        var itemsLength = Object.keys($scope.ListGeography).length;
+        
+        for (var i = 0; i < itemsLength; i++) {
+            html += "<option value = " + $scope.ListGeography[i].GEO_ID + ">" + $scope.ListGeography[i].GEO_NAME + "</option>";
+        }
+        var $OnCompile = $(html).appendTo('#geography');
+        $compile($OnCompile)($scope);
+    }
+
+    $scope.GetProvince = function () {
+        $http({
+            url: "http://localhost:1935/teacher/GetListProvince",
+            method: "GET",
+            params: { geoID: $scope.geography }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.ListProvince = response.data.OUTPUT_DATA;
+                $scope.RenderProvinceDrp()
+            }
+        });
+    }
+
+    $scope.RenderProvinceDrp = function () {
+        $('#province').empty();
+        debugger;
+        var html = "";
+       
+        var itemsLength = Object.keys($scope.ListProvince).length;
+        for (var i = 0; i < itemsLength; i++) {
+            html += "<option value = " + $scope.ListProvince[i].PROVINCE_ID + ">" + $scope.ListProvince[i].PROVINCE_NAME + "</option>";
+        }
+        var $OnCompile = $(html).appendTo('#province');
+        $compile($OnCompile)($scope);
+    }
+
+    $scope.GetAmphur = function () {
+        $http({
+            url: "http://localhost:1935/teacher/GetListAmphur",
+            method: "GET",
+            params: { provinceID: $scope.provinceID }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.ListAmphur = response.data.OUTPUT_DATA;
+                $scope.RenderAmphurDrp()
+            }
+        });
+    }
+
+    $scope.RenderAmphurDrp = function () {
+        $('#amphur').empty();
+        debugger;
+        var html = "";
+       
+        var itemsLength = Object.keys($scope.ListAmphur).length;
+        for (var i = 0; i < itemsLength; i++) {
+            html += "<option value = " + $scope.ListAmphur[i].AMPHUR_ID + ">" + $scope.ListAmphur[i].AMPHUR_NAME + "</option>";
+        }
+        var $OnCompile = $(html).appendTo('#amphur');
+        $compile($OnCompile)($scope);
+    }
 
     $scope.AddSelectedCategory = function () {
         debugger;
@@ -29,8 +141,114 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $scope.renderInnerHtml();
             }
         });
+
+        $http({
+            url: "http://localhost:1935/teacher/GetTeacherProfile",
+            method: "GET",
+            //params: { OrderID: $scope.orderId }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.TeacherProfile = response.data.OUTPUT_DATA;
+                $scope.BindingProfile();
+            }
+        });
         $.LoadingOverlay("hide");
     };
+
+    $scope.BindingProfile = function () {
+        $scope.TEACHING_TYPE = $scope.TeacherProfile[0].TEACHING_TYPE
+        $scope.STUDENT_LEVEL = $scope.TeacherProfile[0].STUDENT_LEVEL
+        $scope.FULLNAME = $scope.TeacherProfile[0].FULLNAME
+        $scope.FIRST_NAME = $scope.TeacherProfile[0].FIRST_NAME
+        $scope.LAST_NAME = $scope.TeacherProfile[0].LAST_NAME
+        $scope.MOBILE = $scope.TeacherProfile[0].MOBILE
+        $scope.DATE_OF_BIRTH_TEXT = $scope.TeacherProfile[0].DATE_OF_BIRTH_TEXT
+        $scope.NICKNAME = $scope.TeacherProfile[0].NICKNAME
+        $scope.LOCATION = $scope.TeacherProfile[0].LOCATION
+        $scope.TEACHING_TYPE = $scope.TeacherProfile[0].TEACHING_TYPE
+        $scope.STUDENT_LEVEL = $scope.TeacherProfile[0].STUDENT_LEVEL
+        if ($scope.TeacherProfile[0].AMPHUR_ID != null) {
+            $scope.amphurID = $scope.TeacherProfile[0].AMPHUR_ID
+        }
+        else {
+            $scope.amphurID = 0;
+        }
+        if ($scope.TeacherProfile[0].SEX == 1) {
+            $scope.SEX = "ชาย"
+        }
+        else {
+            $scope.SEX = "หญิง"
+        }
+
+        $scope.ABOUT = $scope.TeacherProfile[0].ABOUT
+    }
+
+    $scope.UpdateMemberProfile = function () {
+        $.LoadingOverlay("show");
+        var cboxes = document.getElementsByName('about_img');
+       
+        var len = cboxes.length;
+        debugger;
+        $http({
+            url: "http://localhost:1935/teacher/UpdateMemberProfile",
+            method: "GET",
+            params: {
+                FULLNAME: $scope.FULLNAME,
+                FIRST_NAME: $scope.FIRST_NAME,
+                LAST_NAME: $scope.LAST_NAME,
+                MOBILE: $scope.MOBILE,
+                NICKNAME: $scope.NICKNAME,
+                ABOUT: $scope.ABOUT,
+                LOCATION:$scope.LOCATION,
+                AMPHUR_ID: $scope.amphurID,
+                TEACHING_TYPE : $scope.TEACHING_TYPE,
+                STUDENT_LEVEL : $scope.STUDENT_LEVEL
+                
+            }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.init();
+                $scope.HideButton();
+                //$('#btnUpdateSubmitImg').trigger('click')
+               
+            }
+           
+        });
+        $.LoadingOverlay("hide");
+    }
+
+    $scope.HideButton = function () {
+        $('#btnUpdateSubmit').hide()
+        $('#btnUpdateCancel').hide()
+        $("#FULLNAME").prop("disabled", true);
+        $("#FIRST_NAME").prop("disabled", true);
+        $("#LAST_NAME").prop("disabled", true);
+        $("#MOBILE").prop("disabled", true);
+        $("#ABOUT").prop("disabled", true);
+        $("#NICKNAME").prop("disabled", true);
+        $("#DATE_OF_BIRTH").prop("disabled", true);
+        $("#SEX").prop("disabled", true);
+        $("#ID_CARD").prop("disabled", true);
+
+        $('#editAddress').hide();
+        $('#LOCATE').show();
+        $("#LOCATE").prop("disabled", true);
+        $("#TEACHING_TYPE").prop("disabled", true);
+        $("#STUDENT_LEVEL").prop("disabled", true);
+
+        $("#btnAboutImg_1").prop("disabled", true);
+        $("#AboutImg_1").css('cursor', 'pointer');
+        $("#btnAboutImg_2").prop("disabled", true);
+        $("#AboutImg_2").css('cursor', 'pointer');
+        $("#btnAboutImg_3").prop("disabled", true);
+        $("#AboutImg_3").css('cursor', 'pointer');
+        $("#btnAboutImg_4").prop("disabled", true);
+        $("#AboutImg_4").css('cursor', 'pointer');
+        $("#CATEGORY").prop("disabled", true);
+        $("#LOCATION").prop("disabled", true);
+    }
 
     $scope.renderInnerHtml = function () {
         debugger;
@@ -83,7 +301,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.RenderCategoryAvailable = function () {
 
-       
+
         $('#categoryCheckbox').empty();
         var html = "";
         var itemsLength = Object.keys($scope.ListCategoryAvailable).length;
@@ -107,10 +325,10 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         debugger;
         for (var i = 0; i < len; i++) {
             if (cboxes[i].checked) {
-                $scope.categoryList.push(cboxes[i].value);              
+                $scope.categoryList.push(cboxes[i].value);
             }
         }
-        
+
         debugger;
         $http({
             url: "http://localhost:1935/teacher/UpdateMemberCategory",

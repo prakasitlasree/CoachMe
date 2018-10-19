@@ -331,6 +331,8 @@ namespace COACHME.DATASERVICE
                     {
                         member.ABOUT = dto.ABOUT;
                     }
+                    member.TEACHING_TYPE = dto.TEACHING_TYPE;
+                    member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
                     #endregion
                     //add activity
                     #region === Activity ===
@@ -840,7 +842,7 @@ namespace COACHME.DATASERVICE
                     List<string> category = new List<string> { "ดนตรี", "ภาษา", "ธุรกิจและการเงิน", "ศิลปะ", "เทคโนโลยี", "วิชาชีพ/หลักสูตรพิเศษ", "สุขภาพ/ความงาม" };
                     var memberCategory = await ctx.MEMBER_CATEGORY
                                                  .Where(o => o.MEMBER_ID == dto.AUTO_ID)
-                                                 .Select(o=>o.NAME)
+                                                 .Select(o => o.NAME)
                                                  .ToListAsync();
                     resp.OUTPUT_DATA = category.Where(x => !memberCategory.Contains(x)).ToList();
                 }
@@ -855,7 +857,297 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
-        #endregion
 
+        public async Task<RESPONSE__MODEL> GetTeacherProfile(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberProfile = await ctx.MEMBERS
+                                                .Include(o => o.MEMBER_ROLE)
+                                                .Where(o => o.AUTO_ID == dto.AUTO_ID)
+                                                .ToListAsync();
+                    resp.OUTPUT_DATA = (from item in memberProfile
+                                        select new CUSTOM_MEMBERS
+                                        {
+                                            AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
+                                            FULLNAME = memberProfile.FirstOrDefault().FULLNAME,
+                                            FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME,
+                                            LAST_NAME =  memberProfile.FirstOrDefault().LAST_NAME,
+                                            MOBILE = memberProfile.FirstOrDefault().MOBILE,
+                                            NICKNAME = memberProfile.FirstOrDefault().NICKNAME,
+                                            DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.ToString(),
+                                            SEX = memberProfile.FirstOrDefault().SEX,
+                                            ABOUT = memberProfile.FirstOrDefault().ABOUT,
+                                            AMPHUR_ID = memberProfile.FirstOrDefault().ABOUT,
+                                            TEACHING_TYPE= memberProfile.FirstOrDefault().TEACHING_TYPE,
+                                            STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL,
+
+                                        });
+
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> UpdateMemberProfile(CUSTOM_MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                   
+                    #region =====Profile=====
+                    //Update Profile
+                    if (dto.FULLNAME != null)
+                    {
+                        member.FULLNAME = dto.FULLNAME;
+                    }
+                    if (dto.FIRST_NAME != null)
+                    {
+                        member.FIRST_NAME = dto.FIRST_NAME;
+                    }
+                    if (dto.LAST_NAME != null)
+                    {
+                        member.LAST_NAME = dto.LAST_NAME;
+                    }
+                    if (dto.MOBILE != null)
+                    {
+                        member.MOBILE = dto.MOBILE;
+                    }
+                    if (dto.DATE_OF_BIRTH != null)
+                    {
+                        member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH.Value.ToShortDateString());
+                    }
+                    if (dto.NICKNAME != null)
+                    {
+                        member.NICKNAME = dto.NICKNAME;
+                    }
+                    if (dto.ID_CARD != null)
+                    {
+                        member.ID_CARD = dto.ID_CARD;
+                    }
+                    if (dto.SEX != null)
+                    {
+                        member.SEX = dto.SEX;
+                    }
+                    if (dto.ABOUT != null)
+                    {
+                        member.ABOUT = dto.ABOUT;
+                    }
+                    member.TEACHING_TYPE = dto.TEACHING_TYPE;
+                    member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
+
+                    #endregion
+                    //add activity
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Update Profile";
+                    activity.FULLNAME = dto.FULLNAME;
+                    activity.USER_NAME = dto.FULLNAME;
+                    activity.PASSWORD = dto.FULLNAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+               
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> UpdateMemberProfileAboutImg(MEMBERS dto, List<HttpPostedFileBase> about_img)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
+                    #region ===== ABOUT IMAGE ====
+                    for (int i = 0; i < about_img.Count; i++)
+                    {
+                        var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                        string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
+                        //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
+                        //Deploy
+                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        string path = "";
+                        string[] FolderProfile = memberUsername.USER_NAME.Split('@');
+                        myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
+                        System.IO.Directory.CreateDirectory(myDir);
+
+                        if (i == 0 && about_img[0] != null)
+                        {
+
+                            if (about_img[0].ContentLength > 0)
+                            {
+                                string fileName = Path.GetFileName(about_img[0].FileName);
+                                path = Path.Combine(myDir, fileName);
+                                about_img[0].SaveAs(path);
+                            }
+                            int index = path.IndexOf("Content");
+                            member.ABOUT_IMG_URL1 = "//" + path.Substring(index);
+                        }
+                        if (i == 1 && about_img[1] != null)
+                        {
+
+                            if (about_img[1].ContentLength > 0)
+                            {
+                                string fileName = Path.GetFileName(about_img[1].FileName);
+                                path = Path.Combine(myDir, fileName);
+                                about_img[1].SaveAs(path);
+                            }
+                            int index = path.IndexOf("Content");
+                            member.ABOUT_IMG_URL2 = "\\" + path.Substring(index);
+                        }
+                        if (i == 2 && about_img[2] != null)
+                        {
+
+                            if (about_img[2].ContentLength > 0)
+                            {
+                                string fileName = Path.GetFileName(about_img[2].FileName);
+                                path = Path.Combine(myDir, fileName);
+                                about_img[2].SaveAs(path);
+                            }
+                            int index = path.IndexOf("Content");
+                            member.ABOUT_IMG_URL3 = "\\" + path.Substring(index);
+                        }
+                        if (i == 3 && about_img[3] != null)
+                        {
+
+                            if (about_img[3].ContentLength > 0)
+                            {
+                                string fileName = Path.GetFileName(about_img[3].FileName);
+                                path = Path.Combine(myDir, fileName);
+                                about_img[3].SaveAs(path);
+                            }
+                            int index = path.IndexOf("Content");
+                            member.ABOUT_IMG_URL4 = "\\" + path.Substring(index);
+                        }
+
+
+
+                    }
+                    #endregion
+
+                    #endregion
+                    //add activity
+                    #region === Activity ===
+                    var activity = new LOGON_ACTIVITY();
+                    activity.DATE = DateTime.Now;
+                    activity.ACTION = "Update Profile";
+                    activity.FULLNAME = dto.FULLNAME;
+                    activity.USER_NAME = dto.FULLNAME;
+                    activity.PASSWORD = dto.FULLNAME;
+                    activity.STATUS = resp.STATUS;
+                    ctx.LOGON_ACTIVITY.Add(activity);
+                    #endregion
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetGeography()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    resp.OUTPUT_DATA = await ctx.GEOGRAPHY.ToListAsync();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetListProvince(int geoID)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    resp.OUTPUT_DATA = await ctx.PROVINCE
+                                                .Where(o=>o.GEO_ID == geoID)
+                                                .ToListAsync();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+
+        }
+
+        public async Task<RESPONSE__MODEL> GetListAmphur(int provinceID)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    resp.OUTPUT_DATA = await ctx.AMPHUR
+                                                .Where(o => o.PROVINCE_ID == provinceID)
+                                                .ToListAsync();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
     }
 }

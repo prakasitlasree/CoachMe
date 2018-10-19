@@ -138,184 +138,210 @@
                         </div>
 
                     </div>
-                    @using (Html.BeginForm("edit", "teacher", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
-                    {
+                    <form returnurl="" action="/teacher/UpdateMemberProfileAboutImg" enctype="multipart/form-data" method="post" class="ng-pristine ng-valid">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="m_user_profile_tab_1">
+                                <div class="m-form m-form--fit m-form--label-align-right">
 
-                    <div class="tab-content">
-
-                        <div class="tab-pane active" id="m_user_profile_tab_1">
-                            <form class="m-form m-form--fit m-form--label-align-right">
-
-                                <div class="m-portlet__body">
-                                    <div class="form-group m-form__group m--margin-top-10 m--hide">
-                                        <div class="alert m-alert m-alert--default" role="alert">
-                                            @*The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.*@
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <div class="col-10 ml-auto">
-                                            <h3 class="m-form__section">
-                                                ข้อมูลส่วนตัว
-                                                <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate">
-                                                    <i class="fa fa-user-edit"></i>
-                                                </button>
-
-                                            </h3>
-                                            @if (TempData["Message"] != null)
-                                                {
-                                                <p class="text-success">อัพเดทโปรไฟล์เรียบร้อย</p>
-                                                }
-                                        </div>
-                                    </div>
-
-                                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
-                                        <div class="col-7">
-                                            @Html.TextBoxFor(m => m.MEMBERS.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
-                                            @*<input class="form-control m-input" type="text" name="FULLNAME" id="FULLNAME">*@
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
-                                        <div class="col-7">
-                                            @Html.TextBoxFor(m => m.MEMBERS.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
-                                            @*<input class="form-control m-input" type="text" value="lawrence">*@
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
-                                        <div class="col-7">
-                                            @Html.TextBoxFor(m => m.MEMBERS.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
-                                            @*<input class="form-control m-input" type="text" value="Jenny">*@
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
-                                        <div class="col-7">
-                                            <div class='input-group date'>
-                                                @Html.TextBoxFor(m => m.MEMBERS.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH", @class = "form-control m-input m-input--pill", @disabled = "disabled" })
-                                                @*<input type='text' id="birthDate" class="form-control" />*@
+                                    <div class="m-portlet__body">
+                                        <div class="form-group m-form__group m--margin-top-10 m--hide">
+                                            <div class="alert m-alert m-alert--default" role="alert">
+                                                @*The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.*@
                                             </div>
                                         </div>
-                                        @*<div class="col-1">
-                                                <button type="button" class="btn" id='datetimepicker1' style="border-radius:10px;float:right;width:100%">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </button>
-                                            </div>*@
-                                    </div>
-                                    @*<div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">บัตรประชาชน</label>
+                                        <div class="form-group m-form__group row">
+                                            <div class="col-10 ml-auto">
+                                                <h3 class="m-form__section">
+                                                    ข้อมูลส่วนตัว
+                                                    <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate" ng-click="GetComponent()">
+                                                        <i class="fa fa-user-edit"></i>
+                                                    </button>
+
+                                                </h3>
+                                                @*@if (TempData["Message"] != null)
+                                                    {
+                                                        <p class="text-success">อัพเดทโปรไฟล์เรียบร้อย</p>
+                                                    }*@
+                                            </div>
+                                        </div>
+
+                                        @*@Html.HiddenFor(m => m.MEMBERS.AUTO_ID)*@
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
                                             <div class="col-7">
-                                                <span class="input-group-append">
-                                                    @Html.TextBoxFor(m => m.MEMBERS.ID_CARD, new { @id = "ID_CARD", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
-                                                </span>
+                                                @*@Html.TextBoxFor(m => m.MEMBERS.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                                <input class="form-control m-input m-input--pill" id="FIRST_NAME" ng-model="FIRST_NAME" ng-value="FIRST_NAME" disabled>
                                             </div>
-                                        </div>*@
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
-                                        <div class="col-7">
-                                            <div class="m-radio-inline">
-                                                <label class="m-radio">
-                                                    @Html.RadioButtonFor(m => m.MEMBERS.SEX, "1", new { @id = "SEX", disabled = "disabled" })ชาย
-                                                    <span></span>
-                                                </label>
-                                                <label class="m-radio">
-                                                    @Html.RadioButtonFor(m => m.MEMBERS.SEX, "2", new { @id = "SEX", disabled = "disabled" })หญิง
-                                                    <span></span>
-                                                </label>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
+                                            <div class="col-7">
+                                                @*@Html.TextBoxFor(m => m.MEMBERS.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                                <input class="form-control m-input m-input--pill" id="LAST_NAME" ng-model="LAST_NAME" ng-value="LAST_NAME" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
+                                            <div class="col-7">
+                                                @*@Html.TextBoxFor(m => m.MEMBERS.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                                <input class="form-control m-input m-input--pill" id="NICKNAME" ng-model="NICKNAME" ng-value="NICKNAME" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
+                                            <div class="col-7">
+                                                <div class='input-group date'>
+                                                    @*@Html.TextBoxFor(m => m.MEMBERS.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH", @class = "form-control m-input m-input--pill", @disabled = "disabled" })*@
+                                                    <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH" ng-model="DATE_OF_BIRTH_TEXT" ng-value="DATE_OF_BIRTH_TEXT" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
+                                            <div class="col-7">
+                                                <input class="form-control m-input m-input--pill" id="SEX" ng-model="SEX" ng-value="SEX" disabled>
 
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
-                                        <div class="col-7">
-                                            <a id="ChangeAbout_1">
-                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
+                                            <div class="col-7">
                                                 <input type='file' name="about_img" id="btnAboutImg_1" accept="image/*" style="display:none" disabled />
-                                            </a>
-                                            <a id="ChangeAbout_2">
-                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "//Content//images//Blank-Profile.jpg")" id="AboutImg_2" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
                                                 <input type='file' name="about_img" id="btnAboutImg_2" accept="image/*" style="display:none" disabled />
-                                            </a>
-                                            <a id="ChangeAbout_3">
-                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "//Content//images//Blank-Profile.jpg")" id="AboutImg_3" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
                                                 <input type='file' name="about_img" id="btnAboutImg_3" accept="image/*" style="display:none" disabled />
-                                            </a>
-                                            <a id="ChangeAbout_4">
-                                                <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "//Content//images//Blank-Profile.jpg")" id="AboutImg_4" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
                                                 <input type='file' name="about_img" id="btnAboutImg_4" accept="image/*" style="display:none" disabled />
-                                            </a>
+                                                <a id="ChangeAbout_1">
+                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+                                                </a>
+                                                <a id="ChangeAbout_2">
+                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_2" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                </a>
+                                                <a id="ChangeAbout_3">
+                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_3" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                </a>
+                                                <a id="ChangeAbout_4">
+                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_4" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
-                                        <div class="col-7">
-                                            @Html.TextBoxFor(m => m.MEMBERS.MOBILE, new { @id = "MOBILE", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })
-                                            @*<input class="form-control m-input" type="text" value="Jenny">*@
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
+                                            <div class="col-7">
+                                                @*@Html.TextBoxFor(m => m.MEMBERS.MOBILE, new { @id = "MOBILE", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                                <input class="form-control m-input m-input--pill" id="MOBILE" ng-model="MOBILE" ng-value="MOBILE" disabled>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
-                                        <div class="col-7">
-                                            @Html.TextAreaFor(m => m.MEMBERS.ABOUT, new { @id = "ABOUT", @class = "form-control m-input m-input--pill", @disabled = "disabled" })
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">ที่อยู่</label>
+                                            <div class="col-7">
+                                                <input class="form-control m-input m-input--pill" id="LOCATE" ng-model="LOCATION" ng-value="LOCATION" disabled>
+                                                <div class="row" id="editAddress" style="display:none">
+                                                    <div class="col-4">
+                                                        <p>ภาค</p>
+                                                        <select class="form-control m-input m-input--pill" id="geography" ng-model="geography" ng-change="GetProvince()">
+                                                            
 
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p>จังหวัด</p>
+                                                        <select class="form-control m-input m-input--pill" id="province" ng-model="provinceID" ng-change="GetAmphur()">
+                                                          
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p>อำเภอ</p>
+                                                        <select class="form-control m-input m-input--pill" id="amphur" ng-model="amphurID">
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
+                                            <div class="col-7">
+                                                @*@Html.TextAreaFor(m => m.MEMBERS.ABOUT, new { @id = "ABOUT", @class = "form-control m-input m-input--pill", @disabled = "disabled" })*@
+                                                <input class="form-control m-input m-input--pill" id="ABOUT" ng-model="ABOUT" ng-value="ABOUT" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
+                                            <div class="col-7">
+                                                <select class="form-control m-input  m-input--pill" name="MEMBERS.TEACHING_TYPE" ng-model="TEACHING_TYPE" id="TEACHING_TYPE" disabled>
+                                                    <option value="1">เรียนเดี่ยว</option>
+                                                    <option value="2">เรียนกลุ่ม</option>
+                                                    <option value="3">เรียนเดี่ยว,เรียนกลุ่ม</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
+                                            <div class="col-7">
+                                                <select class="form-control m-input  m-input--pill" name="MEMBERS.STUDENT_LEVEL" ng-model="STUDENT_LEVEL"  id="STUDENT_LEVEL" disabled>
+                                                    <option value="1">เริ่มต้น</option>
+                                                    <option value="2">ปานกลาง</option>
+                                                    <option value="3">ขั้นสูง</option>
+                                                    <option value="4">ทุกระดับผู้เรียน</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="m-portlet__foot">
+
+                                        <div class="col-lg-12 m--align-center">
+                                            <button type="button" style="display:none" id="btnUpdateSubmit" ng-click="UpdateMemberProfile()" class="btn m-btn--pill m-btn--air btn-primary">บันทึก</button>
+                                            <button type="button" style="display:none" id="btnUpdateCancel" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom">ยกเลิก</button>
+                                            <button type="submit" id="btnUpdateSubmitImg" style="display:none">บันทึก</button>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="m-portlet__foot">
+                            </div>
 
-                                    <div class="col-lg-12 m--align-center">
-                                        <button type="submit" style="display:none" id="btnUpdateSubmit" class="btn m-btn--pill m-btn--air btn-primary">Save</button>
-                                        <button type="button" style="display:none" id="btnUpdateCancel" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom">Cancel</button>
 
-                                    </div>
-                                </div>
-
-                            </form>
                         </div>
 
-
-                    </div>
-                    }
+                    </form>
 
                 </div>
             </div>
         </div>
 
-        @using (Html.BeginForm("editcategory", "teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            <div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;border-radius:10px" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Category</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+
+        <div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;border-radius:10px" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalCategoryBody">
+                        <div class="m-checkbox-list" id="categoryCheckbox">
+                            <label class="m-checkbox">
+                                <input type="checkbox"> Default
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input type="checkbox" checked="checked"> Checked
+                                <span></span>
+                            </label>
                         </div>
-                        <div class="modal-body" id="modalCategoryBody">
-                            <div class="m-checkbox-list" id="categoryCheckbox">
-                                <label class="m-checkbox">
-                                    <input type="checkbox"> Default
-                                    <span></span>
-                                </label>
-                                <label class="m-checkbox">
-                                    <input type="checkbox" checked="checked"> Checked
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" ng-click="SaveMemberCategory()" class="btn btn-primary">Save changes</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="SaveMemberCategory()" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+
 
 
         <script type="text/javascript">
@@ -333,13 +359,16 @@
             }
 
             $("#btnAboutImg_1").change(function () {
+                debugger;
                 UploadAboutImg_1(this);
             });
             $('#ChangeAbout_1').click(function () {
+                debugger;
                 $('#btnAboutImg_1').trigger('click');
             });
-            function UploadAboutImg_2(input) {
 
+            function UploadAboutImg_2(input) {
+                debugger;
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
 
