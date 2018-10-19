@@ -6,143 +6,140 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 
 }
-<div class="m-subheader ">
-    <div class="d-flex align-items-center">
-        <div class="mr-auto">
-            <h3 class="m-subheader__title ">My Profile</h3>
-        </div>
-    </div>
-</div>
+<section ng-app="TeacherApp" ng-controller="ListCategoryController" ng-init="init()">
 
-<div class="m-content">
-
-    <div class="row">
-        <div class="col-xl-3 col-lg-4">
-            <div class="m-portlet m-portlet--full-height   m-portlet--unair">
-                <div class="m-portlet__body">
-                    <div class="m-card-profile">
-                        <div class="m-card-profile__title m--hide">
-
-                        </div>
-                        @using (Html.BeginForm("uploadFile", "teacher", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <div class="m-card-profile__pic">
-                                <div class="m-card-profile__pic-wrapper">
-                                    <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )"
-                                         alt="" style="height:130px;width:130px" />
-                                </div>
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
-                            </div>
-                            <input type="file" name="profileImage" id="imgupload" accept="image/*" style="display:none" />
-
-                            <button id="btnSubmit" type="submit" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" style="border-radius:20px;display:none">
-                                <i class="fa flaticon-edit"></i>
-                            </button>
-                        }
-                        <div class="m-card-profile__details">
-
-                            <span class="m-card-profile__name">
-                                @Url.Content(@Model.MEMBERS.FULLNAME)
-                                <button id="fileDialog" type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="border-radius:20px">
-                                    <i class="fa fa-camera"></i>
-                                </button>
-                            </span>
-
-                            <a href="" class="m-card-profile__email m-link">
-                                @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
-                            </a>
-                        </div>
-                    </div>
-                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
-                        <li class="m-nav__separator m-nav__separator--fit"></li>
-                        <li class="m-nav__section m--hide">
-                            <span class="m-nav__section-text">Section</span>
-                        </li>
-
-                    </ul>
-
-                    @using (Html.BeginForm("editcategory", "teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        <div class="m-widget1 m-widget1--paddingless">
-                            @if (TempData["MessageCate"] != null)
-                            {
-                                <p style="text-align:center" class="text-success"> อัพเดทโปรไฟล์เรียบร้อย</p>
-                            }
-                            @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
-                            <div class="m-widget1__item">
-                                <div class="row m-row--no-padding align-items-center">
-                                    <label for="example-text-input" class="col-9 col-form-label m-widget1__title">หมวดหมู่</label>
-                                    <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory">
-                                        <i class="fa fa-user-edit"></i>
-                                    </button>
-                                    <br>
-
-                                    @*@Html.TextAreaFor(Model.MEMBERS.MEMBER_CATEGORY.Select(o=>o.NAME).ToList(), new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
-                                    
-                                    <select class="form-control m-input  m-input--pill"  name="category" multiple="multiple" >                      
-                                        <optgroup label="เลือกหมวดหมู่">
-                                            <option value="ดนตรี">ดนตรี</option>
-                                            <option value="ภาษา" >ภาษา</option>
-                                            <option value="ธุรกิจและการเงิน">ธุรกิจและการเงิน</option>
-                                            <option value="ธุรกิจและการเงิน">ศิลปะ</option>
-                                            <option value="เทคโนโลยี">เทคโนโลยี</option>
-                                            <option value="วิชาชีพ/หลักสูตรพิเศษ">วิชาชีพ/หลักสูตรพิเศษ</option>
-                                            <option value="สุขภาพ/ความงาม">สุขภาพ/ความงาม</option>
-                                        </optgroup> 
-                                    </select>
-
-                                </div>
-                            </div>
-                            <div class="m-widget1__item">
-                                <div class="row m-row--no-padding align-items-center">
-                                    <label for="example-text-input" class="col-12 col-form-label m-widget1__title">สถานที่สะดวกสอน</label>
-                                    @Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
-                                    @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-portlet__foot m-portlet__foot--fit">
-                            <div class="m-form__actions">
-
-                                <div class="row">
-
-                                    <div class="col-12">
-                                        <button type="submit" style="display:none" id="btnCateSubmit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save</button>&nbsp;&nbsp;
-                                        <button type="button" style="display:none" id="btnCateCancel" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    }
-                </div>
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title ">My Profile</h3>
             </div>
         </div>
-        <div class="col-xl-9 col-lg-8">
-            <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--unair">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-tools">
-                        <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
-                                    <i class="flaticon-share m--hide"></i>
-                                    Profile
+    </div>
+
+    <div class="m-content">
+
+        <div class="row">
+            <div class="col-xl-3 col-lg-4">
+                <div class="m-portlet m-portlet--full-height   m-portlet--unair">
+                    <div class="m-portlet__body">
+                        <div class="m-card-profile">
+                            <div class="m-card-profile__title m--hide">
+
+                            </div>
+                            @using (Html.BeginForm("uploadFile", "teacher", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="m-card-profile__pic">
+                                    <div class="m-card-profile__pic-wrapper">
+                                        <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? " \\Content\\images\\Blank-Profile.jpg" )"
+                                             alt="" style="height:130px;width:130px" />
+                                    </div>
+                                    @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                </div>
+                                <input type="file" name="profileImage" id="imgupload" accept="image/*" style="display:none" />
+
+                                <button id="btnSubmit" type="submit" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" style="border-radius:20px;display:none">
+                                    <i class="fa flaticon-edit"></i>
+                                </button>
+                            }
+                            <div class="m-card-profile__details">
+
+                                <span class="m-card-profile__name">
+                                    @Url.Content(@Model.MEMBERS.FULLNAME)
+                                    <button id="fileDialog" type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="border-radius:20px">
+                                        <i class="fa fa-camera"></i>
+                                    </button>
+                                </span>
+
+                                <a href="" class="m-card-profile__email m-link">
+                                    @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
                                 </a>
+                            </div>
+                        </div>
+                        <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                            <li class="m-nav__section m--hide">
+                                <span class="m-nav__section-text">Section</span>
                             </li>
-                            @*<li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link " data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
-                                        <i class="flaticon-share m--hide"></i>
-                                        Manage Course
-                                    </a>
-                                </li>*@
 
                         </ul>
-                    </div>
 
+                        @using (Html.BeginForm("editcategory", "teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <div class="m-widget1 m-widget1--paddingless">
+                                @if (TempData["MessageCate"] != null)
+                                {
+                                    <p style="text-align:center" class="text-success"> อัพเดทโปรไฟล์เรียบร้อย</p>
+                                }
+                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                <div class="m-widget1__item">
+                                    <div class="row m-row--no-padding align-items-center">
+                                        <label for="example-text-input" class="col-9 col-form-label m-widget1__title">หมวดหมู่</label>
+                                        <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory" ng-click="UpdateProfileCategory()">
+                                            <i class="fa fa-user-edit"></i>
+                                        </button>
+                                        <br>
+
+                                        @*@Html.TextAreaFor(Model.MEMBERS.MEMBER_CATEGORY.Select(o=>o.NAME).ToList(), new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
+
+
+                                        @*<select class="form-control m-input  m-input--pill" name="categoryList" ng-model="selectedCategory" ng-change="AddSelectedCategory()" id="DropdownCategory" style="display:none"></select>*@
+                                        <div id="BadgeCategoryArea">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="m-widget1__item">
+                                    <div class="row m-row--no-padding align-items-center">
+                                        <label for="example-text-input" class="col-12 col-form-label m-widget1__title">สถานที่สะดวกสอน</label>
+                                        @Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
+                                        @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions">
+
+                                    <div class="row">
+
+                                        <div class="col-12">
+                                            <button type="submit" style="display:none" id="btnCateSubmit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save</button>&nbsp;&nbsp;
+                                            <button type="button" style="display:none" id="btnCateCancel" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
-                @using (Html.BeginForm("edit", "teacher", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
-                {
+            </div>
+            <div class="col-xl-9 col-lg-8">
+                <div class="m-portlet m-portlet--full-height m-portlet--tabs   m-portlet--unair">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
+                                        <i class="flaticon-share m--hide"></i>
+                                        Profile
+                                    </a>
+                                </li>
+                                @*
+                                    <li class="nav-item m-tabs__item">
+                                        <a class="nav-link m-tabs__link " data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
+                                            <i class="flaticon-share m--hide"></i>
+                                            Manage Course
+                                        </a>
+                                    </li>*@
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    @using (Html.BeginForm("edit", "teacher", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
+                    {
 
                     <div class="tab-content">
 
@@ -165,9 +162,9 @@
 
                                             </h3>
                                             @if (TempData["Message"] != null)
-                                            {
+                                                {
                                                 <p class="text-success">อัพเดทโปรไฟล์เรียบร้อย</p>
-                                            }
+                                                }
                                         </div>
                                     </div>
 
@@ -267,23 +264,6 @@
                                         </div>
                                     </div>
 
-                                    @*<div class="m-portlet__foot m-portlet__foot--fit">
-                                            <div class="m-form__actions">
-
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                    </div>
-                                                    <div class="col-7">
-                                                        <button type="submit" style="display:none" id="btnUpdateSubmit" class="btn m-btn--pill m-btn--air btn-primary">Save </button>&nbsp;&nbsp;
-                                                        <button type="button" style="display:none" id="btnUpdateCancel" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom">Cancel</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>*@
-
                                 </div>
                                 <div class="m-portlet__foot">
 
@@ -297,127 +277,124 @@
                             </form>
                         </div>
 
-                        @*<div class="tab-pane " id="m_user_profile_tab_2">
-                                <form class="m-form m-form--fit m-form--label-align-right">
 
-                                    <div class="m-portlet__body">
-                                        <div class="form-group m-form__group m--margin-top-10 m--hide">
-                                            <div class="alert m-alert m-alert--default" role="alert">
-                                                The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
-                                            </div>
-                                        </div>
-                                        <div class="form-group m-form__group row">
-                                            <div class="col-10 ml-auto">
-                                                <h3 class="m-form__section">
-                                                    ข้อมูลส่วนตัว
-                                                    <button type="button" class="btn" id="btnUpdate" style="border-radius:100px">
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                    </button>
-                                                </h3>
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">สถานที่สะดวกสอน</label>
-                                            <div class="col-7">
-                                                <input class="form-control m-input" type="text" value="#บ้าน #office #co-working-space #ร้านกาแฟ">
-                                            </div>
-                                        </div>
-                                        <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">หมวดหมู่</label>
-                                            <div class="col-7">
-                                                <input class="form-control m-input" type="text" value="#ดนตรี #เปียโน #กีตาร์">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="tab-pane " id="m_user_profile_tab_3">
-                                </div>
-                            </div>*@
                     </div>
-                }
+                    }
 
+                </div>
             </div>
         </div>
+
+        @using (Html.BeginForm("editcategory", "teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;border-radius:10px" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Category</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modalCategoryBody">
+                            <div class="m-checkbox-list" id="categoryCheckbox">
+                                <label class="m-checkbox">
+                                    <input type="checkbox"> Default
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input type="checkbox" checked="checked"> Checked
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" ng-click="SaveMemberCategory()" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <script type="text/javascript">
+
+            function UploadAboutImg_1(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#AboutImg_1').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#btnAboutImg_1").change(function () {
+                UploadAboutImg_1(this);
+            });
+            $('#ChangeAbout_1').click(function () {
+                $('#btnAboutImg_1').trigger('click');
+            });
+            function UploadAboutImg_2(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#AboutImg_2').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("#btnAboutImg_2").change(function () {
+                UploadAboutImg_2(this);
+            });
+            $('#ChangeAbout_2').click(function () {
+                $('#btnAboutImg_2').trigger('click');
+            });
+
+            function UploadAboutImg_3(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#AboutImg_3').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("#btnAboutImg_3").change(function () {
+                UploadAboutImg_3(this);
+            });
+            $('#ChangeAbout_3').click(function () {
+                $('#btnAboutImg_3').trigger('click');
+            });
+
+            function UploadAboutImg_4(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#AboutImg_4').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("#btnAboutImg_4").change(function () {
+                UploadAboutImg_4(this);
+            });
+            $('#ChangeAbout_4').click(function () {
+                $('#btnAboutImg_4').trigger('click');
+            });
+
+
+        </script>
+
     </div>
 
-
-    <script type="text/javascript">
-
-        function UploadAboutImg_1(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#AboutImg_1').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#btnAboutImg_1").change(function () {
-            UploadAboutImg_1(this);
-        });
-        $('#ChangeAbout_1').click(function () {
-            $('#btnAboutImg_1').trigger('click');
-        });
-        function UploadAboutImg_2(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#AboutImg_2').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#btnAboutImg_2").change(function () {
-            UploadAboutImg_2(this);
-        });
-        $('#ChangeAbout_2').click(function () {
-            $('#btnAboutImg_2').trigger('click');
-        });
-
-
-
-        function UploadAboutImg_3(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#AboutImg_3').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#btnAboutImg_3").change(function () {
-            UploadAboutImg_3(this);
-        });
-        $('#ChangeAbout_3').click(function () {
-            $('#btnAboutImg_3').trigger('click');
-        });
-
-        function UploadAboutImg_4(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#AboutImg_4').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#btnAboutImg_4").change(function () {
-            UploadAboutImg_4(this);
-        });
-        $('#ChangeAbout_4').click(function () {
-            $('#btnAboutImg_4').trigger('click');
-        });
-
-    </script>
-
-</div>
+</section>

@@ -120,7 +120,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
-        public async Task<ActionResult> EditCategory(string[] category)
+        public async Task<ActionResult> EditCategory(string[] categoryList)
         {
             if (Session["logon"] != null)
             {
@@ -129,7 +129,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 
                 try
                 {                 
-                    RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(memberLogon,category);
+                    RESPONSE__MODEL result = await service.UpdateMemberCategoryProfile(memberLogon,categoryList);
 
                     if (result.STATUS)
                     {
@@ -265,5 +265,79 @@ namespace COACHME.WEB_PRESENT.Controllers
                 return View();
             }
         }
+
+        public async Task<JsonResult> GetListTeacherCategory()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetListTeacherCategory(memberLogon);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }              
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+           
+        }
+        public async Task<JsonResult> GetListAvailableCategory()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetListAvailableCategory(memberLogon);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        public async Task<JsonResult> UpdateMemberCategory(string[] categoryList)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.UpdateMemberCategoryProfile(memberLogon,categoryList);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

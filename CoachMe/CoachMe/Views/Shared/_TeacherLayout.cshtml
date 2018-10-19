@@ -1,13 +1,20 @@
 ﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
+@using System.Web.Optimization
 @{
-    var x = ViewBag.Success;
+    
 
 }
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    
     <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Mitr" rel="stylesheet">
+   
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    
     <title>CoachME เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
 สอนดนตรี ศิลปะ การแสดง เขียนโปรแกรม ทำหุ่นยนต์ การเงิน
 ไม่มีค่าธรรมเนียม ไม่มีค่านายหน้า จบครบในเว็บเดียว</title>
@@ -25,8 +32,8 @@
             }
         });
     </script>*@
-   
-    <link href="https://fonts.googleapis.com/css?family=Kanit|Mitr" rel="stylesheet">
+    
+  
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122822583-3"></script>
     <script>
@@ -37,8 +44,12 @@
         gtag('config', 'UA-122822583-3');
     </script>
 
+   
+  
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="~/AngularController/TeacherController.js"></script>
+  
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/css/teacher/vendors.bundle.css" rel="stylesheet" type="text/css" />
@@ -401,8 +412,8 @@
         });
 
         $('#btnCateCancel').click(function () {
-            $("#CATEGORY").prop("disabled", true);
-            $("#LOCATION").prop("disabled", true);
+            $("#ListCategoryArea").show();
+            $("#DropdownCategory").hide();
 
             $("#btnCateSubmit").hide();
             $("#btnCateCancel").hide();

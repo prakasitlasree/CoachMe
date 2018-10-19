@@ -376,8 +376,8 @@ namespace COACHME.DATASERVICE
                         memberCategory.UPDATED_DATE = DateTime.Now;
                         ctx.MEMBER_CATEGORY.Add(memberCategory);
                     }
-                   
-                                    
+
+
                     //add activity
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
@@ -420,7 +420,7 @@ namespace COACHME.DATASERVICE
 
                 //    var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault()
                 //                                        .MEMBER_TEACH_COURSE.Select(o => o.COURSE_ID).ToArray();
-                
+
                 //    var listStu = await (from a in ctx.MEMBER_REGIS_COURSE
                 //                         join b in ctx.MEMBER_ROLE on a.REGISTER_ID equals b.AUTO_ID
                 //                         join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
@@ -445,7 +445,7 @@ namespace COACHME.DATASERVICE
                 //                         }).ToListAsync(); 
                 //    model.LIST_CUSTOM_MEMBERS = listStu;
                 //    model.MEMBERS = memberProfile;
-                 
+
                 //    var regisCourse = ctx.MEMBER_REGIS_COURSE.Where(o => teachCourse.Contains(o.COURSE_ID))
                 //                                             .Select(o => o.MEMBER_ROLE_ID)
                 //                                             .ToList();
@@ -458,7 +458,7 @@ namespace COACHME.DATASERVICE
                 //                                .Include(x => x.MEMBER_LOGON)
                 //                                .Where(MEMBERS => MEMBERS.MEMBER_ROLE.Any(o => regisCourse.Contains(o.AUTO_ID)))
                 //                                .ToListAsync();
-                 
+
                 //    package = memberProfile.MEMBER_PACKAGE
                 //                                .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
                 //                                .Select(o => o.PACKAGE_NAME).LastOrDefault();
@@ -491,7 +491,7 @@ namespace COACHME.DATASERVICE
                 //    activity.STATUS = resp.STATUS;
                 //    ctx.LOGON_ACTIVITY.Add(activity);
                 //    #endregion
-                 
+
                 //    resp.STATUS = true;
                 //    resp.OUTPUT_DATA = model;
                 //}
@@ -533,7 +533,7 @@ namespace COACHME.DATASERVICE
                             {
                                 var obj = new CUSTOM_MEMBERS();
                                 obj.AUTO_ID = register.REGIS_MEMBER_ROLE_ID;
-                                var student = ctx.MEMBER_ROLE.Where(x => x.AUTO_ID == register.REGIS_MEMBER_ROLE_ID).FirstOrDefault(); 
+                                var student = ctx.MEMBER_ROLE.Where(x => x.AUTO_ID == register.REGIS_MEMBER_ROLE_ID).FirstOrDefault();
                                 obj.PROFILE_IMG_URL = student.MEMBERS.PROFILE_IMG_URL;
                                 obj.STATUS = register.STATUS;
                                 obj.FULLNAME = student.MEMBERS.FULLNAME ?? "";
@@ -550,9 +550,9 @@ namespace COACHME.DATASERVICE
                                 listCustom.Add(obj);
                             }
                         }
-                    } 
-                    model.MEMBERS = memberProfile; 
-                     
+                    }
+                    model.MEMBERS = memberProfile;
+
                     package = memberProfile.MEMBER_PACKAGE
                                                 .Where(x => x.STATUS != "DRAFT" && x.EXPIRE_DATE > DateTime.Now)
                                                 .Select(o => o.PACKAGE_NAME).LastOrDefault();
@@ -806,6 +806,56 @@ namespace COACHME.DATASERVICE
             }
         }
 
+        #region ======================= ANGULAR JS =======================
+        public async Task<RESPONSE__MODEL> GetListTeacherCategory(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    resp.OUTPUT_DATA = await ctx.MEMBER_CATEGORY
+                                                .Where(o => o.MEMBER_ID == dto.AUTO_ID)
+                                                .ToListAsync();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetListAvailableCategory(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    List<string> category = new List<string> { "ดนตรี", "ภาษา", "ธุรกิจและการเงิน", "ศิลปะ", "เทคโนโลยี", "วิชาชีพ/หลักสูตรพิเศษ", "สุขภาพ/ความงาม" };
+                    var memberCategory = await ctx.MEMBER_CATEGORY
+                                                 .Where(o => o.MEMBER_ID == dto.AUTO_ID)
+                                                 .Select(o=>o.NAME)
+                                                 .ToListAsync();
+                    resp.OUTPUT_DATA = category.Where(x => !memberCategory.Contains(x)).ToList();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+        #endregion
 
     }
 }
