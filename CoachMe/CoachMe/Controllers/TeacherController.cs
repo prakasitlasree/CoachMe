@@ -363,7 +363,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
 
         }
-        public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto)
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto )
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             if (Session["logon"] != null)
@@ -387,6 +389,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
         }
+
         public async Task<JsonResult> GetGeography()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -471,7 +474,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 else
                 {
                     resp.STATUS = false;
-                    return RedirectToAction("errorpage", "home");
+                    return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
                 }
             }
             else

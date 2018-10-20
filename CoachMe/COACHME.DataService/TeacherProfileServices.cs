@@ -884,7 +884,7 @@ namespace COACHME.DATASERVICE
                                             AMPHUR_ID = memberProfile.FirstOrDefault().ABOUT,
                                             TEACHING_TYPE= memberProfile.FirstOrDefault().TEACHING_TYPE,
                                             STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL,
-
+                                            LOCATION = memberProfile.FirstOrDefault().LOCATION
                                         });
 
                 }
@@ -899,7 +899,7 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
-
+       
         public async Task<RESPONSE__MODEL> UpdateMemberProfile(CUSTOM_MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -947,6 +947,7 @@ namespace COACHME.DATASERVICE
                     {
                         member.ABOUT = dto.ABOUT;
                     }
+                    member.LOCATION = dto.LOCATION;
                     member.TEACHING_TYPE = dto.TEACHING_TYPE;
                     member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
 
@@ -975,6 +976,7 @@ namespace COACHME.DATASERVICE
                 throw ex;
             }
 
+          
             return resp;
         }
 

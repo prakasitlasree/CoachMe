@@ -32,16 +32,70 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.DATE_OF_BIRTH;
     $scope.SEX;
     $scope.ABOUT;
-   
-    
-    
+    $scope.ABOUT_IMG_1 = "";
+    $scope.ABOUT_IMG_2 = "";
+    $scope.ABOUT_IMG_3 = "";
+    $scope.ABOUT_IMG_4 = "";
+    $scope.ABOUT_IMG = new Array(4);
 
-    $scope.GetComponent = function () {
+
+    $scope.EnableControl = function () {
+        $("#FULLNAME").prop("disabled", false);
+        $("#FIRST_NAME").prop("disabled", false);
+        $("#LAST_NAME").prop("disabled", false);
+        $("#MOBILE").prop("disabled", false);
+        $("#ABOUT").prop("disabled", false);
+        $("#NICKNAME").prop("disabled", false);
+        $("#DATE_OF_BIRTH").prop("disabled", false);
+        $("#SEX").prop("disabled", false);
         $("#LOCATE").prop("disabled", false);
         $("#TEACHING_TYPE").prop("disabled", false);
         $("#STUDENT_LEVEL").prop("disabled", false);
+
+        $("#btnAboutImg_1").prop("disabled", false);
+        $("#AboutImg_1").css('cursor', 'pointer');
+        $("#btnAboutImg_2").prop("disabled", false);
+        $("#AboutImg_2").css('cursor', 'pointer');
+        $("#btnAboutImg_3").prop("disabled", false);
+        $("#AboutImg_3").css('cursor', 'pointer');
+        $("#btnAboutImg_4").prop("disabled", false);
+        $("#AboutImg_4").css('cursor', 'pointer');
+    }
+    $scope.HideButton = function () {
+        $('#btnUpdateSubmit').hide()
+        $('#btnUpdateCancel').hide()
+        $("#FULLNAME").prop("disabled", true);
+        $("#FIRST_NAME").prop("disabled", true);
+        $("#LAST_NAME").prop("disabled", true);
+        $("#MOBILE").prop("disabled", true);
+        $("#ABOUT").prop("disabled", true);
+        $("#NICKNAME").prop("disabled", true);
+        $("#DATE_OF_BIRTH").prop("disabled", true);
+        $("#SEX").prop("disabled", true);
+        $("#ID_CARD").prop("disabled", true);
+
+        $('#editAddress').hide();
+        $('#LOCATE').show();
+        $("#LOCATE").prop("disabled", true);
+        $("#TEACHING_TYPE").prop("disabled", true);
+        $("#STUDENT_LEVEL").prop("disabled", true);
+
+        $("#btnAboutImg_1").prop("disabled", true);
+        $("#AboutImg_1").css('cursor', 'pointer');
+        $("#btnAboutImg_2").prop("disabled", true);
+        $("#AboutImg_2").css('cursor', 'pointer');
+        $("#btnAboutImg_3").prop("disabled", true);
+        $("#AboutImg_3").css('cursor', 'pointer');
+        $("#btnAboutImg_4").prop("disabled", true);
+        $("#AboutImg_4").css('cursor', 'pointer');
+        $("#CATEGORY").prop("disabled", true);
+        $("#LOCATION").prop("disabled", true);
+    }
+
+    $scope.GetComponent = function () {
+        $scope.EnableControl();
         $('#editAddress').show();
-       
+
         $http({
             url: "http://localhost:1935/teacher/GetGeography",
             method: "GET",
@@ -60,7 +114,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         debugger;
         var html = "";
         var itemsLength = Object.keys($scope.ListGeography).length;
-        
+
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListGeography[i].GEO_ID + ">" + $scope.ListGeography[i].GEO_NAME + "</option>";
         }
@@ -86,7 +140,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $('#province').empty();
         debugger;
         var html = "";
-       
+
         var itemsLength = Object.keys($scope.ListProvince).length;
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListProvince[i].PROVINCE_ID + ">" + $scope.ListProvince[i].PROVINCE_NAME + "</option>";
@@ -113,7 +167,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $('#amphur').empty();
         debugger;
         var html = "";
-       
+
         var itemsLength = Object.keys($scope.ListAmphur).length;
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListAmphur[i].AMPHUR_ID + ">" + $scope.ListAmphur[i].AMPHUR_NAME + "</option>";
@@ -156,9 +210,17 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $.LoadingOverlay("hide");
     };
 
+  
+    
     $scope.BindingProfile = function () {
-        $scope.TEACHING_TYPE = $scope.TeacherProfile[0].TEACHING_TYPE
-        $scope.STUDENT_LEVEL = $scope.TeacherProfile[0].STUDENT_LEVEL
+        debugger;
+       
+        $("#TEACHING_TYPE").val($scope.TeacherProfile[0].TEACHING_TYPE);
+        $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
+        $("#LOCATE").val($scope.TeacherProfile[0].LOCATION);
+        //$scope.TEACHING_TYPE = $scope.TeacherProfile[0].TEACHING_TYPE
+        //$scope.STUDENT_LEVEL = $scope.TeacherProfile[0].STUDENT_LEVEL
+
         $scope.FULLNAME = $scope.TeacherProfile[0].FULLNAME
         $scope.FIRST_NAME = $scope.TeacherProfile[0].FIRST_NAME
         $scope.LAST_NAME = $scope.TeacherProfile[0].LAST_NAME
@@ -186,13 +248,11 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.UpdateMemberProfile = function () {
         $.LoadingOverlay("show");
-        var cboxes = document.getElementsByName('about_img');
-       
-        var len = cboxes.length;
+
         debugger;
         $http({
-            url: "http://localhost:1935/teacher/UpdateMemberProfile",
-            method: "GET",
+            url: "/teacher/UpdateMemberProfile",
+            method: "POST",
             params: {
                 FULLNAME: $scope.FULLNAME,
                 FIRST_NAME: $scope.FIRST_NAME,
@@ -200,55 +260,31 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 MOBILE: $scope.MOBILE,
                 NICKNAME: $scope.NICKNAME,
                 ABOUT: $scope.ABOUT,
-                LOCATION:$scope.LOCATION,
+                LOCATION: $scope.LOCATION,
                 AMPHUR_ID: $scope.amphurID,
-                TEACHING_TYPE : $scope.TEACHING_TYPE,
-                STUDENT_LEVEL : $scope.STUDENT_LEVEL
-                
+                TEACHING_TYPE: $('#TEACHING_TYPE option:selected').val(),
+                STUDENT_LEVEL: $('#STUDENT_LEVEL option:selected').val(),
+
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS == true) {
-                $scope.init();
-                $scope.HideButton();
-                //$('#btnUpdateSubmitImg').trigger('click')
-               
+                if ($scope.ABOUT_IMG_1 != "" || $scope.ABOUT_IMG_2 != "" || $scope.ABOUT_IMG_3 != "" || $scope.ABOUT_IMG_4 != "") {
+                    $('#btnUpdateSubmitImg').trigger('click')
+                }
+                else {
+                    $scope.init();
+                    $scope.HideButton();
+                }
+
+                
             }
-           
+
         });
         $.LoadingOverlay("hide");
     }
 
-    $scope.HideButton = function () {
-        $('#btnUpdateSubmit').hide()
-        $('#btnUpdateCancel').hide()
-        $("#FULLNAME").prop("disabled", true);
-        $("#FIRST_NAME").prop("disabled", true);
-        $("#LAST_NAME").prop("disabled", true);
-        $("#MOBILE").prop("disabled", true);
-        $("#ABOUT").prop("disabled", true);
-        $("#NICKNAME").prop("disabled", true);
-        $("#DATE_OF_BIRTH").prop("disabled", true);
-        $("#SEX").prop("disabled", true);
-        $("#ID_CARD").prop("disabled", true);
-
-        $('#editAddress').hide();
-        $('#LOCATE').show();
-        $("#LOCATE").prop("disabled", true);
-        $("#TEACHING_TYPE").prop("disabled", true);
-        $("#STUDENT_LEVEL").prop("disabled", true);
-
-        $("#btnAboutImg_1").prop("disabled", true);
-        $("#AboutImg_1").css('cursor', 'pointer');
-        $("#btnAboutImg_2").prop("disabled", true);
-        $("#AboutImg_2").css('cursor', 'pointer');
-        $("#btnAboutImg_3").prop("disabled", true);
-        $("#AboutImg_3").css('cursor', 'pointer');
-        $("#btnAboutImg_4").prop("disabled", true);
-        $("#AboutImg_4").css('cursor', 'pointer');
-        $("#CATEGORY").prop("disabled", true);
-        $("#LOCATION").prop("disabled", true);
-    }
+   
 
     $scope.renderInnerHtml = function () {
         debugger;
@@ -348,6 +384,55 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $.LoadingOverlay("hide");
     }
 
+
+    $scope.aboutImg1_file = function () {
+        debugger;
+        var f = document.getElementById('btnAboutImg_1').files[0],
+            r = new FileReader();
+        r.onloadend = function (e) {
+            $scope.ABOUT_IMG_1 = e.target.result.toString().split(",")[1];
+        }
+        r.readAsDataURL(f);
+        debugger;
+    };
+
+    $scope.aboutImg2_file = function () {
+        debugger;
+        var f = document.getElementById('btnAboutImg_2').files[0],
+            r = new FileReader();
+        r.onloadend = function (e) {
+            $scope.ABOUT_IMG_2 = e.target.result.toString().split(",")[1];
+        }
+        r.readAsDataURL(f);
+        debugger;
+    };
+
+    $scope.aboutImg3_file = function () {
+        debugger;
+        var f = document.getElementById('btnAboutImg_3').files[0],
+            r = new FileReader();
+        r.onloadend = function (e) {
+            $scope.ABOUT_IMG_3 = e.target.result.toString().split(",")[1];
+        }
+        r.readAsDataURL(f);
+        debugger;
+    };
+
+    $scope.aboutImg4_file = function () {
+        debugger;
+        var f = document.getElementById('btnAboutImg_4').files[0],
+            r = new FileReader();
+        r.onloadend = function (e) {
+            $scope.ABOUT_IMG_4 = e.target.result.toString().split(",")[1];
+        }
+        r.readAsDataURL(f);
+        debugger;
+    };
+
+
+
 });
+
+
 
 

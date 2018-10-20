@@ -170,6 +170,40 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+        public async Task<JsonResult> GetListProvince()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await commonService.GetListProvinceWithID();
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+           
+        }
 
+        public async Task<JsonResult> GetListAmphur(int provinceID)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+           
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await commonService.GetListAmphur(provinceID);
+                if (resp.STATUS)
+                {
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+           
+        }
     }
 }

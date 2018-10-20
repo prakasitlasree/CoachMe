@@ -138,7 +138,7 @@
                         </div>
 
                     </div>
-                    <form returnurl="" action="/teacher/UpdateMemberProfileAboutImg" enctype="multipart/form-data" method="post" class="ng-pristine ng-valid">
+                    <form returnurl="" id="profileForm" action="/teacher/UpdateMemberProfileAboutImg" enctype="multipart/form-data" method="post" class="ng-pristine ng-valid">
                         <div class="tab-content">
                             <div class="tab-pane active" id="m_user_profile_tab_1">
                                 <div class="m-form m-form--fit m-form--label-align-right">
@@ -164,7 +164,7 @@
                                                     }*@
                                             </div>
                                         </div>
-                                         
+
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
                                             <div class="col-7">
@@ -206,10 +206,10 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
                                             <div class="col-7">
-                                                <input type='file' name="about_img" id="btnAboutImg_1" accept="image/*" style="display:none" disabled />
-                                                <input type='file' name="about_img" id="btnAboutImg_2" accept="image/*" style="display:none" disabled />
-                                                <input type='file' name="about_img" id="btnAboutImg_3" accept="image/*" style="display:none" disabled />
-                                                <input type='file' name="about_img" id="btnAboutImg_4" accept="image/*" style="display:none" disabled />
+                                                <input type='file' onchange="angular.element(this).scope().aboutImg1_file(this)" name="about_img" id="btnAboutImg_1" accept="image/*" style="display:none" disabled />
+                                                <input type='file' onchange="angular.element(this).scope().aboutImg2_file(this)" name="about_img" id="btnAboutImg_2" accept="image/*" style="display:none" disabled />
+                                                <input type='file' onchange="angular.element(this).scope().aboutImg3_file(this)" name="about_img" id="btnAboutImg_3" accept="image/*" style="display:none" disabled />
+                                                <input type='file' onchange="angular.element(this).scope().aboutImg4_file(this)" name="about_img" id="btnAboutImg_4" accept="image/*" style="display:none" disabled />
                                                 <a id="ChangeAbout_1">
                                                     <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
                                                 </a>
@@ -227,7 +227,6 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
                                             <div class="col-7">
-                                                
                                                 <input class="form-control m-input m-input--pill" id="MOBILE" ng-model="MOBILE" ng-value="MOBILE" disabled>
                                             </div>
                                         </div>
@@ -238,22 +237,15 @@
                                                 <div class="row" id="editAddress" style="display:none">
                                                     <div class="col-4">
                                                         <p>ภาค</p>
-                                                        <select class="form-control m-input m-input--pill" id="geography" ng-model="geography" ng-change="GetProvince()">
-                                                            
-
-                                                        </select>
+                                                        <select class="form-control m-input m-input--pill" id="geography" ng-model="geography" ng-change="GetProvince()"></select>
                                                     </div>
                                                     <div class="col-4">
                                                         <p>จังหวัด</p>
-                                                        <select class="form-control m-input m-input--pill" id="province" ng-model="provinceID" ng-change="GetAmphur()">
-                                                          
-                                                        </select>
+                                                        <select class="form-control m-input m-input--pill" id="province" ng-model="provinceID" ng-change="GetAmphur()"></select>
                                                     </div>
                                                     <div class="col-4">
                                                         <p>อำเภอ</p>
-                                                        <select class="form-control m-input m-input--pill" id="amphur" ng-model="amphurID">
-
-                                                        </select>
+                                                        <select class="form-control m-input m-input--pill" id="amphur" ng-model="amphurID"></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -268,21 +260,21 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ประเภทการเรียน</label>
                                             <div class="col-7">
-                                                <select class="form-control m-input  m-input--pill" name="MEMBERS.TEACHING_TYPE" ng-model="TEACHING_TYPE" id="TEACHING_TYPE" disabled>
-                                                    <option value="1">เรียนเดี่ยว</option>
-                                                    <option value="2">เรียนกลุ่ม</option>
-                                                    <option value="3">เรียนเดี่ยว,เรียนกลุ่ม</option>
+                                                <select class="form-control m-input  m-input--pill"  id="TEACHING_TYPE" disabled>
+                                                    <option value=1>เรียนเดี่ยว</option>
+                                                    <option value=2>เรียนกลุ่ม</option>
+                                                    <option value=3>เรียนเดี่ยว,เรียนกลุ่ม</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ระดับของผู้เรียน</label>
                                             <div class="col-7">
-                                                <select class="form-control m-input  m-input--pill" name="MEMBERS.STUDENT_LEVEL" ng-model="STUDENT_LEVEL"  id="STUDENT_LEVEL" disabled>
-                                                    <option value="1">เริ่มต้น</option>
-                                                    <option value="2">ปานกลาง</option>
-                                                    <option value="3">ขั้นสูง</option>
-                                                    <option value="4">ทุกระดับผู้เรียน</option>
+                                                <select class="form-control m-input  m-input--pill"   id="STUDENT_LEVEL" disabled>
+                                                    <option value=1>เริ่มต้น</option>
+                                                    <option value=2>ปานกลาง</option>
+                                                    <option value=3>ขั้นสูง</option>
+                                                    <option value=4>ทุกระดับผู้เรียน</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -336,7 +328,7 @@
                     <div class="modal-footer">
                         <button type="button" ng-click="SaveMemberCategory()" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn"> Save </button>
                         <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">Close</button>
-                        
+
                     </div>
                 </div>
             </div>
@@ -345,6 +337,8 @@
 
 
         <script type="text/javascript">
+
+
 
             function UploadAboutImg_1(input) {
 

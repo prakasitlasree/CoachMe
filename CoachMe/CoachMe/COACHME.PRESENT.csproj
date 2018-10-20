@@ -216,6 +216,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AngularController\SearchTeacherController.js" />
     <Content Include="AngularController\TeacherController.js" />
     <Content Include="Content\asset\favicon.ico" />
     <Content Include="Content\asset\style.bundle.css" />

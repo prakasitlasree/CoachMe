@@ -22,6 +22,10 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string SEX { get; set; }
         public Nullable<int> AGE { get; set; }
         public string ABOUT { get; set; }
+        public string ABOUT_IMG_1 { get; set; }
+        public string ABOUT_IMG_2 { get; set; }
+        public string ABOUT_IMG_3 { get; set; }
+        public string ABOUT_IMG_4 { get; set; }
         public string LOCATION { get; set; }
         public string CATEGORY { get; set; }
         public string PROFILE_IMG_URL { get; set; }
@@ -40,7 +44,12 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string COURSE_BANNER { get; set; }
         public string ROLE { get; set; }
 
+        
         public List<int> LIST_MEMBER_CETEGORY { get; set; }
         public List<string> LIST_STUDENT_COMMENT { get; set; }
+    }
+    public class ABOUT_IMG
+    {
+        public string VALUE { get; set; }
     }
 }

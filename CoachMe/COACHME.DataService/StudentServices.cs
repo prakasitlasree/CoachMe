@@ -198,12 +198,34 @@ namespace COACHME.DATASERVICE
                         dto.SEARCH_TEACHER_MODEL.TEACH_GENDER = gender.TEACH_GENDER;
 
                     }
+                    if (dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE == null)
+                    {
+                        var TEACHING_TYPE = new SEARCH_TEACHER_MODEL();
+                        TEACHING_TYPE.TEACHING_TYPE = new List<int?> { 1, 2 };
+
+                        dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE = TEACHING_TYPE.TEACHING_TYPE;
+
+                    }
+                    if (dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL == null)
+                    {
+                        var STUDENT_LEVEL = new SEARCH_TEACHER_MODEL();
+                        STUDENT_LEVEL.STUDENT_LEVEL = new List<int?> { 1,2,3,4 };
+
+                        dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL = STUDENT_LEVEL.STUDENT_LEVEL;
+
+                    }
                     var listStu = await (from a in ctx.MEMBER_TEACH_COURSE
                                          join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
                                          join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                          join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
                                          join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                         where dto.SEARCH_TEACHER_MODEL.TEACH_GENDER.Contains(c.SEX) && dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(d.NAME) && (b.ROLE_ID == 1 && f.STATUS == 2)
+                                         where 
+                                         dto.SEARCH_TEACHER_MODEL.TEACH_GENDER.Contains(c.SEX) 
+                                         && dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(d.NAME)
+                                        // && dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE.Contains(c.TEACHING_TYPE)
+                                        // && dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL.Contains(c.STUDENT_LEVEL)
+                                         && (b.ROLE_ID == 1 && f.STATUS == 2)
+
                                          select new CUSTOM_MEMBERS
                                          {
                                              AUTO_ID = c.AUTO_ID,
@@ -354,12 +376,34 @@ namespace COACHME.DATASERVICE
                         dto.SEARCH_TEACHER_MODEL.TEACH_GENDER = gender.TEACH_GENDER;
 
                     }
+                    if (dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE == null)
+                    {
+                        var TEACHING_TYPE = new SEARCH_TEACHER_MODEL();
+                        TEACHING_TYPE.TEACHING_TYPE = new List<int?> { 1, 2 };
+
+                        dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE = TEACHING_TYPE.TEACHING_TYPE;
+
+                    }
+                    if (dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL == null)
+                    {
+                        var STUDENT_LEVEL = new SEARCH_TEACHER_MODEL();
+                        STUDENT_LEVEL.STUDENT_LEVEL = new List<int?> { 1, 2, 3, 4 };
+
+                        dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL = STUDENT_LEVEL.STUDENT_LEVEL;
+
+                    }
+
                     var listStu = await (from a in ctx.MEMBER_TEACH_COURSE
                                          join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
                                          join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
                                          join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
                                          join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                         where dto.SEARCH_TEACHER_MODEL.TEACH_GENDER.Contains(c.SEX) && dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(d.NAME) && (b.ROLE_ID == 1 && f.STATUS == 2) /*&& !memberRegisCourse.Contains(d.AUTO_ID)*/
+                                         where 
+                                         dto.SEARCH_TEACHER_MODEL.TEACH_GENDER.Contains(c.SEX) 
+                                         && dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(d.NAME)
+                                         && dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE.Contains(c.TEACHING_TYPE)
+                                         && dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL.Contains(c.STUDENT_LEVEL)
+                                         && (b.ROLE_ID == 1 && f.STATUS == 2) 
                                          select new CUSTOM_MEMBERS
                                          {
                                              AUTO_ID = c.AUTO_ID,
