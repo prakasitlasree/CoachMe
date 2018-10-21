@@ -114,14 +114,14 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> GetMemberProfileFromAutoID(MEMBERS dto)
+        public  RESPONSE__MODEL GetMemberProfileFromAutoID(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memberProfile = await ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    var memberProfile = ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -878,10 +878,10 @@ namespace COACHME.DATASERVICE
                                             LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME,
                                             MOBILE = memberProfile.FirstOrDefault().MOBILE,
                                             NICKNAME = memberProfile.FirstOrDefault().NICKNAME,
-                                            DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.ToString(),
+                                            DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.Value.ToShortDateString(),
                                             SEX = memberProfile.FirstOrDefault().SEX,
                                             ABOUT = memberProfile.FirstOrDefault().ABOUT,
-                                            AMPHUR_ID = memberProfile.FirstOrDefault().ABOUT,
+                                            AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID,
                                             TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE,
                                             STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL,
                                             LOCATION = memberProfile.FirstOrDefault().LOCATION
@@ -907,7 +907,9 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBERS
+                                          .Include(s=>s.MEMBER_LOGON)
+                                          .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
                     #region =====Profile=====
                     //Update Profile
@@ -947,7 +949,12 @@ namespace COACHME.DATASERVICE
                     {
                         member.ABOUT = dto.ABOUT;
                     }
+                    if(dto.SEX_RADIO != null)
+                    {
+                        member.SEX = dto.SEX_RADIO;
+                    }
                     member.LOCATION = dto.LOCATION;
+                    member.AMPHUR_ID = dto.AMPHUR_ID;
                     member.TEACHING_TYPE = dto.TEACHING_TYPE;
                     member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
 
@@ -965,6 +972,7 @@ namespace COACHME.DATASERVICE
                     #endregion
 
                     await ctx.SaveChangesAsync();
+                    
                     resp.STATUS = true;
                 }
 
@@ -996,7 +1004,7 @@ namespace COACHME.DATASERVICE
                         string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
@@ -1071,7 +1079,7 @@ namespace COACHME.DATASERVICE
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
-                    resp.OUTPUT_DATA = member;
+                   
                 }
 
 
@@ -1162,8 +1170,8 @@ namespace COACHME.DATASERVICE
                 {
                     using (var ctx = new COACH_MEEntities())
                     {
-
-                        var ampher = await ctx.AMPHUR.Where(o => o.AMPHUR_ID == dto.AMPHUR_ID).FirstOrDefaultAsync();
+                        var memberAmpherID = await ctx.MEMBERS.Where(o => o.AUTO_ID == dto.AUTO_ID).Select(o => o.AMPHUR_ID).FirstOrDefaultAsync();
+                        var ampher = await ctx.AMPHUR.Where(o => o.AMPHUR_ID == memberAmpherID).FirstOrDefaultAsync();
                         var province = await ctx.PROVINCE.Where(o => o.PROVINCE_ID == ampher.PROVINCE_ID).FirstOrDefaultAsync();
                         var geography = await ctx.GEOGRAPHY.Where(o => o.GEO_ID == ampher.GEO_ID).FirstOrDefaultAsync();
                         List<string> address = new List<string>();

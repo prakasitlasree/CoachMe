@@ -14,14 +14,14 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.ListGeography = [];
     $scope.ListProvince = [];
     $scope.ListAmphur = [];
-    $scope.address = [];
+    $scope.address = [null];
 
     $scope.geography
     $scope.provinceID
     $scope.amphurID
     $scope.TEACHING_TYPE
     $scope.STUDENT_LEVEL
-
+    $scope.SEX_RADIO
 
     $scope.TEACHING_TYPE;
     $scope.STUDENT_LEVEL;
@@ -55,6 +55,9 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#editAddress").show();
         $("#ADDRESS").hide();
 
+        $("#SEX_RADIO").show();
+        $("#SEX").hide();
+
         $("#btnAboutImg_1").prop("disabled", false);
         $("#AboutImg_1").css('cursor', 'pointer');
         $("#btnAboutImg_2").prop("disabled", false);
@@ -67,6 +70,11 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.HideButton = function () {
         $('#btnUpdateSubmit').hide()
         $('#btnUpdateCancel').hide()
+
+        $("#SEX_RADIO").hide();
+        $("#SEX_RADIO_BTN").prop("disabled", true);
+        $("#SEX").show();
+
         $("#FULLNAME").prop("disabled", true);
         $("#FIRST_NAME").prop("disabled", true);
         $("#LAST_NAME").prop("disabled", true);
@@ -187,17 +195,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.init = function () {
         debugger;
         $.LoadingOverlay("show");
-        $http({
-            url: "http://localhost:1935/teacher/GetListTeacherCategory",
-            method: "GET",
-            //params: { OrderID: $scope.orderId }
-        }).then(function (response) {
-            console.log(response.data.OUTPUT_DATA)
-            if (response.data.STATUS == true) {
-                $scope.ListCourse = response.data.OUTPUT_DATA;
-                $scope.renderInnerHtml();
-            }
-        });
+       
 
         $http({
             url: "http://localhost:1935/teacher/GetTeacherProfile",
@@ -208,20 +206,34 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
             if (response.data.STATUS == true) {
                 $scope.TeacherProfile = response.data.OUTPUT_DATA;
                 $scope.BindingProfile();
+                $http({
+                    url: "http://localhost:1935/teacher/GetAdress",
+                    method: "GET",
+                    //params: { OrderID: $scope.orderId }
+                }).then(function (response) {
+                    console.log(response.data.OUTPUT_DATA)
+                    if (response.data.STATUS == true) {
+                        $scope.address = response.data.OUTPUT_DATA;
+                        if ($scope.address[0] != null) {
+                            var address = "จังหวัด : " + $scope.address[1] + " อำเภอ : " + $scope.address[0]
+                            $("#ADDRESS").val(address);
+                        }
+                        $http({
+                            url: "http://localhost:1935/teacher/GetListTeacherCategory",
+                            method: "GET",
+                        }).then(function (response) {
+                            console.log(response.data.OUTPUT_DATA)
+                            if (response.data.STATUS == true) {
+                                $scope.ListCourse = response.data.OUTPUT_DATA;
+                                $scope.renderInnerHtml();
+                            }
+                        });
+                    }
+                });
             }
         });
 
-        $http({
-            url: "http://localhost:1935/teacher/GetAdress",
-            method: "GET",
-            //params: { OrderID: $scope.orderId }
-        }).then(function (response) {
-            console.log(response.data.OUTPUT_DATA)
-            if (response.data.STATUS == true) {
-                $scope.address = response.data.OUTPUT_DATA;
-
-            }
-        });
+        
 
 
         $.LoadingOverlay("hide");
@@ -230,11 +242,12 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
 
     $scope.BindingProfile = function () {
+
         debugger;
-      
-        var adress = "จังหวัด : " + $scope.address[1] + " อำเภอ : " + $scope.address[0]
-        $("#ADDRESS").append(address);
-        
+
+
+
+
 
         $("#TEACHING_TYPE").val($scope.TeacherProfile[0].TEACHING_TYPE);
         $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
@@ -271,7 +284,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         debugger;
         $http({
             url: "/teacher/UpdateMemberProfile",
-            method: "POST",
+            method: "GET",
             params: {
                 FULLNAME: $scope.FULLNAME,
                 FIRST_NAME: $scope.FIRST_NAME,
@@ -283,7 +296,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 AMPHUR_ID: $scope.amphurID,
                 TEACHING_TYPE: $('#TEACHING_TYPE option:selected').val(),
                 STUDENT_LEVEL: $('#STUDENT_LEVEL option:selected').val(),
-
+                SEX_RADIO:$scope.SEX_RADIO
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)

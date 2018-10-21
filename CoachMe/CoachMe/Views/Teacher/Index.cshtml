@@ -200,7 +200,16 @@
                                             <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
                                             <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="SEX" ng-model="SEX" ng-value="SEX" disabled>
-
+                                                <div class="m-radio-inline" id="SEX_RADIO" style="display:none">
+                                                    <label class="m-radio">
+                                                        <input type="radio"id="SEX_RADIO_BTN" name="SEX_RADIO" ng-model="SEX_RADIO" value="1"> ชาย
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="m-radio">
+                                                        <input type="radio"id="SEX_RADIO_BTN" name="SEX_RADIO" ng-model="SEX_RADIO" value="2"> หญิง
+                                                        <span></span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -234,9 +243,9 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ที่อยู่</label>
                                             <div class="col-7">
-                                                <div class="row">
-                                                    <input class="form-control m-input m-input--pill" id="ADDRESS" disabled>
-                                                </div>
+
+                                                <input class="form-control m-input m-input--pill" id="ADDRESS" disabled>
+
                                                 <div class="row" id="editAddress" style="display:none">
                                                     <div class="col-4">
                                                         <p>ภาค</p>
@@ -289,7 +298,7 @@
 
                                         <div class="col-lg-12 m--align-center">
                                             <button type="button" style="display:none" id="btnUpdateSubmit" ng-click="UpdateMemberProfile()" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn"> Save </button>
-                                            <button type="button" style="display:none" id="btnUpdateCancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Close </button>
+                                            <button type="button" style="display:none" id="btnUpdateCancel" ng-click="HideButton()" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Close </button>
                                             <button type="submit" id="btnUpdateSubmitImg" style="display:none">บันทึก</button>
                                         </div>
                                     </div>

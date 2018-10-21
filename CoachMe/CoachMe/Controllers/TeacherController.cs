@@ -19,8 +19,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
-                var memeber = (MEMBERS)Session["logon"];
-                model.MEMBERS = memeber;
+                var member = (MEMBERS)Session["logon"];
+                member = service.GetMemberProfileFromAutoID(member).OUTPUT_DATA;
+                model.MEMBERS = member;
                 return View(model);
             }
             else
@@ -361,7 +362,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
 
         }
-        [HttpPost]
+        //[HttpPost]
         public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto )
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -372,6 +373,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp = await service.UpdateMemberProfile(dto);
                 if (resp.STATUS)
                 {
+                    
                     return Json(resp, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -490,10 +492,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp = await service.UpdateMemberProfileAboutImg(memberLogon, about_img);
                 if (resp.STATUS)
                 {
-                    MEMBERS param = new MEMBERS();
-                    param = resp.OUTPUT_DATA;
-                    Session["logon"] = null;
-                    Session["logon"] = param;
+                    
                     return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
                 }
                 else
