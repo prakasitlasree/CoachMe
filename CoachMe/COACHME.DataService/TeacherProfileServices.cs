@@ -953,6 +953,10 @@ namespace COACHME.DATASERVICE
                     {
                         member.SEX = dto.SEX_RADIO;
                     }
+                    if(dto.DATE_OF_BIRTH_TEXT != null)
+                    {
+                        member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH_TEXT);
+                    }
                     member.LOCATION = dto.LOCATION;
                     member.AMPHUR_ID = dto.AMPHUR_ID;
                     member.TEACHING_TYPE = dto.TEACHING_TYPE;

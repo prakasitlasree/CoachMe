@@ -296,7 +296,9 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 AMPHUR_ID: $scope.amphurID,
                 TEACHING_TYPE: $('#TEACHING_TYPE option:selected').val(),
                 STUDENT_LEVEL: $('#STUDENT_LEVEL option:selected').val(),
-                SEX_RADIO:$scope.SEX_RADIO
+                SEX_RADIO: $scope.SEX_RADIO,
+                DATE_OF_BIRTH_TEXT: $scope.DATE_OF_BIRTH_TEXT
+                
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
