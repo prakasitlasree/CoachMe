@@ -13,9 +13,10 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string FIRST_NAME { get; set; }
         public string LAST_NAME { get; set; }
         public string MOBILE { get; set; }
-        public string AMPHUR_ID { get; set; }
+        public int? AMPHUR_ID { get; set; }
         public Nullable<System.DateTime> DATE_OF_BIRTH { get; set; }
         public string DATE_OF_BIRTH_TEXT { get; set; }
+        public string SEX_RADIO { get; set; }
         public string ID_CARD { get; set; }
         public int? TEACHING_TYPE { get; set; }
         public int? STUDENT_LEVEL { get; set; }

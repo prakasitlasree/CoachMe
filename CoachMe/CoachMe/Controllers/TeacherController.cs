@@ -19,8 +19,9 @@ namespace COACHME.WEB_PRESENT.Controllers
             {
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
-                var memeber = (MEMBERS)Session["logon"];
-                model.MEMBERS = memeber;
+                var member = (MEMBERS)Session["logon"];
+                member = service.GetMemberProfileFromAutoID(member).OUTPUT_DATA;
+                model.MEMBERS = member;
                 return View(model);
             }
             else
@@ -38,8 +39,6 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp = await service.UpdateProfilePic(profileImage, dto.MEMBERS);
                 ViewBag.Message = "File Uploaded Successfully!!";
                 MEMBERS param = resp.OUTPUT_DATA;
-
-                Session["logon"] = null;
                 Session["logon"] = param;
                 return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
             }
@@ -363,8 +362,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
 
         }
-
-        [HttpPost]
+        //[HttpPost]
         public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto )
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -373,6 +371,31 @@ namespace COACHME.WEB_PRESENT.Controllers
                 var memberLogon = (MEMBERS)Session["logon"];
                 dto.AUTO_ID = memberLogon.AUTO_ID;
                 resp = await service.UpdateMemberProfile(dto);
+                if (resp.STATUS)
+                {
+                    
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    resp.STATUS = false;
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public async Task<JsonResult> GetAdress()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            if (Session["logon"] != null)
+            {
+                
+                var memberLogon = (MEMBERS)Session["logon"];
+                resp = await service.GetMemberAdress(memberLogon);
                 if (resp.STATUS)
                 {
                     return Json(resp, JsonRequestBehavior.AllowGet);
@@ -388,8 +411,8 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp.STATUS = false;
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
-        }
 
+        }
         public async Task<JsonResult> GetGeography()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -469,6 +492,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp = await service.UpdateMemberProfileAboutImg(memberLogon, about_img);
                 if (resp.STATUS)
                 {
+                    
                     return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
                 }
                 else

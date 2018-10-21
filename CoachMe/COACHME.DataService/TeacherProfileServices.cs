@@ -114,14 +114,14 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> GetMemberProfileFromAutoID(MEMBERS dto)
+        public  RESPONSE__MODEL GetMemberProfileFromAutoID(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memberProfile = await ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    var memberProfile = ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -149,7 +149,7 @@ namespace COACHME.DATASERVICE
                     string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//";
                     #endregion
                     #region ==== ROCK PATH ====
-                    myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
+                    //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
                     // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
@@ -875,14 +875,14 @@ namespace COACHME.DATASERVICE
                                             AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
                                             FULLNAME = memberProfile.FirstOrDefault().FULLNAME,
                                             FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME,
-                                            LAST_NAME =  memberProfile.FirstOrDefault().LAST_NAME,
+                                            LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME,
                                             MOBILE = memberProfile.FirstOrDefault().MOBILE,
                                             NICKNAME = memberProfile.FirstOrDefault().NICKNAME,
-                                            DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.ToString(),
+                                            DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.Value.ToShortDateString(),
                                             SEX = memberProfile.FirstOrDefault().SEX,
                                             ABOUT = memberProfile.FirstOrDefault().ABOUT,
-                                            AMPHUR_ID = memberProfile.FirstOrDefault().ABOUT,
-                                            TEACHING_TYPE= memberProfile.FirstOrDefault().TEACHING_TYPE,
+                                            AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID,
+                                            TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE,
                                             STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL,
                                             LOCATION = memberProfile.FirstOrDefault().LOCATION
                                         });
@@ -899,7 +899,7 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
-       
+
         public async Task<RESPONSE__MODEL> UpdateMemberProfile(CUSTOM_MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -907,8 +907,10 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                   
+                    var member = await ctx.MEMBERS
+                                          .Include(s=>s.MEMBER_LOGON)
+                                          .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+
                     #region =====Profile=====
                     //Update Profile
                     if (dto.FULLNAME != null)
@@ -947,7 +949,16 @@ namespace COACHME.DATASERVICE
                     {
                         member.ABOUT = dto.ABOUT;
                     }
+                    if(dto.SEX_RADIO != null)
+                    {
+                        member.SEX = dto.SEX_RADIO;
+                    }
+                    if(dto.DATE_OF_BIRTH_TEXT != null)
+                    {
+                        member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH_TEXT);
+                    }
                     member.LOCATION = dto.LOCATION;
+                    member.AMPHUR_ID = dto.AMPHUR_ID;
                     member.TEACHING_TYPE = dto.TEACHING_TYPE;
                     member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
 
@@ -965,9 +976,10 @@ namespace COACHME.DATASERVICE
                     #endregion
 
                     await ctx.SaveChangesAsync();
+                    
                     resp.STATUS = true;
                 }
-               
+
 
             }
             catch (Exception ex)
@@ -976,7 +988,7 @@ namespace COACHME.DATASERVICE
                 throw ex;
             }
 
-          
+
             return resp;
         }
 
@@ -1056,7 +1068,7 @@ namespace COACHME.DATASERVICE
                     }
                     #endregion
 
-                    #endregion
+
                     //add activity
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
@@ -1071,6 +1083,7 @@ namespace COACHME.DATASERVICE
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
+                   
                 }
 
 
@@ -1113,7 +1126,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     resp.OUTPUT_DATA = await ctx.PROVINCE
-                                                .Where(o=>o.GEO_ID == geoID)
+                                                .Where(o => o.GEO_ID == geoID)
                                                 .ToListAsync();
                 }
                 resp.STATUS = true;
@@ -1151,5 +1164,41 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
+
+        public async Task<RESPONSE__MODEL> GetMemberAdress(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                if (dto.AMPHUR_ID != null)
+                {
+                    using (var ctx = new COACH_MEEntities())
+                    {
+                        var memberAmpherID = await ctx.MEMBERS.Where(o => o.AUTO_ID == dto.AUTO_ID).Select(o => o.AMPHUR_ID).FirstOrDefaultAsync();
+                        var ampher = await ctx.AMPHUR.Where(o => o.AMPHUR_ID == memberAmpherID).FirstOrDefaultAsync();
+                        var province = await ctx.PROVINCE.Where(o => o.PROVINCE_ID == ampher.PROVINCE_ID).FirstOrDefaultAsync();
+                        var geography = await ctx.GEOGRAPHY.Where(o => o.GEO_ID == ampher.GEO_ID).FirstOrDefaultAsync();
+                        List<string> address = new List<string>();
+                        address.Add(ampher.AMPHUR_NAME);
+                        address.Add(province.PROVINCE_NAME);
+                        address.Add(geography.GEO_NAME);
+                        resp.OUTPUT_DATA = address;
+
+                    }
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        #endregion
+
     }
 }

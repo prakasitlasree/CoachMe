@@ -91,8 +91,9 @@
                                 <div class="m-widget1__item">
                                     <div class="row m-row--no-padding align-items-center">
                                         <label for="example-text-input" class="col-12 col-form-label m-widget1__title">สถานที่สะดวกสอน</label>
-                                        @Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
-                                        @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
+                                        @*@Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
+                                            @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
+                                        <textarea class="form-control m-input m-input--pill" id="LOCATE" rows="3" cols="20" ng-model="LOCATION" ng-value="LOCATION" disabled></textarea>
 
                                     </div>
                                 </div>
@@ -103,10 +104,10 @@
 
                                     <div class="row">
 
-                                        <div class="col-12">
-                                            <button type="submit" style="display:none" id="btnCateSubmit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Save</button>&nbsp;&nbsp;
-                                            <button type="button" style="display:none" id="btnCateCancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</button>
-                                        </div>
+                                        @*<div class="col-12">
+                                                <button type="submit" style="display:none" id="btnCateSubmit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Save</button>&nbsp;&nbsp;
+                                                <button type="button" style="display:none" id="btnCateCancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</button>
+                                            </div>*@
                                     </div>
 
                                 </div>
@@ -199,7 +200,16 @@
                                             <label for="example-text-input" class="col-2 col-form-label">เพศ</label>
                                             <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="SEX" ng-model="SEX" ng-value="SEX" disabled>
-
+                                                <div class="m-radio-inline" id="SEX_RADIO" style="display:none">
+                                                    <label class="m-radio">
+                                                        <input type="radio"id="SEX_RADIO_BTN" name="SEX_RADIO" ng-model="SEX_RADIO" value="1"> ชาย
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="m-radio">
+                                                        <input type="radio"id="SEX_RADIO_BTN" name="SEX_RADIO" ng-model="SEX_RADIO" value="2"> หญิง
+                                                        <span></span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -233,7 +243,9 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ที่อยู่</label>
                                             <div class="col-7">
-                                                <input class="form-control m-input m-input--pill" id="LOCATE" ng-model="LOCATION" ng-value="LOCATION" disabled>
+
+                                                <input class="form-control m-input m-input--pill" id="ADDRESS" disabled>
+
                                                 <div class="row" id="editAddress" style="display:none">
                                                     <div class="col-4">
                                                         <p>ภาค</p>
@@ -260,7 +272,7 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ประเภทการเรียน</label>
                                             <div class="col-7">
-                                                <select class="form-control m-input  m-input--pill"  id="TEACHING_TYPE" disabled>
+                                                <select class="form-control m-input  m-input--pill" id="TEACHING_TYPE" disabled>
                                                     <option value=1>เรียนเดี่ยว</option>
                                                     <option value=2>เรียนกลุ่ม</option>
                                                     <option value=3>เรียนเดี่ยว,เรียนกลุ่ม</option>
@@ -270,7 +282,7 @@
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ระดับของผู้เรียน</label>
                                             <div class="col-7">
-                                                <select class="form-control m-input  m-input--pill"   id="STUDENT_LEVEL" disabled>
+                                                <select class="form-control m-input  m-input--pill" id="STUDENT_LEVEL" disabled>
                                                     <option value=1>เริ่มต้น</option>
                                                     <option value=2>ปานกลาง</option>
                                                     <option value=3>ขั้นสูง</option>
@@ -286,7 +298,7 @@
 
                                         <div class="col-lg-12 m--align-center">
                                             <button type="button" style="display:none" id="btnUpdateSubmit" ng-click="UpdateMemberProfile()" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn"> Save </button>
-                                            <button type="button" style="display:none" id="btnUpdateCancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Close </button>
+                                            <button type="button" style="display:none" id="btnUpdateCancel" ng-click="HideButton()" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Close </button>
                                             <button type="submit" id="btnUpdateSubmitImg" style="display:none">บันทึก</button>
                                         </div>
                                     </div>
