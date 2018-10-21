@@ -1,6 +1,8 @@
 ﻿var app = angular.module('SearchTeacherApp', []);
 app.controller('SearchTeacherController', function ($scope, $http, $compile) {
 
+     
+
     $scope.provinceID;
     $scope.GetProvince = function () {
         debugger;

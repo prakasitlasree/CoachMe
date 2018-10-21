@@ -5,13 +5,51 @@
 
 <!DOCTYPE html>
 
-<html>
+<html> 
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>_HomeLayout</title>
+    <title>
+        CoachME, เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
+        สอนดนตรี ศิลปะ การแสดง เขียนโปรแกรม ทำหุ่นยนต์ การเงิน
+        ไม่มีค่าธรรมเนียม ไม่มีค่านายหน้า จบครบในเว็บเดียว
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/teacher/vendors.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src="~/AngularController/SearchTeacherController.js"></script>
+  
+    @*<script src="~/Content/js/webfont.js"></script>
+        <script>
+            WebFont.load({
+                google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+                active: function () {
+                    sessionStorage.fonts = true;
+                }
+            });
+        </script>*@
+    <style>
+        body, .btn, .btn.m-btn--custom {
+            font-family: 'Kanit', sans-serif;
+        }
+    </style>
+    <script src="/Content/js/vendors.bundle.js" type="text/javascript"></script>
+    <script src="/Content/js/scripts.bundle.js" type="text/javascript"></script>
+    <script src="/Content/js/SweetAlert.js" type="text/javascript"></script>
+    <script src="/Content/datatables/basic.js" type="text/javascript"></script>
+    <script src="/Content/datatables/datatables.bundle.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Mitr" rel="stylesheet">
+    <script src="~/AngularController/TeacherController.js"></script>
+    <script type="text/javascript" src="~/Content/js/Search.js"></script>
 </head>
-<body>
-    <div> 
-    </div>
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    @RenderBody()
 </body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 </html>

@@ -27,7 +27,7 @@ namespace COACHME.DATASERVICE
                     var listCourse = listTeach.Select(x => x.COURSES).ToList();
 
                     resp.OUTPUT_DATA = listCourse;
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -81,38 +81,11 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                    var listMemberCate = ctx.MEMBER_CATEGORY.ToList();
-
-                    var listTeacher = await (from a in ctx.MEMBER_TEACH_COURSE
-                                             join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
-                                             join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
-                                             //join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
-                                             join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                             where b.ROLE_ID == 1 && f.STATUS == 2
-                                             select new CUSTOM_MEMBERS
-                                             {
-                                                 ROLE = b.ROLE_ID.ToString(),
-                                                 AUTO_ID = c.AUTO_ID,
-                                                 PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                                 //COURSE_ID = d.AUTO_ID,
-                                                 MEMBER_ROLE_ID = b.AUTO_ID,
-                                                 FULLNAME = c.FULLNAME ?? "ไม่ระบุ",
-                                                 SEX = c.SEX == "1" ? "ชาย" : "หญิง",
-                                                 AGE = c.AGE,
-                                                 LOCATION = c.LOCATION ?? "ไม่ระบุ",
-                                                 MOBILE = c.MOBILE ?? "ไม่ระบุ",
-                                                 USER_NAME = f.USER_NAME ?? "ไม่ระบุ",
-                                                 //COURSE = d.NAME ?? "ไม่ระบุ",
-                                                 ABOUT = c.ABOUT ?? "ไม่ระบุ",
-                                                 //REGIS_COURSE_ID = a.AUTO_ID,
-                                                 //CATEGORY = "ไม่ระบุ",
-                                                 // 
-                                             }).ToListAsync();
+                    var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x => x.CATEGORY).ToListAsync();
 
                     var list = await (from a in ctx.MEMBERS
                                       join b in ctx.MEMBER_ROLE on a.AUTO_ID equals b.MEMBER_ID
                                       join c in ctx.MEMBER_LOGON on a.AUTO_ID equals c.MEMBER_ID
-                                      //join e in ctx.MEMBER_LOGON on c.AUTO_ID equals e.MEMBER_ID
                                       where b.ROLE_ID == 1 && c.STATUS == 2
                                       select new
                                       CUSTOM_MEMBERS
@@ -167,7 +140,6 @@ namespace COACHME.DATASERVICE
                                                AGE = item.MEMBER_ROLE.MEMBERS.AGE,
                                                ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
                                                REGISTER_STATUS = false
-
                                            }).ToList();
 
                     resp.OUTPUT_DATA = listTeachCourse;
@@ -176,6 +148,8 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
 
             }
             return resp;
@@ -188,10 +162,6 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    //var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
-                    //                                .Include(x => x.MEMBER_ROLE.MEMBERS)
-                    //                                 .Include(x => x.COURSES)
-                    //                                .Where(o => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(o.DESCRIPTION)).ToListAsync();
 
                     var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.COURSES)
@@ -211,13 +181,13 @@ namespace COACHME.DATASERVICE
                     {
                         if (!(dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Count == 1 && dto.SEARCH_TEACHER_MODEL.LIST_COURSE.ToString() != ""))
                         {
-                           // listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(x.COURSES.DESCRIPTION)).ToList();
+                            // listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(x.COURSES.DESCRIPTION)).ToList();
                         }
                         else
                         {
                             if (dto.SEARCH_TEACHER_MODEL.LIST_COURSE[0].ToString() != "")
                             {
-                               // listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(x.COURSES.DESCRIPTION)).ToList();
+                                // listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(x.COURSES.DESCRIPTION)).ToList();
                             }
                         }
                     }
@@ -269,62 +239,48 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    if (dto.SEARCH_TEACHER_MODEL.TEACH_GENDER == null)
-                    {
-                        var gender = new SEARCH_TEACHER_MODEL();
-                        gender.TEACH_GENDER = new List<string> { "1", "2" };
+                    var listTeacher = new List<CUSTOM_MEMBERS>();
+                    var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x=>x.CATEGORY).ToListAsync();
+                    var listCourse = await ctx.MEMBER_TEACH_COURSE.Include(x => x.COURSES).ToListAsync();
 
-                        dto.SEARCH_TEACHER_MODEL.TEACH_GENDER = gender.TEACH_GENDER;
+                    listTeacher = await (from a in ctx.MEMBERS
+                                         join b in ctx.MEMBER_ROLE on a.AUTO_ID equals b.MEMBER_ID
+                                         join c in ctx.MEMBER_LOGON on a.AUTO_ID equals c.MEMBER_ID
 
-                    }
-                    if (dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE == null)
-                    {
-                        var TEACHING_TYPE = new SEARCH_TEACHER_MODEL();
-                        TEACHING_TYPE.TEACHING_TYPE = new List<int?> { 1, 2 };
+                                         where b.ROLE_ID == 1 && c.STATUS == 2
 
-                        dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE = TEACHING_TYPE.TEACHING_TYPE;
-
-                    }
-                    if (dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL == null)
-                    {
-                        var STUDENT_LEVEL = new SEARCH_TEACHER_MODEL();
-                        STUDENT_LEVEL.STUDENT_LEVEL = new List<int?> { 1, 2, 3, 4 };
-
-                        dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL = STUDENT_LEVEL.STUDENT_LEVEL;
-
-                    }
-                    var listStu = await (from a in ctx.MEMBER_TEACH_COURSE
-                                         join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
-                                         join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
-                                         join d in ctx.COURSES on a.COURSE_ID equals d.AUTO_ID
-                                         join f in ctx.MEMBER_LOGON on c.AUTO_ID equals f.MEMBER_ID
-                                         where
-                                         dto.SEARCH_TEACHER_MODEL.TEACH_GENDER.Contains(c.SEX)
-                                         //&& dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(d.NAME)
-                                         // && dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE.Contains(c.TEACHING_TYPE)
-                                         // && dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL.Contains(c.STUDENT_LEVEL)
-                                         && (b.ROLE_ID == 1 && f.STATUS == 2)
-
-                                         select new CUSTOM_MEMBERS
+                                         select new
+                                         CUSTOM_MEMBERS
                                          {
-                                             AUTO_ID = c.AUTO_ID,
-                                             PROFILE_IMG_URL = c.PROFILE_IMG_URL,
-                                             //STATUS = a.STATUS,
-                                             COURSE_ID = d.AUTO_ID,
-                                             FULLNAME = c.FULLNAME ?? "ไม่ระบุ",
-                                             SEX = c.SEX == "1" ? "ชาย" : "หญิง",
-                                             AGE = c.AGE,
-                                             LOCATION = c.LOCATION ?? "ไม่ระบุ",
-                                             MOBILE = c.MOBILE ?? "ไม่ระบุ",
-                                             USER_NAME = f.USER_NAME ?? "ไม่ระบุ",
-                                             COURSE = d.NAME ?? "ไม่ระบุ",
-                                             ABOUT = c.ABOUT ?? "ไม่ระบุ",
-                                             //LIST_STUDENT_COMMENT = a.MEMBER_REGIS_COURSE_COMMENT.Select(o => o.COMMENT).ToList(),
-                                             REGIS_COURSE_ID = a.AUTO_ID,
-                                             CATEGORY = "ไม่ระบุ",
+                                             ROLE = b.ROLE_ID.ToString(),
+                                             AUTO_ID = a.AUTO_ID,
+                                             PROFILE_IMG_URL = a.PROFILE_IMG_URL,
+                                             MEMBER_ROLE_ID = b.AUTO_ID,
+                                             FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
+                                             SEX = a.SEX == "1" ? "ชาย" : "หญิง",
+                                             AGE = a.AGE,
+                                             LOCATION = a.LOCATION ?? "ไม่ระบุ",
+                                             MOBILE = a.MOBILE ?? "ไม่ระบุ",
+                                             ABOUT = a.ABOUT ?? "ไม่ระบุ",
                                          }).ToListAsync();
 
-                    resp.OUTPUT_DATA = listStu;
+                    foreach (var item in listTeacher)
+                    {
+                        item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
+                        item.LIST_MEMBER_TEACH_COURSE = listCourse.Where(x => x.MEMBER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
+                    }
+
+                    #region === Advance Search ====
+
+                    if (dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY != null)
+                    {
+                        int catId = Convert.ToInt32(dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY);
+                        listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o=> o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
+                    }
+                    #endregion
+
+
+                    resp.OUTPUT_DATA = listTeacher;
                 }
             }
             catch (Exception ex)
@@ -399,7 +355,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var result = await ctx.CATEGORY.OrderBy(x=>x.AUTO_ID).ToListAsync();
+                    var result = await ctx.CATEGORY.OrderBy(x => x.AUTO_ID).ToListAsync();
                     resp.OUTPUT_DATA = result;
                 }
             }
@@ -553,7 +509,7 @@ namespace COACHME.DATASERVICE
                     var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
-                                                    // .Where(o => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(o.DESCRIPTION))
+                                                     // .Where(o => dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(o.DESCRIPTION))
                                                      .ToListAsync();
 
 

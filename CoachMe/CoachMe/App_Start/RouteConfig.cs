@@ -16,7 +16,7 @@ namespace CoachMe
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "student", action = "getteacher", id = UrlParameter.Optional }
+                defaults: new { controller = "home", action = "getteacher", id = UrlParameter.Optional }
             );
         }
     }

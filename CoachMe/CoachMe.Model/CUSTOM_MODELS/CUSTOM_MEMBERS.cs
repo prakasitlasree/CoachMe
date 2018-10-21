@@ -47,6 +47,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         
         //public List<int> LIST_MEMBER_CETEGORY { get; set; }
         public List<MEMBER_CATEGORY> LIST_MEMBER_CETEGORY { get; set; }
+        public List<MEMBER_TEACH_COURSE> LIST_MEMBER_TEACH_COURSE { get; set; }
+
         public List<string> LIST_STUDENT_COMMENT { get; set; }
     }
     public class ABOUT_IMG

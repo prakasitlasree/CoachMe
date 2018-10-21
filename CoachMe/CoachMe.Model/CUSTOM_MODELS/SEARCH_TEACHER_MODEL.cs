@@ -19,7 +19,12 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<string> TEACH_GENDER { get; set; }
         public List<int?> STUDENT_LEVEL { get; set; }
         public List<COURSES> LIST_COURSE { get; set; }
+
+        public string  SELECTED_COURSE { get; set; }
+
         public List<CATEGORY> LIST_CATEGORY { get; set; }
+
+        public string SELECTED_CATEGORY { get; set; }
 
         public List<string> LIST_SEARCH_TYPE { get; set; }
         public List<string> LIST_PROVINCE { get; set; }

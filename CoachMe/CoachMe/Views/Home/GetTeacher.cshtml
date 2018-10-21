@@ -1,0 +1,826 @@
+﻿@model COACHME.MODEL.CUSTOM_MODELS.CONTAINER_MODEL
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<!-- begin:: Page -->
+<section ng-app="SearchTeacherApp" ng-controller="SearchTeacherController" ng-init="GetProvince()">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <!-- BEGIN: Header -->
+        <header id="m_header" class="m-grid__item    m-header " m-minimize-offset="200" m-minimize-mobile-offset="200">
+            <div class="m-container m-container--fluid m-container--full-height">
+                <div class="m-stack m-stack--ver m-stack--desktop">
+
+                    <!-- BEGIN: Brand -->
+                    <div class="m-stack__item m-brand  m-brand--skin-dark ">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--middle m-brand__logo">
+                                <a href="/" class="m-brand__logo-wrapper">
+                                    <img alt="" src="/Content/images/teacher/logo.png">
+                                </a>
+                            </div>
+                            <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                                <!-- BEGIN: Left Aside Minimize Toggle -->
+                                @*<a href="javascript:;" id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block  ">
+                                        <span></span>
+                                    </a>*@
+
+                                <!-- END -->
+                                <!-- BEGIN: Responsive Aside Left Menu Toggler -->
+                                <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                                    <span></span>
+                                </a>
+
+                                <!-- END -->
+                                <!-- BEGIN: Responsive Header Menu Toggler -->
+                                <!-- END -->
+                                <!-- BEGIN: Topbar Toggler -->
+                                <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                                    <i class="flaticon-more"></i>
+                                </a>
+
+                                <!-- BEGIN: Topbar Toggler -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- END: Brand -->
+                    <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+
+                        <!-- BEGIN: Topbar -->
+                        @if (Session["logon"] != null)
+                        {
+                            <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                                <div class="m-stack__item m-topbar__nav-wrapper">
+                                    <ul class="m-topbar__nav m-nav m-nav--inline">
+                                        <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
+                                            m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
+                                            <a href="#" class="m-nav__link m-dropdown__toggle">
+                                                <span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
+                                            </a>
+                                            <div class="m-dropdown__wrapper">
+                                                <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                                                <div class="m-dropdown__inner ">
+                                                    <div class="m-dropdown__header">
+                                                        <form class="m-list-search__form">
+                                                            <div class="m-list-search__form-wrapper">
+                                                                <span class="m-list-search__form-input-wrapper">
+                                                                    <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
+                                                                </span>
+                                                                <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                                                    <i class="la la-remove"></i>
+                                                                </span>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="m-dropdown__body">
+                                                        <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-height="300" data-mobile-height="200">
+                                                            <div class="m-dropdown__content">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+                                            <a href="#" class="m-nav__link m-dropdown__toggle">
+                                                <span class="m-topbar__userpic">
+                                                    @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />*@
+                                                    <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg" )" class="m--img-rounded m--marginless m--img-centered" alt="" />
+                                                </span>
+                                                <span class="m-nav__link-icon m-topbar__usericon  m--hide">
+                                                    <span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
+                                                </span>
+                                                <span class="m-topbar__username m--hide">
+                                                    @Url.Content(@Model.MEMBERS.FULLNAME ?? "")
+
+
+                                                </span>
+                                            </a>
+                                            <div class="m-dropdown__wrapper">
+                                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                                <div class="m-dropdown__inner">
+                                                    <div class="m-dropdown__header m--align-center">
+                                                        <div class="m-card-user m-card-user--skin-light">
+                                                            <div class="m-card-user__pic">
+                                                                @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless" alt="" />*@
+                                                                <img src="..\\@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
+                                                            </div>
+                                                            <div class="m-card-user__details">
+                                                                <span class="m-card-user__name m--font-weight-500">
+                                                                    @Url.Content(@Model.MEMBERS.FULLNAME ?? "")
+                                                                </span>
+                                                                <a href="#" class="m-card-user__email m--font-weight-300 m-link">
+                                                                    @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
+
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="m-dropdown__body">
+                                                        <div class="m-dropdown__content">
+                                                            <ul class="m-nav m-nav--skin-light">
+                                                                <li class="m-nav__section m--hide">
+                                                                    <span class="m-nav__section-text">Section</span>
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                                                                    {
+                                                                        <a href="/teacher/index" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                                            <span class="m-nav__link-title">
+                                                                                <span class="m-nav__link-wrap">
+                                                                                    <span class="m-nav__link-text">My Profile</span>
+                                                                                    <span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </a>
+
+                                                                    }
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    <a href="@Url.Action("getteacher","home")" class="m-nav__link">
+                                                                        <i class="m-nav__link-icon flaticon-share"></i>
+                                                                        <span class="m-nav__link-text">หน้าแรก</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="m-nav__separator m-nav__separator--fit">
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    <a href="@Url.Action("logoff","account")" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                                <div class="m-stack__item m-topbar__nav-wrapper">
+                                    <ul class="m-topbar__nav m-nav m-nav--inline">
+                                        <li class="m-nav__item">
+                                            <a href="@Url.Action("login", "account")" class="m-nav__link">
+                                                <span class="m-nav__link-text" style="color:white">Login</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="@Url.Action("register", "account")" class="m-nav__link">
+                                                <span class="m-nav__link-text" style="color:white">Register</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        <!-- END: Topbar -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- END: Header -->
+        <!-- begin::Body -->
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+            <!-- BEGIN: Left Aside -->
+            <!-- END: Left Aside -->
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+                <div class="m-content">
+
+                    <div class="row">
+
+                        <div class="col-xl-3 col-lg-4">
+                            @using (Html.BeginForm("getteacher", "home", FormMethod.Post))
+                            {
+                                <div class="m-portlet m-portlet--tab">
+                                    <div class="m-portlet__body">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active show" data-toggle="tab" href="#" data-target="#m_tabs_1_1">ค้นหา</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link " data-toggle="tab" href="#m_tabs_1_3">ขั้นสูง</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active show" id="m_tabs_1_1" role="tabpanel">
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">ประเภท</label>
+
+                                                    @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @id = "SEARCH_TYPE", @name = "SEARCH_TYPE", @class = "form-control m-input m-input--air m-input--pill" })
+
+                                                    @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู")
+                                                    {
+                                                        var listItems = new List<SelectListItem>();
+                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                        {
+                                                            listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                        }
+                                                        <div id="category">
+                                                            <label for="CATEGORY">หมวดหมู่</label>
+                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
+                                                        </div>
+
+                                                        var listItems1 = new List<SelectListItem>();
+                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
+                                                        {
+                                                            listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                        }
+                                                        <div id="course">
+                                                            <label for="COURSE">คอร์ส</label>
+                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">จังหวัด</label>
+                                                    <select class="form-control m-input m-input--pill" id="SeachProvince" ng-model="provinceID" ng-change="GetAmphur()"></select>
+                                                    @*@Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), "-เลือกทั้งหมด-", new { @class = "form-control m-input m-input--air m-input--pill" })*@
+                                                </div>
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">เขต/อำเภอ</label>
+                                                    <select class="form-control m-input m-input--pill" id="amphur" ng-model="amphurID"></select>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                                                <div class="m-form__group form-group">
+                                                    <label for="">ประเภทการเรียน</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" name="SEARCH_TEACHER_MODEL.TEACHING_TYPE" @*checked="checked"*@ value="1"> เรียนเดียว
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" name="SEARCH_TEACHER_MODEL.TEACHING_TYPE" value="2"> เรียนกลุ่ม
+                                                            <span></span>
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="m-form__group form-group">
+                                                    <label for="">สถานที่</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" name="TEACH_LOCATE"> เรียนที่บ้าน
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" name="TEACH_LOCATE"> เรียนนอกสถานที่
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" name="TEACH_LOCATE"> เรียนที่สถานที่ครู
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-form__group form-group">
+                                                    <label for="">ข้อมูลทั่วไป (เพศของครู)</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="1" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> ชาย
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="2" name="SEARCH_TEACHER_MODEL.TEACH_GENDER"> หญิง
+                                                            <span></span>
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-form__group form-group">
+                                                    <label for="">ระดับผู้เรียน</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="1" name="SEARCH_TEACHER_MODEL.STUDENT_LEVEL"> เริ่มต้น
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="2" name="SEARCH_TEACHER_MODEL.STUDENT_LEVEL"> ปานกลาง
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="3" name="SEARCH_TEACHER_MODEL.STUDENT_LEVEL"> ขั้นสูง
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            @*m-portlet__foot*@
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-12">
+                                                    <button type="submit" class="btn btn-brand m-btn--pill m-btn--air"><i class="fa fa-search"></i>ค้นหา</button>
+                                                    <button type="submit" class="btn btn-metal m-btn--pill m-btn--air" name="SEARCH_TEACHER_MODEL.SEARCH_ALL" value="1"><i class="fa fa-search-plus"></i>ค้นหาทั้งหมด</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู")
+                        {
+                            <div class="col-xl-9 col-lg-8">
+
+                                @if (Model.LIST_CUSTOM_MEMBERS != null)
+                                {
+                                    foreach (var item in Model.LIST_CUSTOM_MEMBERS)
+                                    {
+
+                                        <div class="m-portlet m-portlet--rounded">
+                                            <div class="m-portlet__body">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="m-card-profile">
+                                                            <div class="m-card-profile__pic">
+                                                                <div class="m-card-profile__pic-wrapper">
+                                                                    <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
+                                                                </div>
+                                                                @*<p><i class="fa fa-user-graduate"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>*@
+                                                                <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+
+
+                                                        @*<div class="m-list__content">
+                                                                <div class="m-list-badge m--margin-bottom-20">
+                                                                    <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
+                                                                    <div class="m-list-badge__items">
+                                                                        @Url.Content(item.COURSE)
+                                                                    </div>
+                                                                </div>
+                                                            </div>*@
+                                                        @*<p><i class="fa fa-location-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>*@
+                                                        <div class="m-list__content">
+                                                            <div class="m-list-badge m--margin-bottom-20">
+                                                                <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-user-graduate"></i>&nbsp ชื่อ :</div>
+                                                                <div class="m-list-badge__items">
+                                                                    @Url.Content(item.FULLNAME)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="m-list__content">
+                                                            <div class="m-list-badge m--margin-bottom-20">
+                                                                <div class="m-list-badge__label" style="font-size:12px;font-weight:400;"><i class="fa fa-book-open"></i>&nbsp หมวดหมู่ :</div>
+                                                                <div class="m-list-badge__items">
+                                                                    @foreach (var cat in item.LIST_MEMBER_CETEGORY)
+                                                                    {
+                                                                        if (cat.CATEGORY_ID == 1)
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--brand">  @Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                        if (cat.CATEGORY_ID == 2)//"ภาษา"
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--focus">@Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                        if (cat.CATEGORY_ID == 3)//"ธุรกิจและการเงิน"
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--primary">@Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                        if (cat.CATEGORY_ID == 4) //"ศิลปะ"
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                        if (cat.CATEGORY_ID == 5) //"เทคโนโลยี"
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--danger">@Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                        if (cat.CATEGORY_ID == 6) //"วิชาชีพ/หลักสูตรพิเศษ"
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--warning">@Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                        if (cat.CATEGORY_ID == 7) //"สุขภาพ/ความงาม"
+                                                                        {
+                                                                            <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.CATEGORY.NAME)</a>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="m-list__content">
+                                                            <div class="m-list-badge m--margin-bottom-20">
+                                                                <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-list-ul"></i>&nbsp เกี่ยวกับผู้สอน :</div>
+                                                                <div class="m-list-badge__items">
+                                                                    @Url.Content(item.ABOUT)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @*@if (item.ABOUT != null)
+                                                            {*@
+
+
+                                                        @*}*@
+
+                                                        @if (Session["logon"] == null)
+                                                        {
+
+                                                            <button class="btn m-btn--pill m-btn--air         btn-outline-success m-btn m-btn--outline-2x" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
+                                                                <span>
+                                                                    <i class="fa fa-plus"></i>
+                                                                    <span>ข้อมูลเพิ่มเติม</span>
+                                                                </span>
+                                                            </button>
+                                                            if (item.REGISTER_STATUS == false)
+                                                            {
+                                                                <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_6">
+                                                                    <span>
+                                                                        <i class="fa fa-check-square"></i>
+                                                                        <span>สมัครเรียน!!!</span>
+                                                                    </span>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                                                    <span>
+                                                                        <i class="flaticon-star"></i>
+                                                                        <span>สมัครเรียบร้อย</span>
+                                                                    </span>
+                                                                </a>
+                                                            }
+
+                                                            @*<button type="button" class="btn btn-focus" data-toggle="modal" data-target="#m_modal_6">Launch Modal</button>*@
+
+                                                        using (Html.BeginForm("ChooseTeacherLogin", "account", FormMethod.Post))
+                                                        {
+                                                            <div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">×</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="form-group m-form__group">
+                                                                                <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
+                                                                                <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
+
+                                                                            </div>
+                                                                            <div class="form-group m-form__group">
+                                                                                <label for="exampleInputPassword1">รหัสผ่าน</label>
+                                                                                <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn m-btn--pill    btn-brand">ล็อกอิน</button>
+                                                                            <button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">ปิด</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <button class="btn btn-metal m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
+                                                                <span>
+                                                                    <i class="fa fa-plus"></i>
+                                                                    <span>เพิ่มเติม</span>
+                                                                </span>
+                                                            </button>
+                                                            if (item.REGISTER_STATUS == false)
+                                                            {
+                                                                <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
+                                                                    <span>
+                                                                        <i class="fa fa-check-square"></i>
+                                                                        <span>สมัครเรียนกับครูคนนี้</span>
+                                                                    </span>
+                                                                </button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                                                    <span>
+                                                                        <i class="flaticon-star"></i>
+                                                                        <span>สมัครเรียบร้อย</span>
+                                                                    </span>
+                                                                </a>
+                                                            }
+                                                            using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                            {
+                                                                <div class="modal fade" id="@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-body">
+                                                                                <div class="m-portlet__body">
+                                                                                    <div class="m-demo__preview m-demo__preview--badge">
+
+                                                                                        <h4 class="m--font-bold m--font-bold">
+                                                                                            <span>
+                                                                                                <i class="fa fa-address-card"></i>
+                                                                                                @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                                @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
+                                                                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                                                                                <span> คุณจะเลือกครู @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
+                                                                                            </span>
+
+                                                                                        </h4>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                    <span>
+                                                                                        <i class="fa fa-check-square"></i>
+                                                                                        <span>ตกลง</span>
+                                                                                    </span>
+                                                                                </button>
+                                                                                <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">ปิด</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+
+                                                    <div class="m-portlet m-portlet--full-height   m-portlet--unair">
+                                                        <div class="m-portlet__body">
+                                                            <div class="m-card-profile">
+                                                                <div class="m-card-profile__title m--hide">
+
+                                                                </div>
+
+                                                                <div class="m-card-profile__pic">
+                                                                    <div class="m-card-profile__pic-wrapper">
+                                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
+                                                                    </div>
+                                                                    <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
+                                                                </div>
+                                                                <div class="m-card-profile__details">
+                                                                    <span class="m-card-profile__name">
+                                                                        @item.FULLNAME
+                                                                        <br>
+                                                                        สถานที่ : @item.LOCATION
+                                                                        <br>
+                                                                        เกี่ยวกับครู : @item.ABOUT
+                                                                        <br>
+                                                                        ประเภทการเรียน : @item.ABOUT
+                                                                        <br>
+                                                                        ระดับผู้เรียน : @item.ABOUT
+                                                                    </span>
+
+                                                                    <br>
+                                                                    <br>
+                                                                    <a>
+                                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                    </a>
+                                                                    <a>
+                                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                    </a>
+
+                                                                    <a>
+                                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                    </a>
+                                                                    <a>
+                                                                        <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-brand m-btn--pill m-btn--air" data-dismiss="modal">ปิด</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+
+                            </div>
+                        }
+                        else if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "คอร์ส")
+                        {
+                            <div class="col-xl-9 col-lg-8">
+                                <div class="row">
+                                    @if (Model.LIST_CUSTOM_MEMBERS != null)
+                                    {
+                                        foreach (var item in Model.LIST_CUSTOM_MEMBERS)
+                                        {
+                                            <div class="col-xl-4">
+                                                <!--begin:: Widgets/Blog-->
+                                                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                                                    <div class="m-portlet__head m-portlet__head--fit">
+                                                        <div class="m-portlet__head-caption">
+                                                            <div class="m-portlet__head-action">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="m-portlet__body">
+                                                        <div class="m-widget19">
+                                                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+                                                                <img src="..//@Url.Content(item.COURSE_BANNER ?? "//Content//images//Blank-Book2.jpg" )" style="width:100%;height:286px" />
+                                                                <h3 class="m-widget19__title m--font-light">
+                                                                    @item.COURSE
+                                                                </h3>
+                                                                <div class="m-widget19__shadow"></div>
+                                                            </div>
+                                                            <div class="m-widget19__content">
+                                                                <div class="m-widget19__header">
+                                                                    <div class="m-widget19__user-img">
+                                                                        @*<img class="m-widget19__img" src="./assets/app/media/img//users/user1.jpg" alt="">*@
+                                                                    </div>
+                                                                    <div class="m-widget19__info">
+                                                                        <span class="m-widget19__username">
+                                                                            @item.FULLNAME
+                                                                        </span><br>
+                                                                        <span class="m-widget19__time">
+                                                                            @*UX/UI Designer, Google*@
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget19__stats">
+                                                                        <span class="m-widget19__number m--font-brand">
+                                                                            @item.AGE
+                                                                        </span>
+                                                                        <span class="m-widget19__comment">
+                                                                            @*Comments*@
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="m-widget19__body">
+                                                                    @item.ABOUT
+                                                                </div>
+                                                            </div>
+                                                            @if (Session["logon"] == null)
+                                                            {
+                                                                <div class="m-widget19__action">
+                                                                    <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_7">
+                                                                        <span>
+                                                                            <i class="fa fa-check-square"></i>
+                                                                            <span>สมัครเรียนคอร์สนี้</span>
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                                using (Html.BeginForm("ChooseTeacherLogin", "account", FormMethod.Post))
+                                                                {
+                                                                    <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="form-group m-form__group">
+                                                                                        <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
+                                                                                        <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
+
+                                                                                    </div>
+                                                                                    <div class="form-group m-form__group">
+                                                                                        <label for="exampleInputPassword1">รหัสผ่าน</label>
+                                                                                        <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">ล็อกอิน</button>
+                                                                                    <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">ปิด</button>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (item.REGISTER_STATUS == false)
+                                                                {
+                                                                    <div class="m-widget19__action">
+                                                                        <button type="button" class="btn m-btn--pill btn-brand m-btn--air m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">สมัครเรียน</button>
+                                                                    </div>
+                                                                    using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                                    {
+                                                                        <div class="modal fade" id="@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-body">
+                                                                                        <div class="m-portlet__body">
+                                                                                            <div class="m-demo__preview m-demo__preview--badge">
+
+                                                                                                <h4 class="m--font-bold m--font-bold">
+                                                                                                    <span>
+                                                                                                        <i class="fa fa-address-card"></i>
+                                                                                                        @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                                        @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                                        @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
+                                                                                                        @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                                                                                        <span> คุณจะเลือกคอร์ส @Url.Content(item.COURSE) ใช่หรือไม่ ?</span>
+                                                                                                    </span>
+
+                                                                                                </h4>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                            <span>
+                                                                                                <i class="fa fa-check-square"></i>
+                                                                                                <span>ตกลง</span>
+                                                                                            </span>
+                                                                                        </button>
+                                                                                        <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">ปิด</button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="m-widget19__action">
+                                                                        <button type="button" class="btn m-btn--pill btn-success m-btn--air m-btn--custom">
+                                                                            <i class="flaticon-star"></i>สมัครเรียบร้อย
+                                                                        </button>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end:: Widgets/Blog-->
+                                            </div>
+                                        }
+                                    }
+
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- end:: Body -->
+        <!-- begin::Footer -->
+        <!-- end::Footer -->
+    </div>
+    <div id="m_scroll_top" class="m-scroll-top">
+        <i class="la la-arrow-up"></i>
+    </div>
+
+    <script type="text/javascript">
+
+        $('#SEARCH_TYPE').change(function () {
+            var sel = $('#SEARCH_TYPE :selected').val();
+            if (sel == 'คอร์ส') {
+                $('#category').hide();
+                $('#category').val(null);
+                $('#course').show();
+            }
+            else if (sel == 'ครู') {
+                $('#category').show();
+                $('#course').val(null);
+                $('#course').hide();
+            }
+        });
+        $(document).ready(function () {
+            $('#course').hide();
+        });
+    </script>
+</section>
+
