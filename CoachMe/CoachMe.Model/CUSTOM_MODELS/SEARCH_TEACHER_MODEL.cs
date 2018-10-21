@@ -34,7 +34,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<int?> LIST_AMPHUR_ID { get; set; }
         //public List<CUSTOM_MEMBERS> LIST_MEMBERS { get; set; }
 
-
+        public int TEACHER_ROLE_ID { get; set; }
+        public int STUDENT_ROLE_ID { get; set; }
 
         #region ======= course model =======
 

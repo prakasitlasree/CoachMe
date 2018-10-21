@@ -99,7 +99,15 @@ namespace CoachMe.Controllers
                 Session["logon"] = param;
                 if (param.MEMBER_ROLE.FirstOrDefault() != null)
                 {
-                    return RedirectToAction("index", "teacher");
+                    if (param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1 || param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
+                    {
+                        return RedirectToAction("index", "teacher");
+                    }
+                    else
+                    {
+                        return RedirectToAction("getteacher", "home");
+                    }
+                   
                 }
                 return View(dto);
             }
@@ -136,11 +144,11 @@ namespace CoachMe.Controllers
                 Session["logon"] = param;
                 if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 2)
                 {
-                    return RedirectToAction("GetTeacher", "student");
+                    return RedirectToAction("getteacher", "home");
                 }
                 else if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
                 {
-                    return RedirectToAction("GetTeacher", "student");//return RedirectToAction("index", "teacher");
+                    return RedirectToAction("getteacher", "home");//return RedirectToAction("index", "teacher");
                 }
                 else
                 {
@@ -555,7 +563,7 @@ namespace CoachMe.Controllers
         public ActionResult LogOff()
         {
             Session["logon"] = null;
-            return RedirectToAction("getteacher", "student");
+            return RedirectToAction("getteacher", "home");
         }
 
         //

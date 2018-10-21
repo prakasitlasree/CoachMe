@@ -218,7 +218,7 @@
 
                                                     @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @id = "SEARCH_TYPE", @name = "SEARCH_TYPE", @class = "form-control m-input m-input--air m-input--pill" })
 
-                                                    @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู")
+                                                    @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู" )
                                                     {
                                                         var listItems = new List<SelectListItem>();
                                                         foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
@@ -239,6 +239,29 @@
                                                             <label for="COURSE">คอร์ส</label>
                                                             @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
                                                         </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        var listItems = new List<SelectListItem>();
+                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                        {
+                                                            listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                        }
+                                                        <div id="category">
+                                                            <label for="CATEGORY">หมวดหมู่</label>
+                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
+                                                        </div>
+
+                                                        var listItems1 = new List<SelectListItem>();
+                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
+                                                        {
+                                                            listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                        }
+                                                        <div id="course">
+                                                            <label for="COURSE">คอร์ส</label>
+                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                        </div>
+
                                                     }
                                                 </div>
                                                 <div class="form-group m-form__group">
@@ -355,9 +378,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-8">
-
-
+                                                    <div class="col-md-8"> 
                                                         @*<div class="m-list__content">
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
@@ -420,17 +441,12 @@
                                                                     @Url.Content(item.ABOUT)
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        @*@if (item.ABOUT != null)
-                                                            {*@
-
-
-                                                        @*}*@
+                                                        </div> 
 
                                                         @if (Session["logon"] == null)
                                                         {
 
-                                                            <button class="btn m-btn--pill m-btn--air         btn-outline-success m-btn m-btn--outline-2x" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
+                                                            <button class="btn m-btn--pill m-btn--air btn-outline-success m-btn m-btn--outline-2x" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
                                                                 <span>
                                                                     <i class="fa fa-plus"></i>
                                                                     <span>ข้อมูลเพิ่มเติม</span>
@@ -445,49 +461,38 @@
                                                                     </span>
                                                                 </a>
                                                             }
-                                                            else
+                                                            
+                                                            using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
                                                             {
-                                                                <a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
-                                                                    <span>
-                                                                        <i class="flaticon-star"></i>
-                                                                        <span>สมัครเรียบร้อย</span>
-                                                                    </span>
-                                                                </a>
-                                                            }
+                                                                <div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">×</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="form-group m-form__group">
+                                                                                    <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
+                                                                                    <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
 
-                                                            @*<button type="button" class="btn btn-focus" data-toggle="modal" data-target="#m_modal_6">Launch Modal</button>*@
+                                                                                </div>
+                                                                                <div class="form-group m-form__group">
+                                                                                    <label for="exampleInputPassword1">รหัสผ่าน</label>
+                                                                                    <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
 
-                                                        using (Html.BeginForm("ChooseTeacherLogin", "account", FormMethod.Post))
-                                                        {
-                                                            <div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">×</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="form-group m-form__group">
-                                                                                <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
-                                                                                <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="submit" class="btn m-btn--pill    btn-brand">ล็อกอิน</button>
+                                                                                <button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">ปิด</button>
 
                                                                             </div>
-                                                                            <div class="form-group m-form__group">
-                                                                                <label for="exampleInputPassword1">รหัสผ่าน</label>
-                                                                                <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="submit" class="btn m-btn--pill    btn-brand">ล็อกอิน</button>
-                                                                            <button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">ปิด</button>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
                                                             }
                                                         }
                                                         else
@@ -517,7 +522,7 @@
                                                                     </span>
                                                                 </a>
                                                             }
-                                                            using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                            using (Html.BeginForm("MatchTeacher", "home", FormMethod.Post))
                                                             {
                                                                 <div class="modal fade" id="@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
                                                                     <div class="modal-dialog modal-lg" role="document">
@@ -529,11 +534,13 @@
                                                                                         <h4 class="m--font-bold m--font-bold">
                                                                                             <span>
                                                                                                 <i class="fa fa-address-card"></i>
-                                                                                                @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                                @*@Html.Hidden("COURSE_ID", item.AUTO_ID)
                                                                                                 @Html.Hidden("COURSE_NAME", item.COURSE)
-                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
-                                                                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
-                                                                                                <span> คุณจะเลือกครู @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
+                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)*@
+                                                                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID) 
+                                                                                                @Html.Hidden("TEACHER_ROLE_ID", item.AUTO_ID)
+                                                                                                 
+                                                                                                <span> คุณจะเลือก @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
                                                                                             </span>
 
                                                                                         </h4>
@@ -541,7 +548,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.AUTO_ID">
                                                                                     <span>
                                                                                         <i class="fa fa-check-square"></i>
                                                                                         <span>ตกลง</span>
@@ -584,7 +591,8 @@
                                                                         <br>
                                                                         เกี่ยวกับครู : @item.ABOUT
                                                                         <br>
-                                                                        ประเภทการเรียน : @item.ABOUT
+
+                                                                        ประเภทการเรียน : @item.CATEGORY
                                                                         <br>
                                                                         ระดับผู้เรียน : @item.ABOUT
                                                                     </span>
@@ -644,7 +652,7 @@
                                                     <div class="m-portlet__body">
                                                         <div class="m-widget19">
                                                             <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                                                                <img src="..//@Url.Content(item.COURSE_BANNER ?? "//Content//images//Blank-Book2.jpg" )" style="width:100%;height:286px" />
+                                                                <img src="..//@Url.Content(item.COURSE_BANNER ?? "//Content//images//course//blank_img.jpg" )" style="width:100%;height:230px" />
                                                                 <h3 class="m-widget19__title m--font-light">
                                                                     @item.COURSE
                                                                 </h3>
@@ -686,7 +694,7 @@
                                                                         </span>
                                                                     </a>
                                                                 </div>
-                                                                using (Html.BeginForm("ChooseTeacherLogin", "account", FormMethod.Post))
+                                                                using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
                                                                 {
                                                                     <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                                                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -823,4 +831,3 @@
         });
     </script>
 </section>
-

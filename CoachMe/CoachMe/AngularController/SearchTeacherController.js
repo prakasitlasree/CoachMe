@@ -7,7 +7,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
     $scope.GetProvince = function () {
         debugger;
         $http({
-            url: "http://localhost:1935/student/GetListProvince",
+            url: "/student/GetListProvince",
             method: "GET",
             //params: { geoID: $scope.geography }
         }).then(function (response) {
@@ -38,7 +38,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
 
     $scope.GetAmphur = function () {
         $http({
-            url: "http://localhost:1935/student/GetListAmphur",
+            url: "/student/GetListAmphur",
             method: "GET",
             params: { provinceID: document.getElementById("SeachProvince").value }
         }).then(function (response) {
