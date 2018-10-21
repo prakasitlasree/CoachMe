@@ -76,6 +76,9 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+
+                    var listMemberCate = ctx.MEMBER_CATEGORY.ToList();
+
                     var listTeacher = await (from a in ctx.MEMBER_TEACH_COURSE
                                              join b in ctx.MEMBER_ROLE on a.MEMBER_ROLE_ID equals b.AUTO_ID
                                              join c in ctx.MEMBERS on b.MEMBER_ID equals c.AUTO_ID
@@ -96,10 +99,15 @@ namespace COACHME.DATASERVICE
                                                  MOBILE = c.MOBILE ?? "ไม่ระบุ",
                                                  USER_NAME = f.USER_NAME ?? "ไม่ระบุ",
                                                  COURSE = d.NAME ?? "ไม่ระบุ",
-                                                 ABOUT = c.ABOUT,
+                                                 ABOUT = c.ABOUT ?? "ไม่ระบุ",
                                                  REGIS_COURSE_ID = a.AUTO_ID,
-                                                 CATEGORY = "ไม่ระบุ",
+                                                 //CATEGORY = "ไม่ระบุ",
+                                                // 
                                              }).ToListAsync();
+                    foreach (var item in listTeacher)
+                    {
+                        item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList(); 
+                    }
 
                     resp.OUTPUT_DATA = listTeacher;
                 }

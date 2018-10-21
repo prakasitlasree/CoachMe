@@ -25137,7 +25137,7 @@ button:active, button:focus {
         .m-card-profile .m-card-profile__pic .m-card-profile__pic-wrapper {
             padding: 8px;
             display: inline-block;
-            margin: 2rem auto;
+           /* margin: 2rem auto;*/
             border-radius: 100%;
         }
 

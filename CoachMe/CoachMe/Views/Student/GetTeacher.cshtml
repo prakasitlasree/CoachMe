@@ -378,24 +378,74 @@
                                                                     <div class="m-card-profile__pic-wrapper">
                                                                         <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
                                                                     </div>
-                                                                    <p><i class="fa fa-address-book"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
+                                                                    <p><i class="fa fa-user-graduate"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
                                                                     <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-8">
+                                                            <p></p>
+                                                            <div class="m-list__content">
+                                                                <div class="m-list-badge m--margin-bottom-20">
+                                                                    <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
+                                                                    <div class="m-list-badge__items">
+                                                                        @Url.Content(item.COURSE)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<p><i class="fa fa-location-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>*@
 
-                                                            <p><i class="fa fa-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>
-                                                            <p><i class="fa fa-book"></i>&nbsp หมวดหมู่ : @Url.Content(item.CATEGORY)</p><br>
-                                                            @if (item.LOCATION != null)
-                                                            {
-                                                                <p><i class="fa fa-location-arrow"></i>&nbsp สถานที่ : @Url.Content(item.LOCATION)</p><br>
-                                                            }
+                                                            <div class="m-list__content">
+                                                                <div class="m-list-badge m--margin-bottom-20">
+                                                                    <div class="m-list-badge__label" style="font-size:12px;font-weight:400;"><i class="fa fa-book-open"></i>&nbsp หมวดหมู่ :</div>
+                                                                    <div class="m-list-badge__items">
+                                                                        @foreach (var cat in item.LIST_MEMBER_CETEGORY)
+                                                                        {
+                                                                            if (cat.NAME == "ดนตรี")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--brand">  @Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                            if (cat.NAME == "ภาษา")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--focus">@Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                            if (cat.NAME == "ธุรกิจและการเงิน")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--primary">@Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                            if (cat.NAME == "ศิลปะ")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                            if (cat.NAME == "เทคโนโลยี")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--danger">@Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                            if (cat.NAME == "วิชาชีพ/หลักสูตรพิเศษ")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--warning">@Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                            if (cat.NAME == "สุขภาพ/ความงาม")
+                                                                            {
+                                                                                <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
+                                                                            }
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-                                                            @if (item.ABOUT != null)
-                                                            {
-                                                                <p><i class="fa fa-address-card"></i>&nbsp เกี่ยวกับผู้สอน : @Url.Content(item.ABOUT)</p><br>
-                                                            }
+                                                            @*@if (item.ABOUT != null)
+                                                                {*@
+                                                            <div class="m-list__content">
+                                                                <div class="m-list-badge m--margin-bottom-20">
+                                                                    <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-list-ul"></i>&nbsp เกี่ยวกับผู้สอน :</div>
+                                                                    <div class="m-list-badge__items">
+                                                                        @Url.Content(item.ABOUT)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            @*}*@
 
                                                             @if (Session["logon"] == null)
                                                             {
@@ -529,64 +579,64 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                                    <div class="modal fade" id="@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document">
-                                                            <div class="modal-content">
+                                            <div class="modal fade" id="@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
 
-                                                                <div class="m-portlet m-portlet--full-height   m-portlet--unair">
-                                                                    <div class="m-portlet__body">
-                                                                        <div class="m-card-profile">
-                                                                            <div class="m-card-profile__title m--hide">
+                                                        <div class="m-portlet m-portlet--full-height   m-portlet--unair">
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-card-profile">
+                                                                    <div class="m-card-profile__title m--hide">
 
-                                                                            </div>
+                                                                    </div>
 
-                                                                            <div class="m-card-profile__pic">
-                                                                                <div class="m-card-profile__pic-wrapper">
-                                                                                    <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
-                                                                                </div>
-                                                                                <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
-                                                                            </div>
-                                                                            <div class="m-card-profile__details">
-                                                                                <span class="m-card-profile__name">
-                                                                                    @item.FULLNAME
-                                                                                    <br>
-                                                                                    สถานที่ : @item.LOCATION
-                                                                                    <br>
-                                                                                    เกี่ยวกับครู : @item.ABOUT
-                                                                                    <br>
-                                                                                    ประเภทการเรียน : @item.ABOUT
-                                                                                    <br>
-                                                                                    ระดับผู้เรียน : @item.ABOUT
-                                                                                </span>
-
-                                                                                <br>
-                                                                                <br>
-                                                                                <a>
-                                                                                    <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
-                                                                                </a>
-                                                                                <a>
-                                                                                    <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
-                                                                                </a>
-
-                                                                                <a>
-                                                                                    <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
-                                                                                </a>
-                                                                                <a>
-                                                                                    <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
-                                                                                </a>
-                                                                            </div>
+                                                                    <div class="m-card-profile__pic">
+                                                                        <div class="m-card-profile__pic-wrapper">
+                                                                            <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
                                                                         </div>
+                                                                        <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
+                                                                    </div>
+                                                                    <div class="m-card-profile__details">
+                                                                        <span class="m-card-profile__name">
+                                                                            @item.FULLNAME
+                                                                            <br>
+                                                                            สถานที่ : @item.LOCATION
+                                                                            <br>
+                                                                            เกี่ยวกับครู : @item.ABOUT
+                                                                            <br>
+                                                                            ประเภทการเรียน : @item.ABOUT
+                                                                            <br>
+                                                                            ระดับผู้เรียน : @item.ABOUT
+                                                                        </span>
+
+                                                                        <br>
+                                                                        <br>
+                                                                        <a>
+                                                                            <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                        </a>
+                                                                        <a>
+                                                                            <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                        </a>
+
+                                                                        <a>
+                                                                            <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                        </a>
+                                                                        <a>
+                                                                            <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//course//blank_img.jpg")" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px">
+                                                                        </a>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="modal-footer">
-
-                                                                    <button type="button" class="btn btn-brand m-btn--pill m-btn--air" data-dismiss="modal">ปิด</button>
-                                                                </div>
                                                             </div>
+                                                        </div>
 
+                                                        <div class="modal-footer">
+
+                                                            <button type="button" class="btn btn-brand m-btn--pill m-btn--air" data-dismiss="modal">ปิด</button>
                                                         </div>
                                                     </div>
+
+                                                </div>
+                                            </div>
                                         }
                                     }
 
