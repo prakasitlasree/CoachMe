@@ -39,13 +39,18 @@ namespace COACHME.WEB_PRESENT.Controllers
 
            
             resp = await service.GetListCourseName();
-            model.LIST_COURSE = resp.OUTPUT_DATA; 
+            model.LIST_COURSE = resp.OUTPUT_DATA;
+
+            resp = await service.GetListCategory();
+            container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
+
+            model.LIST_SEARCH_TYPE = new List<string>() { "ครู", "คอร์ส" };
+            container.SEARCH_TEACHER_MODEL = model;
 
             resp = await commonService.GetListProvince();
             model.LIST_PROVINCE = resp.OUTPUT_DATA;
 
-            model.LIST_SEARCH_TYPE = new List<string>() { "ครู", "คอร์ส" };
-            container.SEARCH_TEACHER_MODEL = model;
+         
 
             #region ===== SESSION NOT NUll หลัง LOGIN ====== 
             if (Session["logon"] != null)
@@ -55,11 +60,11 @@ namespace COACHME.WEB_PRESENT.Controllers
                 container.MEMBERS = memberLogon;
 
                 if (dto.SEARCH_TEACHER_MODEL == null)//เข้าครั้งแรก
-                {
-
+                { 
                     resp = await service.GetListAllTeacherAfterLogin(dto);
                     container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                     container.SEARCH_TEACHER_MODEL.TEACH_TYPE = "ครู";
+                     
                     return View(container);
 
                 }
@@ -72,6 +77,8 @@ namespace COACHME.WEB_PRESENT.Controllers
                             resp = await service.GetListAllTeacherAfterLogin(dto);
                             container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                             container.SEARCH_TEACHER_MODEL.TEACH_TYPE = "ครู";
+                            resp = await service.GetListCategory();
+                            container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
                             return View(container);
                         }
                         else//ค้นหาคอร์สทั้งหมดหลังlogin
@@ -113,6 +120,10 @@ namespace COACHME.WEB_PRESENT.Controllers
                     resp = await service.GetListAllTeacherBeforeLogin();
                     container.SEARCH_TEACHER_MODEL.TEACH_TYPE = "ครู";
                     container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+
+                    resp = await service.GetListCategory();
+                    container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
+
                     return View(container);
                 }
                 else
@@ -124,6 +135,9 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
                             resp = await service.GetListAllTeacherBeforeLogin();
                             container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+
+                            resp = await service.GetListCategory();
+                            container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
                             return View(container);
                         }
                         else

@@ -26,18 +26,17 @@ namespace COACHME.DATASERVICE
 
         public enum SurveyType
         {
-            Interest 
+            Interest
         }
         public enum Category
         {
-            
+
         }
 
         public enum PurchaseStatus
         {
             DRAFT,
             ACTIVE
-
-        }
+        } 
     }
 }

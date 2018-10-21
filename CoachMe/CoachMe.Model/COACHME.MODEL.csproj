@@ -52,6 +52,9 @@
     <Compile Include="AMPHUR.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
+    <Compile Include="CATEGORY.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
     <Compile Include="COACH_ME.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,6 +99,9 @@
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="MEMBER_LOGON.cs">
+      <DependentUpon>COACH_ME.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MEMBER_MATCHING.cs">
       <DependentUpon>COACH_ME.tt</DependentUpon>
     </Compile>
     <Compile Include="MEMBER_PACKAGE.cs">

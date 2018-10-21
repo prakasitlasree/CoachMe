@@ -382,6 +382,7 @@
     <Content Include="Views\Home\ErrorPage.cshtml" />
     <Content Include="Views\Student\GetTeacher.cshtml" />
     <Content Include="Views\Student\_FirstPageLayout.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
