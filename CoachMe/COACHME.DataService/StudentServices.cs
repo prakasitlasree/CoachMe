@@ -206,6 +206,26 @@ namespace COACHME.DATASERVICE
                     {
                         listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL.Contains(x.MEMBER_ROLE.MEMBERS.STUDENT_LEVEL)).ToList();
                     }
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID.FirstOrDefault() > 0 && (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() == 0 || dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() == null))
+                    {
+                        var listAmphur = await ctx.AMPHUR
+                                                  .Where(o => o.PROVINCE_ID == dto.SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID.FirstOrDefault())
+                                                  .Select(o => (int?)o.AMPHUR_ID).ToListAsync();
+                        dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = listAmphur;
+                        listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
+
+
+                    }
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID == null)
+                    {
+                        dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
+                        listAllTeachCourse = listAllTeachCourse.Where(x => !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
+                    }
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID != null)
+                    {
+                        //dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
+                        listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
+                    }
                     #endregion
 
                     var listTeachCourse = (from item in listAllTeachCourse
@@ -235,20 +255,32 @@ namespace COACHME.DATASERVICE
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             CONTAINER_MODEL model = new CONTAINER_MODEL();
+
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID.FirstOrDefault() > 0 && (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() == 0 || dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() == null))
+                    {
+                        var listAmphur = await ctx.AMPHUR
+                                                  .Where(o => o.PROVINCE_ID == dto.SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID.FirstOrDefault())
+                                                  .Select(o => (int?)o.AMPHUR_ID).ToListAsync();
+                        dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = listAmphur;
+
+                    }
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID == null)
+                    {
+                        dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
+                    }
                     var listTeacher = new List<CUSTOM_MEMBERS>();
-                    var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x=>x.CATEGORY).ToListAsync();
+                    var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x => x.CATEGORY).ToListAsync();
                     var listCourse = await ctx.MEMBER_TEACH_COURSE.Include(x => x.COURSES).ToListAsync();
 
                     listTeacher = await (from a in ctx.MEMBERS
                                          join b in ctx.MEMBER_ROLE on a.AUTO_ID equals b.MEMBER_ID
                                          join c in ctx.MEMBER_LOGON on a.AUTO_ID equals c.MEMBER_ID
-
                                          where b.ROLE_ID == 1 && c.STATUS == 2
-
+                                         && (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() != 0 ? dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(a.AMPHUR_ID) : !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(a.AMPHUR_ID))
                                          select new
                                          CUSTOM_MEMBERS
                                          {
@@ -275,7 +307,7 @@ namespace COACHME.DATASERVICE
                     if (dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY != null)
                     {
                         int catId = Convert.ToInt32(dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY);
-                        listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o=> o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
+                        listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o => o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
                     }
                     #endregion
 
@@ -346,7 +378,6 @@ namespace COACHME.DATASERVICE
 
 
         }
-
         public async Task<RESPONSE__MODEL> GetListCategory()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -421,6 +452,18 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID.FirstOrDefault() > 0 && (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() == 0 || dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() == null))
+                    {
+                        var listAmphur = await ctx.AMPHUR
+                                                  .Where(o => o.PROVINCE_ID == dto.SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID.FirstOrDefault())
+                                                  .Select(o => (int?)o.AMPHUR_ID).ToListAsync();
+                        dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = listAmphur;
+
+                    }
+                    if (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID == null)
+                    {
+                        dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
+                    }
                     var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();
                     var memberRegisCourse = await ctx.MEMBER_REGIS_COURSE
                                                      .Where(o => o.MEMBER_ROLE.AUTO_ID == memberRole.AUTO_ID)
@@ -458,8 +501,9 @@ namespace COACHME.DATASERVICE
                                          where
                                          dto.SEARCH_TEACHER_MODEL.TEACH_GENDER.Contains(c.SEX)
                                          //&& dto.SEARCH_TEACHER_MODEL.LIST_COURSE.Contains(d.NAME)
-                                         && dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE.Contains(c.TEACHING_TYPE)
-                                         && dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL.Contains(c.STUDENT_LEVEL)
+                                         //&& dto.SEARCH_TEACHER_MODEL.TEACHING_TYPE.Contains(c.TEACHING_TYPE)
+                                         //&& dto.SEARCH_TEACHER_MODEL.STUDENT_LEVEL.Contains(c.STUDENT_LEVEL)
+                                         && (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.FirstOrDefault() != 0 ? dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(c.AMPHUR_ID) : !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(c.AMPHUR_ID))
                                          && (b.ROLE_ID == 1 && f.STATUS == 2)
                                          select new CUSTOM_MEMBERS
                                          {

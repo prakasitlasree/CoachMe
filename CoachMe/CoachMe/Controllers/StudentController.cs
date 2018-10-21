@@ -42,7 +42,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             model.LIST_COURSE = resp.OUTPUT_DATA;
 
             resp = await service.GetListCategory();
-            container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
+            model.LIST_CATEGORY = resp.OUTPUT_DATA;
 
             model.LIST_SEARCH_TYPE = new List<string>() { "ครู", "คอร์ส" };
             container.SEARCH_TEACHER_MODEL = model;
@@ -154,6 +154,9 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
                             resp = await service.GetListSomeTeacherBeforeLogin(dto);
                             container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+
+                            resp = await service.GetListCategory();
+                            container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
                             return View(container);
                         }
                         else
@@ -161,6 +164,9 @@ namespace COACHME.WEB_PRESENT.Controllers
 
                             resp = await service.GetListSomeCourseBeforeLogin(dto);
                             container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
+
+                            resp = await service.GetListCategory();
+                            container.SEARCH_TEACHER_MODEL.LIST_CATEGORY = resp.OUTPUT_DATA;
                             return View(container);
                         }
                     }

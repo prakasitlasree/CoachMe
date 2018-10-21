@@ -243,12 +243,12 @@
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">จังหวัด</label>
-                                                    <select class="form-control m-input m-input--pill" id="SeachProvince" ng-model="provinceID" ng-change="GetAmphur()"></select>
+                                                    <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID" id="SeachProvince" ng-model="provinceID" ng-change="GetAmphur()"></select>
                                                     @*@Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), "-เลือกทั้งหมด-", new { @class = "form-control m-input m-input--air m-input--pill" })*@
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">เขต/อำเภอ</label>
-                                                    <select class="form-control m-input m-input--pill" id="amphur" ng-model="amphurID"></select>
+                                                    <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID" id="amphur" ng-model="amphurID" disabled></select>
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
@@ -820,6 +820,7 @@
         });
         $(document).ready(function () {
             $('#course').hide();
+           
         });
     </script>
 </section>

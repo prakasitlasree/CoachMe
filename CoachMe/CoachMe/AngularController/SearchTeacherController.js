@@ -1,7 +1,7 @@
 ﻿var app = angular.module('SearchTeacherApp', []);
 app.controller('SearchTeacherController', function ($scope, $http, $compile) {
 
-     
+
 
     $scope.provinceID;
     $scope.GetProvince = function () {
@@ -16,6 +16,8 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
                 $scope.ListProvince = response.data.OUTPUT_DATA;
                 $scope.RenderProvinceDrp()
             }
+        }).then(function () {
+            $('#SeachProvince').val('0').change()
         });
     }
 
@@ -25,16 +27,14 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
         var html = "";
 
         var itemsLength = Object.keys($scope.ListProvince).length;
-        html += "<option value = 0>-เลือกทั้งหมด-</option>"
+        html += "<option value = 0 >-เลือกทั้งหมด-</option>"
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListProvince[i].PROVINCE_ID + ">" + $scope.ListProvince[i].PROVINCE_NAME + "</option>";
         }
-        //var $OnCompile = $(html).appendTo('#SeachProvince');
-        //$compile($OnCompile)($scope);
-        $('#SeachProvince').append(html);
-        $("#SeachProvince").prop('selectedIndex', 0);
-        
+        $('#SeachProvince').append(html)
+
     }
+
 
     $scope.GetAmphur = function () {
         $http({
@@ -46,9 +46,9 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
             if (response.data.STATUS == true) {
                 $scope.ListAmphur = response.data.OUTPUT_DATA;
                 $scope.RenderAmphurDrp()
-               
-                $("#amphur").prop("disabled", false);
             }
+        }).then(function () {
+            $("#amphur").prop('disabled', false);
         });
     }
 
@@ -58,16 +58,18 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
         var html = "";
 
         var itemsLength = Object.keys($scope.ListAmphur).length;
-        html += "<option value = 0>-เลือกทั้งหมด-</option>"
+        html += "<option value = 0 selected = 'selected'>-เลือกทั้งหมด-</option>"
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListAmphur[i].AMPHUR_ID + ">" + $scope.ListAmphur[i].AMPHUR_NAME + "</option>";
         }
-        var $OnCompile = $(html).appendTo('#amphur');
-        $compile($OnCompile)($scope);
-        $("#amphur").prop('selectedIndex', 0);
+        $('#amphur').append(html)
+        //var $OnCompile = $(html).appendTo('#amphur');
+        //$compile($OnCompile)($scope);
+
     }
 
     angular.element(document).ready(function () {
-        $("#amphur").prop('selectedIndex', 0);
+
+
     });
 });

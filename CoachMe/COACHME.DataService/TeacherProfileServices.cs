@@ -367,10 +367,13 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
+                   
                     foreach (var item in category)
                     {
+                        var cateID = await ctx.CATEGORY.Where(o => o.NAME == item).Select(o => o.AUTO_ID).FirstAsync();
                         var memberCategory = new MEMBER_CATEGORY();
                         memberCategory.MEMBER_ID = dto.AUTO_ID;
+                        memberCategory.CATEGORY_ID = cateID;
                         memberCategory.NAME = item;
                         memberCategory.CREATED_BY = dto.AUTO_ID.ToString();
                         memberCategory.UPDATED_BY = dto.AUTO_ID.ToString();

@@ -399,7 +399,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
         debugger;
         $http({
-            url: "http://localhost:1935/teacher/UpdateMemberCategory",
+            url: "/teacher/UpdateMemberCategory",
             method: "GET",
             params: { categoryList: $scope.categoryList }
         }).then(function (response) {
