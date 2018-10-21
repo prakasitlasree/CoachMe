@@ -108,7 +108,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $('#editAddress').show();
 
         $http({
-            url: "http://localhost:1935/teacher/GetGeography",
+            url: "/teacher/GetGeography",
             method: "GET",
             //params: { OrderID: $scope.orderId }
         }).then(function (response) {
@@ -135,7 +135,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.GetProvince = function () {
         $http({
-            url: "http://localhost:1935/teacher/GetListProvince",
+            url: "/teacher/GetListProvince",
             method: "GET",
             params: { geoID: $scope.geography }
         }).then(function (response) {
@@ -162,7 +162,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.GetAmphur = function () {
         $http({
-            url: "http://localhost:1935/teacher/GetListAmphur",
+            url: "/teacher/GetListAmphur",
             method: "GET",
             params: { provinceID: $scope.provinceID }
         }).then(function (response) {
@@ -198,7 +198,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
        
 
         $http({
-            url: "http://localhost:1935/teacher/GetTeacherProfile",
+            url: "/teacher/GetTeacherProfile",
             method: "GET",
             //params: { OrderID: $scope.orderId }
         }).then(function (response) {
@@ -207,7 +207,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $scope.TeacherProfile = response.data.OUTPUT_DATA;
                 $scope.BindingProfile();
                 $http({
-                    url: "http://localhost:1935/teacher/GetAdress",
+                    url: "/teacher/GetAdress",
                     method: "GET",
                     //params: { OrderID: $scope.orderId }
                 }).then(function (response) {
@@ -219,7 +219,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                             $("#ADDRESS").val(address);
                         }
                         $http({
-                            url: "http://localhost:1935/teacher/GetListTeacherCategory",
+                            url: "/teacher/GetListTeacherCategory",
                             method: "GET",
                         }).then(function (response) {
                             console.log(response.data.OUTPUT_DATA)
@@ -355,7 +355,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         debugger;
 
         $http({
-            url: "http://localhost:1935/teacher/GetListAvailableCategory",
+            url: "/teacher/GetListAvailableCategory",
             method: "GET",
             //params: { OrderID: $scope.orderId }
         }).then(function (response) {

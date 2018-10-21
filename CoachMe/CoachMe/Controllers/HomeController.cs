@@ -164,12 +164,25 @@ namespace CoachMe.Controllers
 
         }
 
+        public async Task<ActionResult> MatchTeacher(SEARCH_TEACHER_MODEL dto)
+        {
+            resp = await service.MatchTeacher(dto);
+            if (resp.STATUS)
+            {
+                return RedirectToAction("getteacher", "home");
+            }
+            else
+            {
+                return RedirectToAction("errorpage", "index");
+            }
+        }
+
         public async Task<ActionResult> AcceptTeacher(SEARCH_TEACHER_MODEL dto)
         {
             resp = await service.AcceptTeacher(dto);
             if (resp.STATUS)
             {
-                return RedirectToAction("getteacher", "student");
+                return RedirectToAction("getteacher", "home");
             }
             else
             {

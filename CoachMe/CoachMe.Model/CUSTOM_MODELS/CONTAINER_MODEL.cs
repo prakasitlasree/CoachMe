@@ -22,6 +22,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public ROLE ROLE { get; set; }
         public COURSE_PLACE COURSE_PLACE { get; set; }
         public MEMBER_CATEGORY MEMBER_CATEGORY { get; set; }
+        public MEMBER_MATCHING MEMBER_MATCHING { get; set; }
         public AMPHUR AMPHUR { get; set; }
         public PROVINCE PROVINCE { get; set; }
         public GEOGRAPHY GEOGRAPHY { get; set; }
