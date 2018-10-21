@@ -34,7 +34,6 @@ namespace COACHME.MODEL
         public Nullable<int> AGE { get; set; }
         public string ABOUT { get; set; }
         public string LOCATION { get; set; }
-        public string CATEGORY { get; set; }
         public string PROFILE_IMG_URL { get; set; }
         public string ABOUT_IMG_URL1 { get; set; }
         public string ABOUT_IMG_URL2 { get; set; }

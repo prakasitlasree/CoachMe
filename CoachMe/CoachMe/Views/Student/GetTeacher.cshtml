@@ -267,8 +267,33 @@
                                                     <div class="form-group m-form__group">
                                                         <label for="exampleSelect1">ประเภท</label>
                                                         @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
-                                                        <label for="exampleSelect1">หมวดหมู่</label>
-                                                        @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_COURSE), "-เลือกทั้งหมด-", new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                        
+                                                        @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู")
+                                                        {
+                                                            var listItems = new List<SelectListItem>();
+                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                            {
+                                                                listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            }
+                                                            <div id="category">
+                                                                <label for="exampleSelect1">หมวดหมู่</label>
+                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            var listItems = new List<SelectListItem>();
+                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
+                                                            {
+                                                                listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            }
+                                                            <div id="course">
+                                                                <label for="exampleSelect1">คอร์ส</label>
+                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_COURSE, listItems, "-เลือกทั้งหมด-", new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                            </div>
+                                                        }
+
+
                                                     </div>
                                                     <div class="form-group m-form__group">
                                                         <label for="exampleSelect1">จังหวัด</label>
@@ -349,7 +374,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="m-portlet__foot">
+                                            <div class=""> @*m-portlet__foot*@
                                                 <div class="row align-items-center">
                                                     <div class="col-lg-12">
                                                         <button type="submit" class="btn btn-brand m-btn--pill m-btn--air"><i class="fa fa-search"></i>ค้นหา</button>
@@ -380,23 +405,31 @@
                                                                     <div class="m-card-profile__pic-wrapper">
                                                                         <img src="..//@Url.Content(item.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg")" class="img-thumbnail" style="height:130px;width:130px">
                                                                     </div>
-                                                                    <p><i class="fa fa-user-graduate"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>
+                                                                    @*<p><i class="fa fa-user-graduate"></i>&nbsp ชื่อ : @Url.Content(item.FULLNAME)</p><br>*@
                                                                     <input data-val="true" data-val-number="The field AUTO_ID must be a number." data-val-required="The AUTO_ID field is required." id="AUTO_ID" name="MEMBERS.AUTO_ID" type="hidden" value="133">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <p></p>
-                                                            <div class="m-list__content">
+                                                             
+                                                           
+                                                            @*<div class="m-list__content">
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
                                                                     <div class="m-list-badge__items">
                                                                         @Url.Content(item.COURSE)
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>*@
                                                             @*<p><i class="fa fa-location-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>*@
-
+                                                            <div class="m-list__content">
+                                                                <div class="m-list-badge m--margin-bottom-20">
+                                                                    <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-user-graduate"></i>&nbsp ชื่อ :</div>
+                                                                    <div class="m-list-badge__items">
+                                                                        @Url.Content(item.FULLNAME)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="m-list__content">
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label" style="font-size:12px;font-weight:400;"><i class="fa fa-book-open"></i>&nbsp หมวดหมู่ :</div>
@@ -438,9 +471,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-                                                            @*@if (item.ABOUT != null)
-                                                                {*@
                                                             <div class="m-list__content">
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-list-ul"></i>&nbsp เกี่ยวกับผู้สอน :</div>
@@ -449,16 +479,19 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            @*@if (item.ABOUT != null)
+                                                                {*@
+                                                           
 
                                                             @*}*@
 
                                                             @if (Session["logon"] == null)
                                                             {
 
-                                                                <button class="btn btn-metal m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
+                                                                <button class="btn m-btn--pill m-btn--air         btn-outline-success m-btn m-btn--outline-2x" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
                                                                     <span>
                                                                         <i class="fa fa-plus"></i>
-                                                                        <span>เพิ่มเติม</span>
+                                                                        <span>ข้อมูลเพิ่มเติม</span>
                                                                     </span>
                                                                 </button>
                                                                 if (item.REGISTER_STATUS == false)
@@ -466,7 +499,7 @@
                                                                     <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_6">
                                                                         <span>
                                                                             <i class="fa fa-check-square"></i>
-                                                                            <span>สมัครเรียนกับครูคนนี้</span>
+                                                                            <span>สมัครเรียน!!!</span>
                                                                         </span>
                                                                     </a>
                                                                 }

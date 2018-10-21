@@ -13,11 +13,14 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string PROVINCE { get; set; }
         public string AREA { get; set; }
         public  string TEACH_TYPE { get; set; }
+        public string LOCATION { get; set; }
         public List<string> TEACH_LOCATE { get; set; }
         public List<int?> TEACHING_TYPE { get; set; }
         public List<string> TEACH_GENDER { get; set; }
         public List<int?> STUDENT_LEVEL { get; set; }
-        public List<string> LIST_COURSE { get; set; }
+        public List<COURSES> LIST_COURSE { get; set; }
+        public List<CATEGORY> LIST_CATEGORY { get; set; }
+
         public List<string> LIST_SEARCH_TYPE { get; set; }
         public List<string> LIST_PROVINCE { get; set; }
         public List<int?> LIST_COURSE_ID { get; set; }

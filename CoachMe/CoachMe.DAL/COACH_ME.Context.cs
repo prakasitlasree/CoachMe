@@ -29,6 +29,7 @@ namespace COACHME.DAL
         }
     
         public virtual DbSet<AMPHUR> AMPHUR { get; set; }
+        public virtual DbSet<CATEGORY> CATEGORY { get; set; }
         public virtual DbSet<CONFIGURATION> CONFIGURATION { get; set; }
         public virtual DbSet<COURSE_COMMENT> COURSE_COMMENT { get; set; }
         public virtual DbSet<COURSE_PLACE> COURSE_PLACE { get; set; }
@@ -38,6 +39,7 @@ namespace COACHME.DAL
         public virtual DbSet<LOGON_ACTIVITY> LOGON_ACTIVITY { get; set; }
         public virtual DbSet<MEMBER_CATEGORY> MEMBER_CATEGORY { get; set; }
         public virtual DbSet<MEMBER_LOGON> MEMBER_LOGON { get; set; }
+        public virtual DbSet<MEMBER_MATCHING> MEMBER_MATCHING { get; set; }
         public virtual DbSet<MEMBER_PACKAGE> MEMBER_PACKAGE { get; set; }
         public virtual DbSet<MEMBER_REGIS_COURSE> MEMBER_REGIS_COURSE { get; set; }
         public virtual DbSet<MEMBER_ROLE> MEMBER_ROLE { get; set; }
