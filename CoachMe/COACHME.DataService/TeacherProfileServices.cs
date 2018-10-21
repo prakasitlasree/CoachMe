@@ -149,7 +149,7 @@ namespace COACHME.DATASERVICE
                     string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//";
                     #endregion
                     #region ==== ROCK PATH ====
-                    myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
+                    //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
                     // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
@@ -875,14 +875,14 @@ namespace COACHME.DATASERVICE
                                             AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
                                             FULLNAME = memberProfile.FirstOrDefault().FULLNAME,
                                             FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME,
-                                            LAST_NAME =  memberProfile.FirstOrDefault().LAST_NAME,
+                                            LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME,
                                             MOBILE = memberProfile.FirstOrDefault().MOBILE,
                                             NICKNAME = memberProfile.FirstOrDefault().NICKNAME,
                                             DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.ToString(),
                                             SEX = memberProfile.FirstOrDefault().SEX,
                                             ABOUT = memberProfile.FirstOrDefault().ABOUT,
                                             AMPHUR_ID = memberProfile.FirstOrDefault().ABOUT,
-                                            TEACHING_TYPE= memberProfile.FirstOrDefault().TEACHING_TYPE,
+                                            TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE,
                                             STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL,
                                             LOCATION = memberProfile.FirstOrDefault().LOCATION
                                         });
@@ -899,7 +899,7 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
-       
+
         public async Task<RESPONSE__MODEL> UpdateMemberProfile(CUSTOM_MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -908,7 +908,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                   
+
                     #region =====Profile=====
                     //Update Profile
                     if (dto.FULLNAME != null)
@@ -967,7 +967,7 @@ namespace COACHME.DATASERVICE
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
                 }
-               
+
 
             }
             catch (Exception ex)
@@ -976,7 +976,7 @@ namespace COACHME.DATASERVICE
                 throw ex;
             }
 
-          
+
             return resp;
         }
 
@@ -996,7 +996,7 @@ namespace COACHME.DATASERVICE
                         string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
@@ -1056,7 +1056,7 @@ namespace COACHME.DATASERVICE
                     }
                     #endregion
 
-                    #endregion
+
                     //add activity
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
@@ -1071,6 +1071,7 @@ namespace COACHME.DATASERVICE
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
+                    resp.OUTPUT_DATA = member;
                 }
 
 
@@ -1113,7 +1114,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     resp.OUTPUT_DATA = await ctx.PROVINCE
-                                                .Where(o=>o.GEO_ID == geoID)
+                                                .Where(o => o.GEO_ID == geoID)
                                                 .ToListAsync();
                 }
                 resp.STATUS = true;
@@ -1151,5 +1152,41 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
+
+        public async Task<RESPONSE__MODEL> GetMemberAdress(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                if (dto.AMPHUR_ID != null)
+                {
+                    using (var ctx = new COACH_MEEntities())
+                    {
+
+                        var ampher = await ctx.AMPHUR.Where(o => o.AMPHUR_ID == dto.AMPHUR_ID).FirstOrDefaultAsync();
+                        var province = await ctx.PROVINCE.Where(o => o.PROVINCE_ID == ampher.PROVINCE_ID).FirstOrDefaultAsync();
+                        var geography = await ctx.GEOGRAPHY.Where(o => o.GEO_ID == ampher.GEO_ID).FirstOrDefaultAsync();
+                        List<string> address = new List<string>();
+                        address.Add(ampher.AMPHUR_NAME);
+                        address.Add(province.PROVINCE_NAME);
+                        address.Add(geography.GEO_NAME);
+                        resp.OUTPUT_DATA = address;
+
+                    }
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
+        #endregion
+
     }
 }

@@ -14,6 +14,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.ListGeography = [];
     $scope.ListProvince = [];
     $scope.ListAmphur = [];
+    $scope.address = [];
 
     $scope.geography
     $scope.provinceID
@@ -51,6 +52,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#LOCATE").prop("disabled", false);
         $("#TEACHING_TYPE").prop("disabled", false);
         $("#STUDENT_LEVEL").prop("disabled", false);
+        $("#editAddress").show();
+        $("#ADDRESS").hide();
 
         $("#btnAboutImg_1").prop("disabled", false);
         $("#AboutImg_1").css('cursor', 'pointer');
@@ -73,7 +76,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#DATE_OF_BIRTH").prop("disabled", true);
         $("#SEX").prop("disabled", true);
         $("#ID_CARD").prop("disabled", true);
-
+        $("#ADDRESS").show();
         $('#editAddress').hide();
         $('#LOCATE').show();
         $("#LOCATE").prop("disabled", true);
@@ -207,19 +210,35 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $scope.BindingProfile();
             }
         });
+
+        $http({
+            url: "http://localhost:1935/teacher/GetAdress",
+            method: "GET",
+            //params: { OrderID: $scope.orderId }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.address = response.data.OUTPUT_DATA;
+
+            }
+        });
+
+
         $.LoadingOverlay("hide");
     };
 
-  
-    
+
+
     $scope.BindingProfile = function () {
         debugger;
-       
+      
+        var adress = "จังหวัด : " + $scope.address[1] + " อำเภอ : " + $scope.address[0]
+        $("#ADDRESS").append(address);
+        
+
         $("#TEACHING_TYPE").val($scope.TeacherProfile[0].TEACHING_TYPE);
         $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
         $("#LOCATE").val($scope.TeacherProfile[0].LOCATION);
-        //$scope.TEACHING_TYPE = $scope.TeacherProfile[0].TEACHING_TYPE
-        //$scope.STUDENT_LEVEL = $scope.TeacherProfile[0].STUDENT_LEVEL
 
         $scope.FULLNAME = $scope.TeacherProfile[0].FULLNAME
         $scope.FIRST_NAME = $scope.TeacherProfile[0].FIRST_NAME
@@ -277,14 +296,12 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                     $scope.HideButton();
                 }
 
-                
+
             }
 
         });
         $.LoadingOverlay("hide");
     }
-
-   
 
     $scope.renderInnerHtml = function () {
         debugger;

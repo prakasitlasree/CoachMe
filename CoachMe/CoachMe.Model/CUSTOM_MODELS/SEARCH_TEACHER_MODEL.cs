@@ -22,13 +22,14 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<string> LIST_PROVINCE { get; set; }
         public List<int?> LIST_COURSE_ID { get; set; }
         public string SEARCH_ALL { get; set; }
-
+        public List<int?> LIST_PROVINCE_ID { get; set; }
+        public List<int?> LIST_AMPHUR_ID { get; set; }
         //public List<CUSTOM_MEMBERS> LIST_MEMBERS { get; set; }
-        
 
-    
+
+
         #region ======= course model =======
- 
+
         public int COURSE_ID { get; set; }
         public string COURSE_NAME { get; set; }
         public int MEMBER_ROLE_ID { get; set; }

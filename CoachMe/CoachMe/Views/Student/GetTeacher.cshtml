@@ -272,12 +272,14 @@
                                                     </div>
                                                     <div class="form-group m-form__group">
                                                         <label for="exampleSelect1">จังหวัด</label>
-                                                        <select class="form-control m-input m-input--pill" id="SeachProvince" ng-model="provinceID" ng-change="GetAmphur()"></select>
+                                                        <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID" id="SeachProvince" ng-model = "provinceID" ng-change="GetAmphur()"></select>
                                                         @*@Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), "-เลือกทั้งหมด-", new { @class = "form-control m-input m-input--air m-input--pill" })*@
                                                     </div>
                                                     <div class="form-group m-form__group">
                                                         <label for="exampleSelect1">เขต/อำเภอ</label>
-                                                        <select class="form-control m-input m-input--pill" id="amphur" ng-model="amphurID"></select>
+                                                        <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID" id="amphur" disabled>
+                                                            <option value="0" selected>-เลือกทั้งหมด-</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
@@ -399,35 +401,38 @@
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label" style="font-size:12px;font-weight:400;"><i class="fa fa-book-open"></i>&nbsp หมวดหมู่ :</div>
                                                                     <div class="m-list-badge__items">
-                                                                        @foreach (var cat in item.LIST_MEMBER_CETEGORY)
+                                                                        @if (item.LIST_MEMBER_CETEGORY != null)
                                                                         {
-                                                                            if (cat.NAME == "ดนตรี")
+                                                                            foreach (var cat in item.LIST_MEMBER_CETEGORY)
                                                                             {
+                                                                                if (cat.NAME == "ดนตรี")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--brand">  @Url.Content(cat.NAME)</a>
-                                                                            }
-                                                                            if (cat.NAME == "ภาษา")
-                                                                            {
+                                                                                }
+                                                                                if (cat.NAME == "ภาษา")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--focus">@Url.Content(cat.NAME)</a>
-                                                                            }
-                                                                            if (cat.NAME == "ธุรกิจและการเงิน")
-                                                                            {
+                                                                                }
+                                                                                if (cat.NAME == "ธุรกิจและการเงิน")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--primary">@Url.Content(cat.NAME)</a>
-                                                                            }
-                                                                            if (cat.NAME == "ศิลปะ")
-                                                                            {
+                                                                                }
+                                                                                if (cat.NAME == "ศิลปะ")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
-                                                                            }
-                                                                            if (cat.NAME == "เทคโนโลยี")
-                                                                            {
+                                                                                }
+                                                                                if (cat.NAME == "เทคโนโลยี")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--danger">@Url.Content(cat.NAME)</a>
-                                                                            }
-                                                                            if (cat.NAME == "วิชาชีพ/หลักสูตรพิเศษ")
-                                                                            {
+                                                                                }
+                                                                                if (cat.NAME == "วิชาชีพ/หลักสูตรพิเศษ")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--warning">@Url.Content(cat.NAME)</a>
-                                                                            }
-                                                                            if (cat.NAME == "สุขภาพ/ความงาม")
-                                                                            {
+                                                                                }
+                                                                                if (cat.NAME == "สุขภาพ/ความงาม")
+                                                                                {
                                                                                 <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
+                                                                                }
                                                                             }
                                                                         }
                                                                     </div>
