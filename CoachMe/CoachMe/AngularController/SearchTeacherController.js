@@ -2,8 +2,77 @@
 app.controller('SearchTeacherController', function ($scope, $http, $compile) {
 
 
-
+    $scope.SEARCH_TYPE = "ครู";
     $scope.provinceID;
+    $scope.ListCategory = [];
+    $scope.ListCourse = [];
+
+    $scope.GetType = function () {
+        debugger;
+
+        $('#SEARCH_TYPE').val($scope.SEARCH_TYPE)
+
+        if (document.getElementById("SEARCH_TYPE").value == "ครู") {
+            $http({
+                url: "/home/GetListCategory",
+                method: "GET",
+            }).then(function (response) {
+                console.log(response.data.OUTPUT_DATA)
+                if (response.data.STATUS == true) {
+                    $scope.ListCategory = response.data.OUTPUT_DATA;
+                    $scope.RenderCategoryDrp()
+                }
+            }).then(function () {
+                $('#SEARCH_TEACHER_MODEL.LIST_MEMBER_CETEGORY').prop('selectedIndex', 0);
+               
+            });
+        }
+        else {
+            debugger;
+            $http({
+                url: "/home/GetListCourse",
+                method: "GET",
+                //params: { geoID: $scope.geography }
+            }).then(function (response) {
+                console.log(response.data.OUTPUT_DATA)
+                if (response.data.STATUS == true) {
+                    $scope.ListCourse = response.data.OUTPUT_DATA;
+                    $scope.RenderCourseDrp()
+                }
+            }).then(function () {
+                $('#SEARCH_TEACHER_MODEL.LIST_MEMBER_TEACH_COURSE').prop('selectedIndex', 0);
+            });
+        }
+    }
+
+    $scope.RenderCategoryDrp = function () {
+        $('#TYPE').empty();
+        var html = "";
+        debugger;
+        var itemsLength = Object.keys($scope.ListCategory).length;
+        html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_CETEGORY' name='LIST_CATE'>"
+        html += "<option value = 0 >-เลือกทั้งหมด-</option>"
+        for (var i = 0; i < itemsLength; i++) {
+            html += "<option value = " + $scope.ListCategory[i].AUTO_ID + ">" + $scope.ListCategory[i].NAME + "</option>";
+        }
+        html += "</select>"
+        $('#TYPE').append(html)
+    }
+
+    $scope.RenderCourseDrp = function () {
+        $('#TYPE').empty();
+        var html = "";
+        debugger;
+        var itemsLength = Object.keys($scope.ListCourse).length;
+        html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_TEACH_COURSE' name='LIST_COURSE'>"
+        html += "<option value = 0 >-เลือกทั้งหมด-</option>"
+        for (var i = 0; i < itemsLength; i++) {
+            html += "<option value = '" + $scope.ListCourse[i].NAME + "'>" + $scope.ListCourse[i].NAME + "</option>";
+        }
+        html += "</select>"
+        $('#TYPE').append(html)
+    }
+
     $scope.GetProvince = function () {
         debugger;
         $http({

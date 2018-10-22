@@ -18,7 +18,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string DATE_OF_BIRTH_TEXT { get; set; }
         public string SEX_RADIO { get; set; }
         public string ID_CARD { get; set; }
-
+        public string ACCEPT_BY { get; set; }
         public int? TEACHING_TYPE { get; set; }
         public string TEACHING_TYPE_NAME { get; set; }
         public int? STUDENT_LEVEL { get; set; }

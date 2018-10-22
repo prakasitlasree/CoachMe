@@ -215,54 +215,72 @@
                                             <div class="tab-pane active show" id="m_tabs_1_1" role="tabpanel">
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">ประเภท</label>
+                                                    <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE" id="SEARCH_TYPE" ng-model="SEARCH_TYPE" ng-change="GetType()">
+                                                        <option value="ครู">ครู</option>
+                                                        <option value="คอร์ส">คอร์ส</option>>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">หมวดหมู่</label>
+                                                    <div id="TYPE">
+                                                        <select class="form-control m-input m-input--pill" id="SEARCH_TEACHER_MODEL.LIST_MEMBER_CETEGORY" name="LIST_CATE">
+                                                            <option value="0">เลือกทั้งหมด</option>
+                                                            <option value="1">ดนตรี</option>
+                                                            <option value="2">ภาษา</option>>
+                                                            <option value="3">ธุรกิจและการเงิน</option>
+                                                            <option value="4">ศิลปะ</option>>
+                                                            <option value="5">เทคโนโลยี </option>
+                                                            <option value="6">วิชาชีพ/หลักสูตรพิเศษ</option>>
+                                                            <option value="7">สุขภาพ/ความงาม</option>
+                                                        </select>
+                                                    </div>
+                                                    @*@Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @id = "SEARCH_TYPE", @name = "SEARCH_TYPE", @class = "form-control m-input m-input--air m-input--pill" })
 
-                                                    @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @id = "SEARCH_TYPE", @name = "SEARCH_TYPE", @class = "form-control m-input m-input--air m-input--pill" })
-
-                                                    @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู" )
-                                                    {
-                                                        var listItems = new List<SelectListItem>();
-                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                        @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู" )
                                                         {
-                                                            listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                        }
-                                                        <div id="category">
-                                                            <label for="CATEGORY">หมวดหมู่</label>
-                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
-                                                        </div>
+                                                            var listItems = new List<SelectListItem>();
+                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                            {
+                                                                listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            }
+                                                            <div id="category">
+                                                                <label for="CATEGORY">หมวดหมู่</label>
+                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
+                                                            </div>
 
-                                                        var listItems1 = new List<SelectListItem>();
-                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
-                                                        {
-                                                            listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            var listItems1 = new List<SelectListItem>();
+                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
+                                                            {
+                                                                listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            }
+                                                            <div id="course">
+                                                                <label for="COURSE">คอร์ส</label>
+                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                            </div>
                                                         }
-                                                        <div id="course">
-                                                            <label for="COURSE">คอร์ส</label>
-                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        var listItems = new List<SelectListItem>();
-                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                        else
                                                         {
-                                                            listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                        }
-                                                        <div id="category">
-                                                            <label for="CATEGORY">หมวดหมู่</label>
-                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
-                                                        </div>
+                                                            var listItems = new List<SelectListItem>();
+                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
+                                                            {
+                                                                listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            }
+                                                            <div id="category">
+                                                                <label for="CATEGORY">หมวดหมู่</label>
+                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
+                                                            </div>
 
-                                                        var listItems1 = new List<SelectListItem>();
-                                                        foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
-                                                        {
-                                                            listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                        }
-                                                        <div id="course">
-                                                            <label for="COURSE">คอร์ส</label>
-                                                            @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
-                                                        </div>
+                                                            var listItems1 = new List<SelectListItem>();
+                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
+                                                            {
+                                                                listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
+                                                            }
+                                                            <div id="course">
+                                                                <label for="COURSE">คอร์ส</label>
+                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
+                                                            </div>
 
-                                                    }
+                                                        }*@
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">จังหวัด</label>
@@ -378,7 +396,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-8"> 
+                                                    <div class="col-md-8">
                                                         @*<div class="m-list__content">
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
@@ -441,7 +459,7 @@
                                                                     @Url.Content(item.ABOUT)
                                                                 </div>
                                                             </div>
-                                                        </div> 
+                                                        </div>
 
                                                         @if (Session["logon"] == null)
                                                         {
@@ -461,7 +479,7 @@
                                                                     </span>
                                                                 </a>
                                                             }
-                                                            
+
                                                             using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
                                                             {
                                                                 <div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
@@ -535,11 +553,11 @@
                                                                                             <span>
                                                                                                 <i class="fa fa-address-card"></i>
                                                                                                 @*@Html.Hidden("COURSE_ID", item.AUTO_ID)
-                                                                                                @Html.Hidden("COURSE_NAME", item.COURSE)
-                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)*@
-                                                                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID) 
+                                                                                                    @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                                    @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)*@
+                                                                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
                                                                                                 @Html.Hidden("TEACHER_ROLE_ID", item.AUTO_ID)
-                                                                                                 
+
                                                                                                 <span> คุณจะเลือก @Url.Content(item.FULLNAME) ใช่หรือไม่ ?</span>
                                                                                             </span>
 
@@ -828,7 +846,7 @@
         });
         $(document).ready(function () {
             $('#course').hide();
-           
+
         });
     </script>
 </section>

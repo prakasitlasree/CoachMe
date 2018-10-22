@@ -48,7 +48,7 @@
                                 <h4 class="m--font-bold m--font-bold">
                                     <span>
                                         <i class="fa fa-male">&nbsp&nbsp</i>
-                                        <span> เพศ : &nbsp  @Url.Content(item.SEX == "1" ? "ชาย" : "หญิง")</span>
+                                        <span> เพศ : &nbsp  @item.SEX</span>
                                     </span>
                                 </h4>
                                 <h4 class="m--font-bold m--font-bold">
@@ -68,7 +68,7 @@
                                     <span>
                                         <i class="fa fa-phone-square"></i>
                                         <span> เบอร์โทรศัพท์ : &nbsp @item.MOBILE </span>
-                                    </span> 
+                                    </span>
                                 </h4>
                                 <h4 class="m--font-bold m--font-bold">
                                     <span>
@@ -98,14 +98,17 @@
                                     </div>
                                 </div>
                                 <br>
-                                @foreach (var comment in item.LIST_STUDENT_COMMENT)
+                                @if (item.LIST_STUDENT_COMMENT.Count > 0)
                                 {
-                                    <h4 class="m--font-bold m--font-bold">
-                                        <span>
-                                            <i class="fa fa-comment"></i>
-                                            <span>@comment</span>
-                                        </span>
-                                    </h4>
+                                    foreach (var comment in item.LIST_STUDENT_COMMENT)
+                                    {
+                                        <h4 class="m--font-bold m--font-bold">
+                                            <span>
+                                                <i class="fa fa-comment"></i>
+                                                <span>@comment</span>
+                                            </span>
+                                        </h4>
+                                    }
                                 }
                             </div>
 
@@ -163,6 +166,14 @@
                     <div class="m-portlet__head m-portlet__head--fit">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-action">
+                                @if (item.ACCEPT_BY == "COURSE")
+                                {
+                                    <button type="button" class="btn btn-sm m-btn--pill  btn-brand" disabled>Accept by course</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-sm m-btn--pill  btn-success" disabled>Accept by teacher</button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -182,16 +193,16 @@
                                     </div>
                                     <div class="m-widget19__info">
                                         <span class="m-widget19__username">
-                                           @item.FULLNAME
+                                            @item.FULLNAME
                                         </span><br>
                                         <span class="m-widget19__time">
-                                           @item.COURSE
+                                            @item.COURSE
                                         </span>
                                     </div>
-                                                                      
+
                                 </div>
                                 <div class="m-widget19__body">
-                                   เกี่ยวกับนักเรียน : @item.ABOUT 
+                                    เกี่ยวกับนักเรียน : @item.ABOUT
                                 </div>
                             </div>
                             <div class="m-widget19__action center">
@@ -212,6 +223,7 @@
                                             <span>เพิ่มเติม</span>
                                         </span>
                                     </button>
+
                                 }
                             </div>
                             <br />
@@ -285,10 +297,10 @@
                 }
                 <!--end:: Widgets/Blog-->
             </div>
-        } 
+        }
     </div>
 
 </div>
- 
+
 
 

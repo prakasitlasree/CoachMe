@@ -78,5 +78,47 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
+
+        public async Task<RESPONSE__MODEL> GetListCategory()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    resp.OUTPUT_DATA = await ctx.CATEGORY
+                                                .ToListAsync();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetListCourse()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    resp.OUTPUT_DATA = await ctx.COURSES
+                                                .ToListAsync();
+                }
+                resp.STATUS = true;
+
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+            return resp;
+        }
     }
 }

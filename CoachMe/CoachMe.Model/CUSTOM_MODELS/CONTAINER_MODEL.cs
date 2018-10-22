@@ -44,7 +44,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<COURSE_PLACE> LIST_COURSE_PLACE { get; set; }
         public List<MEMBER_PACKAGE> LIST_MEMBER_PACKAGE { get; set; }
         public List<CUSTOM_MEMBERS> LIST_CUSTOM_MEMBERS { get; set; }
-
+        public List<string> LIST_COURSE { get; set; }
+        public List<int> LIST_CATE { get; set; }
         public decimal TotalProfit { get; set; }
 
         public int CountAllTeacher { get; set; }

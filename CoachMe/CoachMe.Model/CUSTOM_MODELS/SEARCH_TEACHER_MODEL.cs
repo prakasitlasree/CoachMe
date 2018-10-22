@@ -32,7 +32,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string SEARCH_ALL { get; set; }
         public List<int?> LIST_PROVINCE_ID { get; set; }
         public List<int?> LIST_AMPHUR_ID { get; set; }
-        //public List<CUSTOM_MEMBERS> LIST_MEMBERS { get; set; }
+        public List<int> LIST_MEMBER_CETEGORY { get; set; }
+        public List<int> LIST_MEMBER_TEACH_COURSE { get; set; }
 
         public int TEACHER_ROLE_ID { get; set; }
         public int STUDENT_ROLE_ID { get; set; }

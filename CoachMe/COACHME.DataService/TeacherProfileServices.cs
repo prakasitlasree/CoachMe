@@ -114,7 +114,7 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public  RESPONSE__MODEL GetMemberProfileFromAutoID(MEMBERS dto)
+        public RESPONSE__MODEL GetMemberProfileFromAutoID(MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
@@ -367,7 +367,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                   
+
                     foreach (var item in category)
                     {
                         var cateID = await ctx.CATEGORY.Where(o => o.NAME == item).Select(o => o.AUTO_ID).FirstAsync();
@@ -523,6 +523,7 @@ namespace COACHME.DATASERVICE
                         .Include("MEMBER_PACKAGE")
                         .Include(a => a.MEMBER_ROLE.Select(c => c.MEMBER_TEACH_COURSE))
                         .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
+
                     var teachCourse = memberProfile.MEMBER_ROLE.FirstOrDefault();
 
                     var listStudent = ctx.MEMBERS.ToList();
@@ -551,11 +552,38 @@ namespace COACHME.DATASERVICE
                                 obj.ABOUT = student.MEMBERS.ABOUT ?? "";
                                 obj.LIST_STUDENT_COMMENT = ctx.COURSE_COMMENT.Where(x => x.COURSE_ID == item.COURSE_ID && x.USER_ROLE_ID == student.AUTO_ID).Select(p => p.COMMENT).ToList();
                                 obj.REGIS_COURSE_ID = register.AUTO_ID;
-
+                                obj.ACCEPT_BY = "COURSE";
                                 listCustom.Add(obj);
                             }
                         }
                     }
+                    var memberRoleID = memberProfile.MEMBER_ROLE.Select(o => o.AUTO_ID).FirstOrDefault();
+                    var listIDAcceptByTeacher = ctx.MEMBER_MATCHING.Where(o => o.TEACHER_ROLE_ID == memberRoleID)
+                                             .Select(k => k.STUDENT_ROLE_ID).ToList();
+
+                    var listStudentAcceptByTeacher = ctx.MEMBERS.Where(o => listIDAcceptByTeacher.Contains(o.MEMBER_ROLE.FirstOrDefault().AUTO_ID)).ToList();
+                    foreach (var member in listStudentAcceptByTeacher)
+                    {
+                        var obj = new CUSTOM_MEMBERS();
+                        obj.AUTO_ID = member.AUTO_ID;
+
+                        obj.PROFILE_IMG_URL = member.PROFILE_IMG_URL;
+                        //obj.STATUS = member.sta
+                        obj.FULLNAME = member.FULLNAME ?? "ไม่ระบุ";
+                        obj.SEX = member.SEX == "1" ? "ชาย" : "หญิง";
+                        obj.AGE = member.AGE ?? 0;
+                        obj.LOCATION = member.LOCATION ?? "ไม่ระบุ";
+                        obj.MOBILE = member.MOBILE ?? "ไม่ระบุ";
+                        obj.COURSE = "Accept by Teacher";
+                        obj.ABOUT = member.ABOUT ?? "ไม่ระบุ";
+                        obj.LIST_STUDENT_COMMENT = new List<string> { "ไม่ระบุ" };
+                        obj.REGIS_COURSE_ID = 999;
+                        obj.ACCEPT_BY = "TEACHER";
+                        listCustom.Add(obj);
+
+                    }
+
+
                     model.MEMBERS = memberProfile;
 
                     package = memberProfile.MEMBER_PACKAGE
@@ -875,7 +903,7 @@ namespace COACHME.DATASERVICE
                     resp.OUTPUT_DATA = (from item in memberProfile
                                         select new CUSTOM_MEMBERS
                                         {
-                                            AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID ,
+                                            AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
                                             FULLNAME = memberProfile.FirstOrDefault().FULLNAME ?? "ไม่ระบุ",
                                             FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME ?? "ไม่ระบุ",
                                             LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME ?? "ไม่ระบุ",
@@ -911,7 +939,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var member = await ctx.MEMBERS
-                                          .Include(s=>s.MEMBER_LOGON)
+                                          .Include(s => s.MEMBER_LOGON)
                                           .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
 
                     #region =====Profile=====
@@ -952,11 +980,11 @@ namespace COACHME.DATASERVICE
                     {
                         member.ABOUT = dto.ABOUT;
                     }
-                    if(dto.SEX_RADIO != null)
+                    if (dto.SEX_RADIO != null)
                     {
                         member.SEX = dto.SEX_RADIO;
                     }
-                    if(dto.DATE_OF_BIRTH_TEXT != null)
+                    if (dto.DATE_OF_BIRTH_TEXT != null)
                     {
                         DateTime value;
                         if (DateTime.TryParse(dto.DATE_OF_BIRTH_TEXT, out value))
@@ -965,9 +993,9 @@ namespace COACHME.DATASERVICE
                         }
                         else
                         {
-                           
+
                         }
-                        
+
                     }
                     if (dto.LOCATION != null)
                     {
@@ -985,7 +1013,7 @@ namespace COACHME.DATASERVICE
                     {
                         member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
                     }
-                    
+
 
                     #endregion
                     //add activity
@@ -1001,7 +1029,7 @@ namespace COACHME.DATASERVICE
                     #endregion
 
                     await ctx.SaveChangesAsync();
-                    
+
                     resp.STATUS = true;
                 }
 
@@ -1033,7 +1061,7 @@ namespace COACHME.DATASERVICE
                         string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
@@ -1108,7 +1136,7 @@ namespace COACHME.DATASERVICE
 
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
-                   
+
                 }
 
 

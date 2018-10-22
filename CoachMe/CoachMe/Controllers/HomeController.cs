@@ -226,6 +226,41 @@ namespace CoachMe.Controllers
 
         }
 
+        public async Task<JsonResult> GetListCategory()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+
+            resp = await commonService.GetListCategory();
+            if (resp.STATUS)
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public async Task<JsonResult> GetListCourse()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+
+            resp = await commonService.GetListCourse();
+            if (resp.STATUS)
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

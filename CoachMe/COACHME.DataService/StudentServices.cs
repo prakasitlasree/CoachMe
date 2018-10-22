@@ -121,6 +121,55 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
+        private string GetTeachtingTypeValue(int? id)
+        {
+            string result = string.Empty;
+            if (id == 1)
+            {
+                result = "เรียนเดี่ยว";
+            }
+            else if (id == 2)
+            {
+                result = "เรียนกลุ่ม";
+            }
+            else if (id == 3)
+            {
+                result = "เรียนเดี่ยว,เรียนกลุ่ม";
+            }
+            //< option value = 1 > เรียนเดี่ยว </ option >
+            //< option value = 2 > เรียนกลุ่ม </ option >
+            //< option value = 3 > เรียนเดี่ยว,เรียนกลุ่ม </ option >
+            return result;
+        }
+
+        private string GetStudentLevelValue(int? id)
+        {
+            string result = string.Empty;
+            if (id == 1)
+            {
+                result = "เริ่มต้น";
+            }
+            else if (id == 2)
+            {
+                result = "ปานกลาง";
+            }
+            else if (id == 3)
+            {
+                result = "ขั้นสูง";
+            }
+            else if (id == 4)
+            {
+                result = "ทุกระดับผู้เรียน";
+            }
+            //< option value = 1 > เริ่มต้น </ option >
+
+            //< option value = 2 > ปานกลาง </ option >
+
+            //< option value = 3 > ขั้นสูง </ option >
+
+            //< option value = 4 > ทุกระดับผู้เรียน </ option >
+            return result;
+        }
 
         #region ===== BEFORE LOGIN ======
 
@@ -192,57 +241,6 @@ namespace COACHME.DATASERVICE
             }
             return resp;
         }
-
-        private string GetTeachtingTypeValue(int? id)
-        {
-            string result = string.Empty;
-            if (id == 1)
-            {
-                result = "เรียนเดี่ยว";
-            }
-            else if (id == 2)
-            {
-                result = "เรียนกลุ่ม";
-            }
-            else if (id == 3)
-            {
-                result = "เรียนเดี่ยว,เรียนกลุ่ม";
-            }
-            //< option value = 1 > เรียนเดี่ยว </ option >
-            //< option value = 2 > เรียนกลุ่ม </ option >
-            //< option value = 3 > เรียนเดี่ยว,เรียนกลุ่ม </ option >
-            return result;
-        }
-
-        private string GetStudentLevelValue(int? id)
-        {
-            string result = string.Empty;
-            if (id == 1)
-            {
-                result = "เริ่มต้น";
-            }
-            else if (id == 2)
-            {
-                result = "ปานกลาง";
-            }
-            else if (id == 3)
-            {
-                result = "ขั้นสูง";
-            }
-            else if (id == 4)
-            {
-                result = "ทุกระดับผู้เรียน";
-            }
-            //< option value = 1 > เริ่มต้น </ option >
-
-            //< option value = 2 > ปานกลาง </ option >
-
-            //< option value = 3 > ขั้นสูง </ option >
-
-            //< option value = 4 > ทุกระดับผู้เรียน </ option >
-            return result;
-        }
-
         public async Task<RESPONSE__MODEL> GetListAllCourseBeforeLogin()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -314,6 +312,10 @@ namespace COACHME.DATASERVICE
                     {
                         dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
                         listAllTeachCourse = listAllTeachCourse.Where(x => !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
+                    }
+                    if(dto.LIST_COURSE.FirstOrDefault() != "0")
+                    {
+                        listAllTeachCourse = listAllTeachCourse.Where(x => x.DESCRIPTION == dto.LIST_COURSE.FirstOrDefault()).ToList();
                     }
 
 
@@ -418,9 +420,9 @@ namespace COACHME.DATASERVICE
 
                     #region === Advance Search ====
 
-                    if (dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY != null)
+                    if (dto.LIST_CATE.FirstOrDefault() >0)
                     {
-                        int catId = Convert.ToInt32(dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY);
+                        int catId = dto.LIST_CATE.FirstOrDefault();
                         listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o=> o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
                     }
                     #endregion
@@ -677,12 +679,15 @@ namespace COACHME.DATASERVICE
                     }
                     #region === Advance Search ====
 
-                    if (dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY != null)
+                   
+
+                    if (dto.LIST_CATE.FirstOrDefault() > 0)
                     {
-                        int catId = Convert.ToInt32(dto.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY);
+                        int catId = dto.LIST_CATE.FirstOrDefault();
                         list = list.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o => o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
                     }
                     #endregion
+                   
 
                     resp.OUTPUT_DATA = list;
                 }
@@ -714,6 +719,7 @@ namespace COACHME.DATASERVICE
                     var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();
 
                     var memberRegisCourse = await ctx.MEMBER_REGIS_COURSE
+                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                      .Where(o => o.MEMBER_ROLE.AUTO_ID == memberRole.AUTO_ID)
                                                      .Select(p => p.TEACH_COURSE_ID).ToListAsync();
 
