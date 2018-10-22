@@ -252,7 +252,8 @@ namespace COACHME.DATASERVICE
                     var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
-                                                    .ToListAsync();
+                                                    .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
+                                                   
 
                     var listTeachCourse = (from item in listAllTeachCourse
                                            select new CUSTOM_MEMBERS
@@ -571,7 +572,8 @@ namespace COACHME.DATASERVICE
                     var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
-                                                    .ToListAsync();
+                                                    .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
+                                                   
 
                     var listTeachCourse = (from item in listAllTeachCourse
                                            select new CUSTOM_MEMBERS
