@@ -67,7 +67,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
         html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_TEACH_COURSE' name='LIST_COURSE'>"
         html += "<option value = 0 >-เลือกทั้งหมด-</option>"
         for (var i = 0; i < itemsLength; i++) {
-            html += "<option value = '" + $scope.ListCourse[i].NAME + "'>" + $scope.ListCourse[i].NAME + "</option>";
+            html += "<option value = " + $scope.ListCourse[i].AUTO_ID + ">" + $scope.ListCourse[i].NAME + "</option>";
         }
         html += "</select>"
         $('#TYPE').append(html)

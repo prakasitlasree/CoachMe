@@ -313,9 +313,9 @@ namespace COACHME.DATASERVICE
                         dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
                         listAllTeachCourse = listAllTeachCourse.Where(x => !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
                     }
-                    if(dto.LIST_COURSE.FirstOrDefault() != "0")
+                    if(dto.LIST_COURSE.FirstOrDefault() > 0)
                     {
-                        listAllTeachCourse = listAllTeachCourse.Where(x => x.DESCRIPTION == dto.LIST_COURSE.FirstOrDefault()).ToList();
+                        listAllTeachCourse = listAllTeachCourse.Where(x => x.COURSE_ID == dto.LIST_COURSE.FirstOrDefault()).ToList();
                     }
 
 
@@ -744,6 +744,10 @@ namespace COACHME.DATASERVICE
                     {
                         dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
                         listAllTeachCourse = listAllTeachCourse.Where(x => !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
+                    }
+                    if (dto.LIST_COURSE.FirstOrDefault() > 0)
+                    {
+                        listAllTeachCourse = listAllTeachCourse.Where(x => x.COURSE_ID == dto.LIST_COURSE.FirstOrDefault()).ToList();
                     }
                     #endregion
 
