@@ -152,12 +152,30 @@ namespace COACHME.DATASERVICE
                                           LOCATION = a.LOCATION ?? "ไม่ระบุ",
                                           MOBILE = a.MOBILE ?? "ไม่ระบุ",
                                           ABOUT = a.ABOUT ?? "ไม่ระบุ",
+                                          TEACHING_TYPE = a.TEACHING_TYPE,
+                                          STUDENT_LEVEL = a.STUDENT_LEVEL,
 
                                       }).ToListAsync();
 
                     foreach (var item in list)
                     {
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
+                        if (item.TEACHING_TYPE != null)
+                        {
+                            item.TEACHING_TYPE_NAME = GetTeachtingTypeValue(item.TEACHING_TYPE);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
+                        if (item.STUDENT_LEVEL != null)
+                        {
+                            item.STUDENT_LEVEL_NAME = GetStudentLevelValue(item.STUDENT_LEVEL);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
                     }
 
                     resp.OUTPUT_DATA = list;
@@ -170,6 +188,57 @@ namespace COACHME.DATASERVICE
             }
             return resp;
         }
+
+        private string GetTeachtingTypeValue(int? id)
+        {
+            string result = string.Empty;
+            if (id == 1)
+            {
+                result = "เรียนเดี่ยว";
+            }
+            else if (id == 2)
+            {
+                result = "เรียนกลุ่ม";
+            }
+            else if (id == 3)
+            {
+                result = "เรียนเดี่ยว,เรียนกลุ่ม";
+            }
+            //< option value = 1 > เรียนเดี่ยว </ option >
+            //< option value = 2 > เรียนกลุ่ม </ option >
+            //< option value = 3 > เรียนเดี่ยว,เรียนกลุ่ม </ option >
+            return result;
+        }
+
+        private string GetStudentLevelValue(int? id)
+        {
+            string result = string.Empty;
+            if (id == 1)
+            {
+                result = "เริ่มต้น";
+            }
+            else if (id == 2)
+            {
+                result = "ปานกลาง";
+            }
+            else if (id == 3)
+            {
+                result = "ขั้นสูง";
+            }
+            else if (id == 4)
+            {
+                result = "ทุกระดับผู้เรียน";
+            }
+            //< option value = 1 > เริ่มต้น </ option >
+
+            //< option value = 2 > ปานกลาง </ option >
+
+            //< option value = 3 > ขั้นสูง </ option >
+
+            //< option value = 4 > ทุกระดับผู้เรียน </ option >
+            return result;
+        }
+
         public async Task<RESPONSE__MODEL> GetListAllCourseBeforeLogin()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -313,12 +382,30 @@ namespace COACHME.DATASERVICE
                                              LOCATION = a.LOCATION ?? "ไม่ระบุ",
                                              MOBILE = a.MOBILE ?? "ไม่ระบุ",
                                              ABOUT = a.ABOUT ?? "ไม่ระบุ",
+                                             TEACHING_TYPE = a.TEACHING_TYPE,
+                                             STUDENT_LEVEL = a.STUDENT_LEVEL,
                                          }).ToListAsync();
 
                     foreach (var item in listTeacher)
                     {
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
                         item.LIST_MEMBER_TEACH_COURSE = listCourse.Where(x => x.MEMBER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
+                        if (item.TEACHING_TYPE != null)
+                        {
+                            item.TEACHING_TYPE_NAME = GetTeachtingTypeValue(item.TEACHING_TYPE);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
+                        if (item.STUDENT_LEVEL != null)
+                        {
+                            item.STUDENT_LEVEL_NAME = GetStudentLevelValue(item.STUDENT_LEVEL);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
                     }
 
                     #region === Advance Search ====
@@ -410,12 +497,30 @@ namespace COACHME.DATASERVICE
                                           LOCATION = a.LOCATION ?? "ไม่ระบุ",
                                           MOBILE = a.MOBILE ?? "ไม่ระบุ",
                                           ABOUT = a.ABOUT ?? "ไม่ระบุ",
-
+                                          TEACHING_TYPE = a.TEACHING_TYPE,
+                                          STUDENT_LEVEL = a.STUDENT_LEVEL,
                                       }).ToListAsync();
 
                     foreach (var item in list)
                     {
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
+                        if (item.TEACHING_TYPE != null)
+                        {
+                            item.TEACHING_TYPE_NAME = GetTeachtingTypeValue(item.TEACHING_TYPE);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
+                        if (item.STUDENT_LEVEL != null)
+                        {
+                            item.STUDENT_LEVEL_NAME = GetStudentLevelValue(item.STUDENT_LEVEL);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
+
                         var match = listMatching.Where(x => x.TEACHER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
                         if (match.Count > 0)
                         {
@@ -524,12 +629,30 @@ namespace COACHME.DATASERVICE
                                           LOCATION = a.LOCATION ?? "ไม่ระบุ",
                                           MOBILE = a.MOBILE ?? "ไม่ระบุ",
                                           ABOUT = a.ABOUT ?? "ไม่ระบุ",
-                                          
+                                          TEACHING_TYPE = a.TEACHING_TYPE,
+                                          STUDENT_LEVEL = a.STUDENT_LEVEL,
+
                                       }).ToListAsync();
 
                     foreach (var item in list)
                     {
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
+                        if (item.TEACHING_TYPE != null)
+                        {
+                            item.TEACHING_TYPE_NAME = GetTeachtingTypeValue(item.TEACHING_TYPE);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
+                        if (item.STUDENT_LEVEL != null)
+                        {
+                            item.STUDENT_LEVEL_NAME = GetStudentLevelValue(item.STUDENT_LEVEL);
+                        }
+                        else
+                        {
+                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
+                        }
                         var match = listMatching.Where(x => x.TEACHER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
                         if (match.Count > 0)
                         {

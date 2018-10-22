@@ -18,8 +18,12 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string DATE_OF_BIRTH_TEXT { get; set; }
         public string SEX_RADIO { get; set; }
         public string ID_CARD { get; set; }
+
         public int? TEACHING_TYPE { get; set; }
+        public string TEACHING_TYPE_NAME { get; set; }
         public int? STUDENT_LEVEL { get; set; }
+        public string STUDENT_LEVEL_NAME { get; set; }
+
         public string SEX { get; set; }
         public Nullable<int> AGE { get; set; }
         public string ABOUT { get; set; }
@@ -44,8 +48,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int REGIS_COURSE_ID { get; set; }
         public string COURSE_BANNER { get; set; }
         public string ROLE { get; set; }
+         
 
-        
         //public List<int> LIST_MEMBER_CETEGORY { get; set; }
         public List<MEMBER_CATEGORY> LIST_MEMBER_CETEGORY { get; set; }
         public List<MEMBER_TEACH_COURSE> LIST_MEMBER_TEACH_COURSE { get; set; }
