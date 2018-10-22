@@ -154,6 +154,10 @@ namespace COACHME.DATASERVICE
                                           ABOUT = a.ABOUT ?? "ไม่ระบุ",
                                           TEACHING_TYPE = a.TEACHING_TYPE,
                                           STUDENT_LEVEL = a.STUDENT_LEVEL,
+                                          ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
+                                          ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
+                                          ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
+                                          ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
 
                                       }).ToListAsync();
 
@@ -384,6 +388,10 @@ namespace COACHME.DATASERVICE
                                              ABOUT = a.ABOUT ?? "ไม่ระบุ",
                                              TEACHING_TYPE = a.TEACHING_TYPE,
                                              STUDENT_LEVEL = a.STUDENT_LEVEL,
+                                             ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
+                                             ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
+                                             ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
+                                             ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
                                          }).ToListAsync();
 
                     foreach (var item in listTeacher)
@@ -499,6 +507,10 @@ namespace COACHME.DATASERVICE
                                           ABOUT = a.ABOUT ?? "ไม่ระบุ",
                                           TEACHING_TYPE = a.TEACHING_TYPE,
                                           STUDENT_LEVEL = a.STUDENT_LEVEL,
+                                          ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
+                                          ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
+                                          ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
+                                          ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
                                       }).ToListAsync();
 
                     foreach (var item in list)
@@ -631,6 +643,10 @@ namespace COACHME.DATASERVICE
                                           ABOUT = a.ABOUT ?? "ไม่ระบุ",
                                           TEACHING_TYPE = a.TEACHING_TYPE,
                                           STUDENT_LEVEL = a.STUDENT_LEVEL,
+                                          ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
+                                          ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
+                                          ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
+                                          ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
 
                                       }).ToListAsync();
 
