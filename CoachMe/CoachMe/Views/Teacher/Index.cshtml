@@ -193,6 +193,7 @@
                                                 <div class='input-group date'>
                                                     @*@Html.TextBoxFor(m => m.MEMBERS.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH", @class = "form-control m-input m-input--pill", @disabled = "disabled" })*@
                                                     <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH" ng-model="DATE_OF_BIRTH_TEXT" ng-value="DATE_OF_BIRTH_TEXT" disabled>
+                                                    <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH_TEXT" style="display:none">
                                                 </div>
                                             </div>
                                         </div>
@@ -202,11 +203,11 @@
                                                 <input class="form-control m-input m-input--pill" id="SEX" ng-model="SEX" ng-value="SEX" disabled>
                                                 <div class="m-radio-inline" id="SEX_RADIO" style="display:none">
                                                     <label class="m-radio">
-                                                        <input type="radio"id="SEX_RADIO_BTN" name="SEX_RADIO" ng-model="SEX_RADIO" value="1"> ชาย
+                                                        <input type="radio"id="SEX_RADIO_BTN_1" name="SEX_RADIO" ng-model="SEX_RADIO" value="1"> ชาย
                                                         <span></span>
                                                     </label>
                                                     <label class="m-radio">
-                                                        <input type="radio"id="SEX_RADIO_BTN" name="SEX_RADIO" ng-model="SEX_RADIO" value="2"> หญิง
+                                                        <input type="radio"id="SEX_RADIO_BTN_2" name="SEX_RADIO" ng-model="SEX_RADIO" value="2"> หญิง
                                                         <span></span>
                                                     </label>
                                                 </div>

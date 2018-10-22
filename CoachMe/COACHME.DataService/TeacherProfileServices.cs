@@ -875,19 +875,19 @@ namespace COACHME.DATASERVICE
                     resp.OUTPUT_DATA = (from item in memberProfile
                                         select new CUSTOM_MEMBERS
                                         {
-                                            AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
-                                            FULLNAME = memberProfile.FirstOrDefault().FULLNAME,
-                                            FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME,
-                                            LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME,
-                                            MOBILE = memberProfile.FirstOrDefault().MOBILE,
-                                            NICKNAME = memberProfile.FirstOrDefault().NICKNAME,
-                                            DATE_OF_BIRTH_TEXT = memberProfile.FirstOrDefault().DATE_OF_BIRTH.Value.ToShortDateString(),
-                                            SEX = memberProfile.FirstOrDefault().SEX,
-                                            ABOUT = memberProfile.FirstOrDefault().ABOUT,
-                                            AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID,
-                                            TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE,
-                                            STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL,
-                                            LOCATION = memberProfile.FirstOrDefault().LOCATION
+                                            AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID ,
+                                            FULLNAME = memberProfile.FirstOrDefault().FULLNAME ?? "ไม่ระบุ",
+                                            FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME ?? "ไม่ระบุ",
+                                            LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME ?? "ไม่ระบุ",
+                                            MOBILE = memberProfile.FirstOrDefault().MOBILE ?? "ไม่ระบุ",
+                                            NICKNAME = memberProfile.FirstOrDefault().NICKNAME ?? "ไม่ระบุ",
+                                            DATE_OF_BIRTH_TEXT = (memberProfile.FirstOrDefault().DATE_OF_BIRTH.HasValue) ? memberProfile.FirstOrDefault().DATE_OF_BIRTH.Value.ToShortDateString() : "ไม่ระบุ",
+                                            SEX = memberProfile.FirstOrDefault().SEX ?? "ไม่ระบุ",
+                                            ABOUT = memberProfile.FirstOrDefault().ABOUT ?? "ไม่ระบุ",
+                                            AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID ?? 0,
+                                            TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE ?? 0,
+                                            STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL ?? 0,
+                                            LOCATION = memberProfile.FirstOrDefault().LOCATION ?? "ไม่ระบุ"
                                         });
 
                 }
@@ -958,12 +958,34 @@ namespace COACHME.DATASERVICE
                     }
                     if(dto.DATE_OF_BIRTH_TEXT != null)
                     {
-                        member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH_TEXT);
+                        DateTime value;
+                        if (DateTime.TryParse(dto.DATE_OF_BIRTH_TEXT, out value))
+                        {
+                            member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH_TEXT);
+                        }
+                        else
+                        {
+                           
+                        }
+                        
                     }
-                    member.LOCATION = dto.LOCATION;
-                    member.AMPHUR_ID = dto.AMPHUR_ID;
-                    member.TEACHING_TYPE = dto.TEACHING_TYPE;
-                    member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
+                    if (dto.LOCATION != null)
+                    {
+                        member.LOCATION = dto.LOCATION;
+                    }
+                    if (dto.AMPHUR_ID != null)
+                    {
+                        member.AMPHUR_ID = dto.AMPHUR_ID;
+                    }
+                    if (dto.TEACHING_TYPE != null)
+                    {
+                        member.TEACHING_TYPE = dto.TEACHING_TYPE;
+                    }
+                    if (dto.STUDENT_LEVEL != null)
+                    {
+                        member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
+                    }
+                    
 
                     #endregion
                     //add activity

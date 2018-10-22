@@ -340,9 +340,15 @@
 
         $(document).ready(function () {
 
-            $('#DATE_OF_BIRTH').datepicker(
+        $('#DATE_OF_BIRTH').datepicker(
         {
             autoclose: true
+        });
+
+        $('#DATE_OF_BIRTH').change(function () {
+            debugger;
+            var val = $(this).val();
+            $('#DATE_OF_BIRTH_TEXT').val(val);
         });
 
         });

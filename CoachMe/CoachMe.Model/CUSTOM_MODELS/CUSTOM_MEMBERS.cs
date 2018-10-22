@@ -36,7 +36,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
         public string NICKNAME { get; set; }
         public string COURSE { get; set; }
-        public int COURSE_ID { get; set; }
+        public int? COURSE_ID { get; set; }
         public int MEMBER_ROLE_ID { get; set; }
         public string USER_NAME { get; set; }             
         public string STATUS { get; set; }

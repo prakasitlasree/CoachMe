@@ -42,5 +42,9 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 
         [Required]
         public int ROLE { get; set; }
+
+        //[Required]
+        //public DateTime DATE_OF_BIRTH { get; set; }
+
     }
 }

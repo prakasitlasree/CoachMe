@@ -270,9 +270,13 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }
         if ($scope.TeacherProfile[0].SEX == 1) {
             $scope.SEX = "ชาย"
+          
+            $("#SEX_RADIO_BTN_1").prop("checked", true);
         }
         else {
             $scope.SEX = "หญิง"
+            
+            $("#SEX_RADIO_BTN_2").prop("checked", true);
         }
 
         $scope.ABOUT = $scope.TeacherProfile[0].ABOUT
@@ -297,7 +301,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 TEACHING_TYPE: $('#TEACHING_TYPE option:selected').val(),
                 STUDENT_LEVEL: $('#STUDENT_LEVEL option:selected').val(),
                 SEX_RADIO: $scope.SEX_RADIO,
-                DATE_OF_BIRTH_TEXT: $scope.DATE_OF_BIRTH_TEXT
+                DATE_OF_BIRTH_TEXT: $('#DATE_OF_BIRTH_TEXT').val(),
                 
             }
         }).then(function (response) {
