@@ -36,7 +36,16 @@ namespace COACHME.DATASERVICE
         public enum PurchaseStatus
         {
             DRAFT,
-            ACTIVE
+            ACTIVE,
+            HOLD,
+            EXPIRED
+        }
+
+        public enum PackageName
+        {
+            Basic = 200,
+            Professional = 1200,
+            Advance = 2400
         } 
     }
 }

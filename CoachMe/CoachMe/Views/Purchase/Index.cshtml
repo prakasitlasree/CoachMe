@@ -23,7 +23,7 @@
                             </button>
                         </div>*@
                 </div>
-                @using (Html.BeginForm("PurchasePackage", "Purchase", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
+                @using (Html.BeginForm("purchasepackage", "purchase", FormMethod.Post, new { enctype = "multipart/form-data", ReturnUrl = ViewBag.ReturnUrl }))
                 {
                     @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
 
@@ -37,9 +37,9 @@
                                                 <div class="m-pricing-table-2__hexagon"></div>
                                                 <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-confetti"></i></span>
                                             </div>
-                                            <h2 class="m-pricing-table-2__subtitle">Basic Plan</h2>
+                                            <h2 class="m-pricing-table-2__subtitle">Basic Plan <br /> (1 Month)</h2>
                                             <div class="m-pricing-table-2__features">
-                                                <span>2 Course</span>
+                                                <span>2 course create</span>
                                                 <span>View match 10 student</span>
                                                 @*<span>20 Copies</span>*@
                                                 @*<span>Free Assets</span>*@
@@ -47,18 +47,30 @@
                                             <span class="m-pricing-table-2__price">200</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if (TempData["Plan"].ToString() == "Basic Plan")
+                                                @if (TempData["Plan1"] != null && TempData["Plan1"].ToString() == "Basic")
                                                 {
-                                                    <button type="button" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
-
-                                                }
-                                                else if (TempData["Plan"].ToString() == "Professional Plan" || TempData["Plan"].ToString() == "Advance Plan")
-                                                {
-                                                    @*<button type="button" class="btn m-btn--pill  btn-brand m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Hold</button>*@
+                                                    if (TempData["Plan1Status"].ToString() == "DRAFT")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>
+                                                    }
+                                                    else if (TempData["Plan1Status"].ToString() == "ACTIVE")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-success m-btn--gradient-to-accent">Already Purchase</button>
+                                                    }
+                                                    else if (TempData["Plan1Status"].ToString() == "EXPIRED")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning">Purchase package has expired!!</button>
+                                                        <br />
+                                                        <button type="button" data-toggle="modal" data-target="#m_modal_1" value="Basic" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" data-toggle="modal" data-target="#m_modal_1" value="Basic" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" data-toggle="modal" data-target="#m_modal_1" value="basic" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
+                                                    <button type="button" data-toggle="modal" data-target="#m_modal_1" value="Basic" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
                                                 }
                                             </div>
                                         </div>
@@ -67,28 +79,40 @@
                                                 <div class="m-pricing-table-2__hexagon"></div>
                                                 <span class="m-pricing-table-2__icon m--font-info"><i class="fa  flaticon-rocket"></i></span>
                                             </div>
-                                            <h2 class="m-pricing-table-2__subtitle">Professional Plan</h2>
+                                            <h2 class="m-pricing-table-2__subtitle">Professional Plan <br /> (6 Months)</h2>
                                             <div class="m-pricing-table-2__features">
-                                                <span>5 Course</span>
-                                                <span>Unlimited match student</span>
+                                                <span>Unlimited course create</span>
+                                                <span>Unlimited view match student</span>
                                                 @*<span>Unlimited Copies</span>*@
                                                 @*<span>Free Assets</span>*@
                                             </div>
-                                            <span class="m-pricing-table-2__price">400</span>
+                                            <span class="m-pricing-table-2__price">1,200</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if (TempData["Plan"].ToString() == "Professional Plan")
+                                                @if (TempData["Plan2"] != null && TempData["Plan2"].ToString() == "Professional")
                                                 {
-                                                    <button type="button" id="ProBTN" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
-                                                }
-                                                else if (TempData["Plan"].ToString() == "Advance Plan")
-                                                {
-                                                    @*<button type="button" class="btn m-btn--pill  btn-brand m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Hold</button>*@
+                                                    if (TempData["Plan2Status"].ToString() == "DRAFT")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>
+                                                    }
+                                                    else if (TempData["Plan2Status"].ToString() == "ACTIVE")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-success m-btn--gradient-to-accent">Already Purchase</button>
+                                                    }
+                                                    else if (TempData["Plan2Status"].ToString() == "EXPIRED")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning">Purchase package has expired!!</button>
+                                                        <br />
+                                                        <button type="button" data-toggle="modal" data-target="#m_modal_2" value="Professional" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button id="ProBTN"  type="button" data-toggle="modal" data-target="#m_modal_2" value="Professional" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" id="ProBTN" data-toggle="modal" data-target="#m_modal_2" value="pro" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-
+                                                    <button id="ProBTN"  type="button" data-toggle="modal" data-target="#m_modal_2" value="Professional" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
                                                 }
                                             </div>
                                         </div>
@@ -97,24 +121,40 @@
                                                 <div class="m-pricing-table-2__hexagon"></div>
                                                 <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-gift"></i></span>
                                             </div>
-                                            <h2 class="m-pricing-table-2__subtitle">Advance Plan</h2>
+                                            <h2 class="m-pricing-table-2__subtitle">Advance Plan <br /> (12 Months)</h2>
                                             <div class="m-pricing-table-2__features">
-                                                <span>10 Course</span>
-                                                <span>Unlimited match student</span>
+                                                <span>Unlimited course create</span>
+                                                <span>Unlimited view match student</span>
                                                 @*<span>Unlimited Copies</span>*@
                                                 @*<span>Free Assets</span>*@
                                             </div>
-                                            <span class="m-pricing-table-2__price">500</span>
+                                            <span class="m-pricing-table-2__price">2,400</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
-                                                @if (TempData["Plan"].ToString() == "Advance Plan")
+                                                @if (TempData["Plan3"] != null && TempData["Plan3"].ToString() == "Advance")
                                                 {
-                                                    <button type="button" id="AdvanceBTN" class="btn m-btn--pill  btn-danger m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Already Purchase</button>
+                                                    if (TempData["Plan3Status"].ToString() == "DRAFT")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>
+                                                    }
+                                                    else if (TempData["Plan3Status"].ToString() == "ACTIVE")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-success m-btn--gradient-to-accent">Already Purchase</button>
+                                                    }
+                                                    else if (TempData["Plan3Status"].ToString() == "EXPIRED")
+                                                    {
+                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning">Purchase package has expired!!</button>
+                                                        <br />
+                                                        <button type="button" data-toggle="modal" data-target="#m_modal_3" value="Advance" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button  id="AdvanceBTN" type="button" data-toggle="modal" data-target="#m_modal_3" value="Advance" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" id="AdvanceBTN" data-toggle="modal" data-target="#m_modal_3" value="advance" name="btnPlan" class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">Purchase</button>
-
+                                                    <button  id="AdvanceBTN" type="button" data-toggle="modal" data-target="#m_modal_3" value="Advance" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
                                                 }
                                             </div>
                                         </div>
@@ -148,9 +188,9 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="file" name="slipImage" id="slip_1" class="btn btn-primary" style="display:none">
-                                    <button type="submit" id="btnBasicPlan" name="btnPlan" value="basic" class="btn btn-secondary" style="display:none">Close</button>
+                                    <button type="button" class="btn m-btn--pill    btn-focus" data-dismiss="modal">Close</button>
+                                    <input type="file" name="slipImage" id="slip_1" class="btn m-btn--pill    btn-focus" style="display:none">
+                                    <button type="submit" id="btnBasicPlan" name="btnPlan" value="basic" class="btn m-btn--pill    btn-focus" style="display:none">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -177,9 +217,9 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="file" name="slipImage" id="slip_2" class="btn btn-primary" style="display:none">
-                                    <button type="submit" id="btnProPlan" name="btnPlan" value="Pro" class="btn btn-secondary" style="display:none">Close</button>
+                                    <button type="button" class="btn m-btn--pill    btn-focus" data-dismiss="modal">Close</button>
+                                    <input type="file" name="slipImage" id="slip_2" class="btn m-btn--pill    btn-focus" style="display:none">
+                                    <button type="submit" id="btnProPlan" name="btnPlan" value="Professional" class="btn m-btn--pill    btn-focus" style="display:none">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -206,9 +246,9 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn m-btn--pill    btn-focus" data-dismiss="modal">Close</button>
                                     <input type="file" name="slipImage" id="slip_3" class="btn btn-primary" style="display:none">
-                                    <button type="submit" id="btnAdvancePlan" name="btnPlan" value="Advance" class="btn btn-secondary" style="display:none">Close</button>
+                                    <button type="submit" id="btnAdvancePlan" name="btnPlan" value="Advance" class="btn m-btn--pill    btn-focus" style="display:none">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +270,7 @@
                                         <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp @TempData["MessagePurchase"]</h4>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" id="close_curr_modal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" id="close_curr_modal" class="btn m-btn--pill    btn-focus" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -301,13 +341,7 @@
             $("#slip_1").remove();
             debugger;
             $('#btnAdvancePlan').trigger('click');
-
-
+             
         }
-    }
-    $(document).ready(function () {
-        $("#ProBTN").hide();
-        $("#AdvanceBTN").hide();
-    });
-
+    } 
 </script>

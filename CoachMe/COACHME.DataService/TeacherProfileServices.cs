@@ -60,13 +60,13 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberProfile = ctx.MEMBERS
-                                             .Include("MEMBER_ROLE")
-                                             .Include("MEMBER_LOGON")
-                                             .Include("MEMBER_PACKAGE")
+                                             .Include(o => o.MEMBER_ROLE)
+                                             .Include(o => o.MEMBER_LOGON)
+                                             .Include(o=> o.MEMBER_PACKAGE)
                                              .Where(x => x.AUTO_ID == member_id).FirstOrDefault();
 
                     memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE
-                                                   .Where(x => x.STATUS != "DRAFT" && x.STATUS != "HOLD")
+                                                   //.Where(x => x.STATUS != "DRAFT" && x.STATUS != "HOLD")
                                                    .OrderByDescending(x => x.AUTO_ID)
                                                    .ToList();
 

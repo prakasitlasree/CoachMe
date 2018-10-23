@@ -21,22 +21,54 @@ namespace COACHME.WEB_PRESENT.Controllers
             if (Session["logon"] != null)
             { 
                 var model = new CONTAINER_MODEL();
-                var member = (MEMBERS)Session["logon"];  
-                var course = service.GetMemberProfileNotAsync(member.MEMBER_LOGON.FirstOrDefault());
-                model.MEMBERS = course.OUTPUT_DATA;
+                var member = (MEMBERS)Session["logon"];
+                var mem = service.GetMemberProfileNotAsync(member.MEMBER_LOGON.FirstOrDefault());
+                var package = (MEMBERS)mem.OUTPUT_DATA;
+                member.MEMBER_PACKAGE = package.MEMBER_PACKAGE;
+                model.MEMBERS = member;// course.OUTPUT_DATA;
 
                 if (model.MEMBERS.MEMBER_PACKAGE.Count > 0)
                 {
-                    var hasPackage = model.MEMBERS.MEMBER_PACKAGE.OrderByDescending(o=>o.AUTO_ID).FirstOrDefault();
-                    if (hasPackage != null)
+                    foreach (var item in model.MEMBERS.MEMBER_PACKAGE)
                     {
-                        TempData["Plan"] =  hasPackage.PACKAGE_NAME;
+                        if (item.PACKAGE_NAME == StandardEnums.PackageName.Basic.ToString())
+                        {
+                            TempData["Plan1"] = item.PACKAGE_NAME;
+                            TempData["Plan1Status"] = item.STATUS;
+                            if (item.EXPIRE_DATE.Value.Date > DateTime.Now.Date)
+                            {
+                                TempData["Plan1Status"] = StandardEnums.PurchaseStatus.EXPIRED;
+                            }
+                        }
+                        else if (item.PACKAGE_NAME == StandardEnums.PackageName.Professional.ToString())
+                        {
+                            TempData["Plan2"] = item.PACKAGE_NAME;
+                            TempData["Plan2Status"] = item.STATUS;
+                            if (item.EXPIRE_DATE.Value.Date > DateTime.Now.Date)
+                            {
+                                TempData["Plan2Status"] = StandardEnums.PurchaseStatus.EXPIRED;
+                            }
+                        }
+                        else if (item.PACKAGE_NAME == StandardEnums.PackageName.Advance.ToString())
+                        {
+                            TempData["Plan3"] = item.PACKAGE_NAME;
+                            TempData["Plan3Status"] = item.STATUS;
+                            if (item.EXPIRE_DATE.Value.Date > DateTime.Now.Date)
+                            {
+                                TempData["Plan3Status"] = StandardEnums.PurchaseStatus.EXPIRED;
+                            }
+                        }
+                    }
 
-                    }
-                    else
-                    {
-                        TempData["Plan"] = "No Plan";
-                    }
+                    //var hasPackage = model.MEMBERS.MEMBER_PACKAGE.OrderByDescending(o=>o.AUTO_ID).FirstOrDefault();
+                    //if (hasPackage != null)
+                    //{
+                    //    TempData["Plan"] =  hasPackage.PACKAGE_NAME; 
+                    //}
+                    //else
+                    //{
+                    //    TempData["Plan"] = "No Plan";
+                    //}
                 }
                 else
                 {

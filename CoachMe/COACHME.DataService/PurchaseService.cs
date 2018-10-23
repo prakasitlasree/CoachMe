@@ -62,19 +62,18 @@ namespace COACHME.DATASERVICE
                     #endregion
                    
                     #region ==== UPDATE OLD PACKAGE====
-                    var memberOldPackage = member.MEMBER_PACKAGE
-                                                  .Where(o => o.EXPIRE_DATE > DateTime.Now && o.STATUS == "ACTIVE")
-                                                  .OrderByDescending(p => p.AUTO_ID)
-                                                  .FirstOrDefault();
+                    //var memberOldPackage = member.MEMBER_PACKAGE
+                    //                              .Where(o => o.EXPIRE_DATE > DateTime.Now && o.STATUS == "ACTIVE")
+                    //                              .OrderByDescending(p => p.AUTO_ID)
+                    //                              .FirstOrDefault();
 
-                    if (memberOldPackage != null)
-                    {
-                        int remainDays = Convert.ToInt32((memberOldPackage.EXPIRE_DATE.Value - memberOldPackage.EFFECTIVE_DATE.Value).TotalDays);
-                        memberOldPackage.EFFECTIVE_DATE = DateTime.Now.AddDays(30);
-                        memberOldPackage.EXPIRE_DATE = DateTime.Now.AddDays(30 + remainDays);
-                        memberOldPackage.STATUS = "HOLD";
-
-                    }
+                    //if (memberOldPackage != null)
+                    //{
+                    //    int remainDays = Convert.ToInt32((memberOldPackage.EXPIRE_DATE.Value - memberOldPackage.EFFECTIVE_DATE.Value).TotalDays);
+                    //    memberOldPackage.EFFECTIVE_DATE = DateTime.Now.AddDays(30);
+                    //    memberOldPackage.EXPIRE_DATE = DateTime.Now.AddDays(30 + remainDays);
+                    //    memberOldPackage.STATUS = "HOLD"; 
+                    //}
                     #endregion
 
                     #region ==== ADD NEW PACKAGE ====
@@ -87,28 +86,28 @@ namespace COACHME.DATASERVICE
                     memberPackage.CREATED_BY = member.FULLNAME;
                     memberPackage.UPDATED_BY = member.FULLNAME;
                     memberPackage.SLIP_URL1 = "//" + path.Substring(index);
-                    memberPackage.STATUS = "DRAFT";
-                    if (plan == "basic")
+                    memberPackage.STATUS = StandardEnums.PurchaseStatus.DRAFT.ToString();
+                    if (plan == StandardEnums.PackageName.Basic.ToString())
                     {
-                        memberPackage.PACKAGE_NAME = "Basic Plan";
+                        memberPackage.PACKAGE_NAME = StandardEnums.PackageName.Basic.ToString();
                         memberPackage.PACKAGE_DETAIL = "Basic Plan Detail";
-                        memberPackage.PRICE = 200;
+                        memberPackage.PRICE = (decimal)StandardEnums.PackageName.Professional; 
                     }
-                    if (plan == "Pro")
+                    if (plan == StandardEnums.PackageName.Professional.ToString())
                     {
-                        memberPackage.PACKAGE_NAME = "Professional Plan";
+                        memberPackage.PACKAGE_NAME = StandardEnums.PackageName.Professional.ToString();
                         memberPackage.PACKAGE_DETAIL = "Professional Plan Detail";
-                        memberPackage.PRICE = 400;
+                        memberPackage.PRICE = (decimal)StandardEnums.PackageName.Professional;
+                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(180);
                     }
-                    if (plan == "Advance")
+                    if (plan == StandardEnums.PackageName.Advance.ToString())
                     {
-                        memberPackage.PACKAGE_NAME = "Advance Plan";
+                        memberPackage.PACKAGE_NAME = StandardEnums.PackageName.Advance.ToString();
                         memberPackage.PACKAGE_DETAIL = "Advance Plan Detail";
-                        memberPackage.PRICE = 500;
+                        memberPackage.PRICE = (decimal)StandardEnums.PackageName.Advance;
+                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(365);
                     }
-
-                    memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(120);
-
+                     
                     var uploadSlip = ctx.MEMBER_PACKAGE.Add(memberPackage);
                     #endregion
                     

@@ -20,7 +20,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
                 var member = (MEMBERS)Session["logon"];
-                member = service.GetMemberProfileFromAutoID(member).OUTPUT_DATA;
+                //member = service.GetMemberProfileFromAutoID(member).OUTPUT_DATA;
                 model.MEMBERS = member;
                 return View(model);
             }

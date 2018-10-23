@@ -24,15 +24,16 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
 
-                    var member = await ctx.MEMBER_LOGON.Include("MEMBERS").Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD).FirstOrDefaultAsync();
+                    var member = await ctx.MEMBER_LOGON.Where(x => x.USER_NAME.ToUpper() == dto.USER_NAME.ToUpper() && x.PASSWORD == dto.PASSWORD).FirstOrDefaultAsync();
                     if (member != null && member.STATUS == 2)
-                    {
-                        fullname = member.MEMBERS.FULLNAME;
+                    { 
                         memberObj = ctx.MEMBERS
-                                       .Include("MEMBER_ROLE")
-                                       .Include("MEMBER_PACKAGE")
+                                       .Include(x=> x.MEMBER_LOGON)
+                                       .Include(x=> x.MEMBER_ROLE)
+                                       .Include(x=> x.MEMBER_PACKAGE)
                                        .Where(x => x.AUTO_ID == member.MEMBER_ID).FirstOrDefault();
                         result = true;
+                        fullname = memberObj.FULLNAME;
                     }
                     else if (member != null && member.STATUS == 1)
                     {
