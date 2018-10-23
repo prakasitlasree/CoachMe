@@ -126,14 +126,14 @@
                                                                     <span class="m-nav__section-text">Section</span>
                                                                 </li>
                                                                 <li class="m-nav__item">
-                                                                    @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                                                                    @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1 || Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
                                                                     {
                                                                         <a href="/teacher/index" class="m-nav__link">
                                                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                                             <span class="m-nav__link-title">
                                                                                 <span class="m-nav__link-wrap">
                                                                                     <span class="m-nav__link-text">My Profile</span>
-                                                                                    <span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>
+                                                                                    @*<span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>*@
                                                                                 </span>
                                                                             </span>
                                                                         </a>

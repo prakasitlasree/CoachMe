@@ -174,13 +174,13 @@
                                     <div class="m-widget4__progress">
                                         <div class="m-widget4__progress-wrapper">
                                             <span class="m-widget17__progress-number">
-                                              Joined :  @if (item.EFFECTIVE_DATE.Value != null)
+                                              Purchase Date :  @if (item.EFFECTIVE_DATE.Value != null)
                                                 {
                                                     @item.EFFECTIVE_DATE.Value.ToString("yyyy-MM-dd");
                                                 }
                                                 
                                             </span>
-                                            <span class="m-widget17__progress-label">Expire : @item.EXPIRE_DATE.Value.Date.ToString("yyyy-MM-dd")</span>
+                                            <span class="m-widget17__progress-label">Expiry Date : @item.EXPIRE_DATE.Value.ToString("yyyy-MM-dd")</span>
                                             <div class="progress m-progress--sm">
                                                 <div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div>
                                             </div>
@@ -222,11 +222,11 @@
     <!--begin::Modal-->
     @using (Html.BeginForm("manage", "admin", FormMethod.Post))
     {
-        <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="popupactivate" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Confirm purchase package</h5>
+                        <h5 class="modal-title" id="popupactivate">Confirm purchase package</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -268,8 +268,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Activate</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn m-btn--pill m-btn--air         btn-outline-primary active">Approve</button>
+                        <button type="button" class="btn m-btn--pill m-btn--air         btn-outline-metal active" data-dismiss="modal">Reject</button>
                     </div>
 
                 </div>
@@ -293,7 +293,7 @@
                     $('#m_modal_5').modal('show');
                 }
             }
-
+         
         }
     </script>
 </div>

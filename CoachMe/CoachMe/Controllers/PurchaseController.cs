@@ -35,7 +35,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
                             TempData["Plan1"] = item.PACKAGE_NAME;
                             TempData["Plan1Status"] = item.STATUS;
-                            if (item.EXPIRE_DATE.Value.Date > DateTime.Now.Date)
+                            if (item.EXPIRE_DATE.Value.Date < DateTime.Now.Date)
                             {
                                 TempData["Plan1Status"] = StandardEnums.PurchaseStatus.EXPIRED;
                             }
@@ -44,7 +44,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
                             TempData["Plan2"] = item.PACKAGE_NAME;
                             TempData["Plan2Status"] = item.STATUS;
-                            if (item.EXPIRE_DATE.Value.Date > DateTime.Now.Date)
+                            if (item.EXPIRE_DATE.Value.Date < DateTime.Now.Date)
                             {
                                 TempData["Plan2Status"] = StandardEnums.PurchaseStatus.EXPIRED;
                             }
@@ -53,7 +53,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                         {
                             TempData["Plan3"] = item.PACKAGE_NAME;
                             TempData["Plan3Status"] = item.STATUS;
-                            if (item.EXPIRE_DATE.Value.Date > DateTime.Now.Date)
+                            if (item.EXPIRE_DATE.Value.Date < DateTime.Now.Date )
                             {
                                 TempData["Plan3Status"] = StandardEnums.PurchaseStatus.EXPIRED;
                             }

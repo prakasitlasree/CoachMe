@@ -91,7 +91,8 @@ namespace COACHME.DATASERVICE
                     {
                         memberPackage.PACKAGE_NAME = StandardEnums.PackageName.Basic.ToString();
                         memberPackage.PACKAGE_DETAIL = "Basic Plan Detail";
-                        memberPackage.PRICE = (decimal)StandardEnums.PackageName.Professional; 
+                        memberPackage.PRICE = (decimal)StandardEnums.PackageName.Basic;
+                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(30);
                     }
                     if (plan == StandardEnums.PackageName.Professional.ToString())
                     {
