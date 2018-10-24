@@ -106,11 +106,9 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.GetComponent = function () {
         $scope.EnableControl();
         $('#editAddress').show();
-
         $http({
             url: "/teacher/GetGeography",
             method: "GET",
-            //params: { OrderID: $scope.orderId }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS == true) {
