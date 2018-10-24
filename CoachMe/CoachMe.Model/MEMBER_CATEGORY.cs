@@ -16,7 +16,7 @@ namespace COACHME.MODEL
     {
         public int AUTO_ID { get; set; }
         public int MEMBER_ID { get; set; }
-        public Nullable<int> CATEGORY_ID { get; set; }
+        public int CATEGORY_ID { get; set; }
         public string NAME { get; set; }
         public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }

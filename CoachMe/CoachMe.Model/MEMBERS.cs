@@ -48,6 +48,8 @@ namespace COACHME.MODEL
         public Nullable<int> AMPHUR_ID { get; set; }
         public Nullable<int> TEACHING_TYPE { get; set; }
         public Nullable<int> STUDENT_LEVEL { get; set; }
+        public string LINE_ID { get; set; }
+        public string FACEBOOK_URL { get; set; }
     
         public virtual AMPHUR AMPHUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

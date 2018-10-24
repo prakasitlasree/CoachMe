@@ -331,6 +331,14 @@ namespace COACHME.DATASERVICE
                     {
                         member.ABOUT = dto.ABOUT;
                     }
+                    if (dto.LINE_ID != null)
+                    {
+                        member.LINE_ID = dto.LINE_ID;
+                    }
+                    if (dto.FACEBOOK_URL != null)
+                    {
+                        member.FACEBOOK_URL = dto.FACEBOOK_URL;
+                    }
                     member.TEACHING_TYPE = dto.TEACHING_TYPE;
                     member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
                     #endregion
@@ -915,7 +923,10 @@ namespace COACHME.DATASERVICE
                                             AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID ?? 0,
                                             TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE ?? 0,
                                             STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL ?? 0,
-                                            LOCATION = memberProfile.FirstOrDefault().LOCATION ?? "ไม่ระบุ"
+                                            LOCATION = memberProfile.FirstOrDefault().LOCATION ?? "ไม่ระบุ",
+                                            FACEBOOK_URL = memberProfile.FirstOrDefault().FACEBOOK_URL,
+                                            LINE_ID = memberProfile.FirstOrDefault().LINE_ID
+                                            
                                         });
 
                 }
@@ -990,18 +1001,13 @@ namespace COACHME.DATASERVICE
                         if (DateTime.TryParse(dto.DATE_OF_BIRTH_TEXT, out value))
                         {
                             member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH_TEXT);
-                        }
-                        else
-                        {
-
-                        }
-
+                        }  
                     }
                     if (dto.LOCATION != null)
                     {
                         member.LOCATION = dto.LOCATION;
                     }
-                    if (dto.AMPHUR_ID != null)
+                    if (dto.AMPHUR_ID != null && dto.AMPHUR_ID > 0)
                     {
                         member.AMPHUR_ID = dto.AMPHUR_ID;
                     }
@@ -1014,6 +1020,14 @@ namespace COACHME.DATASERVICE
                         member.STUDENT_LEVEL = dto.STUDENT_LEVEL;
                     }
 
+                    if (dto.LINE_ID != null)
+                    {
+                        member.LINE_ID = dto.LINE_ID;
+                    }
+                    if (dto.FACEBOOK_URL != null)
+                    {
+                        member.FACEBOOK_URL = dto.FACEBOOK_URL;
+                    }
 
                     #endregion
                     //add activity
@@ -1037,6 +1051,7 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.ErrorMessage = ex.Message;
                 resp.STATUS = false;
                 throw ex;
             }

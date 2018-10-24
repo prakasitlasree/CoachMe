@@ -73,7 +73,7 @@
                                 @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
                                 <div class="m-widget1__item">
                                     <div class="row m-row--no-padding align-items-center">
-                                        <label for="example-text-input" class="col-9 col-form-label m-widget1__title">หมวดหมู่</label>
+                                        <label for="example-text-input" class="col-8 col-form-label m-widget1__title">หมวดหมู่</label>
                                         <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory" ng-click="UpdateProfileCategory()">
                                             <i class="fa fa-user-edit"></i>
                                         </button>
@@ -265,9 +265,20 @@
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
-                                            <div class="col-7">
-                                                @*@Html.TextAreaFor(m => m.MEMBERS.ABOUT, new { @id = "ABOUT", @class = "form-control m-input m-input--pill", @disabled = "disabled" })*@
+                                            <div class="col-7"> 
                                                 <input class="form-control m-input m-input--pill" id="ABOUT" ng-model="ABOUT" ng-value="ABOUT" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="LINE_ID" class="col-2 col-form-label">LINE ID : </label>
+                                            <div class="col-7">
+                                                <input class="form-control m-input m-input--pill" id="LINE_ID" ng-model="LINE_ID" ng-value="LINE_ID" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <label for="FACEBOOK_URL" class="col-2 col-form-label">FACEBOOK : </label>
+                                            <div class="col-7">
+                                                <input class="form-control m-input m-input--pill" id="FACEBOOK_URL" ng-model="FACEBOOK_URL" ng-value="FACEBOOK_URL" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
@@ -292,6 +303,7 @@
                                             </div>
                                         </div>
 
+                                      
                                     </div>
 
 

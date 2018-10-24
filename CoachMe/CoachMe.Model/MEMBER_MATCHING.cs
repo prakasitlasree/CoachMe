@@ -21,5 +21,8 @@ namespace COACHME.MODEL
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string UPDATED_BY { get; set; }
         public Nullable<System.DateTime> UPDATED_DATE { get; set; }
+    
+        public virtual MEMBER_ROLE MEMBER_ROLE { get; set; }
+        public virtual MEMBER_ROLE MEMBER_ROLE1 { get; set; }
     }
 }
