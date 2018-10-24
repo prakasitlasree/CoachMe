@@ -18,9 +18,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.geography
     $scope.provinceID
-    $scope.amphurID
-    $scope.TEACHING_TYPE
-    $scope.STUDENT_LEVEL
+    $scope.amphurID 
     $scope.SEX_RADIO
 
     $scope.TEACHING_TYPE;
@@ -32,6 +30,10 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.NICKNAME;
     $scope.DATE_OF_BIRTH;
     $scope.SEX;
+
+    $scope.LINE_ID;
+    $scope.FACEBOOK_URL;
+
     $scope.ABOUT;
     $scope.ABOUT_IMG_1 = "";
     $scope.ABOUT_IMG_2 = "";
@@ -46,6 +48,10 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#LAST_NAME").prop("disabled", false);
         $("#MOBILE").prop("disabled", false);
         $("#ABOUT").prop("disabled", false);
+
+        $("#LINE_ID").prop("disabled", false);
+        $("#FACEBOOK_URL").prop("disabled", false);
+
         $("#NICKNAME").prop("disabled", false);
         $("#DATE_OF_BIRTH").prop("disabled", false);
         $("#SEX").prop("disabled", false);
@@ -54,7 +60,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#STUDENT_LEVEL").prop("disabled", false);
         $("#editAddress").show();
         $("#ADDRESS").hide();
-
+ 
         $("#SEX_RADIO").show();
         $("#SEX").hide();
 
@@ -80,6 +86,10 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#LAST_NAME").prop("disabled", true);
         $("#MOBILE").prop("disabled", true);
         $("#ABOUT").prop("disabled", true);
+
+        $("#LINE_ID").prop("disabled", true);
+        $("#FACEBOOK_URL").prop("disabled", true);
+
         $("#NICKNAME").prop("disabled", true);
         $("#DATE_OF_BIRTH").prop("disabled", true);
         $("#SEX").prop("disabled", true);
@@ -212,7 +222,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                     console.log(response.data.OUTPUT_DATA)
                     if (response.data.STATUS == true) {
                         $scope.address = response.data.OUTPUT_DATA;
-                        if ($scope.address[0] != null) {
+                        if ($scope.address != null && $scope.address[0] != null) {
                             var address = "จังหวัด : " + $scope.address[1] + " อำเภอ : " + $scope.address[0]
                             $("#ADDRESS").val(address);
                         }
@@ -229,11 +239,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                     }
                 });
             }
-        });
-
-        
-
-
+        }); 
         $.LoadingOverlay("hide");
     };
 
@@ -242,11 +248,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.BindingProfile = function () {
 
         debugger;
-
-
-
-
-
+         
         $("#TEACHING_TYPE").val($scope.TeacherProfile[0].TEACHING_TYPE);
         $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
         $("#LOCATE").val($scope.TeacherProfile[0].LOCATION);
@@ -278,6 +280,10 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }
 
         $scope.ABOUT = $scope.TeacherProfile[0].ABOUT
+
+        $scope.LINE_ID = $scope.TeacherProfile[0].LINE_ID
+        $scope.FACEBOOK_URL = $scope.TeacherProfile[0].FACEBOOK_URL
+
     }
 
     $scope.UpdateMemberProfile = function () {
@@ -294,6 +300,10 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 MOBILE: $scope.MOBILE,
                 NICKNAME: $scope.NICKNAME,
                 ABOUT: $scope.ABOUT,
+                
+                LINE_ID: $scope.LINE_ID,
+                FACEBOOK_URL: $scope.FACEBOOK_URL,
+
                 LOCATION: $scope.LOCATION,
                 AMPHUR_ID: $scope.amphurID,
                 TEACHING_TYPE: $('#TEACHING_TYPE option:selected').val(),
@@ -311,11 +321,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 else {
                     $scope.init();
                     $scope.HideButton();
-                }
-
-
-            }
-
+                } 
+            } 
         });
         $.LoadingOverlay("hide");
     }

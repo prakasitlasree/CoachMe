@@ -107,8 +107,8 @@
           </Key>
           <Property Name="AUTO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MEMBER_ID" Type="int" Nullable="false" />
-          <Property Name="CATEGORY_ID" Type="int" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CATEGORY_ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" />
           <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="CREATED_DATE" Type="datetime" />
           <Property Name="UPDATED_BY" Type="nvarchar" MaxLength="50" />
@@ -235,6 +235,8 @@
           <Property Name="AMPHUR_ID" Type="int" />
           <Property Name="TEACHING_TYPE" Type="int" />
           <Property Name="STUDENT_LEVEL" Type="int" />
+          <Property Name="LINE_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="FACEBOOK_URL" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -343,7 +345,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MEMBER_CATEGORY_CATEGORY">
-          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1" />
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
           <End Role="MEMBER_CATEGORY" Type="Self.MEMBER_CATEGORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CATEGORY">
@@ -375,6 +377,30 @@
             </Principal>
             <Dependent Role="MEMBER_LOGON">
               <PropertyRef Name="MEMBER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEMBER_MATCHING_MEMBER_ROLE">
+          <End Role="MEMBER_ROLE" Type="Self.MEMBER_ROLE" Multiplicity="1" />
+          <End Role="MEMBER_MATCHING" Type="Self.MEMBER_MATCHING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBER_ROLE">
+              <PropertyRef Name="AUTO_ID" />
+            </Principal>
+            <Dependent Role="MEMBER_MATCHING">
+              <PropertyRef Name="TEACHER_ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEMBER_MATCHING_MEMBER_ROLE1">
+          <End Role="MEMBER_ROLE" Type="Self.MEMBER_ROLE" Multiplicity="1" />
+          <End Role="MEMBER_MATCHING" Type="Self.MEMBER_MATCHING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBER_ROLE">
+              <PropertyRef Name="AUTO_ID" />
+            </Principal>
+            <Dependent Role="MEMBER_MATCHING">
+              <PropertyRef Name="STUDENT_ROLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -525,6 +551,14 @@
             <End Role="MEMBERS" EntitySet="MEMBERS" />
             <End Role="MEMBER_LOGON" EntitySet="MEMBER_LOGON" />
           </AssociationSet>
+          <AssociationSet Name="FK_MEMBER_MATCHING_MEMBER_ROLE" Association="Self.FK_MEMBER_MATCHING_MEMBER_ROLE">
+            <End Role="MEMBER_ROLE" EntitySet="MEMBER_ROLE" />
+            <End Role="MEMBER_MATCHING" EntitySet="MEMBER_MATCHING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEMBER_MATCHING_MEMBER_ROLE1" Association="Self.FK_MEMBER_MATCHING_MEMBER_ROLE1">
+            <End Role="MEMBER_ROLE" EntitySet="MEMBER_ROLE" />
+            <End Role="MEMBER_MATCHING" EntitySet="MEMBER_MATCHING" />
+          </AssociationSet>
           <AssociationSet Name="FK_MEMBER_PACKAGE_MEMBERS" Association="Self.FK_MEMBER_PACKAGE_MEMBERS">
             <End Role="MEMBERS" EntitySet="MEMBERS" />
             <End Role="MEMBER_PACKAGE" EntitySet="MEMBER_PACKAGE" />
@@ -620,6 +654,14 @@
           <AssociationSet Name="FK_MEMBER_LOGON_MEMBERS" Association="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS">
             <End Role="MEMBERS" EntitySet="MEMBERS" />
             <End Role="MEMBER_LOGON" EntitySet="MEMBER_LOGON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEMBER_MATCHING_MEMBER_ROLE" Association="COACH_MEModel.FK_MEMBER_MATCHING_MEMBER_ROLE">
+            <End Role="MEMBER_ROLE" EntitySet="MEMBER_ROLE" />
+            <End Role="MEMBER_MATCHING" EntitySet="MEMBER_MATCHING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEMBER_MATCHING_MEMBER_ROLE1" Association="COACH_MEModel.FK_MEMBER_MATCHING_MEMBER_ROLE1">
+            <End Role="MEMBER_ROLE" EntitySet="MEMBER_ROLE" />
+            <End Role="MEMBER_MATCHING" EntitySet="MEMBER_MATCHING" />
           </AssociationSet>
           <AssociationSet Name="FK_MEMBER_PACKAGE_MEMBERS" Association="COACH_MEModel.FK_MEMBER_PACKAGE_MEMBERS">
             <End Role="MEMBERS" EntitySet="MEMBERS" />
@@ -757,8 +799,8 @@
           </Key>
           <Property Name="AUTO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MEMBER_ID" Type="Int32" Nullable="false" />
-          <Property Name="CATEGORY_ID" Type="Int32" />
-          <Property Name="NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CATEGORY_ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -795,6 +837,8 @@
           <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_MATCHING_MEMBER_ROLE" FromRole="MEMBER_MATCHING" ToRole="MEMBER_ROLE" />
+          <NavigationProperty Name="MEMBER_ROLE1" Relationship="COACH_MEModel.FK_MEMBER_MATCHING_MEMBER_ROLE1" FromRole="MEMBER_MATCHING" ToRole="MEMBER_ROLE" />
         </EntityType>
         <EntityType Name="MEMBER_PACKAGE">
           <Key>
@@ -849,6 +893,8 @@
           <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UPDATED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="COURSE_COMMENT" Relationship="COACH_MEModel.FK_COURSE_COMMENT_MEMBER_ROLE" FromRole="MEMBER_ROLE" ToRole="COURSE_COMMENT" />
+          <NavigationProperty Name="MEMBER_MATCHING" Relationship="COACH_MEModel.FK_MEMBER_MATCHING_MEMBER_ROLE" FromRole="MEMBER_ROLE" ToRole="MEMBER_MATCHING" />
+          <NavigationProperty Name="MEMBER_MATCHING1" Relationship="COACH_MEModel.FK_MEMBER_MATCHING_MEMBER_ROLE1" FromRole="MEMBER_ROLE" ToRole="MEMBER_MATCHING" />
           <NavigationProperty Name="MEMBER_REGIS_COURSE" Relationship="COACH_MEModel.FK_MEMBER_REGIS_COURSE_MEMBER_REGIS_COURSE" FromRole="MEMBER_ROLE" ToRole="MEMBER_REGIS_COURSE" />
           <NavigationProperty Name="MEMBERS" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBER_ROLE" ToRole="MEMBERS" />
           <NavigationProperty Name="ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_ROLE" FromRole="MEMBER_ROLE" ToRole="ROLE" />
@@ -899,6 +945,8 @@
           <Property Name="AMPHUR_ID" Type="Int32" />
           <Property Name="TEACHING_TYPE" Type="Int32" />
           <Property Name="STUDENT_LEVEL" Type="Int32" />
+          <Property Name="LINE_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FACEBOOK_URL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AMPHUR" Relationship="COACH_MEModel.FK_MEMBERS_AMPHUR" FromRole="MEMBERS" ToRole="AMPHUR" />
           <NavigationProperty Name="MEMBER_CATEGORY" Relationship="COACH_MEModel.FK_MEMBER_CATEGORY_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_CATEGORY" />
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
@@ -978,7 +1026,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MEMBER_CATEGORY_CATEGORY">
-          <End Type="COACH_MEModel.CATEGORY" Role="CATEGORY" Multiplicity="0..1" />
+          <End Type="COACH_MEModel.CATEGORY" Role="CATEGORY" Multiplicity="1" />
           <End Type="COACH_MEModel.MEMBER_CATEGORY" Role="MEMBER_CATEGORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CATEGORY">
@@ -1070,6 +1118,30 @@
             </Principal>
             <Dependent Role="MEMBER_LOGON">
               <PropertyRef Name="MEMBER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEMBER_MATCHING_MEMBER_ROLE">
+          <End Type="COACH_MEModel.MEMBER_ROLE" Role="MEMBER_ROLE" Multiplicity="1" />
+          <End Type="COACH_MEModel.MEMBER_MATCHING" Role="MEMBER_MATCHING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBER_ROLE">
+              <PropertyRef Name="AUTO_ID" />
+            </Principal>
+            <Dependent Role="MEMBER_MATCHING">
+              <PropertyRef Name="TEACHER_ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEMBER_MATCHING_MEMBER_ROLE1">
+          <End Type="COACH_MEModel.MEMBER_ROLE" Role="MEMBER_ROLE" Multiplicity="1" />
+          <End Type="COACH_MEModel.MEMBER_MATCHING" Role="MEMBER_MATCHING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBER_ROLE">
+              <PropertyRef Name="AUTO_ID" />
+            </Principal>
+            <Dependent Role="MEMBER_MATCHING">
+              <PropertyRef Name="STUDENT_ROLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1371,6 +1443,8 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="FACEBOOK_URL" ColumnName="FACEBOOK_URL" />
+                <ScalarProperty Name="LINE_ID" ColumnName="LINE_ID" />
                 <ScalarProperty Name="STUDENT_LEVEL" ColumnName="STUDENT_LEVEL" />
                 <ScalarProperty Name="TEACHING_TYPE" ColumnName="TEACHING_TYPE" />
                 <ScalarProperty Name="AMPHUR_ID" ColumnName="AMPHUR_ID" />

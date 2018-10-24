@@ -48,7 +48,10 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int REGIS_COURSE_ID { get; set; }
         public string COURSE_BANNER { get; set; }
         public string ROLE { get; set; }
-         
+
+        public string LINE_ID { get; set; }
+
+        public string FACEBOOK_URL { get; set; }
 
         //public List<int> LIST_MEMBER_CETEGORY { get; set; }
         public List<MEMBER_CATEGORY> LIST_MEMBER_CETEGORY { get; set; }
