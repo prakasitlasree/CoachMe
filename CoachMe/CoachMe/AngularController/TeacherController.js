@@ -18,7 +18,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.geography
     $scope.provinceID
-    $scope.amphurID 
+    $scope.amphurID
     $scope.SEX_RADIO
 
     $scope.TEACHING_TYPE;
@@ -60,7 +60,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#STUDENT_LEVEL").prop("disabled", false);
         $("#editAddress").show();
         $("#ADDRESS").hide();
- 
+
         $("#SEX_RADIO").show();
         $("#SEX").hide();
 
@@ -203,7 +203,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.init = function () {
         debugger;
         $.LoadingOverlay("show");
-       
+
 
         $http({
             url: "/teacher/GetTeacherProfile",
@@ -239,7 +239,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                     }
                 });
             }
-        }); 
+        });
         $.LoadingOverlay("hide");
     };
 
@@ -248,7 +248,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.BindingProfile = function () {
 
         debugger;
-         
+
         $("#TEACHING_TYPE").val($scope.TeacherProfile[0].TEACHING_TYPE);
         $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
         $("#LOCATE").val($scope.TeacherProfile[0].LOCATION);
@@ -270,12 +270,12 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }
         if ($scope.TeacherProfile[0].SEX == 1) {
             $scope.SEX = "ชาย"
-          
+
             $("#SEX_RADIO_BTN_1").prop("checked", true);
         }
         else {
             $scope.SEX = "หญิง"
-            
+
             $("#SEX_RADIO_BTN_2").prop("checked", true);
         }
 
@@ -300,7 +300,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 MOBILE: $scope.MOBILE,
                 NICKNAME: $scope.NICKNAME,
                 ABOUT: $scope.ABOUT,
-                
+
                 LINE_ID: $scope.LINE_ID,
                 FACEBOOK_URL: $scope.FACEBOOK_URL,
 
@@ -310,7 +310,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 STUDENT_LEVEL: $('#STUDENT_LEVEL option:selected').val(),
                 SEX_RADIO: $scope.SEX_RADIO,
                 DATE_OF_BIRTH_TEXT: $('#DATE_OF_BIRTH_TEXT').val(),
-                
+
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
@@ -321,8 +321,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 else {
                     $scope.init();
                     $scope.HideButton();
-                } 
-            } 
+                }
+            }
         });
         $.LoadingOverlay("hide");
     }
@@ -380,16 +380,22 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
 
         $('#categoryCheckbox').empty();
+        var cate = ["ดนตรี", "ภาษา", "ธุรกิจและการเงิน", "ศิลปะ", "เทคโนโลยี", "วิชาชีพ/หลักสูตรพิเศษ", "สุขภาพ/ความงาม"]
         var html = "";
         var itemsLength = Object.keys($scope.ListCategoryAvailable).length;
-        for (var i = 0; i < itemsLength; i++) {
+        for (var i = 0; i < cate.length; i++) {
+            var index =  i+1;
             html += "<label class='m-checkbox'>"
-            html += "<input type='checkbox' name = 'categoryList[]' id = 'categoryList[]' ng-model='chkCategory[" + i + "]' value=" + $scope.ListCategoryAvailable[i] + " > " + $scope.ListCategoryAvailable[i]
+            html += "<input type='checkbox' name = 'categoryList[]' id = " + index + " value = " + cate[i] + "> " + cate[i]
             html += "<span></span>"
             html += "</label>"
         }
         var $OnCompile = $(html).appendTo('#categoryCheckbox');
-        $compile($OnCompile)($scope);
+        for (var i = 0; i < itemsLength; i++) {
+            debugger;
+            var id = $scope.ListCategoryAvailable[i]
+            $('#' + $scope.ListCategoryAvailable[i] + '').prop('checked', true);
+        }
     }
 
     $scope.SaveMemberCategory = function () {
