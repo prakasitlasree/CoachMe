@@ -43,8 +43,8 @@ namespace COACHME.DATASERVICE
 
         public enum PackageName
         {
-            Basic = 200,
-            Professional = 1200,
+            Basic = 399,
+            Professional = 699,
             Advance = 2400
         } 
     }

@@ -30,7 +30,7 @@
                             {
                                 <div class="m-card-profile__pic">
                                     <div class="m-card-profile__pic-wrapper">
-                                        <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? " \\Content\\images\\Blank-Profile.jpg" )"
+                                        <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? @"/Content/images/Blank-Profile.jpg" )"
                                              alt="" style="height:130px;width:130px" />
                                     </div>
                                     @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })

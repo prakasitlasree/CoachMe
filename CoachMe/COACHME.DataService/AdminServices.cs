@@ -21,7 +21,7 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memPackage = await  ctx.MEMBER_PACKAGE.Include("MEMBERS").OrderByDescending(x => x.CREATED_DATE).ToListAsync();
+                    var memPackage = await  ctx.MEMBER_PACKAGE.Include(o => o.MEMBERS).Where(x=> x.STATUS != StandardEnums.PurchaseStatus.HOLD.ToString()).OrderByDescending(x => x.CREATED_DATE).Take(100).ToListAsync();
                     var list = new List<MEMBER_PACKAGE>();
                     foreach (var item in memPackage)
                     {

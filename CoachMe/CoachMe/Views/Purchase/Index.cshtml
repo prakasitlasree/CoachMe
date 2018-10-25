@@ -37,21 +37,22 @@
                                                 <div class="m-pricing-table-2__hexagon"></div>
                                                 <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-confetti"></i></span>
                                             </div>
-                                            <h2 class="m-pricing-table-2__subtitle">Basic Plan <br /> (1 Month)</h2>
+                                            <h2 class="m-pricing-table-2__subtitle">1 Month <br /> Package</h2>
                                             <div class="m-pricing-table-2__features">
-                                                <span>2 course create</span>
-                                                <span>View match 10 student</span>
+                                                <span>List up to 2 course</span>
+                                                <span>See up to 10 students <br />who interest with your</span>
                                                 @*<span>20 Copies</span>*@
                                                 @*<span>Free Assets</span>*@
                                             </div>
-                                            <span class="m-pricing-table-2__price">200</span>
+                                            <span class="m-pricing-table-2__price">299</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
                                                 @if (TempData["Plan1"] != null && TempData["Plan1"].ToString() == "Basic")
                                                 {
                                                     if (TempData["Plan1Status"].ToString() == "DRAFT")
                                                     {
-                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>
+                                                        @*<button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>*@
+                                                        <button type="button" data-toggle="modal" data-target="#m_modal_1" value="Basic" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Purchase</button>
                                                     }
                                                     else if (TempData["Plan1Status"].ToString() == "ACTIVE")
                                                     {
@@ -79,21 +80,22 @@
                                                 <div class="m-pricing-table-2__hexagon"></div>
                                                 <span class="m-pricing-table-2__icon m--font-info"><i class="fa  flaticon-rocket"></i></span>
                                             </div>
-                                            <h2 class="m-pricing-table-2__subtitle">Professional Plan <br /> (6 Months)</h2>
+                                            <h2 class="m-pricing-table-2__subtitle">3 Months <br /> Package</h2>
                                             <div class="m-pricing-table-2__features">
-                                                <span>Unlimited course create</span>
-                                                <span>Unlimited view match student</span>
+                                                <span>List up to 2 course</span>
+                                                <span>See up to 10 students <br />who interest with your</span>
                                                 @*<span>Unlimited Copies</span>*@
                                                 @*<span>Free Assets</span>*@
                                             </div>
-                                            <span class="m-pricing-table-2__price">1,200</span>
+                                            <span class="m-pricing-table-2__price">699</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
                                                 @if (TempData["Plan2"] != null && TempData["Plan2"].ToString() == "Professional")
                                                 {
                                                     if (TempData["Plan2Status"].ToString() == "DRAFT")
                                                     {
-                                                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>
+                                                        @*<button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>*@
+                                                        <button id="ProBTN" type="button" data-toggle="modal" data-target="#m_modal_2" value="Professional" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-warning m-btn--gradient-to-danger">Pending review slip</button>
                                                     }
                                                     else if (TempData["Plan2Status"].ToString() == "ACTIVE")
                                                     {
@@ -121,14 +123,13 @@
                                                 <div class="m-pricing-table-2__hexagon"></div>
                                                 <span class="m-pricing-table-2__icon m--font-info"><i class="fa flaticon-gift"></i></span>
                                             </div>
-                                            <h2 class="m-pricing-table-2__subtitle">Advance Plan <br /> (12 Months)</h2>
+                                            <h2 class="m-pricing-table-2__subtitle">Need Help?<br /> Call us at <br /> 082-524-4830</h2>
                                             <div class="m-pricing-table-2__features">
-                                                <span>Unlimited course create</span>
-                                                <span>Unlimited view match student</span>
-                                                @*<span>Unlimited Copies</span>*@
-                                                @*<span>Free Assets</span>*@
+                                                @*<span>Unlimited course create</span>
+                                                <span>Unlimited view match student</span>*@
+                                                 
                                             </div>
-                                            <span class="m-pricing-table-2__price">2,400</span>
+                                            @*<span class="m-pricing-table-2__price">2,400</span>
                                             <span class="m-pricing-table-2__label">฿</span>
                                             <div class="m-pricing-table-2__btn">
                                                 @if (TempData["Plan3"] != null && TempData["Plan3"].ToString() == "Advance")
@@ -156,7 +157,7 @@
                                                 {
                                                     <button  id="AdvanceBTN" type="button" data-toggle="modal" data-target="#m_modal_3" value="Advance" name="btnPlan" class="btn m-btn--pill m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">Purchase</button>
                                                 }
-                                            </div>
+                                            </div>*@
                                         </div>
                                     </div>
                                 </div>
@@ -186,6 +187,8 @@
                                     <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp CoachME admin ยืนยันการสั่งซื้อ </h4>
                                     <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp ใช้งานตามสิทธิ์  </h4>
 
+                                    <h4 class="m--font-bold m--font-bold"><span class="m-badge m-badge--success m-badge--dot"></span>&nbsp Hotline: 082-524-4830  </h4>
+                                    
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn m-btn--pill    btn-focus" data-dismiss="modal">Close</button>

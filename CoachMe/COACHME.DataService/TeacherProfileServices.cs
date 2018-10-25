@@ -582,7 +582,7 @@ namespace COACHME.DATASERVICE
                         obj.AGE = member.AGE ?? 0;
                         obj.LOCATION = member.LOCATION ?? "ไม่ระบุ";
                         obj.MOBILE = member.MOBILE ?? "ไม่ระบุ";
-                        obj.COURSE = "Accept by Teacher";
+                        obj.COURSE = "Match by teacher";
                         obj.ABOUT = member.ABOUT ?? "ไม่ระบุ";
                         obj.LIST_STUDENT_COMMENT = new List<string> { "ไม่ระบุ" };
                         obj.REGIS_COURSE_ID = 999;

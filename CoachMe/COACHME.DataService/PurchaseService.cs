@@ -55,24 +55,28 @@ namespace COACHME.DATASERVICE
                         string fileName = Path.GetFileName(slipImage.FileName);
                         path = Path.Combine(myDir, fileName);
                         slipImage.SaveAs(path);
-                        index = path.IndexOf("Content");
-                       
+                        index = path.IndexOf("Content"); 
                     }
                     //updateMemberProfileUrl
                     #endregion
-                   
-                    #region ==== UPDATE OLD PACKAGE====
-                    //var memberOldPackage = member.MEMBER_PACKAGE
-                    //                              .Where(o => o.EXPIRE_DATE > DateTime.Now && o.STATUS == "ACTIVE")
-                    //                              .OrderByDescending(p => p.AUTO_ID)
-                    //                              .FirstOrDefault();
 
+                    #region ==== UPDATE OLD PACKAGE====
+
+                    //Set hold all purchase package.
+                    foreach (var item in member.MEMBER_PACKAGE)
+                    {
+                        if (item.STATUS == StandardEnums.PurchaseStatus.DRAFT.ToString())
+                        { 
+                            item.STATUS = StandardEnums.PurchaseStatus.HOLD.ToString();
+                        } 
+                    }
+                    //var memberOldPackage = member.MEMBER_PACKAGE 
                     //if (memberOldPackage != null)
                     //{
                     //    int remainDays = Convert.ToInt32((memberOldPackage.EXPIRE_DATE.Value - memberOldPackage.EFFECTIVE_DATE.Value).TotalDays);
                     //    memberOldPackage.EFFECTIVE_DATE = DateTime.Now.AddDays(30);
                     //    memberOldPackage.EXPIRE_DATE = DateTime.Now.AddDays(30 + remainDays);
-                    //    memberOldPackage.STATUS = "HOLD"; 
+                    //    memberOldPackage.STATUS = StandardEnums.PurchaseStatus.HOLD.ToString() ;
                     //}
                     #endregion
 
@@ -90,16 +94,16 @@ namespace COACHME.DATASERVICE
                     if (plan == StandardEnums.PackageName.Basic.ToString())
                     {
                         memberPackage.PACKAGE_NAME = StandardEnums.PackageName.Basic.ToString();
-                        memberPackage.PACKAGE_DETAIL = "Basic Plan Detail";
+                        memberPackage.PACKAGE_DETAIL = "1 Month Package";
                         memberPackage.PRICE = (decimal)StandardEnums.PackageName.Basic;
-                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(30);
+                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(31);
                     }
                     if (plan == StandardEnums.PackageName.Professional.ToString())
                     {
                         memberPackage.PACKAGE_NAME = StandardEnums.PackageName.Professional.ToString();
-                        memberPackage.PACKAGE_DETAIL = "Professional Plan Detail";
+                        memberPackage.PACKAGE_DETAIL = "3 Months Package";
                         memberPackage.PRICE = (decimal)StandardEnums.PackageName.Professional;
-                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(180);
+                        memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(93);
                     }
                     if (plan == StandardEnums.PackageName.Advance.ToString())
                     {
@@ -109,17 +113,15 @@ namespace COACHME.DATASERVICE
                         memberPackage.EXPIRE_DATE = DateTime.Now.AddDays(365);
                     }
                      
-                    var uploadSlip = ctx.MEMBER_PACKAGE.Add(memberPackage);
+                    ctx.MEMBER_PACKAGE.Add(memberPackage);
                     #endregion
                     
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;
                     activity.ACTION = "Purchase Package";
-                    activity.FULLNAME = dto.FULLNAME;
-                    activity.USER_NAME = dto.FULLNAME;
-                    activity.PASSWORD = dto.FULLNAME;
-                    activity.STATUS = resp.STATUS;
+                    activity.FULLNAME = dto.FULLNAME; 
+                    activity.STATUS = true;
                     ctx.LOGON_ACTIVITY.Add(activity);
                     #endregion
 
