@@ -66,8 +66,9 @@ namespace COACHME.DATASERVICE
                                              .Where(x => x.AUTO_ID == member_id).FirstOrDefault();
 
                     memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE
-                                                   //.Where(x => x.STATUS != "DRAFT" && x.STATUS != "HOLD")
+                                                   .Where(x => x.STATUS != "HOLD")
                                                    .OrderByDescending(x => x.AUTO_ID)
+                                                   .Take(1)
                                                    .ToList();
 
                     resp.OUTPUT_DATA = memberProfile;

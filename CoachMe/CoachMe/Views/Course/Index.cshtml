@@ -181,31 +181,31 @@
                                         <img src="~/Content/images/course/BlankBanner.png" id="imgCourse" class="img-thumbnail imgZoom"
                                              style="height:200px; width:100%;margin-bottom:15px" />
                                     </a>
-                                    @Html.TextBoxFor(m => m.COURSES.AUTO_ID, new { @id = "cAUTO_ID", @name = "AUTO_ID", @class = "form-control m-input", @style = "display:none;" })
+                                    @Html.TextBoxFor(m => m.COURSES.AUTO_ID, new { @id = "cAUTO_ID", @name = "AUTO_ID", @class = "form-control m-input m-input--pill", @style = "display:none;" })
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
                                 <label for="message-text" class="col-2 col-form-label">ชื่อคอร์ส:</label>
                                 <div class="col-10">
-                                    @Html.TextBoxFor(m => m.COURSES.NAME, new { @id = "cNAME", @class = "form-control m-input" })
+                                    @Html.TextBoxFor(m => m.COURSES.NAME, new { @id = "cNAME", @class = "form-control m-input m-input--pill" })
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
                                 <label for="message-text" class="col-2 col-form-label">รายละเอียด:</label>
                                 <div class="col-10">
-                                    @Html.TextAreaFor(m => m.COURSES.DESCRIPTION, new { @id = "cDESCRIPTION", @class = "form-control m-input", @rows = "4" })
+                                    @Html.TextAreaFor(m => m.COURSES.DESCRIPTION, new { @id = "cDESCRIPTION", @class = "form-control m-input m-input--pill", @rows = "4" })
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
                                 <label for="message-text" class="col-2 col-form-label">ราคา:</label>
                                 <div class="col-10">
-                                    @Html.TextBoxFor(m => m.COURSES.PRICE, new { @id = "cPRICE", type = "Number", @class = "form-control m-input" })
+                                    @Html.TextBoxFor(m => m.COURSES.PRICE, new { @id = "cPRICE", type = "Number", @class = "form-control m-input m-input--pill" })
                                 </div>
                             </div>
                         </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">Save</button>
-                                    <button type="button" class="btn btn-secondary m-btn m-btn--air m-btn--custom" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Save</button>
+                                    <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">Close</button>
                                     <input name="banner_img" type="file" id="uploadCover" style="display:none;" />
                                 </div>
                     }
