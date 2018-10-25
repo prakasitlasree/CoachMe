@@ -267,7 +267,7 @@
                                                     <div class="form-group m-form__group">
                                                         <label for="exampleSelect1">ประเภท</label>
                                                         @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @name = "COURSE", @class = "form-control m-input m-input--air m-input--pill" })
-                                                        
+
                                                         @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู")
                                                         {
                                                             var listItems = new List<SelectListItem>();
@@ -297,7 +297,7 @@
                                                     </div>
                                                     <div class="form-group m-form__group">
                                                         <label for="exampleSelect1">จังหวัด</label>
-                                                        <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID" id="SeachProvince" ng-model = "provinceID" ng-change="GetAmphur()"></select>
+                                                        <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_PROVINCE_ID" id="SeachProvince" ng-model="provinceID" ng-change="GetAmphur()"></select>
                                                         @*@Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_PROVINCE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_PROVINCE), "-เลือกทั้งหมด-", new { @class = "form-control m-input m-input--air m-input--pill" })*@
                                                     </div>
                                                     <div class="form-group m-form__group">
@@ -374,7 +374,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class=""> @*m-portlet__foot*@
+                                            <div class="">
+                                                @*m-portlet__foot*@
                                                 <div class="row align-items-center">
                                                     <div class="col-lg-12">
                                                         <button type="submit" class="btn btn-brand m-btn--pill m-btn--air"><i class="fa fa-search"></i>ค้นหา</button>
@@ -411,25 +412,39 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-8">
-                                                             
-                                                           
+
+
                                                             @*<div class="m-list__content">
-                                                                <div class="m-list-badge m--margin-bottom-20">
-                                                                    <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
-                                                                    <div class="m-list-badge__items">
-                                                                        @Url.Content(item.COURSE)
+                                                                    <div class="m-list-badge m--margin-bottom-20">
+                                                                        <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-book"></i>&nbsp คอร์สที่สอน :</div>
+                                                                        <div class="m-list-badge__items">
+                                                                            @Url.Content(item.COURSE)
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>*@
+                                                                </div>*@
                                                             @*<p><i class="fa fa-location-book"></i>&nbsp คอร์สที่สอน : @Url.Content(item.COURSE)</p><br>*@
-                                                            <div class="m-list__content">
-                                                                <div class="m-list-badge m--margin-bottom-20">
-                                                                    <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-user-graduate"></i>&nbsp ชื่อ :</div>
-                                                                    <div class="m-list-badge__items">
-                                                                        @Url.Content(item.FULLNAME)
+                                                            @if (item.VERIFY == false)
+                                                            {
+                                                                <div class="m-list__content">
+                                                                    <div class="m-list-badge m--margin-bottom-20">
+                                                                        <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-user-graduate"></i>&nbsp ชื่อ :</div>
+                                                                        <div class="m-list-badge__items">
+                                                                            @Url.Content(item.FULLNAME)
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="m-list__content">
+                                                                    <div class="m-list-badge m--margin-bottom-20">
+                                                                        <div class="m-list-badge__label " style="font-size:12px;font-weight:400;"><i class="fa fa-user-graduate"></i>&nbsp ชื่อ :<i class="fa fa-check-circle success"></i></div>
+                                                                        <div class="m-list-badge__items">
+                                                                            @Url.Content(item.FULLNAME)
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                             <div class="m-list__content">
                                                                 <div class="m-list-badge m--margin-bottom-20">
                                                                     <div class="m-list-badge__label" style="font-size:12px;font-weight:400;"><i class="fa fa-book-open"></i>&nbsp หมวดหมู่ :</div>
@@ -440,31 +455,31 @@
                                                                             {
                                                                                 if (cat.NAME == "ดนตรี")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--brand">  @Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--brand">  @Url.Content(cat.NAME)</a>
                                                                                 }
                                                                                 if (cat.NAME == "ภาษา")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--focus">@Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--focus">@Url.Content(cat.NAME)</a>
                                                                                 }
                                                                                 if (cat.NAME == "ธุรกิจและการเงิน")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--primary">@Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--primary">@Url.Content(cat.NAME)</a>
                                                                                 }
                                                                                 if (cat.NAME == "ศิลปะ")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
                                                                                 }
                                                                                 if (cat.NAME == "เทคโนโลยี")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--danger">@Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--danger">@Url.Content(cat.NAME)</a>
                                                                                 }
                                                                                 if (cat.NAME == "วิชาชีพ/หลักสูตรพิเศษ")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--warning">@Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--warning">@Url.Content(cat.NAME)</a>
                                                                                 }
                                                                                 if (cat.NAME == "สุขภาพ/ความงาม")
                                                                                 {
-                                                                                <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
+                                                                                    <a class="m-list-badge__item m-list-badge__item--success">@Url.Content(cat.NAME)</a>
                                                                                 }
                                                                             }
                                                                         }
@@ -481,7 +496,7 @@
                                                             </div>
                                                             @*@if (item.ABOUT != null)
                                                                 {*@
-                                                           
+
 
                                                             @*}*@
 
