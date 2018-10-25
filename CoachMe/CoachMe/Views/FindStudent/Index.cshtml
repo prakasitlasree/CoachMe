@@ -208,22 +208,23 @@
                             <div class="m-widget19__action center">
                                 @using (Html.BeginForm("acceptstudent", "findstudent", FormMethod.Post))
                                 {
-                                    if (item.STATUS != "ACTIVE")
-                                    {
-                                        <button class="btn m-btn--pill m-btn--air btn-primary" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.AUTO_ID)">
+                                    <div class="m-form__actions">
+                                        @if (item.STATUS != "ACTIVE")
+                                        {
+                                        <button class="btn m-btn--pill    btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.AUTO_ID)">
                                             <span>
-                                                <i class="fa fa-check-square"></i>
+                                                <i class="fa fa-user-check"></i>
                                                 <span>เลือกนักรียน</span>
                                             </span>
                                         </button>
-                                    }
-                                    <button class="btn m-btn--pill m-btn--air btn-info" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
-                                        <span>
-                                            <i class="fa flaticon-edit-1"></i>
-                                            <span>เพิ่มเติม</span>
-                                        </span>
-                                    </button>
-
+                                        }
+                                        <button class="btn m-btn--pill    btn-outline-success btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
+                                            <span>
+                                                <i class="fa fa-user-tie"></i>
+                                                <span>เพิ่มเติม</span>
+                                            </span>
+                                        </button>
+                                    </div>
                                 }
                             </div>
                             <br />
@@ -275,7 +276,7 @@
                                 </div>
                                 <div class="m-widget7__user">
                                     <div class="m-widget7__user-img">
-                                        <img class="m-widget7__img" src="./assets/app/media/img//users/100_3.jpg" alt="">
+                                        @*<img class="m-widget7__img" src="./assets/app/media/img//users/100_3.jpg" alt="">*@
                                     </div>
                                     <div class="m-widget7__info">
 
