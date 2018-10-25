@@ -212,6 +212,17 @@ namespace COACHME.DATASERVICE
 
                     foreach (var item in list)
                     {
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.AUTO_ID 
+                                                                          && x.STATUS == "ACTIVE"
+                                                                          && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
+                        if(memberPackage.Count > 0)
+                        {
+                            item.VERIFY = true;
+                        }
+                        else
+                        {
+                            item.VERIFY = false;
+                        }
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
                         if (item.TEACHING_TYPE != null)
                         {
@@ -231,7 +242,7 @@ namespace COACHME.DATASERVICE
                         }
                     }
 
-                    resp.OUTPUT_DATA = list;
+                    resp.OUTPUT_DATA = list.OrderByDescending(x=>x.VERIFY).ToList();
                 }
             }
             catch (Exception ex)
@@ -399,6 +410,17 @@ namespace COACHME.DATASERVICE
 
                     foreach (var item in listTeacher)
                     {
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.AUTO_ID
+                                                                          && x.STATUS == "ACTIVE"
+                                                                          && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
+                        if (memberPackage.Count > 0)
+                        {
+                            item.VERIFY = true;
+                        }
+                        else
+                        {
+                            item.VERIFY = false;
+                        }
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
                         item.LIST_MEMBER_TEACH_COURSE = listCourse.Where(x => x.MEMBER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
                         if (item.TEACHING_TYPE != null)
@@ -429,7 +451,7 @@ namespace COACHME.DATASERVICE
                     #endregion
 
 
-                    resp.OUTPUT_DATA = listTeacher;
+                    resp.OUTPUT_DATA = listTeacher.OrderByDescending(x => x.VERIFY).ToList();
                 }
             }
             catch (Exception ex)
@@ -518,6 +540,17 @@ namespace COACHME.DATASERVICE
 
                     foreach (var item in list)
                     {
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.AUTO_ID
+                                                                             && x.STATUS == "ACTIVE"
+                                                                             && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
+                        if (memberPackage.Count > 0)
+                        {
+                            item.VERIFY = true;
+                        }
+                        else
+                        {
+                            item.VERIFY = false;
+                        }
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
                         if (item.TEACHING_TYPE != null)
                         {
@@ -543,7 +576,7 @@ namespace COACHME.DATASERVICE
                         }
                     }
 
-                    resp.OUTPUT_DATA = list;
+                    resp.OUTPUT_DATA = list.OrderByDescending(x => x.VERIFY).ToList();
                 }
             }
             catch (Exception ex)
@@ -656,6 +689,17 @@ namespace COACHME.DATASERVICE
 
                     foreach (var item in list)
                     {
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.AUTO_ID
+                                                                          && x.STATUS == "ACTIVE"
+                                                                          && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
+                        if (memberPackage.Count > 0)
+                        {
+                            item.VERIFY = true;
+                        }
+                        else
+                        {
+                            item.VERIFY = false;
+                        }
                         item.LIST_MEMBER_CETEGORY = listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID).ToList();
                         if (item.TEACHING_TYPE != null)
                         {
@@ -691,7 +735,7 @@ namespace COACHME.DATASERVICE
                     #endregion
                    
 
-                    resp.OUTPUT_DATA = list;
+                    resp.OUTPUT_DATA = list.OrderByDescending(x => x.VERIFY).ToList();
                 }
             }
             catch (Exception ex)

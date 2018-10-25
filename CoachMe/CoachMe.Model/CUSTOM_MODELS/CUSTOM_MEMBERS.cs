@@ -24,6 +24,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int? STUDENT_LEVEL { get; set; }
         public string STUDENT_LEVEL_NAME { get; set; }
 
+        public bool VERIFY { get; set; }
         public string SEX { get; set; }
         public Nullable<int> AGE { get; set; }
         public string ABOUT { get; set; }
