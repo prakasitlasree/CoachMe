@@ -245,53 +245,7 @@
                                                             <option value="7">สุขภาพ/ความงาม</option>
                                                         </select>
                                                     </div>
-                                                    @*@Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE, new SelectList(Model.SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE), new { @id = "SEARCH_TYPE", @name = "SEARCH_TYPE", @class = "form-control m-input m-input--air m-input--pill" })
-
-                                                        @if (Model.SEARCH_TEACHER_MODEL.TEACH_TYPE == "ครู" )
-                                                        {
-                                                            var listItems = new List<SelectListItem>();
-                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
-                                                            {
-                                                                listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                            }
-                                                            <div id="category">
-                                                                <label for="CATEGORY">หมวดหมู่</label>
-                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
-                                                            </div>
-
-                                                            var listItems1 = new List<SelectListItem>();
-                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
-                                                            {
-                                                                listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                            }
-                                                            <div id="course">
-                                                                <label for="COURSE">คอร์ส</label>
-                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            var listItems = new List<SelectListItem>();
-                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_CATEGORY)
-                                                            {
-                                                                listItems.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                            }
-                                                            <div id="category">
-                                                                <label for="CATEGORY">หมวดหมู่</label>
-                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_CATEGORY, listItems, "-เลือกทั้งหมด-", new { @name = "LIST_CATEGORY", @id = "DDLCATEGORY", @class = "form-control m-input m-input--air m-input--pill" })
-                                                            </div>
-
-                                                            var listItems1 = new List<SelectListItem>();
-                                                            foreach (var item in Model.SEARCH_TEACHER_MODEL.LIST_COURSE)
-                                                            {
-                                                                listItems1.Add(new SelectListItem { Text = item.NAME, Value = item.AUTO_ID.ToString() });
-                                                            }
-                                                            <div id="course">
-                                                                <label for="COURSE">คอร์ส</label>
-                                                                @Html.DropDownListFor(m => m.SEARCH_TEACHER_MODEL.SELECTED_COURSE, listItems1, "-เลือกทั้งหมด-", new { @name = "COURSE", @id = "DDLCOURSE", @class = "form-control m-input m-input--air m-input--pill" })
-                                                            </div>
-
-                                                        }*@
+                                                    
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">จังหวัด</label>
@@ -569,7 +523,7 @@
                                                             else if (item.REGISTER_STATUS == false && item.VERIFY == true)
                                                             {
                                                                 <button class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
-                                                                    <span data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Verify by CoachMe">
+                                                                    <span data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Verify by CoachME">
                                                                         <i class="fa fa-heart"></i>
                                                                         <span>สมัครเรียนกับครูคนนี้</span>
                                                                     </span>
@@ -613,7 +567,7 @@
                                                                                 <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.AUTO_ID">
                                                                                     <span>
                                                                                         <i class="fa fa-check-square"></i>
-                                                                                        <span>ตกลง</span>
+                                                                                        <span>&nbsp ตกลง</span>
                                                                                     </span>
                                                                                 </button>
                                                                                 <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">ปิด</button>
@@ -681,7 +635,7 @@
 
                                                     <div class="modal-footer">
 
-                                                        <button type="button" class="btn btn-brand m-btn--pill m-btn--air" data-dismiss="modal">ปิด</button>
+                                                        <button type="button" class="btn m-btn--pill m-btn--air         btn-outline-brand btn-sm" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
 
@@ -721,26 +675,15 @@
                                                                 <div class="m-widget19__shadow"></div>
                                                             </div>
                                                             <div class="m-widget19__content">
-                                                                <div class="m-widget19__header">
-                                                                    <div class="m-widget19__user-img">
-                                                                        @*<img class="m-widget19__img" src="./assets/app/media/img//users/user1.jpg" alt="">*@
-                                                                    </div>
+                                                                <div class="m-widget19__header" style="margin-top:1.10rem;margin-bottom:1.10rem;">
+                                                                     
                                                                     <div class="m-widget19__info">
-                                                                        <span class="m-widget19__username">
+                                                                        <i class="fa fa-user-graduate"></i>
+                                                                        <span class="m-widget19__username" style="margin-bottom:0;">
                                                                             @item.FULLNAME
-                                                                        </span><br>
-                                                                        <span class="m-widget19__time">
-                                                                            @*UX/UI Designer, Google*@
-                                                                        </span>
+                                                                        </span><br> 
                                                                     </div>
-                                                                    <div class="m-widget19__stats">
-                                                                        <span class="m-widget19__number m--font-brand">
-                                                                            @item.AGE
-                                                                        </span>
-                                                                        <span class="m-widget19__comment">
-                                                                            @*Comments*@
-                                                                        </span>
-                                                                    </div>
+                                                                     
                                                                 </div>
                                                                 <div class="m-widget19__body">
                                                                     @item.ABOUT
@@ -748,14 +691,33 @@
                                                             </div>
                                                             @if (Session["logon"] == null)
                                                             {
-                                                                <div class="m-widget19__action">
+                                                                if(item.VERIFY == false)
+                                                                {
+                                                                    <a href="#" class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#m_modal_7">
+                                                                        <span>
+                                                                            <i class="fa fa-check-square"></i>
+                                                                            <span>&nbsp สมัครเรียนคอร์สนี้!!!</span>
+                                                                        </span>
+                                                                    </a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="#" class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#m_modal_7">
+                                                                        <span data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Verify by CoachME">
+                                                                            <i class="fa fa-heart"></i>
+                                                                            <span>&nbsp สมัครเรียนคอร์สนี้!!!</span>
+                                                                        </span>
+                                                                    </a>
+                                                                }
+                                                                @*<div class="m-widget19__action">
                                                                     <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_7">
                                                                         <span>
                                                                             <i class="fa fa-check-square"></i>
                                                                             <span>สมัครเรียนคอร์สนี้</span>
                                                                         </span>
                                                                     </a>
-                                                                </div>
+                                                                </div>*@
+
                                                                 using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
                                                                 {
                                                                     <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
@@ -780,8 +742,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="modal-footer">
-                                                                                    <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">ล็อกอิน</button>
-                                                                                    <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">ปิด</button>
+                                                                                    <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Login</button>
+                                                                                    <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">Close</button>
 
                                                                                 </div>
                                                                             </div>
@@ -793,9 +755,28 @@
                                                             {
                                                                 if (item.REGISTER_STATUS == false)
                                                                 {
-                                                                    <div class="m-widget19__action">
+                                                                    if (item.VERIFY == false)
+                                                                    {
+                                                                        <button class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">
+                                                                            <span>
+                                                                                <i class="fa fa-check-square"></i>
+                                                                                <span>&nbsp สมัครเรียนคอร์สนี้</span>
+                                                                            </span>
+                                                                        </button>
+                                                                    }
+                                                                    else if (item.VERIFY == true)
+                                                                    {
+                                                                        <button class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">
+                                                                            <span data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Verify by CoachME">
+                                                                                <i class="fa fa-heart"></i>
+                                                                                <span>&nbsp สมัครเรียนคอร์สนี้</span>
+                                                                            </span>
+                                                                        </button>
+                                                                    } 
+                                                                    @*<div class="m-widget19__action">
                                                                         <button type="button" class="btn m-btn--pill btn-brand m-btn--air m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">สมัครเรียน</button>
-                                                                    </div>
+                                                                    </div>*@
+
                                                                     using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
                                                                     {
                                                                         <div class="modal fade" id="@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
@@ -823,10 +804,10 @@
                                                                                         <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
                                                                                             <span>
                                                                                                 <i class="fa fa-check-square"></i>
-                                                                                                <span>ตกลง</span>
+                                                                                                <span>Confirm</span>
                                                                                             </span>
                                                                                         </button>
-                                                                                        <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">ปิด</button>
+                                                                                        <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
                                                                                     </div>
                                                                                 </div>
 
@@ -837,8 +818,8 @@
                                                                 else
                                                                 {
                                                                     <div class="m-widget19__action">
-                                                                        <button type="button" class="btn m-btn--pill btn-success m-btn--air m-btn--custom">
-                                                                            <i class="flaticon-star"></i>สมัครเรียบร้อย
+                                                                        <button type="button" class="btn m-btn--pill m-btn--air         btn-primary btn-sm">
+                                                                            <i class="flaticon-star"></i>&nbsp สมัครเรียบร้อย
                                                                         </button>
                                                                     </div>
                                                                 }

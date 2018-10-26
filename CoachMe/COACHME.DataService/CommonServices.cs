@@ -99,7 +99,7 @@ namespace COACHME.DATASERVICE
             }
             return resp;
         }
-
+  
         public async Task<RESPONSE__MODEL> GetListCourse()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -107,8 +107,9 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    resp.OUTPUT_DATA = await ctx.COURSES
-                                                .ToListAsync();
+                    var course = await ctx.COURSES.ToListAsync();
+
+                    resp.OUTPUT_DATA = course;
                 }
                 resp.STATUS = true;
 
