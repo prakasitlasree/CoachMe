@@ -930,7 +930,8 @@ namespace COACHME.DATASERVICE
                                             STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL ?? 0,
                                             LOCATION = memberProfile.FirstOrDefault().LOCATION ?? "ไม่ระบุ",
                                             FACEBOOK_URL = memberProfile.FirstOrDefault().FACEBOOK_URL,
-                                            LINE_ID = memberProfile.FirstOrDefault().LINE_ID
+                                            LINE_ID = memberProfile.FirstOrDefault().LINE_ID,
+                                            ROLE = memberProfile.FirstOrDefault().MEMBER_ROLE.FirstOrDefault().ROLE_ID.ToString(),
                                             
                                         });
 

@@ -30,6 +30,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.NICKNAME;
     $scope.DATE_OF_BIRTH;
     $scope.SEX;
+    $scope.ROLE;
 
     $scope.LINE_ID;
     $scope.FACEBOOK_URL;
@@ -43,6 +44,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
 
     $scope.EnableControl = function () {
+ 
+
         $("#FULLNAME").prop("disabled", false);
         $("#FIRST_NAME").prop("disabled", false);
         $("#LAST_NAME").prop("disabled", false);
@@ -73,14 +76,15 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#btnAboutImg_4").prop("disabled", false);
         $("#AboutImg_4").css('cursor', 'pointer');
     }
+
     $scope.HideButton = function () {
+       
         $('#btnUpdateSubmit').hide()
         $('#btnUpdateCancel').hide()
 
         $("#SEX_RADIO").hide();
         $("#SEX_RADIO_BTN").prop("disabled", true);
         $("#SEX").show();
-
         $("#FULLNAME").prop("disabled", true);
         $("#FIRST_NAME").prop("disabled", true);
         $("#LAST_NAME").prop("disabled", true);
@@ -93,24 +97,28 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#NICKNAME").prop("disabled", true);
         $("#DATE_OF_BIRTH").prop("disabled", true);
         $("#SEX").prop("disabled", true);
-        $("#ID_CARD").prop("disabled", true);
-        $("#ADDRESS").show();
-        $('#editAddress').hide();
-        $('#LOCATE').show();
-        $("#LOCATE").prop("disabled", true);
-        $("#TEACHING_TYPE").prop("disabled", true);
-        $("#STUDENT_LEVEL").prop("disabled", true);
 
-        $("#btnAboutImg_1").prop("disabled", true);
-        $("#AboutImg_1").css('cursor', 'pointer');
-        $("#btnAboutImg_2").prop("disabled", true);
-        $("#AboutImg_2").css('cursor', 'pointer');
-        $("#btnAboutImg_3").prop("disabled", true);
-        $("#AboutImg_3").css('cursor', 'pointer');
-        $("#btnAboutImg_4").prop("disabled", true);
-        $("#AboutImg_4").css('cursor', 'pointer');
-        $("#CATEGORY").prop("disabled", true);
-        $("#LOCATION").prop("disabled", true);
+        if ($scope.ROLE =="1") {
+            
+            $("#ID_CARD").prop("disabled", true);
+            $("#ADDRESS").show();
+            $('#editAddress').hide();
+            $('#LOCATE').show();
+            $("#LOCATE").prop("disabled", true);
+            $("#TEACHING_TYPE").prop("disabled", true);
+            $("#STUDENT_LEVEL").prop("disabled", true);
+
+            $("#btnAboutImg_1").prop("disabled", true);
+            $("#AboutImg_1").css('cursor', 'pointer');
+            $("#btnAboutImg_2").prop("disabled", true);
+            $("#AboutImg_2").css('cursor', 'pointer');
+            $("#btnAboutImg_3").prop("disabled", true);
+            $("#AboutImg_3").css('cursor', 'pointer');
+            $("#btnAboutImg_4").prop("disabled", true);
+            $("#AboutImg_4").css('cursor', 'pointer');
+            $("#CATEGORY").prop("disabled", true);
+            $("#LOCATION").prop("disabled", true); 
+        }
     }
 
     $scope.GetComponent = function () {
@@ -208,7 +216,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $http({
             url: "/teacher/GetTeacherProfile",
             method: "GET",
-            //params: { OrderID: $scope.orderId }
+             
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS == true) {
@@ -217,7 +225,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $http({
                     url: "/teacher/GetAdress",
                     method: "GET",
-                    //params: { OrderID: $scope.orderId }
+                     
                 }).then(function (response) {
                     console.log(response.data.OUTPUT_DATA)
                     if (response.data.STATUS == true) {
@@ -262,6 +270,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $scope.LOCATION = $scope.TeacherProfile[0].LOCATION
         $scope.TEACHING_TYPE = $scope.TeacherProfile[0].TEACHING_TYPE
         $scope.STUDENT_LEVEL = $scope.TeacherProfile[0].STUDENT_LEVEL
+        $scope.ROLE = $scope.TeacherProfile[0].ROLE
+
         if ($scope.TeacherProfile[0].AMPHUR_ID != null) {
             $scope.amphurID = $scope.TeacherProfile[0].AMPHUR_ID
         }

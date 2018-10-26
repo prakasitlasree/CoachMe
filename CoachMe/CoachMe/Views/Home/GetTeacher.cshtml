@@ -54,7 +54,7 @@
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">
-                                        <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
+                                        @*<li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
                                             m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
                                             <a href="#" class="m-nav__link m-dropdown__toggle">
                                                 <span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
@@ -63,16 +63,16 @@
                                                 <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
                                                 <div class="m-dropdown__inner ">
                                                     <div class="m-dropdown__header">
-                                                        @*<form class="m-list-search__form">
-                                                            <div class="m-list-search__form-wrapper">
-                                                                <span class="m-list-search__form-input-wrapper">
-                                                                    <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
-                                                                </span>
-                                                                <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
-                                                                    <i class="la la-remove"></i>
-                                                                </span>
-                                                            </div>
-                                                        </form>*@
+                                                        <form class="m-list-search__form">
+                                                                <div class="m-list-search__form-wrapper">
+                                                                    <span class="m-list-search__form-input-wrapper">
+                                                                        <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
+                                                                    </span>
+                                                                    <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                                                        <i class="la la-remove"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </form>
                                                     </div>
                                                     <div class="m-dropdown__body">
                                                         <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-height="300" data-mobile-height="200">
@@ -82,7 +82,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </li>*@
 
                                         <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                             <a href="#" class="m-nav__link m-dropdown__toggle">
@@ -106,7 +106,7 @@
                                                         <div class="m-card-user m-card-user--skin-light">
                                                             <div class="m-card-user__pic">
                                                                 @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless" alt="" />*@
-                                                                <img src="..\\@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "\\Content\\images\\Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
+                                                                <img src="..\\@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" />
                                                             </div>
                                                             <div class="m-card-user__details">
                                                                 <span class="m-card-user__name m--font-weight-500">
@@ -138,6 +138,17 @@
                                                                             </span>
                                                                         </a>
 
+                                                                    }
+                                                                    @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 2)
+                                                                    {
+                                                                        <a href="/teacher/index" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                                            <span class="m-nav__link-title">
+                                                                                <span class="m-nav__link-wrap">
+                                                                                    <span class="m-nav__link-text">My Profile</span> 
+                                                                                </span>
+                                                                            </span>
+                                                                        </a>
                                                                     }
                                                                 </li>
                                                                 <li class="m-nav__item">
@@ -540,7 +551,7 @@
                                                         else
                                                         {
 
-                                                            <button class="btn btn-metal m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
+                                                            <button class="btn m-btn--pill m-btn--air         btn-outline-success btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_PROFILE_TEACHER" + item.AUTO_ID)">
                                                                 <span>
                                                                     <i class="fa fa-plus"></i>
                                                                     <span>เพิ่มเติม</span>
@@ -548,7 +559,7 @@
                                                             </button>
                                                             if (item.REGISTER_STATUS == false && item.VERIFY == false)
                                                             {
-                                                                <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
+                                                                <button class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
                                                                     <span>
                                                                         <i class="fa fa-check-square"></i>
                                                                         <span>สมัครเรียนกับครูคนนี้</span>
@@ -557,7 +568,7 @@
                                                             }
                                                             else if (item.REGISTER_STATUS == false && item.VERIFY == true)
                                                             {
-                                                                <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
+                                                                <button class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_TEACHER" + item.AUTO_ID)">
                                                                     <span data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Verify by CoachMe">
                                                                         <i class="fa fa-heart"></i>
                                                                         <span>สมัครเรียนกับครูคนนี้</span>
@@ -566,7 +577,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                                                <a href="#" class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom">
                                                                     <span>
                                                                         <i class="flaticon-star"></i>
                                                                         <span>สมัครเรียบร้อย</span>

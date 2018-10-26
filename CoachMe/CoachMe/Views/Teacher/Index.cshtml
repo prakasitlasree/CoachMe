@@ -65,53 +65,52 @@
 
                         @using (Html.BeginForm("editcategory", "teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                         {
-                            <div class="m-widget1 m-widget1--paddingless">
-                                @if (TempData["MessageCate"] != null)
+                            if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault() != null)
+                            {
+                                if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
                                 {
-                                    <p style="text-align:center" class="text-success"> อัพเดทโปรไฟล์เรียบร้อย</p>
-                                }
-                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
-                                <div class="m-widget1__item">
-                                    <div class="row m-row--no-padding align-items-center">
-                                        <label for="example-text-input" class="col-8 col-form-label m-widget1__title">หมวดหมู่</label>
-                                        <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory" ng-click="UpdateProfileCategory()">
-                                            <i class="fa fa-user-edit"></i>
-                                        </button>
-                                        <br>
+                                    <div class="m-widget1 m-widget1--paddingless">
+                                        @if (TempData["MessageCate"] != null)
+                                        {
+                                            <p style="text-align:center" class="text-success"> อัพเดทโปรไฟล์เรียบร้อย</p>
+                                        } 
+                                        @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                        <div class="m-widget1__item">
+                                            <div class="row m-row--no-padding align-items-center">
+                                                <label for="example-text-input" class="col-8 col-form-label m-widget1__title">หมวดหมู่</label>
+                                                <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory" ng-click="UpdateProfileCategory()">
+                                                    <i class="fa fa-user-edit"></i>
+                                                </button>
+                                                <br>
 
-                                        @*@Html.TextAreaFor(Model.MEMBERS.MEMBER_CATEGORY.Select(o=>o.NAME).ToList(), new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
+                                                @*@Html.TextAreaFor(Model.MEMBERS.MEMBER_CATEGORY.Select(o=>o.NAME).ToList(), new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
 
 
-                                        @*<select class="form-control m-input  m-input--pill" name="categoryList" ng-model="selectedCategory" ng-change="AddSelectedCategory()" id="DropdownCategory" style="display:none"></select>*@
-                                        <div id="BadgeCategoryArea">
+                                                @*<select class="form-control m-input  m-input--pill" name="categoryList" ng-model="selectedCategory" ng-change="AddSelectedCategory()" id="DropdownCategory" style="display:none"></select>*@
+                                                <div id="BadgeCategoryArea">
+                                                </div>
+
+                                            </div>
                                         </div>
+                                        <div class="m-widget1__item">
+                                            <div class="row m-row--no-padding align-items-center">
+                                                <label for="example-text-input" class="col-12 col-form-label m-widget1__title">สถานที่สะดวกสอน</label>
+                                                @*@Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
+                                                    @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
+                                                <textarea class="form-control m-input m-input--pill" id="LOCATE" rows="3" cols="20" ng-model="LOCATION" ng-value="LOCATION" disabled></textarea>
 
-                                    </div>
-                                </div>
-                                <div class="m-widget1__item">
-                                    <div class="row m-row--no-padding align-items-center">
-                                        <label for="example-text-input" class="col-12 col-form-label m-widget1__title">สถานที่สะดวกสอน</label>
-                                        @*@Html.TextAreaFor(m => m.MEMBERS.LOCATION, new { @id = "LOCATION", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })
-                                            @*<textarea id="LOCATION" class="form-control m-input" cols="20" disabled="disabled" rows="3">#บ้าน #office #co-working-space #ร้านกาแฟ</textarea>*@
-                                        <textarea class="form-control m-input m-input--pill" id="LOCATE" rows="3" cols="20" ng-model="LOCATION" ng-value="LOCATION" disabled></textarea>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="m-portlet__foot m-portlet__foot--fit">
-                                <div class="m-form__actions">
-
-                                    <div class="row">
-
-                                        @*<div class="col-12">
-                                                <button type="submit" style="display:none" id="btnCateSubmit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Save</button>&nbsp;&nbsp;
-                                                <button type="button" style="display:none" id="btnCateCancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</button>
-                                            </div>*@
+                                            </div>
+                                        </div>
                                     </div>
 
-                                </div>
-                            </div>
+                                    <div class="m-portlet__foot m-portlet__foot--fit">
+                                        <div class="m-form__actions">
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
                         }
                     </div>
                 </div>
@@ -124,17 +123,20 @@
                                 <li class="nav-item m-tabs__item">
                                     <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
                                         <i class="flaticon-share m--hide"></i>
-                                        Profile
-                                    </a>
+                                        ข้อมูลส่วนตัว
+                                    </a> 
+                                    &nbsp&nbsp <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="margin-top:12px;margin-bottom:12px;" id="btnUpdate" ng-click="GetComponent()">
+                                        <i class="fa fa-user-edit"></i>
+                                    </button>
                                 </li>
+
                                 @*
                                     <li class="nav-item m-tabs__item">
                                         <a class="nav-link m-tabs__link " data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
                                             <i class="flaticon-share m--hide"></i>
                                             Manage Course
                                         </a>
-                                    </li>*@
-
+                                    </li>*@ 
                             </ul>
                         </div>
 
@@ -145,9 +147,8 @@
                                 <div class="m-form m-form--fit m-form--label-align-right">
 
                                     <div class="m-portlet__body">
-                                        <div class="form-group m-form__group m--margin-top-10 m--hide">
-                                            <div class="alert m-alert m-alert--default" role="alert">
-                                                @*The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.*@
+                                        @*<div class="form-group m-form__group m--margin-top-10 m--hide">
+                                            <div class="alert m-alert m-alert--default" role="alert"> 
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
@@ -156,42 +157,40 @@
                                                     ข้อมูลส่วนตัว
                                                     <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate" ng-click="GetComponent()">
                                                         <i class="fa fa-user-edit"></i>
-                                                    </button>
+                                                    </button> 
+                                                </h3> 
+                                            </div>
+                                        </div>*@
 
-                                                </h3>
-                                                @*@if (TempData["Message"] != null)
-                                                    {
-                                                        <p class="text-success">อัพเดทโปรไฟล์เรียบร้อย</p>
-                                                    }*@
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">Display Name</label>
+                                            <div class="col-7"> 
+                                                <input class="form-control m-input m-input--pill" id="FULLNAME" ng-model="FULLNAME" ng-value="FULLNAME" disabled>
                                             </div>
                                         </div>
 
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
-                                            <div class="col-7">
-                                                @*@Html.TextBoxFor(m => m.MEMBERS.FIRST_NAME, new { @id = "FIRST_NAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                            <div class="col-7"> 
                                                 <input class="form-control m-input m-input--pill" id="FIRST_NAME" ng-model="FIRST_NAME" ng-value="FIRST_NAME" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
-                                            <div class="col-7">
-                                                @*@Html.TextBoxFor(m => m.MEMBERS.LAST_NAME, new { @id = "LAST_NAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                            <div class="col-7"> 
                                                 <input class="form-control m-input m-input--pill" id="LAST_NAME" ng-model="LAST_NAME" ng-value="LAST_NAME" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
-                                            <div class="col-7">
-                                                @*@Html.TextBoxFor(m => m.MEMBERS.NICKNAME, new { @id = "NICKNAME", @class = "form-control m-input  m-input--pill", @disabled = "disabled" })*@
+                                            <div class="col-7"> 
                                                 <input class="form-control m-input m-input--pill" id="NICKNAME" ng-model="NICKNAME" ng-value="NICKNAME" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
                                             <div class="col-7">
-                                                <div class='input-group date'>
-                                                    @*@Html.TextBoxFor(m => m.MEMBERS.DATE_OF_BIRTH, "{0:d MMM yyyy}", new { @id = "DATE_OF_BIRTH", @class = "form-control m-input m-input--pill", @disabled = "disabled" })*@
+                                                <div class='input-group date'> 
                                                     <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH" ng-model="DATE_OF_BIRTH_TEXT" ng-value="DATE_OF_BIRTH_TEXT" disabled>
                                                     <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH_TEXT" style="display:none">
                                                 </div>
@@ -203,38 +202,45 @@
                                                 <input class="form-control m-input m-input--pill" id="SEX" ng-model="SEX" ng-value="SEX" disabled>
                                                 <div class="m-radio-inline" id="SEX_RADIO" style="display:none">
                                                     <label class="m-radio">
-                                                        <input type="radio"id="SEX_RADIO_BTN_1" name="SEX_RADIO" ng-model="SEX_RADIO" value="1"> ชาย
+                                                        <input type="radio" id="SEX_RADIO_BTN_1" name="SEX_RADIO" ng-model="SEX_RADIO" value="1"> ชาย
                                                         <span></span>
                                                     </label>
                                                     <label class="m-radio">
-                                                        <input type="radio"id="SEX_RADIO_BTN_2" name="SEX_RADIO" ng-model="SEX_RADIO" value="2"> หญิง
+                                                        <input type="radio" id="SEX_RADIO_BTN_2" name="SEX_RADIO" ng-model="SEX_RADIO" value="2"> หญิง
                                                         <span></span>
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
-                                            <div class="col-7">
-                                                <input type='file' onchange="angular.element(this).scope().aboutImg1_file(this)" name="about_img" id="btnAboutImg_1" accept="image/*" style="display:none" disabled />
-                                                <input type='file' onchange="angular.element(this).scope().aboutImg2_file(this)" name="about_img" id="btnAboutImg_2" accept="image/*" style="display:none" disabled />
-                                                <input type='file' onchange="angular.element(this).scope().aboutImg3_file(this)" name="about_img" id="btnAboutImg_3" accept="image/*" style="display:none" disabled />
-                                                <input type='file' onchange="angular.element(this).scope().aboutImg4_file(this)" name="about_img" id="btnAboutImg_4" accept="image/*" style="display:none" disabled />
-                                                <a id="ChangeAbout_1">
-                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
-                                                </a>
-                                                <a id="ChangeAbout_2">
-                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_2" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
-                                                </a>
-                                                <a id="ChangeAbout_3">
-                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_3" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
-                                                </a>
-                                                <a id="ChangeAbout_4">
-                                                    <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_4" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
-                                                </a>
-                                            </div>
-                                        </div>
+                                        @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault() != null)
+                                        {
+                                            if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                                            {
+                                                <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
+                                                    <div class="col-7">
+                                                        <input type='file' onchange="angular.element(this).scope().aboutImg1_file(this)" name="about_img" id="btnAboutImg_1" accept="image/*" style="display:none" disabled />
+                                                        <input type='file' onchange="angular.element(this).scope().aboutImg2_file(this)" name="about_img" id="btnAboutImg_2" accept="image/*" style="display:none" disabled />
+                                                        <input type='file' onchange="angular.element(this).scope().aboutImg3_file(this)" name="about_img" id="btnAboutImg_3" accept="image/*" style="display:none" disabled />
+                                                        <input type='file' onchange="angular.element(this).scope().aboutImg4_file(this)" name="about_img" id="btnAboutImg_4" accept="image/*" style="display:none" disabled />
+                                                        <a id="ChangeAbout_1">
+                                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
+                                                        </a>
+                                                        <a id="ChangeAbout_2">
+                                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL2 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_2" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                        </a>
+                                                        <a id="ChangeAbout_3">
+                                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL3 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_3" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                        </a>
+                                                        <a id="ChangeAbout_4">
+                                                            <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL4 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_4" alt="" class="img-thumbnail" style="height:130px;width:130px;margin-left:5px" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">เบอร์ติดต่อ</label>
                                             <div class="col-7">
@@ -264,8 +270,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับผู้สอน</label>
-                                            <div class="col-7"> 
+                                            <label for="example-text-input" class="col-2 col-form-label">เกี่ยวกับเรา</label>
+                                            <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="ABOUT" ng-model="ABOUT" ng-value="ABOUT" disabled>
                                             </div>
                                         </div>
@@ -281,29 +287,34 @@
                                                 <input class="form-control m-input m-input--pill" id="FACEBOOK_URL" ng-model="FACEBOOK_URL" ng-value="FACEBOOK_URL" disabled>
                                             </div>
                                         </div>
-                                        <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">ประเภทการเรียน</label>
-                                            <div class="col-7">
-                                                <select class="form-control m-input  m-input--pill" id="TEACHING_TYPE" disabled>
-                                                    <option value=1>เรียนเดี่ยว</option>
-                                                    <option value=2>เรียนกลุ่ม</option>
-                                                    <option value=3>เรียนเดี่ยว,เรียนกลุ่ม</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">ระดับของผู้เรียน</label>
-                                            <div class="col-7">
-                                                <select class="form-control m-input  m-input--pill" id="STUDENT_LEVEL" disabled>
-                                                    <option value=1>เริ่มต้น</option>
-                                                    <option value=2>ปานกลาง</option>
-                                                    <option value=3>ขั้นสูง</option>
-                                                    <option value=4>เริ่มต้น,ปานกลาง,ขั้นสูง</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault() != null)
+                                        {
+                                            if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                                            {
+                                                <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label">ประเภทการเรียน</label>
+                                                    <div class="col-7">
+                                                        <select class="form-control m-input  m-input--pill" id="TEACHING_TYPE" disabled>
+                                                            <option value=1>เรียนเดี่ยว</option>
+                                                            <option value=2>เรียนกลุ่ม</option>
+                                                            <option value=3>เรียนเดี่ยว,เรียนกลุ่ม</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label">ระดับของผู้เรียน</label>
+                                                    <div class="col-7">
+                                                        <select class="form-control m-input  m-input--pill" id="STUDENT_LEVEL" disabled>
+                                                            <option value=1>เริ่มต้น</option>
+                                                            <option value=2>ปานกลาง</option>
+                                                            <option value=3>ขั้นสูง</option>
+                                                            <option value=4>เริ่มต้น,ปานกลาง,ขั้นสูง</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
 
-                                      
                                     </div>
 
 
