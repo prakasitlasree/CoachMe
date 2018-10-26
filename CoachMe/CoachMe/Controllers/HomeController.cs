@@ -119,7 +119,7 @@ namespace CoachMe.Controllers
                      
                     return View(container);
                 }
-                else
+                else 
                 {
                     if (dto.SEARCH_TEACHER_MODEL.SEARCH_ALL == "1")
                     {
