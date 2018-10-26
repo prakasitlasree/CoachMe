@@ -376,9 +376,11 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-
+                    List<MEMBER_CATEGORY> userCate = ctx.MEMBER_CATEGORY.Where(o => o.MEMBER_ID == dto.AUTO_ID).ToList();
+                    ctx.MEMBER_CATEGORY.RemoveRange(userCate);
                     foreach (var item in category)
                     {
+                        
                         var cateID = await ctx.CATEGORY.Where(o => o.NAME == item).Select(o => o.AUTO_ID).FirstAsync();
                         var memberCategory = new MEMBER_CATEGORY();
                         memberCategory.MEMBER_ID = dto.AUTO_ID;
@@ -858,6 +860,7 @@ namespace COACHME.DATASERVICE
                 {
                     resp.OUTPUT_DATA = await ctx.MEMBER_CATEGORY
                                                 .Where(o => o.MEMBER_ID == dto.AUTO_ID)
+                                                
                                                 .ToListAsync();
                 }
                 resp.STATUS = true;
@@ -879,12 +882,13 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    List<string> category = new List<string> { "ดนตรี", "ภาษา", "ธุรกิจและการเงิน", "ศิลปะ", "เทคโนโลยี", "วิชาชีพ/หลักสูตรพิเศษ", "สุขภาพ/ความงาม" };
+                    //List<string> category = new List<string> { "ดนตรี", "ภาษา", "ธุรกิจและการเงิน", "ศิลปะ", "เทคโนโลยี", "วิชาชีพ/หลักสูตรพิเศษ", "สุขภาพ/ความงาม" };
+                    List<int> category = new List<int> { 1,2,3,4,5,6,7 };
                     var memberCategory = await ctx.MEMBER_CATEGORY
                                                  .Where(o => o.MEMBER_ID == dto.AUTO_ID)
-                                                 .Select(o => o.NAME)
+                                                 .Select(o => o.CATEGORY_ID)
                                                  .ToListAsync();
-                    resp.OUTPUT_DATA = category.Where(x => !memberCategory.Contains(x)).ToList();
+                    resp.OUTPUT_DATA = category.Where(x => memberCategory.Contains(x)).ToList();
                 }
                 resp.STATUS = true;
 
