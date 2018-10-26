@@ -18,7 +18,7 @@
 
         @foreach (var item in Model.LIST_CUSTOM_MEMBERS)
             {
-            <div class="modal fade" id="@("MODAL_" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+            <div class="modal fade" id="@("MODAL_" + item.REGIS_COURSE_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         @*<div class="modal-header">
@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="@("MODAL_ACCEPT_" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+            <div class="modal fade" id="@("MODAL_ACCEPT_" + item.REGIS_COURSE_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     @using (Html.BeginForm("acceptstudent", "findstudent", FormMethod.Post))
                     {
@@ -211,14 +211,14 @@
                                     <div class="m-form__actions">
                                         @if (item.STATUS != "ACTIVE")
                                         {
-                                        <button class="btn m-btn--pill    btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.AUTO_ID)">
+                                        <button class="btn m-btn--pill    btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_" + item.REGIS_COURSE_ID)">
                                             <span>
                                                 <i class="fa fa-user-check"></i>
                                                 <span>เลือกนักรียน</span>
                                             </span>
                                         </button>
                                         }
-                                        <button class="btn m-btn--pill    btn-outline-success btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_" + item.AUTO_ID)">
+                                        <button class="btn m-btn--pill    btn-outline-success btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#@("MODAL_" + item.REGIS_COURSE_ID)">
                                             <span>
                                                 <i class="fa fa-user-tie"></i>
                                                 <span>เพิ่มเติม</span>

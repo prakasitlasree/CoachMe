@@ -212,10 +212,10 @@ namespace COACHME.DATASERVICE
 
                     foreach (var item in list)
                     {
-                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.AUTO_ID 
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.AUTO_ID
                                                                           && x.STATUS == "ACTIVE"
                                                                           && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
-                        if(memberPackage.Count > 0)
+                        if (memberPackage.Count > 0)
                         {
                             item.VERIFY = true;
                         }
@@ -242,7 +242,7 @@ namespace COACHME.DATASERVICE
                         }
                     }
 
-                    resp.OUTPUT_DATA = list.OrderByDescending(x=>x.VERIFY).ToList();
+                    resp.OUTPUT_DATA = list.OrderByDescending(x => x.VERIFY).ToList();
                 }
             }
             catch (Exception ex)
@@ -264,18 +264,46 @@ namespace COACHME.DATASERVICE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
                                                     .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
-                                                   
 
-                    var listTeachCourse = (from item in listAllTeachCourse
-                                           select new CUSTOM_MEMBERS
-                                           {
-                                               COURSE_BANNER = item.COURSES.BANNER_URL,
-                                               COURSE = item.COURSES.NAME,
-                                               FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME,
-                                               AGE = item.MEMBER_ROLE.MEMBERS.AGE,
-                                               ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
-                                               REGISTER_STATUS = false
-                                           }).ToList();
+                    var listTeachCourse = new List<CUSTOM_MEMBERS>();
+
+
+                    var listTeachCourse2 = (from item in listAllTeachCourse
+                                            select new CUSTOM_MEMBERS
+                                            {
+                                                COURSE_BANNER = item.COURSES.BANNER_URL,
+                                                COURSE = item.COURSES.NAME,
+                                                FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME,
+                                                AGE = item.MEMBER_ROLE.MEMBERS.AGE,
+                                                ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT,
+                                                AUTO_ID = item.MEMBER_ROLE.MEMBERS.AUTO_ID,
+                                                REGISTER_STATUS = false
+
+                                            }).ToList();
+
+                    foreach (var item in listAllTeachCourse)
+                    {
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.MEMBER_ROLE.MEMBERS.AUTO_ID
+                                                                          && x.STATUS == "ACTIVE"
+                                                                          && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
+                        if (memberPackage.Count > 0)
+                        {
+                            var memberCourse = new CUSTOM_MEMBERS();
+                            memberCourse.COURSE_BANNER = item.COURSES.BANNER_URL;
+                            memberCourse.COURSE = item.COURSES.NAME;
+                            memberCourse.FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME;
+                            memberCourse.AGE = item.MEMBER_ROLE.MEMBERS.AGE;
+                            memberCourse.ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT;
+                            memberCourse.AUTO_ID = item.MEMBER_ROLE.MEMBERS.AUTO_ID;
+                            memberCourse.REGISTER_STATUS = false;
+                            memberCourse.VERIFY = true;
+                            listTeachCourse.Add(memberCourse);
+                        }
+                        else
+                        {
+                           
+                        }
+                    }
 
                     resp.OUTPUT_DATA = listTeachCourse;
                 }
@@ -316,7 +344,7 @@ namespace COACHME.DATASERVICE
 
 
                     }
-                    else if (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID != null )
+                    else if (dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID != null)
                     {
                         listAllTeachCourse = listAllTeachCourse.Where(x => dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
                     }
@@ -325,7 +353,7 @@ namespace COACHME.DATASERVICE
                         dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
                         listAllTeachCourse = listAllTeachCourse.Where(x => !dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID.Contains(x.MEMBER_ROLE.MEMBERS.AMPHUR_ID)).ToList();
                     }
-                    if(dto.LIST_COURSE.FirstOrDefault() > 0)
+                    if (dto.LIST_COURSE.FirstOrDefault() > 0)
                     {
                         listAllTeachCourse = listAllTeachCourse.Where(x => x.COURSE_ID == dto.LIST_COURSE.FirstOrDefault()).ToList();
                     }
@@ -333,7 +361,7 @@ namespace COACHME.DATASERVICE
 
                     #endregion
 
-                    var listTeachCourse = (from item in listAllTeachCourse
+                    var listTeachCourse2 = (from item in listAllTeachCourse
                                            select new CUSTOM_MEMBERS
                                            {
                                                COURSE_BANNER = item.COURSES.BANNER_URL,
@@ -345,6 +373,31 @@ namespace COACHME.DATASERVICE
                                                REGISTER_STATUS = false
 
                                            }).ToList();
+                    var listTeachCourse = new List<CUSTOM_MEMBERS>();
+
+                    foreach (var item in listAllTeachCourse)
+                    {
+                        var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == item.MEMBER_ROLE.MEMBERS.AUTO_ID
+                                                                          && x.STATUS == "ACTIVE"
+                                                                          && x.EXPIRE_DATE > DateTime.Now).ToListAsync();
+                        if (memberPackage.Count > 0)
+                        {
+                            var memberCourse = new CUSTOM_MEMBERS();
+                            memberCourse.COURSE_BANNER = item.COURSES.BANNER_URL;
+                            memberCourse.COURSE = item.COURSES.NAME;
+                            memberCourse.FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME;
+                            memberCourse.AGE = item.MEMBER_ROLE.MEMBERS.AGE;
+                            memberCourse.ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT;
+                            memberCourse.AUTO_ID = item.MEMBER_ROLE.MEMBERS.AUTO_ID;
+                            memberCourse.REGISTER_STATUS = false;
+                            memberCourse.VERIFY = true;
+                            listTeachCourse.Add(memberCourse);
+                        }
+                        else
+                        {
+
+                        }
+                    }
 
                     resp.OUTPUT_DATA = listTeachCourse;
                 }
@@ -378,7 +431,7 @@ namespace COACHME.DATASERVICE
                         dto.SEARCH_TEACHER_MODEL.LIST_AMPHUR_ID = new List<int?> { 0 };
                     }
                     var listTeacher = new List<CUSTOM_MEMBERS>();
-                    var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x=>x.CATEGORY).ToListAsync();
+                    var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x => x.CATEGORY).ToListAsync();
                     var listCourse = await ctx.MEMBER_TEACH_COURSE.Include(x => x.COURSES).ToListAsync();
 
                     listTeacher = await (from a in ctx.MEMBERS
@@ -443,10 +496,10 @@ namespace COACHME.DATASERVICE
 
                     #region === Advance Search ====
 
-                    if (dto.LIST_CATE.FirstOrDefault() >0)
+                    if (dto.LIST_CATE.FirstOrDefault() > 0)
                     {
                         int catId = dto.LIST_CATE.FirstOrDefault();
-                        listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o=> o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
+                        listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o => o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
                     }
                     #endregion
 
@@ -587,7 +640,7 @@ namespace COACHME.DATASERVICE
             return resp;
 
 
-        }     
+        }
         public async Task<RESPONSE__MODEL> GetListAllCourseAfterLogin(CONTAINER_MODEL dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -606,7 +659,7 @@ namespace COACHME.DATASERVICE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
                                                     .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
-                                                   
+
 
                     var listTeachCourse = (from item in listAllTeachCourse
                                            select new CUSTOM_MEMBERS
@@ -725,7 +778,7 @@ namespace COACHME.DATASERVICE
                     }
                     #region === Advance Search ====
 
-                   
+
 
                     if (dto.LIST_CATE.FirstOrDefault() > 0)
                     {
@@ -733,7 +786,7 @@ namespace COACHME.DATASERVICE
                         list = list.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o => o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
                     }
                     #endregion
-                   
+
 
                     resp.OUTPUT_DATA = list.OrderByDescending(x => x.VERIFY).ToList();
                 }
@@ -810,6 +863,8 @@ namespace COACHME.DATASERVICE
                                                REGISTER_STATUS = (memberRegisCourse.Contains(item.AUTO_ID)) ? true : false
 
                                            }).ToList();
+
+
 
                     resp.OUTPUT_DATA = listTeachCourse;
                 }
