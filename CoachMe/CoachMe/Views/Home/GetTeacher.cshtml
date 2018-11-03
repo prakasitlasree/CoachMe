@@ -55,34 +55,34 @@
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">
                                         @*<li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
-                                            m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
-                                            <a href="#" class="m-nav__link m-dropdown__toggle">
-                                                <span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
-                                            </a>
-                                            <div class="m-dropdown__wrapper">
-                                                <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
-                                                <div class="m-dropdown__inner ">
-                                                    <div class="m-dropdown__header">
-                                                        <form class="m-list-search__form">
-                                                                <div class="m-list-search__form-wrapper">
-                                                                    <span class="m-list-search__form-input-wrapper">
-                                                                        <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
-                                                                    </span>
-                                                                    <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
-                                                                        <i class="la la-remove"></i>
-                                                                    </span>
+                                                m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
+                                                <a href="#" class="m-nav__link m-dropdown__toggle">
+                                                    <span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
+                                                </a>
+                                                <div class="m-dropdown__wrapper">
+                                                    <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                                                    <div class="m-dropdown__inner ">
+                                                        <div class="m-dropdown__header">
+                                                            <form class="m-list-search__form">
+                                                                    <div class="m-list-search__form-wrapper">
+                                                                        <span class="m-list-search__form-input-wrapper">
+                                                                            <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
+                                                                        </span>
+                                                                        <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                                                            <i class="la la-remove"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </form>
+                                                        </div>
+                                                        <div class="m-dropdown__body">
+                                                            <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-height="300" data-mobile-height="200">
+                                                                <div class="m-dropdown__content">
                                                                 </div>
-                                                            </form>
-                                                    </div>
-                                                    <div class="m-dropdown__body">
-                                                        <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-height="300" data-mobile-height="200">
-                                                            <div class="m-dropdown__content">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>*@
+                                            </li>*@
 
                                         <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                             <a href="#" class="m-nav__link m-dropdown__toggle">
@@ -145,7 +145,7 @@
                                                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                                             <span class="m-nav__link-title">
                                                                                 <span class="m-nav__link-wrap">
-                                                                                    <span class="m-nav__link-text">My Profile</span> 
+                                                                                    <span class="m-nav__link-text">My Profile</span>
                                                                                 </span>
                                                                             </span>
                                                                         </a>
@@ -178,14 +178,15 @@
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">
+
                                         <li class="m-nav__item">
                                             <a href="@Url.Action("login", "account")" class="m-nav__link">
-                                                <span class="m-nav__link-text" style="color:white">Login</span>
+                                                <span class="m-nav__link-text" style="color:darkgray">Login</span>
                                             </a>
                                         </li>
                                         <li class="m-nav__item">
                                             <a href="@Url.Action("register", "account")" class="m-nav__link">
-                                                <span class="m-nav__link-text" style="color:white">Register</span>
+                                                <span class="m-nav__link-text" style="color:darkgray">Register</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -245,7 +246,7 @@
                                                             <option value="7">สุขภาพ/ความงาม</option>
                                                         </select>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">จังหวัด</label>
@@ -676,14 +677,14 @@
                                                             </div>
                                                             <div class="m-widget19__content">
                                                                 <div class="m-widget19__header" style="margin-top:1.10rem;margin-bottom:1.10rem;">
-                                                                     
+
                                                                     <div class="m-widget19__info">
                                                                         <i class="fa fa-user-graduate"></i>
                                                                         <span class="m-widget19__username" style="margin-bottom:0;">
                                                                             @item.FULLNAME
-                                                                        </span><br> 
+                                                                        </span><br>
                                                                     </div>
-                                                                     
+
                                                                 </div>
                                                                 <div class="m-widget19__body">
                                                                     @item.ABOUT
@@ -691,7 +692,7 @@
                                                             </div>
                                                             @if (Session["logon"] == null)
                                                             {
-                                                                if(item.VERIFY == false)
+                                                                if (item.VERIFY == false)
                                                                 {
                                                                     <a href="#" class="btn m-btn--pill m-btn--air         btn-outline-info btn-sm m-btn m-btn--custom" data-toggle="modal" data-target="#m_modal_7">
                                                                         <span>
@@ -710,45 +711,45 @@
                                                                     </a>
                                                                 }
                                                                 @*<div class="m-widget19__action">
-                                                                    <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_7">
-                                                                        <span>
-                                                                            <i class="fa fa-check-square"></i>
-                                                                            <span>สมัครเรียนคอร์สนี้</span>
-                                                                        </span>
-                                                                    </a>
-                                                                </div>*@
+                                                                        <a href="#" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" data-toggle="modal" data-target="#m_modal_7">
+                                                                            <span>
+                                                                                <i class="fa fa-check-square"></i>
+                                                                                <span>สมัครเรียนคอร์สนี้</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </div>*@
 
-                                                                using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
-                                                                {
-                                                                    <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
-                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true">×</span>
-                                                                                    </button>
+                                                            using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
+                                                            {
+                                                                <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบ</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">×</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="form-group m-form__group">
+                                                                                    <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
+                                                                                    <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
+
                                                                                 </div>
-                                                                                <div class="modal-body">
-                                                                                    <div class="form-group m-form__group">
-                                                                                        <label for="exampleInputEmail1">ชื่อผู้ใช้งาน</label>
-                                                                                        <input type="email" class="form-control m-input m-input--pill " name="USER_NAME" aria-describedby="emailHelp" placeholder="Enter email">
-
-                                                                                    </div>
-                                                                                    <div class="form-group m-form__group">
-                                                                                        <label for="exampleInputPassword1">รหัสผ่าน</label>
-                                                                                        <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
-
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Login</button>
-                                                                                    <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">Close</button>
+                                                                                <div class="form-group m-form__group">
+                                                                                    <label for="exampleInputPassword1">รหัสผ่าน</label>
+                                                                                    <input type="password" class="form-control m-input m-input--pill " name="PASSWORD" placeholder="Password">
 
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Login</button>
+                                                                                <button type="button" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss="modal">Close</button>
+
+                                                                            </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
                                                                 }
                                                             }
                                                             else
@@ -772,56 +773,56 @@
                                                                                 <span>&nbsp สมัครเรียนคอร์สนี้</span>
                                                                             </span>
                                                                         </button>
-                                                                    } 
+                                                                    }
                                                                     @*<div class="m-widget19__action">
-                                                                        <button type="button" class="btn m-btn--pill btn-brand m-btn--air m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">สมัครเรียน</button>
-                                                                    </div>*@
+                                                                            <button type="button" class="btn m-btn--pill btn-brand m-btn--air m-btn--custom" data-toggle="modal" data-target="#@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)">สมัครเรียน</button>
+                                                                        </div>*@
 
-                                                                    using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
-                                                                    {
-                                                                        <div class="modal fade" id="@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
-                                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-body">
-                                                                                        <div class="m-portlet__body">
-                                                                                            <div class="m-demo__preview m-demo__preview--badge">
+                                                            using (Html.BeginForm("AcceptTeacher", "student", FormMethod.Post))
+                                                            {
+                                                                <div class="modal fade" id="@("MODAL_ACCEPT_COURSE" + item.AUTO_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-body">
+                                                                                <div class="m-portlet__body">
+                                                                                    <div class="m-demo__preview m-demo__preview--badge">
 
-                                                                                                <h4 class="m--font-bold m--font-bold">
-                                                                                                    <span>
-                                                                                                        <i class="fa fa-address-card"></i>
-                                                                                                        @Html.Hidden("COURSE_ID", item.COURSE_ID)
-                                                                                                        @Html.Hidden("COURSE_NAME", item.COURSE)
-                                                                                                        @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
-                                                                                                        @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
-                                                                                                        <span> คุณจะเลือกคอร์ส @Url.Content(item.COURSE) ใช่หรือไม่ ?</span>
-                                                                                                    </span>
-
-                                                                                                </h4>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                        <h4 class="m--font-bold m--font-bold">
                                                                                             <span>
-                                                                                                <i class="fa fa-check-square"></i>
-                                                                                                <span>Confirm</span>
+                                                                                                <i class="fa fa-address-card"></i>
+                                                                                                @Html.Hidden("COURSE_ID", item.COURSE_ID)
+                                                                                                @Html.Hidden("COURSE_NAME", item.COURSE)
+                                                                                                @Html.Hidden("MEMBER_ROLE_ID", item.MEMBER_ROLE_ID)
+                                                                                                @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
+                                                                                                <span> คุณจะเลือกคอร์ส @Url.Content(item.COURSE) ใช่หรือไม่ ?</span>
                                                                                             </span>
-                                                                                        </button>
-                                                                                        <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
+
+                                                                                        </h4>
                                                                                     </div>
                                                                                 </div>
-
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn m-btn--pill m-btn--air btn-primary" type="submit" name="AcceptStudent" value="@item.REGIS_COURSE_ID">
+                                                                                    <span>
+                                                                                        <i class="fa fa-check-square"></i>
+                                                                                        <span>Confirm</span>
+                                                                                    </span>
+                                                                                </button>
+                                                                                <button type="button" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom" data-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </div>
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="m-widget19__action">
-                                                                        <button type="button" class="btn m-btn--pill m-btn--air         btn-primary btn-sm">
-                                                                            <i class="flaticon-star"></i>&nbsp สมัครเรียบร้อย
-                                                                        </button>
+
                                                                     </div>
+                                                                </div>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="m-widget19__action">
+                                                                    <button type="button" class="btn m-btn--pill m-btn--air         btn-primary btn-sm">
+                                                                        <i class="flaticon-star"></i>&nbsp สมัครเรียบร้อย
+                                                                    </button>
+                                                                </div>
                                                                 }
                                                             }
                                                         </div>
