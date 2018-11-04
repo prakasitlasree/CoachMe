@@ -25,6 +25,19 @@ namespace COACHME.WEB_PRESENT.Controllers
                 model.MEMBERS = memberLogon;
                 resp = await service.GetCourseByTeacherID(memberLogon);
                 model.LIST_COURSES = resp.OUTPUT_DATA;
+                if (memberLogon.MEMBER_PACKAGE != null)
+                {
+                    foreach (var item in memberLogon.MEMBER_PACKAGE)
+                    {
+                        
+                        if (item.STATUS == StandardEnums.PurchaseStatus.ACTIVE.ToString() && item.EXPIRE_DATE.Value.Date >= DateTime.Now.Date)
+                        {
+                            model.MEMBER_PACKAGE = item;
+                        }
+                    }
+                     
+                }
+                //model.MEMBER_PACKAGE = memberLogon.MEMBER_PACKAGE;
                 return View(model);
             }
             else
@@ -55,11 +68,13 @@ namespace COACHME.WEB_PRESENT.Controllers
                 if (result.STATUS)
                 {
                     TempData["Message"] = "Save course successfully";
+
                     return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
                 else
                 {
                     TempData["Message"] = "Save course Fail";
+                    TempData["Message"] += "<br>" + result.Message;
                     return RedirectToAction("index", "course", new { member_id = dto.MEMBERS.AUTO_ID });
                 }
             }

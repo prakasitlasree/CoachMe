@@ -330,7 +330,7 @@ namespace COACHME.DATASERVICE
                                                     .Include(x => x.COURSES)
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS.MEMBER_LOGON)
-                                                    .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
+                                                    .Where(o => o.MEMBER_ROLE.ROLE_ID == 1 && o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
                     var obj = dto.SEARCH_TEACHER_MODEL.LIST_COURSE;
 
                     #region === Advance Search ====
@@ -395,7 +395,16 @@ namespace COACHME.DATASERVICE
                         }
                         else
                         {
-
+                            var memberCourse = new CUSTOM_MEMBERS();
+                            memberCourse.COURSE_BANNER = item.COURSES.BANNER_URL;
+                            memberCourse.COURSE = item.COURSES.NAME;
+                            memberCourse.FULLNAME = item.MEMBER_ROLE.MEMBERS.FULLNAME;
+                            memberCourse.AGE = item.MEMBER_ROLE.MEMBERS.AGE;
+                            memberCourse.ABOUT = item.MEMBER_ROLE.MEMBERS.ABOUT;
+                            memberCourse.AUTO_ID = item.MEMBER_ROLE.MEMBERS.AUTO_ID;
+                            memberCourse.REGISTER_STATUS = false;
+                            memberCourse.VERIFY = false;
+                            listTeachCourse.Add(memberCourse);
                         }
                     }
 
@@ -658,7 +667,7 @@ namespace COACHME.DATASERVICE
                     var listAllTeachCourse = await ctx.MEMBER_TEACH_COURSE
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.COURSES)
-                                                    .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
+                                                    .Where(o => o.MEMBER_ROLE.ROLE_ID == 1 && o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
 
 
                     var listTeachCourse = (from item in listAllTeachCourse
@@ -812,7 +821,7 @@ namespace COACHME.DATASERVICE
                                                     .Include(x => x.COURSES)
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS)
                                                     .Include(x => x.MEMBER_ROLE.MEMBERS.MEMBER_LOGON)
-                                                    .Where(o => o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
+                                                    .Where(o => o.MEMBER_ROLE.ROLE_ID == 1 && o.MEMBER_ROLE.MEMBERS.MEMBER_LOGON.FirstOrDefault().STATUS == 2).ToListAsync();
                     var obj = dto.SEARCH_TEACHER_MODEL.LIST_COURSE;
 
                     var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBERS.AUTO_ID).FirstOrDefaultAsync();

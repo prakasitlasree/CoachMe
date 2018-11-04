@@ -682,7 +682,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefault();
-                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefault();
+                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID ).FirstOrDefault();
 
                     var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).OrderByDescending(x => x.AUTO_ID).ToListAsync();
                     var listCourse = new List<COURSES>();
@@ -697,7 +697,7 @@ namespace COACHME.DATASERVICE
                     }
                     else
                     {
-                        //แบบฟรี
+                        //แบบฟรี or expire
                         foreach (var item in listTeacher)
                         {
                             if (listCourse.Count == 2)
@@ -714,6 +714,28 @@ namespace COACHME.DATASERVICE
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = listCourse;
                 }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                resp.ErrorMessage = ex.Message;
+
+            }
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetMemberPackageByTeacherID(MEMBERS dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                { 
+                    var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
+                    resp.STATUS = true;
+                    resp.OUTPUT_DATA = memberPackage;
+                }
+
             }
             catch (Exception ex)
             {
@@ -766,9 +788,9 @@ namespace COACHME.DATASERVICE
                         var objEdit = ctx.COURSES.Where(x => x.AUTO_ID == dto.COURSES.AUTO_ID).FirstOrDefault();
                         objEdit.NAME = dto.COURSES.NAME;
                         objEdit.DESCRIPTION = dto.COURSES.DESCRIPTION;
-                        objEdit.CREATED_BY = dto.MEMBERS.FULLNAME;
+                        objEdit.CREATED_BY = dto.MEMBERS.FIRST_NAME;
                         objEdit.CREATED_DATE = DateTime.Now;
-                        objEdit.UPDATED_BY = dto.MEMBERS.FULLNAME;
+                        objEdit.UPDATED_BY = dto.MEMBERS.FIRST_NAME;
                         objEdit.UPDATED_DATE = DateTime.Now;
                         objEdit.PRICE = dto.COURSES.PRICE;
 
@@ -812,7 +834,7 @@ namespace COACHME.DATASERVICE
                         var activity = new LOGON_ACTIVITY();
                         activity.DATE = DateTime.Now;
                         activity.ACTION = "Create Course";
-                        activity.FULLNAME = dto.MEMBERS.FULLNAME;
+                        activity.FULLNAME = dto.MEMBERS.FIRST_NAME;
                         activity.USER_NAME = dto.MEMBERS.FIRST_NAME;
                         activity.STATUS = resp.STATUS;
                         ctx.LOGON_ACTIVITY.Add(activity);
@@ -828,6 +850,7 @@ namespace COACHME.DATASERVICE
             }
             catch (Exception ex)
             {
+                resp.Message = ex.Message;
                 resp.STATUS = false;
                 throw ex;
             }

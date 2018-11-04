@@ -8,7 +8,7 @@
 <div class="m-content">
     @if (TempData["Message"] != null)
     {
-        <p style="text-align:center" class="text-success"> บันทึกข้อมูลเรียบร้อย</p>
+        <p style="text-align:center" class="text-success"> @TempData["Message"].ToString() </p>
     }
     <!--Begin::Section-->
     <div class="row">
@@ -78,7 +78,7 @@
             </div>
         }
 
-        @if (Model.LIST_COURSES.Count <= 1)
+        @if (Model.LIST_COURSES.Count <= 1 && Model.MEMBER_PACKAGE == null)
         {
             <div class="col-xl-4">
                 <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
@@ -102,7 +102,7 @@
                 </div>
             </div>
         }
-        @if (Model.LIST_COURSES.Count == 2)
+        @if (Model.MEMBER_PACKAGE == null)
         {
             <div class="col-xl-4">
                 <div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height ">
@@ -156,6 +156,30 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-xl-4">
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
+                    <div class="m-portlet__head m-portlet__head--fit">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action">
+                                <button type="button" class="btn m-btn--pill btn-primary m-btn--wide" data-toggle="modal" onclick="ShowAction(0, 'Add','Course')">เพิ่มคอร์ส</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+
+                        <div class="m-widget19">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 180px">
+                                <img src="~/Content/images/course/New_Course.jpg" alt="">
+                                <h3 class="m-widget19__title m--font-light"></h3>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

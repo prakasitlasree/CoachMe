@@ -146,7 +146,7 @@
                         }
                         @if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault() != null)
                         {
-                            if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
+                            if (Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1 || Model.MEMBERS.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
                             {
                                 <li class="m-menu__item  m-menu__item " aria-haspopup="true">
                                     @using (Html.BeginForm("dashboard", "teacher", FormMethod.Post))
