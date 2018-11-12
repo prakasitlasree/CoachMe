@@ -325,7 +325,9 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS == true) {
+            debugger;
                 if ($scope.ABOUT_IMG_1 != "" || $scope.ABOUT_IMG_2 != "" || $scope.ABOUT_IMG_3 != "" || $scope.ABOUT_IMG_4 != "") {
+                    debugger;
                     $('#btnUpdateSubmitImg').trigger('click')
                 }
                 else {
@@ -441,51 +443,23 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $.LoadingOverlay("hide");
     }
 
-
-    $scope.aboutImg1_file = function () {
+    $scope.SetImage = function (val) {
         debugger;
-        var f = document.getElementById('btnAboutImg_1').files[0],
-            r = new FileReader();
-        r.onloadend = function (e) {
-            $scope.ABOUT_IMG_1 = e.target.result.toString().split(",")[1];
+        if (val == 1) {
+            $scope.ABOUT_IMG_1 = "upload"
         }
-        r.readAsDataURL(f);
-        debugger;
-    };
-
-    $scope.aboutImg2_file = function () {
-        debugger;
-        var f = document.getElementById('btnAboutImg_2').files[0],
-            r = new FileReader();
-        r.onloadend = function (e) {
-            $scope.ABOUT_IMG_2 = e.target.result.toString().split(",")[1];
+        if (val == 2) {
+            $scope.ABOUT_IMG_2 = "upload"
         }
-        r.readAsDataURL(f);
-        debugger;
-    };
-
-    $scope.aboutImg3_file = function () {
-        debugger;
-        var f = document.getElementById('btnAboutImg_3').files[0],
-            r = new FileReader();
-        r.onloadend = function (e) {
-            $scope.ABOUT_IMG_3 = e.target.result.toString().split(",")[1];
+        if (val == 3) {
+            $scope.ABOUT_IMG_3 = "upload"
         }
-        r.readAsDataURL(f);
-        debugger;
-    };
-
-    $scope.aboutImg4_file = function () {
-        debugger;
-        var f = document.getElementById('btnAboutImg_4').files[0],
-            r = new FileReader();
-        r.onloadend = function (e) {
-            $scope.ABOUT_IMG_4 = e.target.result.toString().split(",")[1];
+        if (val == 4) {
+            $scope.ABOUT_IMG_4 = "upload"
         }
-        r.readAsDataURL(f);
-        debugger;
-    };
+    }
 
+  
 
 
 });

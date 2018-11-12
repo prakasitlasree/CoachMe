@@ -73,7 +73,7 @@
                                         @if (TempData["MessageCate"] != null)
                                         {
                                             <p style="text-align:center" class="text-success"> อัพเดทโปรไฟล์เรียบร้อย</p>
-                                        } 
+                                        }
                                         @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
                                         <div class="m-widget1__item">
                                             <div class="row m-row--no-padding align-items-center">
@@ -124,7 +124,7 @@
                                     <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
                                         <i class="flaticon-share m--hide"></i>
                                         ข้อมูลส่วนตัว
-                                    </a> 
+                                    </a>
                                     &nbsp&nbsp <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="margin-top:12px;margin-bottom:12px;" id="btnUpdate" ng-click="GetComponent()">
                                         <i class="fa fa-user-edit"></i>
                                     </button>
@@ -136,7 +136,7 @@
                                             <i class="flaticon-share m--hide"></i>
                                             Manage Course
                                         </a>
-                                    </li>*@ 
+                                    </li>*@
                             </ul>
                         </div>
 
@@ -148,49 +148,49 @@
 
                                     <div class="m-portlet__body">
                                         @*<div class="form-group m-form__group m--margin-top-10 m--hide">
-                                            <div class="alert m-alert m-alert--default" role="alert"> 
+                                                <div class="alert m-alert m-alert--default" role="alert">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group m-form__group row">
-                                            <div class="col-10 ml-auto">
-                                                <h3 class="m-form__section">
-                                                    ข้อมูลส่วนตัว
-                                                    <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate" ng-click="GetComponent()">
-                                                        <i class="fa fa-user-edit"></i>
-                                                    </button> 
-                                                </h3> 
-                                            </div>
-                                        </div>*@
+                                            <div class="form-group m-form__group row">
+                                                <div class="col-10 ml-auto">
+                                                    <h3 class="m-form__section">
+                                                        ข้อมูลส่วนตัว
+                                                        <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate" ng-click="GetComponent()">
+                                                            <i class="fa fa-user-edit"></i>
+                                                        </button>
+                                                    </h3>
+                                                </div>
+                                            </div>*@
 
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">Display Name</label>
-                                            <div class="col-7"> 
+                                            <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="FULLNAME" ng-model="FULLNAME" ng-value="FULLNAME" disabled>
                                             </div>
                                         </div>
 
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ชื่อ</label>
-                                            <div class="col-7"> 
+                                            <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="FIRST_NAME" ng-model="FIRST_NAME" ng-value="FIRST_NAME" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">นามสกุล</label>
-                                            <div class="col-7"> 
+                                            <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="LAST_NAME" ng-model="LAST_NAME" ng-value="LAST_NAME" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">ชื่อเล่น</label>
-                                            <div class="col-7"> 
+                                            <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="NICKNAME" ng-model="NICKNAME" ng-value="NICKNAME" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">วันเดือนปีเกิด</label>
                                             <div class="col-7">
-                                                <div class='input-group date'> 
+                                                <div class='input-group date'>
                                                     <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH" ng-model="DATE_OF_BIRTH_TEXT" ng-value="DATE_OF_BIRTH_TEXT" disabled>
                                                     <input class="form-control m-input m-input--pill" id="DATE_OF_BIRTH_TEXT" style="display:none">
                                                 </div>
@@ -220,10 +220,10 @@
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
                                                     <div class="col-7">
-                                                        <input type='file' onchange="angular.element(this).scope().aboutImg1_file(this)" name="about_img" id="btnAboutImg_1" accept="image/*" style="display:none" disabled />
-                                                        <input type='file' onchange="angular.element(this).scope().aboutImg2_file(this)" name="about_img" id="btnAboutImg_2" accept="image/*" style="display:none" disabled />
-                                                        <input type='file' onchange="angular.element(this).scope().aboutImg3_file(this)" name="about_img" id="btnAboutImg_3" accept="image/*" style="display:none" disabled />
-                                                        <input type='file' onchange="angular.element(this).scope().aboutImg4_file(this)" name="about_img" id="btnAboutImg_4" accept="image/*" style="display:none" disabled />
+                                                        <input type='file'  name="about_img" id="btnAboutImg_1" accept="image/*" onchange="angular.element(this).scope().SetImage(1)" style="display:none" disabled />
+                                                        <input type='file'  name="about_img" id="btnAboutImg_2" accept="image/*" onchange="angular.element(this).scope().SetImage(2)" style="display:none" disabled />
+                                                        <input type='file'  name="about_img" id="btnAboutImg_3" accept="image/*" onchange="angular.element(this).scope().SetImage(3)" style="display:none" disabled />
+                                                        <input type='file'  name="about_img" id="btnAboutImg_4" accept="image/*" onchange="angular.element(this).scope().SetImage(4)" style="display:none" disabled />
                                                         <a id="ChangeAbout_1">
                                                             <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
                                                         </a>
