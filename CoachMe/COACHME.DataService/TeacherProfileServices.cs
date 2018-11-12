@@ -1105,10 +1105,10 @@ namespace COACHME.DATASERVICE
                         //string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        string myDir = @"C://WebApplication//coachme.asia//Content//images//About//";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
-                        myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
+                        myDir += memberUsername.USER_NAME; //FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
                         System.IO.Directory.CreateDirectory(myDir);
 
                         if (i == 0 && about_img[0] != null)
@@ -1133,7 +1133,7 @@ namespace COACHME.DATASERVICE
                                 about_img[1].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL2 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL2 = "//" + path.Substring(index);
                         }
                         if (i == 2 && about_img[2] != null)
                         {
@@ -1145,7 +1145,7 @@ namespace COACHME.DATASERVICE
                                 about_img[2].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL3 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL3 = "//" + path.Substring(index);
                         }
                         if (i == 3 && about_img[3] != null)
                         {
@@ -1157,7 +1157,7 @@ namespace COACHME.DATASERVICE
                                 about_img[3].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL4 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL4 = "//" + path.Substring(index);
                         }
 
 
