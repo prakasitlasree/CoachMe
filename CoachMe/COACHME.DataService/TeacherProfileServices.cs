@@ -122,7 +122,8 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var memberProfile = ctx.MEMBERS.Include("MEMBER_LOGON").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
+                    var memberProfile = ctx.MEMBERS.Include("MEMBER_LOGON")
+                        .Include("MEMBER_ROLE").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -955,7 +956,10 @@ namespace COACHME.DATASERVICE
                                             FACEBOOK_URL = memberProfile.FirstOrDefault().FACEBOOK_URL,
                                             LINE_ID = memberProfile.FirstOrDefault().LINE_ID,
                                             ROLE = memberProfile.FirstOrDefault().MEMBER_ROLE.FirstOrDefault().ROLE_ID.ToString(),
-                                            
+                                            ABOUT_IMG_1 = memberProfile.FirstOrDefault().ABOUT_IMG_URL1,
+                                            ABOUT_IMG_2 = memberProfile.FirstOrDefault().ABOUT_IMG_URL2,
+                                            ABOUT_IMG_3 = memberProfile.FirstOrDefault().ABOUT_IMG_URL3,
+                                            ABOUT_IMG_4 = memberProfile.FirstOrDefault().ABOUT_IMG_URL4,
                                         });
 
                 }
@@ -1105,7 +1109,7 @@ namespace COACHME.DATASERVICE
                         //string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        string myDir = @"C://WebApplication//coachme.asia//Content//images//About//";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
@@ -1133,7 +1137,7 @@ namespace COACHME.DATASERVICE
                                 about_img[1].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL2 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL2 = "//" + path.Substring(index);
                         }
                         if (i == 2 && about_img[2] != null)
                         {
@@ -1145,7 +1149,7 @@ namespace COACHME.DATASERVICE
                                 about_img[2].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL3 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL3 = "//" + path.Substring(index);
                         }
                         if (i == 3 && about_img[3] != null)
                         {
@@ -1157,7 +1161,7 @@ namespace COACHME.DATASERVICE
                                 about_img[3].SaveAs(path);
                             }
                             int index = path.IndexOf("Content");
-                            member.ABOUT_IMG_URL4 = "\\" + path.Substring(index);
+                            member.ABOUT_IMG_URL4 = "//" + path.Substring(index);
                         }
 
 
