@@ -1112,7 +1112,7 @@ namespace COACHME.DATASERVICE
                         string myDir = @"C://WebApplication//coachme.asia//Content//images//About//";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
-                        myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
+                        myDir += memberUsername.USER_NAME; //FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();
                         System.IO.Directory.CreateDirectory(myDir);
 
                         if (i == 0 && about_img[0] != null)
