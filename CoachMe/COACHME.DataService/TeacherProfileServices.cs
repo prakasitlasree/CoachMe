@@ -1102,10 +1102,10 @@ namespace COACHME.DATASERVICE
                     for (int i = 0; i < about_img.Count; i++)
                     {
                         var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
-                        string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
+                        //string myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//About//";
                         //string myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\About\\";
                         //Deploy
-                        //myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
+                        string myDir = @"C:\\WebApplication\\coachme.asia\\Content\\images\\About\\";
                         string path = "";
                         string[] FolderProfile = memberUsername.USER_NAME.Split('@');
                         myDir += FolderProfile[0].ToUpper() + " " + FolderProfile[1].ToUpper();

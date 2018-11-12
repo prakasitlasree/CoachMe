@@ -45,7 +45,8 @@ namespace COACHME.WEB_PRESENT.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = "File upload failed!!" + "<br>" + ex.Message;
-                return Redirect(Request.Url.AbsoluteUri);
+                return RedirectToAction("errorpage", "home");
+                //return Redirect(Request.Url.AbsoluteUri);
             }
         }
 
