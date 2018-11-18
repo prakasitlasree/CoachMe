@@ -142,7 +142,7 @@ namespace CoachMe.Controllers
             if (result.STATUS)
             {
                 Session["logon"] = param;
-                if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 2)
+                if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 2 || param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
                 {
                     return RedirectToAction("getteacher", "home");
                 }

@@ -20,6 +20,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 RESPONSE__MODEL resp = new RESPONSE__MODEL();
                 CONTAINER_MODEL model = new CONTAINER_MODEL();
                 var member = (MEMBERS)Session["logon"];
+                
                 member = service.GetMemberProfileFromAutoID(member).OUTPUT_DATA;
                 model.MEMBERS = member;
                 return View(model);
@@ -364,7 +365,7 @@ namespace COACHME.WEB_PRESENT.Controllers
 
         }
         //[HttpPost]
-        public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto )
+        public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             if (Session["logon"] != null)
@@ -374,7 +375,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 resp = await service.UpdateMemberProfile(dto);
                 if (resp.STATUS)
                 {
-                    
+
                     return Json(resp, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -394,7 +395,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             if (Session["logon"] != null)
             {
-                
+
                 var memberLogon = (MEMBERS)Session["logon"];
                 resp = await service.GetMemberAdress(memberLogon);
                 if (resp.STATUS)
@@ -489,16 +490,17 @@ namespace COACHME.WEB_PRESENT.Controllers
             if (Session["logon"] != null)
             {
                 var memberLogon = (MEMBERS)Session["logon"];
-               
+
                 resp = await service.UpdateMemberProfileAboutImg(memberLogon, about_img);
                 if (resp.STATUS)
                 {
-                    
+                    TempData["UpdateStatus"] = "Success";
                     return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
                 }
                 else
                 {
                     resp.STATUS = false;
+                    TempData["UpdateStatus"] = "Fail";
                     return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
                 }
             }

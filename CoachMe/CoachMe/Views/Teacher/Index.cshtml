@@ -147,20 +147,7 @@
                                 <div class="m-form m-form--fit m-form--label-align-right">
 
                                     <div class="m-portlet__body">
-                                        @*<div class="form-group m-form__group m--margin-top-10 m--hide">
-                                                <div class="alert m-alert m-alert--default" role="alert">
-                                                </div>
-                                            </div>
-                                            <div class="form-group m-form__group row">
-                                                <div class="col-10 ml-auto">
-                                                    <h3 class="m-form__section">
-                                                        ข้อมูลส่วนตัว
-                                                        <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdate" ng-click="GetComponent()">
-                                                            <i class="fa fa-user-edit"></i>
-                                                        </button>
-                                                    </h3>
-                                                </div>
-                                            </div>*@
+
 
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-2 col-form-label">Display Name</label>
@@ -220,10 +207,10 @@
                                                 <div class="form-group m-form__group row">
                                                     <label for="example-text-input" class="col-2 col-form-label">รูปภาพ</label>
                                                     <div class="col-7">
-                                                        <input type='file'  name="about_img" id="btnAboutImg_1" accept="image/*" onchange="angular.element(this).scope().SetImage(1)" style="display:none" disabled />
-                                                        <input type='file'  name="about_img" id="btnAboutImg_2" accept="image/*" onchange="angular.element(this).scope().SetImage(2)" style="display:none" disabled />
-                                                        <input type='file'  name="about_img" id="btnAboutImg_3" accept="image/*" onchange="angular.element(this).scope().SetImage(3)" style="display:none" disabled />
-                                                        <input type='file'  name="about_img" id="btnAboutImg_4" accept="image/*" onchange="angular.element(this).scope().SetImage(4)" style="display:none" disabled />
+                                                        <input type='file' name="about_img" id="btnAboutImg_1" accept="image/*" onchange="angular.element(this).scope().SetImage(1)" style="display:none" disabled />
+                                                        <input type='file' name="about_img" id="btnAboutImg_2" accept="image/*" onchange="angular.element(this).scope().SetImage(2)" style="display:none" disabled />
+                                                        <input type='file' name="about_img" id="btnAboutImg_3" accept="image/*" onchange="angular.element(this).scope().SetImage(3)" style="display:none" disabled />
+                                                        <input type='file' name="about_img" id="btnAboutImg_4" accept="image/*" onchange="angular.element(this).scope().SetImage(4)" style="display:none" disabled />
                                                         <a id="ChangeAbout_1">
                                                             <img src="..//@Url.Content(@Model.MEMBERS.ABOUT_IMG_URL1 ?? "//Content//images//Blank-Profile.jpg")" name="AboutImg[]" id="AboutImg_1" class="img-thumbnail imgZoom" style="height:130px;width:130px;margin-left:5px" />
                                                         </a>
@@ -370,11 +357,57 @@
             </div>
         </div>
 
+        <div class="modal fade" id="modalUpdateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="updateStatus"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (TempData["UpdateStatus"] != null)
+        {
+            if (TempData["UpdateStatus"].ToString() == "Success")
+            {
+                <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>อัพเดทข้อมูลของคุณเรียบร้อย</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>เกิดข้อผิดพลาด กรุณาลองอีกครั้ง</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
 
 
         <script type="text/javascript">
 
-
+            
 
             function UploadAboutImg_1(input) {
 

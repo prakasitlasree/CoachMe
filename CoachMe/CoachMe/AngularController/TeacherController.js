@@ -44,7 +44,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
 
     $scope.EnableControl = function () {
- 
+
 
         $("#FULLNAME").prop("disabled", false);
         $("#FIRST_NAME").prop("disabled", false);
@@ -78,7 +78,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     }
 
     $scope.HideButton = function () {
-       
+
         $('#btnUpdateSubmit').hide()
         $('#btnUpdateCancel').hide()
 
@@ -98,8 +98,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#DATE_OF_BIRTH").prop("disabled", true);
         $("#SEX").prop("disabled", true);
 
-        if ($scope.ROLE =="1") {
-            
+        if ($scope.ROLE == "1") {
+
             $("#ID_CARD").prop("disabled", true);
             $("#ADDRESS").show();
             $('#editAddress').hide();
@@ -117,7 +117,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
             $("#btnAboutImg_4").prop("disabled", true);
             $("#AboutImg_4").css('cursor', 'pointer');
             $("#CATEGORY").prop("disabled", true);
-            $("#LOCATION").prop("disabled", true); 
+            $("#LOCATION").prop("disabled", true);
         }
     }
 
@@ -216,7 +216,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $http({
             url: "/teacher/GetTeacherProfile",
             method: "GET",
-             
+
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS == true) {
@@ -225,8 +225,9 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $http({
                     url: "/teacher/GetAdress",
                     method: "GET",
-                     
+
                 }).then(function (response) {
+
                     console.log(response.data.OUTPUT_DATA)
                     if (response.data.STATUS == true) {
                         $scope.address = response.data.OUTPUT_DATA;
@@ -247,6 +248,8 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                     }
                 });
             }
+        }).then(function () {
+            $('#modalUpdate').modal('show')
         });
         $.LoadingOverlay("hide");
     };
@@ -297,7 +300,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     }
 
     $scope.UpdateMemberProfile = function () {
-        $.LoadingOverlay("show");
+
 
         debugger;
         $http({
@@ -324,19 +327,33 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
-            if (response.data.STATUS == true) {
-            debugger;
+            if (response.data.STATUS) {
                 if ($scope.ABOUT_IMG_1 != "" || $scope.ABOUT_IMG_2 != "" || $scope.ABOUT_IMG_3 != "" || $scope.ABOUT_IMG_4 != "") {
                     debugger;
                     $('#btnUpdateSubmitImg').trigger('click')
                 }
                 else {
-                    $scope.init();
+                    $('#updateStatus').html("อัพเดทข้อมูลของคุณเรียบร้อย")
                     $scope.HideButton();
+                    $scope.init();
+
                 }
             }
+            else {
+                $('#updateStatus').html("เกิดข้อผิดพลาด กรุณาลองอีกครั้ง")
+                $scope.HideButton();
+                $scope.init();
+            }
+        }).then(function () {
+            debugger;
+            if ($scope.ABOUT_IMG_1 != "" || $scope.ABOUT_IMG_2 != "" || $scope.ABOUT_IMG_3 != "" || $scope.ABOUT_IMG_4 != "") {
+
+            }
+            else {
+                $('#modalUpdateStatus').modal('show')
+            }
         });
-        $.LoadingOverlay("hide");
+
     }
 
     $scope.renderInnerHtml = function () {
@@ -396,7 +413,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         var html = "";
         var itemsLength = Object.keys($scope.ListCategoryAvailable).length;
         for (var i = 0; i < cate.length; i++) {
-            var index =  i+1;
+            var index = i + 1;
             html += "<label class='m-checkbox'>"
             html += "<input type='checkbox' name = 'categoryList[]' id = " + index + " value = " + cate[i] + "> " + cate[i]
             html += "<span></span>"
@@ -459,7 +476,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }
     }
 
-  
+
 
 
 });

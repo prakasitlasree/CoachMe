@@ -529,7 +529,7 @@ namespace COACHME.DATASERVICE
             using (var ctx = new COACH_MEEntities())
             {
                 var checkMember = await ctx.MEMBER_LOGON
-                                            .Include("MEMBDERS")
+                                            .Include("MEMBERS")
                                             .Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper() && x.TOKEN_USED != true).FirstOrDefaultAsync();
                 #region ====RESET TOKEN=====
                 checkMember.TOKEN_HASH = GenUniqueKey(checkMember.USER_NAME.ToUpper());

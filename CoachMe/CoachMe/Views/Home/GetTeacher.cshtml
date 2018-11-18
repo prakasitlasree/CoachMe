@@ -181,12 +181,12 @@
 
                                         <li class="m-nav__item">
                                             <a href="@Url.Action("login", "account")" class="m-nav__link">
-                                                <span class="m-nav__link-text" style="color:darkgray">Login</span>
+                                                <span class="m-nav__link-text" style="color:lightgrey">เข้าสู่ระบบ</span>
                                             </a>
                                         </li>
                                         <li class="m-nav__item">
                                             <a href="@Url.Action("register", "account")" class="m-nav__link">
-                                                <span class="m-nav__link-text" style="color:darkgray">Register</span>
+                                                <span class="m-nav__link-text" style="color:lightgrey">สมัครสมาชิก</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -225,6 +225,10 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane active show" id="m_tabs_1_1" role="tabpanel">
+                                                @*<div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">คุณต้องการเรียนรู้อะไร</label>
+                                                    <input type="text" class="form-control m-input m-input--pill" placeholder="อยู่ในระหว่างการปรับปรุง">
+                                                </div>*@
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleSelect1">กำลังมองหา</label>
                                                     <select class="form-control m-input m-input--pill" name="SEARCH_TEACHER_MODEL.LIST_SEARCH_TYPE" id="SEARCH_TYPE" ng-model="SEARCH_TYPE" ng-change="GetType()">
@@ -494,9 +498,9 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <button type="submit" class="btn m-btn--pill    btn-brand">Login</button>
-                                                                                <button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">Close</button>
-
+                                                                                <button type="submit" class="btn m-btn--pill    btn-brand">เข้าสู่ระบบ</button>
+                                                                                <a href="@Url.Action("register","Account")" class="btn m-btn--pill    btn-outline-primary  ">สมัครสมาชิก</a>
+                                                                                @*<button type="button" class="btn m-btn--pill    btn-metal" data-dismiss="modal">ปิด</button>*@
                                                                             </div>
                                                                         </div>
                                                                     </div>
