@@ -364,7 +364,6 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
 
         }
-        //[HttpPost]
         public async Task<JsonResult> UpdateMemberProfile(CUSTOM_MEMBERS dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();

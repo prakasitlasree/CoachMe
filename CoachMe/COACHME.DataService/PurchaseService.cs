@@ -52,7 +52,8 @@ namespace COACHME.DATASERVICE
                     //Upload Pic
                     if (slipImage.ContentLength > 0)
                     {
-                        string fileName = Path.GetFileName(slipImage.FileName);
+                        string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-slip-image" + Path.GetExtension(slipImage.FileName);
+                        //string fileName = Path.GetFileName(slipImage.FileName);
                         path = Path.Combine(myDir, fileName);
                         slipImage.SaveAs(path);
                         index = path.IndexOf("Content"); 

@@ -8,7 +8,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
     $scope.ListCourse = [];
 
     $scope.GetType = function () {
-        debugger;
+        
 
         $('#SEARCH_TYPE').val($scope.SEARCH_TYPE)
 
@@ -28,7 +28,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
             });
         }
         else {
-            debugger;
+            
             $http({
                 url: "/home/GetListCourse",
                 method: "GET",
@@ -48,7 +48,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
     $scope.RenderCategoryDrp = function () {
         $('#TYPE').empty();
         var html = "";
-        debugger;
+        
         var itemsLength = Object.keys($scope.ListCategory).length;
         html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_CETEGORY' name='LIST_CATE'>"
         html += "<option value = 0 >-เลือกทั้งหมด-</option>"
@@ -62,7 +62,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
     $scope.RenderCourseDrp = function () {
         $('#TYPE').empty();
         var html = "";
-        debugger;
+        
         var itemsLength = Object.keys($scope.ListCourse).length;
         html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_TEACH_COURSE' name='LIST_COURSE'>"
         html += "<option value = 0 >-เลือกทั้งหมด-</option>"
@@ -74,7 +74,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
     }
 
     $scope.GetProvince = function () {
-        debugger;
+        
         $http({
             url: "/student/GetListProvince",
             method: "GET",
@@ -92,7 +92,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
 
     $scope.RenderProvinceDrp = function () {
         $('#SeachProvince').empty();
-        debugger;
+        
         var html = "";
 
         var itemsLength = Object.keys($scope.ListProvince).length;
@@ -123,7 +123,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
 
     $scope.RenderAmphurDrp = function () {
         $('#amphur').empty();
-        debugger;
+        
         var html = "";
 
         var itemsLength = Object.keys($scope.ListAmphur).length;

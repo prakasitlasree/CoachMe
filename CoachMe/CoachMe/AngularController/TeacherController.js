@@ -42,6 +42,52 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.ABOUT_IMG_4 = "";
     $scope.ABOUT_IMG = new Array(4);
 
+    $scope.init = function () {
+
+        $.LoadingOverlay("show");
+
+
+        $http({
+            url: "/teacher/GetTeacherProfile",
+            method: "GET",
+
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $scope.TeacherProfile = response.data.OUTPUT_DATA;
+                $scope.BindingProfile();
+                $http({
+                    url: "/teacher/GetAdress",
+                    method: "GET",
+
+                }).then(function (response) {
+
+                    console.log(response.data.OUTPUT_DATA)
+                    if (response.data.STATUS == true) {
+                        $scope.address = response.data.OUTPUT_DATA;
+                        debugger;
+                        if ($scope.address != null && $scope.address[0] != null) {
+                            var address = "จังหวัด : " + $scope.address[3] + " อำเภอ : " + $scope.address[1]
+                            $("#ADDRESS").val(address);
+                        }
+                        $http({
+                            url: "/teacher/GetListTeacherCategory",
+                            method: "GET",
+                        }).then(function (response) {
+                            console.log(response.data.OUTPUT_DATA)
+                            if (response.data.STATUS == true) {
+                                $scope.ListCourse = response.data.OUTPUT_DATA;
+                                $scope.renderInnerHtml();
+                            }
+                        });
+                    }
+                });
+            }
+        }).then(function () {
+            $('#modalUpdate').modal('show')
+        });
+        $.LoadingOverlay("hide");
+    };
 
     $scope.EnableControl = function () {
 
@@ -133,12 +179,38 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $scope.ListGeography = response.data.OUTPUT_DATA;
                 $scope.RenderGeographyDrp()
             }
+        }).then(function () {
+            if ($scope.address != null) {
+                $scope.geography = $scope.address[4]
+                $('#geography').val($scope.address[4]);
+                debugger;
+            }
+        }).then(function () {
+            if ($scope.address != null) {
+                $scope.GetProvince();
+            }
+        }).then(function () {
+            if ($scope.address != null) {
+                $scope.provinceID = $scope.address[2]
+                $('#province').val($scope.address[2]);
+                debugger;
+            }
+        }).then(function () {
+            if ($scope.address != null) {
+                $scope.GetAmphur();
+            }
+        }).then(function () {
+            if ($scope.address != null) {
+                $scope.amphurID = $scope.address[0]
+                $('#amphur').val($scope.address[0]);
+                debugger;
+            }
         });
     }
 
     $scope.RenderGeographyDrp = function () {
         $('#geography').empty();
-        debugger;
+
         var html = "";
         var itemsLength = Object.keys($scope.ListGeography).length;
 
@@ -165,7 +237,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.RenderProvinceDrp = function () {
         $('#province').empty();
-        debugger;
+
         var html = "";
 
         var itemsLength = Object.keys($scope.ListProvince).length;
@@ -192,7 +264,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
     $scope.RenderAmphurDrp = function () {
         $('#amphur').empty();
-        debugger;
+
         var html = "";
 
         var itemsLength = Object.keys($scope.ListAmphur).length;
@@ -204,61 +276,14 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     }
 
     $scope.AddSelectedCategory = function () {
-        debugger;
+
         $('#SelectedCategory').append(" #" + $scope.selectedCategory);
     }
-
-    $scope.init = function () {
-        debugger;
-        $.LoadingOverlay("show");
-
-
-        $http({
-            url: "/teacher/GetTeacherProfile",
-            method: "GET",
-
-        }).then(function (response) {
-            console.log(response.data.OUTPUT_DATA)
-            if (response.data.STATUS == true) {
-                $scope.TeacherProfile = response.data.OUTPUT_DATA;
-                $scope.BindingProfile();
-                $http({
-                    url: "/teacher/GetAdress",
-                    method: "GET",
-
-                }).then(function (response) {
-
-                    console.log(response.data.OUTPUT_DATA)
-                    if (response.data.STATUS == true) {
-                        $scope.address = response.data.OUTPUT_DATA;
-                        if ($scope.address != null && $scope.address[0] != null) {
-                            var address = "จังหวัด : " + $scope.address[1] + " อำเภอ : " + $scope.address[0]
-                            $("#ADDRESS").val(address);
-                        }
-                        $http({
-                            url: "/teacher/GetListTeacherCategory",
-                            method: "GET",
-                        }).then(function (response) {
-                            console.log(response.data.OUTPUT_DATA)
-                            if (response.data.STATUS == true) {
-                                $scope.ListCourse = response.data.OUTPUT_DATA;
-                                $scope.renderInnerHtml();
-                            }
-                        });
-                    }
-                });
-            }
-        }).then(function () {
-            $('#modalUpdate').modal('show')
-        });
-        $.LoadingOverlay("hide");
-    };
-
 
 
     $scope.BindingProfile = function () {
 
-        debugger;
+
 
         $("#TEACHING_TYPE").val($scope.TeacherProfile[0].TEACHING_TYPE);
         $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
@@ -302,7 +327,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.UpdateMemberProfile = function () {
 
 
-        debugger;
+
         $http({
             url: "/teacher/UpdateMemberProfile",
             method: "GET",
@@ -329,7 +354,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS) {
                 if ($scope.ABOUT_IMG_1 != "" || $scope.ABOUT_IMG_2 != "" || $scope.ABOUT_IMG_3 != "" || $scope.ABOUT_IMG_4 != "") {
-                    debugger;
+
                     $('#btnUpdateSubmitImg').trigger('click')
                 }
                 else {
@@ -345,7 +370,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 $scope.init();
             }
         }).then(function () {
-            debugger;
+
             if ($scope.ABOUT_IMG_1 != "" || $scope.ABOUT_IMG_2 != "" || $scope.ABOUT_IMG_3 != "" || $scope.ABOUT_IMG_4 != "") {
 
             }
@@ -357,14 +382,14 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     }
 
     $scope.renderInnerHtml = function () {
-        debugger;
+
         $('#ListCategoryArea').val("");
         $('#BadgeCategoryArea').empty();
 
         var html = "";
         var string = "";
         var itemsLength = Object.keys($scope.ListCourse).length;
-        debugger;
+
         for (var i = 0; i < itemsLength; i++) {
             html += "<p>#" + $scope.ListCourse[i].NAME + "</p>";
 
@@ -375,7 +400,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 string += $scope.ListCourse[i].NAME + ",";
             }
         }
-        debugger;
+
         $('#BadgeCategoryArea').append(html);
         $('#ListCategoryArea').val(string);
 
@@ -390,7 +415,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     }
 
     $scope.GetCategoryAvailable = function () {
-        debugger;
+
 
         $http({
             url: "/teacher/GetListAvailableCategory",
@@ -421,7 +446,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }
         var $OnCompile = $(html).appendTo('#categoryCheckbox');
         for (var i = 0; i < itemsLength; i++) {
-            debugger;
+
             var id = $scope.ListCategoryAvailable[i]
             $('#' + $scope.ListCategoryAvailable[i] + '').prop('checked', true);
         }
@@ -434,14 +459,14 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         var len = cboxes.length;
         $scope.categoryList = []
 
-        debugger;
+
         for (var i = 0; i < len; i++) {
             if (cboxes[i].checked) {
                 $scope.categoryList.push(cboxes[i].value);
             }
         }
 
-        debugger;
+
         $http({
             url: "/teacher/UpdateMemberCategory",
             method: "GET",
@@ -461,7 +486,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     }
 
     $scope.SetImage = function (val) {
-        debugger;
+
         if (val == 1) {
             $scope.ABOUT_IMG_1 = "upload"
         }

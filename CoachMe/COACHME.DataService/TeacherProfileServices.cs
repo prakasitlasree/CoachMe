@@ -62,7 +62,7 @@ namespace COACHME.DATASERVICE
                     var memberProfile = ctx.MEMBERS
                                              .Include(o => o.MEMBER_ROLE)
                                              .Include(o => o.MEMBER_LOGON)
-                                             .Include(o=> o.MEMBER_PACKAGE)
+                                             .Include(o => o.MEMBER_PACKAGE)
                                              .Where(x => x.AUTO_ID == member_id).FirstOrDefault();
 
                     memberProfile.MEMBER_PACKAGE = memberProfile.MEMBER_PACKAGE
@@ -123,7 +123,8 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberProfile = ctx.MEMBERS.Include("MEMBER_LOGON")
-                        .Include("MEMBER_ROLE").Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
+                                                   .Include("MEMBER_ROLE")
+                                                   .Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefault();
                     resp.OUTPUT_DATA = memberProfile;
                     resp.STATUS = true;
                 }
@@ -168,7 +169,7 @@ namespace COACHME.DATASERVICE
                     //Upload Pic
                     if (profileImage.ContentLength > 0)
                     {
-                        string fileName = Path.GetFileName(profileImage.FileName);
+                        string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-profile-image" + Path.GetExtension(profileImage.FileName);
                         path = Path.Combine(myDir, fileName);
                         profileImage.SaveAs(path);
                         Bitmap bimage = new Bitmap(path);
@@ -246,7 +247,8 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[0].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[0].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-1" + Path.GetExtension(about_img[0].FileName);
+                                //string fileName = Path.GetFileName(about_img[0].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[0].SaveAs(path);
                             }
@@ -258,7 +260,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[1].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[1].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-2" + Path.GetExtension(about_img[1].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[1].SaveAs(path);
                             }
@@ -270,7 +272,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[2].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[2].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-3" + Path.GetExtension(about_img[2].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[2].SaveAs(path);
                             }
@@ -282,7 +284,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[3].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[3].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-4" + Path.GetExtension(about_img[3].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[3].SaveAs(path);
                             }
@@ -381,7 +383,7 @@ namespace COACHME.DATASERVICE
                     ctx.MEMBER_CATEGORY.RemoveRange(userCate);
                     foreach (var item in category)
                     {
-                        
+
                         var cateID = await ctx.CATEGORY.Where(o => o.NAME == item).Select(o => o.AUTO_ID).FirstAsync();
                         var memberCategory = new MEMBER_CATEGORY();
                         memberCategory.MEMBER_ID = dto.AUTO_ID;
@@ -683,7 +685,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     var memberRole = ctx.MEMBER_ROLE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefault();
-                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID ).FirstOrDefault();
+                    var checkPackage = ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefault();
 
                     var listTeacher = await ctx.MEMBER_TEACH_COURSE.Include("COURSES").Where(x => x.MEMBER_ROLE_ID == memberRole.AUTO_ID).OrderByDescending(x => x.AUTO_ID).ToListAsync();
                     var listCourse = new List<COURSES>();
@@ -731,7 +733,7 @@ namespace COACHME.DATASERVICE
             try
             {
                 using (var ctx = new COACH_MEEntities())
-                { 
+                {
                     var memberPackage = await ctx.MEMBER_PACKAGE.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     resp.STATUS = true;
                     resp.OUTPUT_DATA = memberPackage;
@@ -772,7 +774,8 @@ namespace COACHME.DATASERVICE
                     {
                         if (banner_img.ContentLength > 0)
                         {
-                            string fileName = Path.GetFileName(banner_img.FileName);
+                            
+                            string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-banner-image" + Path.GetExtension(banner_img.FileName);
                             path = Path.Combine(myDir, fileName);
                             banner_img.SaveAs(path);
                         }
@@ -884,7 +887,7 @@ namespace COACHME.DATASERVICE
                 {
                     resp.OUTPUT_DATA = await ctx.MEMBER_CATEGORY
                                                 .Where(o => o.MEMBER_ID == dto.AUTO_ID)
-                                                
+
                                                 .ToListAsync();
                 }
                 resp.STATUS = true;
@@ -907,7 +910,7 @@ namespace COACHME.DATASERVICE
                 using (var ctx = new COACH_MEEntities())
                 {
                     //List<string> category = new List<string> { "ดนตรี", "ภาษา", "ธุรกิจและการเงิน", "ศิลปะ", "เทคโนโลยี", "วิชาชีพ/หลักสูตรพิเศษ", "สุขภาพ/ความงาม" };
-                    List<int> category = new List<int> { 1,2,3,4,5,6,7 };
+                    List<int> category = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
                     var memberCategory = await ctx.MEMBER_CATEGORY
                                                  .Where(o => o.MEMBER_ID == dto.AUTO_ID)
                                                  .Select(o => o.CATEGORY_ID)
@@ -1034,7 +1037,7 @@ namespace COACHME.DATASERVICE
                         if (DateTime.TryParse(dto.DATE_OF_BIRTH_TEXT, out value))
                         {
                             member.DATE_OF_BIRTH = Convert.ToDateTime(dto.DATE_OF_BIRTH_TEXT);
-                        }  
+                        }
                     }
                     if (dto.LOCATION != null)
                     {
@@ -1120,7 +1123,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[0].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[0].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-1" + Path.GetExtension(about_img[0].FileName);//Path.GetFileName(about_img[0].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[0].SaveAs(path);
                             }
@@ -1132,7 +1135,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[1].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[1].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-2" + Path.GetExtension(about_img[1].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[1].SaveAs(path);
                             }
@@ -1144,7 +1147,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[2].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[2].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-3" + Path.GetExtension(about_img[2].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[2].SaveAs(path);
                             }
@@ -1156,7 +1159,7 @@ namespace COACHME.DATASERVICE
 
                             if (about_img[3].ContentLength > 0)
                             {
-                                string fileName = Path.GetFileName(about_img[3].FileName);
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-4" + Path.GetExtension(about_img[3].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[3].SaveAs(path);
                             }
@@ -1268,25 +1271,41 @@ namespace COACHME.DATASERVICE
 
         public async Task<RESPONSE__MODEL> GetMemberAdress(MEMBERS dto)
         {
+
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try
             {
-                if (dto.AMPHUR_ID != null)
+
+                using (var ctx = new COACH_MEEntities())
                 {
-                    using (var ctx = new COACH_MEEntities())
+                    var memberAmpherID = await ctx.MEMBERS.Where(o => o.AUTO_ID == dto.AUTO_ID).Select(o => o.AMPHUR_ID).FirstOrDefaultAsync();
+
+                    if (memberAmpherID != null)
                     {
-                        var memberAmpherID = await ctx.MEMBERS.Where(o => o.AUTO_ID == dto.AUTO_ID).Select(o => o.AMPHUR_ID).FirstOrDefaultAsync();
                         var ampher = await ctx.AMPHUR.Where(o => o.AMPHUR_ID == memberAmpherID).FirstOrDefaultAsync();
                         var province = await ctx.PROVINCE.Where(o => o.PROVINCE_ID == ampher.PROVINCE_ID).FirstOrDefaultAsync();
                         var geography = await ctx.GEOGRAPHY.Where(o => o.GEO_ID == ampher.GEO_ID).FirstOrDefaultAsync();
+
                         List<string> address = new List<string>();
+
+                        address.Add(ampher.AMPHUR_ID.ToString());
                         address.Add(ampher.AMPHUR_NAME);
+
+                        address.Add(ampher.PROVINCE_ID.ToString());
                         address.Add(province.PROVINCE_NAME);
+
+                        address.Add(ampher.GEO_ID.ToString());
                         address.Add(geography.GEO_NAME);
                         resp.OUTPUT_DATA = address;
-
                     }
+                    else
+                    {
+                        resp.OUTPUT_DATA = null;
+                    }
+
+
                 }
+
                 resp.STATUS = true;
 
             }

@@ -290,59 +290,59 @@
 <script>
 
     $("#slip_1").change(function () {
-        debugger;
+        
 
         Slip_1(this);
     });
 
     function Slip_1(input) {
 
-        debugger;
+        
 
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             $("#slip_2").remove();
             $("#slip_3").remove();
-            debugger;
+            
             $('#btnBasicPlan').trigger('click');
         }
     }
 
     $("#slip_2").change(function () {
-        debugger;
+        
 
         Slip_2(this);
     });
 
     function Slip_2(input) {
 
-        debugger;
+        
 
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             $("#slip_1").remove();
             $("#slip_3").remove();
-            debugger;
+            
             $('#btnProPlan').trigger('click');
 
         }
     }
 
     $("#slip_3").change(function () {
-        debugger;
+        
 
         Slip_3(this);
     });
 
     function Slip_3(input) {
 
-        debugger;
+        
 
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             $("#slip_2").remove();
             $("#slip_1").remove();
-            debugger;
+            
             $('#btnAdvancePlan').trigger('click');
              
         }
