@@ -155,7 +155,7 @@ namespace COACHME.DATASERVICE
                     //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
                     #endregion
                     #region ==== P'X PATH ====
-                    // myDir = @"C:\\Users\\Prakasit\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
+                    //myDir = @"C:\\Users\\Rock\\Source\\Repos\\CoachMe\\CoachMe\\CoachMe\\Content\\images\\Profile\\";
                     #endregion
 
                     string path = "";
@@ -248,9 +248,9 @@ namespace COACHME.DATASERVICE
                             if (about_img[0].ContentLength > 0)
                             {
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-1" + Path.GetExtension(about_img[0].FileName);
-                                //string fileName = Path.GetFileName(about_img[0].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[0].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL1 = "//" + path.Substring(index);
@@ -263,6 +263,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-2" + Path.GetExtension(about_img[1].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[1].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL2 = "\\" + path.Substring(index);
@@ -275,6 +276,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-3" + Path.GetExtension(about_img[2].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[2].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL3 = "\\" + path.Substring(index);
@@ -287,6 +289,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-4" + Path.GetExtension(about_img[3].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[3].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL4 = "\\" + path.Substring(index);
@@ -774,10 +777,11 @@ namespace COACHME.DATASERVICE
                     {
                         if (banner_img.ContentLength > 0)
                         {
-                            
+
                             string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-banner-image" + Path.GetExtension(banner_img.FileName);
                             path = Path.Combine(myDir, fileName);
                             banner_img.SaveAs(path);
+                            changeCorrectOrientation(path);
                         }
                         int index = path.IndexOf("Content");
                         course.BANNER_URL = @"\\" + path.Substring(index);
@@ -866,7 +870,33 @@ namespace COACHME.DATASERVICE
         {
             try
             {
+
+
+                foreach (var prop in imgToResize.PropertyItems)
+                {
+                    if ((prop.Id == 0x0112 || prop.Id == 5029 || prop.Id == 274))
+                    {
+                        var value = (int)prop.Value[0];
+                        if (value == 6)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                        }
+                        else if (value == 8)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                        }
+                        else if (value == 3)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        }
+                    }
+                }
+
                 var imageResized = new Bitmap(imgToResize, 800, 500);
+
                 imgToResize.Dispose();
                 imgToResize = null;
                 imageResized.Save(path, ImageFormat.Jpeg);
@@ -876,6 +906,47 @@ namespace COACHME.DATASERVICE
 
             }
         }
+
+        private void changeCorrectOrientation(string path)
+        {
+            try
+            {
+                Bitmap imgToResize = new Bitmap(path);
+
+                foreach (var prop in imgToResize.PropertyItems)
+                {
+                    if ((prop.Id == 0x0112 || prop.Id == 5029 || prop.Id == 274))
+                    {
+                        var value = (int)prop.Value[0];
+                        if (value == 6)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                        }
+                        else if (value == 8)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                        }
+                        else if (value == 3)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        }
+                    }
+                }
+
+             
+                imgToResize.Dispose();
+                imgToResize = null;
+                imgToResize.Save(path, ImageFormat.Jpeg);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
 
         #region ======================= ANGULAR JS =======================
         public async Task<RESPONSE__MODEL> GetListTeacherCategory(MEMBERS dto)
@@ -1126,6 +1197,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-1" + Path.GetExtension(about_img[0].FileName);//Path.GetFileName(about_img[0].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[0].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL1 = "//" + path.Substring(index);
@@ -1138,6 +1210,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-2" + Path.GetExtension(about_img[1].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[1].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL2 = "//" + path.Substring(index);
@@ -1150,6 +1223,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-3" + Path.GetExtension(about_img[2].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[2].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL3 = "//" + path.Substring(index);
@@ -1162,6 +1236,7 @@ namespace COACHME.DATASERVICE
                                 string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-about-image-4" + Path.GetExtension(about_img[3].FileName);
                                 path = Path.Combine(myDir, fileName);
                                 about_img[3].SaveAs(path);
+                                changeCorrectOrientation(path);
                             }
                             int index = path.IndexOf("Content");
                             member.ABOUT_IMG_URL4 = "//" + path.Substring(index);

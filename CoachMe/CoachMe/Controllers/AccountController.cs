@@ -228,7 +228,7 @@ namespace CoachMe.Controllers
             var result = await service.RegisterVerify(dto);
             if (result.STATUS)
             {
-                TempData["RegisterVerify"] = "Your accout has been verified.";
+                TempData["RegisterVerify"] = "บัญชีคุณยินยันตัวตนเรียบร้อย";
                 return RedirectToAction("login", "account");
             }
             else
@@ -255,17 +255,17 @@ namespace CoachMe.Controllers
                     var result = await service.Register(dto);
                     if (result.STATUS)
                     {
-                        ViewBag.Success = "Register complete please check your email in 3Hr.";
+                        ViewBag.Success = "สมัครเรียบร้อย กรุณาตรวจสอบอีเมลล์ เพื่อยืนยันตัวตนภายใน 3 ชั่วโมง";
                         return View(dto);
                     }
                     else if (result.STATUS == false && result.Message == "active")
                     {
-                        ViewBag.Fail = "This email has been register.";
+                        ViewBag.Fail = "อีเมลล์นี้อยู่ในระบบเรียบร้อยแล้ว";
                         return View(dto);
                     }
                     else if (result.STATUS == false && result.Message == "not active")
                     {
-                        ViewBag.ActiveFail = "This email has been register. Do you want to send active mail again ?";
+                        ViewBag.ActiveFail = "อีเมลล์นี้ยังไม่ได้ยืนยันตัวตน คุณต้องการส่งอีเมลล์เพื่อยืนยันตัวตนอีกครั้งหรือไม ?";
                         return View(dto);
                     }
                     return View(dto);
