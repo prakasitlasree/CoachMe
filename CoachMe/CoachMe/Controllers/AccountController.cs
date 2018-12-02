@@ -265,7 +265,7 @@ namespace CoachMe.Controllers
                     }
                     else if (result.STATUS == false && result.Message == "not active")
                     {
-                        ViewBag.ActiveFail = "อีเมลล์นี้ยังไม่ได้ยืนยันตัวตน คุณต้องการส่งอีเมลล์เพื่อยืนยันตัวตนอีกครั้งหรือไม ?";
+                        ViewBag.ActiveFail = "อีเมลล์นี้ยังไม่ได้ยืนยันตัวตน คุณต้องการส่งอีเมลล์เพื่อยืนยันตัวตนอีกครั้งหรือไม่ ?";
                         return View(dto);
                     }
                     return View(dto);
