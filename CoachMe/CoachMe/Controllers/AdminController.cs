@@ -41,13 +41,15 @@ namespace COACHME.WEB_PRESENT.Controllers
                 
                 List<MEMBER_ROLE> listMemberRole = resp.OUTPUT_DATA;
 
-                resp = await service.GetTotalTeacherThisMonth();
-                List<MEMBER_PACKAGE> listMemberPackage = resp.OUTPUT_DATA;
-
-
                 model.CountAllTeacher = listMemberRole.Where(x => x.ROLE_ID == 1).ToList().Count();
                 model.CountAllStudent = listMemberRole.Where(x => x.ROLE_ID == 2).ToList().Count();
-                model.CountTeacherByMonth = listMemberPackage.Count();
+
+                resp = await service.GetTotalTeacherThisMonth();
+                List<MEMBERS> listMember = resp.OUTPUT_DATA; 
+                model.CountTeacherByMonth = listMember.Count();
+
+                resp = await service.GetPaidTeacherThisMonth();
+                List<MEMBER_PACKAGE> listMemberPackage = resp.OUTPUT_DATA; 
                 model.TotalProfit = listMemberPackage.Where(x=>x.STATUS== StandardEnums.PurchaseStatus.ACTIVE.ToString()).Sum(x => x.PRICE).Value;
 
                 model.MEMBERS = memberLogon;

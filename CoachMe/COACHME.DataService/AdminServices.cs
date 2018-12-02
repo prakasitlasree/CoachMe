@@ -97,8 +97,29 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var obj = await ctx.MEMBER_PACKAGE.Where(x => x.EFFECTIVE_DATE.Value.Month >= DateTime.Now.Month).ToListAsync();
+                    //var obj = await ctx.MEMBER_PACKAGE.Where(x => x.EFFECTIVE_DATE.Value.Month >= DateTime.Now.Month).ToListAsync();
+                    var obj = await ctx.MEMBERS.Where(x => x.CREATED_DATE.Value.Month >= DateTime.Now.Month).ToListAsync();
+                    resp.OUTPUT_DATA = obj;
+                    resp.STATUS = true;
+                }
 
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp;
+        }
+
+        public async Task<RESPONSE__MODEL> GetPaidTeacherThisMonth()
+        {
+            var resp = new RESPONSE__MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                     var obj = await ctx.MEMBER_PACKAGE.Where(x => x.EFFECTIVE_DATE.Value.Month >= DateTime.Now.Month).ToListAsync(); 
                     resp.OUTPUT_DATA = obj;
                     resp.STATUS = true;
                 }
