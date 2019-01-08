@@ -182,7 +182,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             resp = await service.AcceptTeacher(dto);
             if (resp.STATUS)
             {
-                return RedirectToAction("getteacher", "student");
+                return RedirectToAction("index", "mainhome");
             }
             else
             {

@@ -105,7 +105,7 @@ namespace CoachMe.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("getteacher", "home");
+                        return RedirectToAction("index", "mainhome");
                     }
                    
                 }
@@ -144,11 +144,11 @@ namespace CoachMe.Controllers
                 Session["logon"] = param;
                 if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 2 || param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
                 {
-                    return RedirectToAction("getteacher", "home");
+                    return RedirectToAction("index", "mainhome");
                 }
                 else if (param.MEMBER_ROLE.FirstOrDefault() != null && param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1)
                 {
-                    return RedirectToAction("getteacher", "home");//return RedirectToAction("index", "teacher");
+                    return RedirectToAction("index", "mainhome");//return RedirectToAction("index", "teacher");
                 }
                 else
                 {
@@ -563,7 +563,7 @@ namespace CoachMe.Controllers
         public ActionResult LogOff()
         {
             Session["logon"] = null;
-            return RedirectToAction("getteacher", "home");
+            return RedirectToAction("index", "mainhome");
         }
 
         //
@@ -652,5 +652,18 @@ namespace CoachMe.Controllers
             }
         }
         #endregion
+
+
+        public ActionResult FacebookLogin(string id,string email)
+        {
+            if (true)//เข้าด้วยเฟสครั้งแรก
+            {
+                return RedirectToAction("index", "mainhome");
+            }
+            else
+            {
+                return RedirectToAction("index", "mainhome");
+            }
+        }
     }
 }

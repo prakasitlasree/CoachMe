@@ -50,7 +50,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
         var html = "";
         
         var itemsLength = Object.keys($scope.ListCategory).length;
-        html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_CETEGORY' name='LIST_CATE'>"
+        html += "<select onchange='changeListMemberCategory(this)' class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_CETEGORY' name='LIST_CATE'>"
         html += "<option value = 0 >-เลือกทั้งหมด-</option>"
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListCategory[i].AUTO_ID + ">" + $scope.ListCategory[i].NAME + "</option>";
@@ -64,7 +64,7 @@ app.controller('SearchTeacherController', function ($scope, $http, $compile) {
         var html = "";
         
         var itemsLength = Object.keys($scope.ListCourse).length;
-        html += "<select class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_TEACH_COURSE' name='LIST_COURSE'>"
+        html += "<select onchange='changeListMemberCategory(this)' class='form-control m-input m-input--pill' id='SEARCH_TEACHER_MODEL.LIST_MEMBER_TEACH_COURSE' name='LIST_COURSE'>"
         html += "<option value = 0 >-เลือกทั้งหมด-</option>"
         for (var i = 0; i < itemsLength; i++) {
             html += "<option value = " + $scope.ListCourse[i].AUTO_ID + ">" + $scope.ListCourse[i].NAME + "</option>";

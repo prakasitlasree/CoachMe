@@ -179,7 +179,7 @@
                                                                     }
                                                                 </li>
                                                                 <li class="m-nav__item">
-                                                                    <a href="@Url.Action("getteacher","home")" class="m-nav__link">
+                                                                    <a href="@Url.Action("index","mainhome")" class="m-nav__link">
                                                                         <i class="m-nav__link-icon flaticon-share"></i>
                                                                         <span class="m-nav__link-text">หน้าแรก</span>
                                                                     </a>
@@ -245,7 +245,7 @@
 
                     <div class="row">
                         <div class="col-xl-3 col-lg-4">
-                            @using (Html.BeginForm("getteacher", "student", FormMethod.Post))
+                            @using (Html.BeginForm("mainhome", "index", FormMethod.Post))
                             {
                                 <div class="m-portlet m-portlet--tab">
                                     <div class="m-portlet__body">

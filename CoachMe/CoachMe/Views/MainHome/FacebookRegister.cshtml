@@ -1,0 +1,146 @@
+﻿@model COACHME.MODEL.CUSTOM_MODELS.FACEBOOK_MODEL
+@{
+    ViewBag.Title = "FacebookRegister";
+    
+}
+<div class="m-grid m-grid--hor m-grid--root m-page">
+
+
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../Content/images/bg-3.jpg);">
+        <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
+            <div class="m-login__container">
+
+                <div class="m-login__logo">
+                    <a href="/">
+                        <img src="/Content/images/login/login_logo2.png">
+                    </a>
+                </div>
+
+                <!--Start SignUp -->
+                <div class="m-login__signin">
+
+                    <div class="m-login__head">
+                        <h3 class="m-login__title">Register new Coach Me account</h3>
+                        <div class="m-login__desc">Enter your details to create your account:</div>
+                    </div>
+                    <div class="m-login__form m-form" method="post" novalidate="novalidate">
+                        <div class="form-group m-form__group">
+                            <input id="ID" value="@Model.ID" hidden>
+                            <input class="form-control m-input" type="text" placeholder="Fullname" id="FULLNAME" value="@Model.NAME"> 
+                        </div>
+                        <div class="form-group m-form__group">
+                            <input class="form-control m-input" type="text" placeholder="Email" id="EMAIL" autocomplete="off" value="@Model.EMAIL" readonly>
+                            
+                        </div>
+                        
+                        
+                        <div class="row form-group m-form__group m-login__form-sub">
+                            <div class="col m--align-left">
+                                <label class="m-radio">
+                                    <input checked="checked" data-val="true" data-val-required="The GENDER field is required." id="SEX" name="GENDER" type="radio" value="1">Male
+                                    <span></span>
+                                </label>
+                                <label class="m-radio" style="margin-left:20px">
+                                    <input id="SEX" name="GENDER" type="radio" value="2">Female
+                                    <span></span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="row form-group m-form__group m-login__form-sub">
+                            <div class="col m--align-left">
+                                <label class="m-radio">
+                                    <input type="radio" name="ROLE" value="1" checked=""> Teacher
+                                    <span></span>
+                                </label>
+                                <label class="m-radio" style="margin-left:20px">
+                                    <input type="radio" name="ROLE" value="2"> Student
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row form-group m-form__group m-login__form-sub">
+                            <div class="col m--align-left">
+                                <label class="m-checkbox m-checkbox--focus">
+                                    <input type="checkbox" name="Agree" value="true" checked> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
+
+                                    <span></span>
+                                </label>
+                                <span class="m-form__help"></span>
+                             
+                            </div>
+                        </div>
+                        <div class="m-login__form-action">
+                            <button onclick="FacebookRegisterConfirm()" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <!--End SignUp -->
+
+            </div>
+        </div>
+    </div>
+ 
+</div>
+<script>
+    function FacebookRegisterConfirm() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("FacebookRegisterConfirm", "mainhome")',
+            contentType: "application/json; charset=utf-8",
+            data:
+            {
+                FULLNAME: document.getElementById("FULLNAME").value,
+                USER_NAME: document.getElementById("ID").value,
+                ROLE_ID: $("#ROLE:checked").val(),
+                GENDER: $("#SEX:checked").val(),
+
+            },
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                if (response.STATUS == true) {
+                    location.reload();
+                }
+
+
+            }
+
+        });
+    }
+    function facebookLogout() {
+        debugger;
+        FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+                FB.logout(function (response) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("logoff", "mainhome")',
+                        contentType: "application/json; charset=utf-8",
+                        data: {},
+                        dataType: "json",
+                        success: function (response) {
+                            debugger;
+                            if (response.STATUS == true) {
+                                window.location.href = 'https://www.coachme.asia/';
+                            }
+                            else {
+                                window.location.href = 'https://www.coachme.asia/';
+                            }
+
+
+                        }
+
+                    });
+
+                });
+            }
+        });
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

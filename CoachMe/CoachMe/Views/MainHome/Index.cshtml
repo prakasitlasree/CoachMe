@@ -1,0 +1,642 @@
+﻿@model COACHME.MODEL.CUSTOM_MODELS.HOME_MODEL
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<section ng-app="MainHome" ng-controller="MainHomeController" ng-init="GetComponent()">
+    <style>
+        .modal-backdrop {
+            z-index: -1;
+        }
+    </style>
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <header id="m_header" class="m-grid__item    m-header " m-minimize-offset="200" m-minimize-mobile-offset="200">
+            <div class="m-container m-container--fluid m-container--full-height">
+                <div class="m-stack m-stack--ver m-stack--desktop">
+
+                    <div class="m-stack__item m-brand  m-brand--skin-dark ">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--middle m-brand__logo">
+                                <a href="/" class="m-brand__logo-wrapper">
+                                    <img alt="" src="/Content/images/teacher/logo.png">
+                                </a>
+                            </div>
+                            <div class="m-stack__item m-stack__item--middle m-brand__tools">
+
+                                <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                                    <span></span>
+                                </a>
+
+
+                                <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                                    <i class="flaticon-more"></i>
+                                </a>
+
+                                <!-- BEGIN: Topbar Toggler -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+                        @if (Session["logon"] != null)
+                        {
+                            <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                                <div class="m-stack__item m-topbar__nav-wrapper">
+                                    <ul class="m-topbar__nav m-nav m-nav--inline">
+
+
+                                        <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+                                            <a href="#" class="m-nav__link m-dropdown__toggle">
+                                                <span class="m-topbar__userpic">
+                                                    @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />*@
+                                                    <img src="..//@Url.Content(@Model.MEMBER.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg" )" class="m--img-rounded m--marginless m--img-centered" alt="" style="width:31px;height:31px;" />
+                                                </span>
+                                                <span class="m-nav__link-icon m-topbar__usericon  m--hide">
+                                                    <span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
+                                                </span>
+                                                <span class="m-topbar__username m--hide">
+                                                    @Url.Content(@Model.MEMBER.FULLNAME ?? "")
+
+
+                                                </span>
+                                            </a>
+                                            <div class="m-dropdown__wrapper">
+                                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                                <div class="m-dropdown__inner">
+                                                    <div class="m-dropdown__header m--align-center">
+                                                        <div class="m-card-user m-card-user--skin-light">
+                                                            <div class="m-card-user__pic">
+                                                                @*<img src="~/Content/images/teacher/user1.jpg" class="m--img-rounded m--marginless" alt="" />*@
+                                                                <img src="..\\@Url.Content(@Model.MEMBER.PROFILE_IMG_URL ?? "//Content//images//Blank-Profile.jpg" )" class="m--img-rounded m--marginless" alt="" style="width:70px;height:70px;" />
+                                                            </div>
+                                                            <div class="m-card-user__details">
+                                                                <span class="m-card-user__name m--font-weight-500">
+                                                                    @Url.Content(@Model.MEMBER.FULLNAME ?? "")
+                                                                </span>
+                                                                <a href="#" class="m-card-user__email m--font-weight-300 m-link">
+                                                                    @Url.Content(@Model.MEMBER.USER_NAME)
+
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="m-dropdown__body">
+                                                        <div class="m-dropdown__content">
+                                                            <ul class="m-nav m-nav--skin-light">
+                                                                <li class="m-nav__section m--hide">
+                                                                    <span class="m-nav__section-text">Section</span>
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    @if (Model.MEMBER.ROLE_ID == 1 || Model.MEMBER.ROLE_ID == 3)
+                                                                    {
+                                                                        <a href="/teacher/index" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                                            <span class="m-nav__link-title">
+                                                                                <span class="m-nav__link-wrap">
+                                                                                    <span class="m-nav__link-text">My Profile</span>
+                                                                                    @*<span class="m-nav__link-badge"><span class="m-badge m-badge--success"></span></span>*@
+                                                                                </span>
+                                                                            </span>
+                                                                        </a>
+
+                                                                    }
+                                                                    @if (Model.MEMBER.ROLE_ID == 2)
+                                                                    {
+                                                                        <a href="/teacher/index" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                                            <span class="m-nav__link-title">
+                                                                                <span class="m-nav__link-wrap">
+                                                                                    <span class="m-nav__link-text">My Profile</span>
+                                                                                </span>
+                                                                            </span>
+                                                                        </a>
+                                                                    }
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    <a href="@Url.Action("index","mainhome")" class="m-nav__link">
+                                                                        <i class="m-nav__link-icon flaticon-share"></i>
+                                                                        <span class="m-nav__link-text">หน้าแรก</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="m-nav__separator m-nav__separator--fit">
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    <a onclick="facebookLogout();" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                                <div class="m-stack__item m-topbar__nav-wrapper">
+                                    <ul class="m-topbar__nav m-nav m-nav--inline">
+                                        <li class="m-nav__item">
+                                            <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" scope="public_profile,email" onlogin="checkLoginState();" auto-logout-link="true"></div>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="@Url.Action("login", "account")" class="m-nav__link">
+                                                <span class="m-nav__link-text" style="color:lightgrey">เข้าสู่ระบบ</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="@Url.Action("register", "account")" class="m-nav__link">
+                                                <span class="m-nav__link-text" style="color:lightgrey">สมัครสมาชิก</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                <div class="m-content">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4">
+                            <form action="/" method="post" class="ng-pristine ng-valid">
+                                <div class="m-portlet m-portlet--tab">
+                                    <div class="m-portlet__body">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active show" data-toggle="tab" href="#" data-target="#m_tabs_1_1">ค้นหา</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link " data-toggle="tab" href="#m_tabs_1_3">ค้นหาโดยละเอียด</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active show" id="m_tabs_1_1" role="tabpanel">
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">กำลังมองหา</label>
+
+                                                    <select class="form-control m-input m-input--pill ng-pristine ng-untouched ng-valid ng-not-empty"
+                                                            name="NAME_SEARCH_TYPE"
+                                                            id="ID_SEARCH_TYPE"
+                                                            ng-options="option.name for option in LIST_SEARCH_TYPE.availableOptions track by option.value"
+                                                            ng-model="LIST_SEARCH_TYPE.selectedOption"
+                                                            ng-change="ChangeSearchType()"></select>
+
+                                                </div>
+
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">ประเภทวิชา</label>
+
+                                                    <select class="form-control m-input m-input--pill ng-pristine ng-untouched ng-valid ng-not-empty"
+                                                            name="NAME_TEACHER_CATE"
+                                                            id="ID_TEACHER_CATE"
+                                                            ng-change="Search()"
+                                                            ng-options="option.NAME for option in LIST_TEACHER_CATEGORY.availableOptions track by option.AUTO_ID"
+                                                            ng-model="LIST_TEACHER_CATEGORY.selectedOption"></select>
+
+                                                    <select class="form-control m-input m-input--pill ng-pristine ng-untouched ng-valid ng-not-empty"
+                                                            name="NAME_COURSE_CATE"
+                                                            id="ID_COURSE_CATE"
+                                                            ng-change="Search()"
+                                                            ng-options="option.NAME for option in LIST_COURSE_CATEGORY.availableOptions track by option.AUTO_ID"
+                                                            ng-model="LIST_COURSE_CATEGORY.selectedOption"></select>
+
+                                                </div>
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">จังหวัด</label>
+                                                    <select class="form-control m-input m-input--pill ng-pristine ng-untouched ng-valid ng-not-empty"
+                                                            name="NAME_PROVINCE"
+                                                            id="ID_PROVINCE"
+                                                            ng-options="option.PROVINCE_NAME for option in LIST_PROVINCE.availableOptions track by option.PROVINCE_ID"
+                                                            ng-model="LIST_PROVINCE.selectedOption"
+                                                            ng-change="GetAmphur()"></select>
+                                                </div>
+                                                <div class="form-group m-form__group">
+                                                    <label for="exampleSelect1">เขต/อำเภอ</label>
+                                                    <select class="form-control m-input m-input--pill ng-pristine ng-untouched ng-valid ng-not-empty"
+                                                            name="NAME_AMPHUR"
+                                                            id="ID_AMPHUR"
+                                                            ng-change="Search()"
+                                                            ng-options="option.AMPHUR_NAME for option in LIST_AMPHUR.availableOptions track by option.AMPHUR_ID"
+                                                            ng-model="LIST_AMPHUR.selectedOption"></select>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                                                <div class="m-form__group form-group">
+                                                    <label for="">ประเภทการเรียน</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="1"> เรียนเดียว
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="2"> เรียนกลุ่ม
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="m-form__group form-group">
+                                                    <label for="">สถานที่</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="1"> เรียนที่บ้าน
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="2"> เรียนนอกสถานที่
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="3"> เรียนที่สถานที่ครู
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="m-form__group form-group">
+                                                    <label for="">ข้อมูลทั่วไป (เพศของครู)</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="1"> ชาย
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="2"> หญิง
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="m-form__group form-group">
+                                                    <label for="">ระดับผู้เรียน</label>
+                                                    <div class="m-checkbox-list">
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="1"> เริ่มต้น
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="2"> ปานกลาง
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="m-checkbox">
+                                                            <input type="checkbox" value="3"> ขั้นสูง
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-12">
+                                                    <button type="button" class="btn btn-brand m-btn--pill m-btn--air" ng-click="Search()"><i class="fa fa-search"></i>ค้นหา</button>
+                                                    <button type="button" class="btn btn-metal m-btn--pill m-btn--air" name="SEARCH_TEACHER_MODEL.SEARCH_ALL" value="1"><i class="fa fa-search-plus"></i>ค้นหาทั้งหมด</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xl-9 col-lg-8">
+
+                            <div id="listTeacher">
+                            </div>
+                            <div id="listCourse" class="row">
+                            </div>
+                            <div id="modalTeacherProfile">
+                            </div>
+
+                            <div class="m-portlet m-portlet--responsive-tablet-and-mobile m-portlet--sortable">
+                                <div class="m-portlet__head ui-sortable-handle">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon">
+
+                                            </span>
+                                            <h3 class="m-portlet__head-text">
+                                                Page
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__head-tools">
+                                        <div class="btn-group m-btn-group m-btn-group--pill" role="group" aria-label="...">
+                                            <button type="button" ng-click="Previous()" id="BTN_PREVIOUS" class="m-btn btn btn-secondary">Previous</button>
+                                            <button type="button" class="m-btn btn btn-secondary">{{PAGE_NUMBER}}</button>
+                                            <button type="button" class="m-btn btn btn-secondary">{{PAGE_COUNT}}</button>
+                                            <button type="button" ng-click="Next()" id="BTN_NEXT" class="m-btn btn btn-secondary">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm("chooseteacherlogin", "account", FormMethod.Post))
+        {
+            <div class='modal fade' id='m_modal_6' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' style='display: none;' aria-hidden='true'>
+                <div class='modal-dialog modal-dialog-centered' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='exampleModalLongTitle'>เข้าสู่ระบบ</h5>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>×</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+                            <div class='form-group m-form__group'>
+                                <label for='exampleInputEmail1'>ชื่อผู้ใช้งาน</label>
+                                <input type='email' class='form-control m-input m-input--pill ' name='USER_NAME' aria-describedby='emailHelp' placeholder='Enter email'>
+
+                            </div>
+                            <div class='form-group m-form__group'>
+                                <label for='exampleInputPassword1'>รหัสผ่าน</label>
+                                <input type='password' class='form-control m-input m-input--pill ' name='PASSWORD' placeholder='Password'>
+
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='submit' class='btn m-btn--pill    btn-brand'>เข้าสู่ระบบ</button>
+                            <a href='@Url.Action("register","Account")' class='btn m-btn--pill    btn-outline-primary  '>สมัครสมาชิก</a>
+                            @*<button type='button' class='btn m-btn--pill    btn-metal' data-dismiss='modal'>ปิด</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3>สมัครสำเร็จ</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn m-btn--pill    btn-outline-primary    " data-dismiss="modal">ปิด</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="m_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3>เกิดข้อผิดพลาด</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn m-btn--pill    btn-outline-primary    " data-dismiss="modal">ปิด</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-info btn-md" id="modalRegister" data-toggle="modal" data-target="#m_modal_3" data-backdrop="static" style="display:none"><</button>>
+        <div class='modal fade' id='m_modal_3' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' style='display: none;' aria-hidden='true'>
+            <div class='modal-dialog modal-dialog-centered' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLongTitle'>สมัครสมาชิก</h5>
+                        <button type='button' class='close' data-dismiss='modal' onclick="facebookLogout()" aria-label='Close'>
+                            <span aria-hidden='true'>×</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>
+                        <div class="m-login__form m-form" method="post" novalidate="novalidate">
+                            <div class="form-group m-form__group">
+                                <input id="ID" hidden>
+                                <p>ชื่อ</p>
+                                <input class="form-control m-input" type="text" placeholder="Fullname" id="FULLNAME">
+                            </div>
+                            <div class="form-group m-form__group">
+                                <p>อีเมลล์</p>
+                                <input class="form-control m-input" type="text" placeholder="Email" id="EMAIL" autocomplete="off" readonly>
+
+                            </div>
+
+
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-radio">
+                                        <input checked="checked" data-val="true" data-val-required="The GENDER field is required." id="SEX" name="GENDER" type="radio" value="1">Male
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio" style="margin-left:20px">
+                                        <input id="SEX" name="GENDER" type="radio" value="2">Female
+                                        <span></span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-radio">
+                                        <input type="radio" id="ROLE" name="ROLE" value="1" checked> Teacher
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio" style="margin-left:20px">
+                                        <input type="radio" id="ROLE" name="ROLE" value="2"> Student
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-checkbox m-checkbox--focus">
+                                        <input type="checkbox" name="Agree" value="true" checked> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
+
+                                        <span></span>
+                                    </label>
+                                    <span class="m-form__help"></span>
+
+                                </div>
+                            </div>
+                            <div class="m-login__form-action">
+                                <button onclick="FacebookRegisterConfirm()" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="m_scroll_top" class="m-scroll-top">
+            <i class="la la-arrow-up"></i>
+        </div>
+
+    </div>
+    <script>
+
+        $(document).ready(function () {
+
+            $("#ID_AMPHUR").prop("disabled", true);
+            $("#ID_COURSE_CATE").hide();
+            checkLoginState();
+        });
+
+        var bFbStatus = false;
+        var fbID = "";
+        var fbName = "";
+        var fbEmail = "";
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2305099133080843',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.2'
+            });
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        var status = false;
+        function statusChangeCallback(response) {
+
+
+            fbID = response.authResponse.userID;
+            if (response.status == 'connected') {
+                getCurrentUserInfo(response)
+            } else {
+                FB.login(function (response) {
+                    if (response.authResponse) {
+                        if (fbID != "" && fbEmail != "") {
+                            Login(fbID, fbEmail, fbName)
+                        }
+                        getCurrentUserInfo(response)
+                    } else {
+                        console.log('Auth cancelled.')
+                    }
+                }, { scope: 'email' });
+            }
+
+        }
+
+        function getCurrentUserInfo() {
+            FB.api('/me?fields=name,email', function (userInfo) {
+                console.log(userInfo);
+                fbName = userInfo.name;
+                fbEmail = userInfo.email;
+
+            });
+        }
+
+        var firstCall = false;
+
+        function checkLoginState() {
+            debugger;
+            FB.getLoginStatus(function (response) {
+                fbID = response.authResponse.userID;
+                if (response.status == 'connected' && firstCall == false) {
+                    getCurrentUserInfo(response)
+                    firstCall = true;
+                }
+                else if (response.status == 'connected' && firstCall == true) {
+                    getCurrentUserInfo(response)
+                    if (fbID != "" && fbEmail != "") {
+                        Login(fbID, fbEmail, fbName)
+                    }
+                }
+
+            });
+
+        }
+
+        function Login(id, email, name) {
+
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("FacebookLogin", "MainHome")',
+                contentType: "application/json; charset=utf-8",
+                data: { ID: id, EMAIL: email, NAME: name },
+                dataType: "json",
+                success: function (response) {
+
+                    if (response.STATUS == true) {
+                        location.reload();
+                    }
+                    else {
+
+                        document.getElementById("FULLNAME").value = name
+                        document.getElementById("ID").value = id
+                        document.getElementById("EMAIL").value = email
+                        $("#modalRegister").click();
+                    }
+
+                }
+
+            });
+        }
+
+
+        function FacebookRegisterConfirm() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("FacebookRegisterConfirm", "mainhome")',
+                contentType: "application/json; charset=utf-8",
+                data:
+                {
+                    FULLNAME: document.getElementById("FULLNAME").value,
+                    USER_NAME: document.getElementById("ID").value,
+                    ROLE_ID: $("#ROLE:checked").val(),
+                    GENDER: $("#SEX:checked").val(),
+
+                },
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    if (response.STATUS == true) {
+                        location.reload();
+                    }
+
+
+                }
+
+            });
+        }
+
+        function facebookLogout() {
+
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    FB.logout(function (response) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("logoff", "mainhome")',
+                            contentType: "application/json; charset=utf-8",
+                            data: {},
+                            dataType: "json",
+                            success: function (response) {
+                                location.reload();
+                                
+                            }
+                        });
+
+                    });
+                }
+            });
+        }
+
+    </script>
+</section>

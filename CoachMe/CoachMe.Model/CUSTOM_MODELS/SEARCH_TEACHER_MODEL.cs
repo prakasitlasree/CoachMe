@@ -19,11 +19,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public List<string> TEACH_GENDER { get; set; }
         public List<int?> STUDENT_LEVEL { get; set; }
         public List<COURSES> LIST_COURSE { get; set; }
-
         public string  SELECTED_COURSE { get; set; }
-
         public List<CATEGORY> LIST_CATEGORY { get; set; }
-
         public string SELECTED_CATEGORY { get; set; }
 
         public List<string> LIST_SEARCH_TYPE { get; set; }
@@ -37,6 +34,14 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 
         public int TEACHER_ROLE_ID { get; set; }
         public int STUDENT_ROLE_ID { get; set; }
+
+        #region ============= PAGING =============
+        public int PAGE_NUMBER { get; set; }
+        public int NEXT { get; set; }
+        public int PREVIOS { get; set; }
+        public int PAGE_COUNT { get; set; }
+        #endregion
+
 
         #region ======= course model =======
 

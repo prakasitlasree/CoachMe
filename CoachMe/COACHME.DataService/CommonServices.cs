@@ -100,7 +100,7 @@ namespace COACHME.DATASERVICE
             return resp;
         }
   
-        public async Task<RESPONSE__MODEL> GetListCourse()
+        public async Task<RESPONSE__MODEL> GetListCourseCategory()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
             try

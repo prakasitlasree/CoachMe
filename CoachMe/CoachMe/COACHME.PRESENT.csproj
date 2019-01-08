@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\FindStudentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MainHomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AngularController\MainHome.js" />
     <Content Include="AngularController\SearchTeacherController.js" />
     <Content Include="AngularController\TeacherController.js" />
     <Content Include="Content\asset\favicon.ico" />
@@ -383,6 +385,9 @@
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\GetTeacher.cshtml" />
+    <Content Include="Views\MainHome\Index.cshtml" />
+    <Content Include="Views\MainHome\FacebookLogin.cshtml" />
+    <Content Include="Views\MainHome\FacebookRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
