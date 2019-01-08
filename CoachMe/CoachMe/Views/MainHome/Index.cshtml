@@ -141,9 +141,9 @@
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">
-                                        <li class="m-nav__item">
+                                        <!--<li class="m-nav__item">
                                             <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" scope="public_profile,email" onlogin="checkLoginState();" auto-logout-link="true"></div>
-                                        </li>
+                                        </li>-->
                                         <li class="m-nav__item">
                                             <a href="@Url.Action("login", "account")" class="m-nav__link">
                                                 <span class="m-nav__link-text" style="color:lightgrey">เข้าสู่ระบบ</span>
@@ -483,7 +483,7 @@
 
             $("#ID_AMPHUR").prop("disabled", true);
             $("#ID_COURSE_CATE").hide();
-            checkLoginState();
+            //checkLoginState();
         });
 
         var bFbStatus = false;
