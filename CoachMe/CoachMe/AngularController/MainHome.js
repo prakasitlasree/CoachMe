@@ -124,7 +124,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
     }
 
     $scope.Search = function () {
-        debugger;
+        
         if ($scope.LIST_SEARCH_TYPE.selectedOption.value == 1) {
             $scope.PAGE_NUMBER = 1;
             $scope.GetListTeacher();
@@ -204,7 +204,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
     }
 
     $scope.GetListCourse = function () {
-        debugger;
+        
         $.LoadingOverlay("show");
         $http({
             url: "/home/GetListCourse",
@@ -223,7 +223,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 $scope.PAGE_NUMBER = response.data.OUTPUT_DATA.PAGE_NUMBER;
                 $scope.PAGE_COUNT = response.data.OUTPUT_DATA.PAGE_COUNT;
                 $scope.LIST_COURSE = response.data.OUTPUT_DATA;
-                debugger;
+                
                 if ($scope.PAGE_NUMBER >= $scope.PAGE_COUNT) {
                     $('#BTN_NEXT').prop('disabled', true);
                 }
@@ -263,11 +263,13 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 html += "   <div class='col-md-3'>"//md3
                 html += "       <div class='m-card-profile'><div class='m-card-profile__pic'><div class='m-card-profile__pic-wrapper'>"
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
+                    debugger;
                     var pic = "..////Content//images//Blank-Profile.jpg";
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
+                    debugger;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
                 }
                 html += ""
@@ -367,7 +369,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                              </a>`
                 }
                 else {
-                    debugger;
+                    
                     html += "<button href='#' class='btn m-btn--pill m-btn--air btn-outline-info btn-sm m-btn m-btn--custom' disabled='disabled'>\
                             <span>\
                             <i class='fa fa-star'></i>\
@@ -435,12 +437,12 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 html += "<div class='row'>"
                 html += "   <div class='col-md-3'>"//md3
                 html += "       <div class='m-card-profile'><div class='m-card-profile__pic'><div class='m-card-profile__pic-wrapper'>"
-                if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL != null) {
+                if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
                     var pic = "..////Content//images//Blank-Profile.jpg";
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
                 }
                 html += ""
@@ -586,7 +588,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='width:100%;height:230px'>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_COURSE.LIST_MEMBERS[i].COURSE_BANNER;
+                    var pic = "..////" + $scope.LIST_COURSE.LIST_MEMBERS[i].COURSE_BANNER;
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='width:100%;height:230px'>"
                 }
                 //==================================================
@@ -686,7 +688,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='width:100%;height:230px'>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_COURSE.LIST_MEMBERS[i].COURSE_BANNER;
+                    var pic = "..////" + $scope.LIST_COURSE.LIST_MEMBERS[i].COURSE_BANNER;
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='width:100%;height:230px'>"
                 }
                 //==================================================
@@ -759,12 +761,12 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                          <div class ='m-card-profile__pic'>\
                          <div class ='m-card-profile__pic-wrapper'>\
                     "
-                if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL != null) {
+                if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
                     var pic = "//Content//images//Blank-Profile.jpg";
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></div>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
                     html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></div>"
                 }
                 html += "</div>\
@@ -789,7 +791,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_1;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_1;
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_2 == null) {
@@ -798,7 +800,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_2;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_2;
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_3 == null) {
@@ -807,7 +809,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_3;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_3;
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_4 == null) {
@@ -816,7 +818,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 else {
-                    var pic = "..////Content//images//" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_4;
+                    var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_4;
                     html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
                 }
                 html += "</div></div></div></div>\
@@ -832,11 +834,11 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
         $('#modalTeacherProfile').append(html)
         $('#modalProfile').modal('show');
 
-        debugger;
+        
     }
 
     $scope.SelectTeacher = function (TEACHER_AUTO_ID) {
-        debugger;
+        
 
         $("#MODAL_ACCEPT_TEACHER" + TEACHER_AUTO_ID + "").modal('hide');
         $http({
@@ -857,7 +859,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
     }
 
     $scope.SelectCourse = function (COURSE_ID) {
-        debugger;
+        
 
         $("#MODAL_ACCEPT_COURSE" + COURSE_ID + "").modal('hide');
         $http({
