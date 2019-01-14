@@ -409,9 +409,7 @@
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='exampleModalLongTitle'>สมัครสมาชิก</h5>
-                        <button type='button' class='close' data-dismiss='modal' onclick="facebookLogout()" aria-label='Close'>
-                            <span aria-hidden='true'>×</span>
-                        </button>
+                        
                     </div>
                     <div class='modal-body'>
                         <div class="m-login__form m-form" method="post" novalidate="novalidate">
@@ -465,7 +463,12 @@
                             </div>
                             <div class="m-login__form-action">
                                 <button onclick="FacebookRegisterConfirm()" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+                                <button type='button' class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn" data-dismiss='modal' onclick="facebookLogout()" aria-label='Close'>
+                                    <span aria-hidden='true'>ปิด</span>
+                                </button>
                             </div>
+
+
                         </div>
                     </div>
 
@@ -607,6 +610,9 @@
                     debugger;
                     if (response.STATUS == true) {
                         location.reload();
+                    }
+                    else {
+                        facebookLogout();
                     }
 
 
