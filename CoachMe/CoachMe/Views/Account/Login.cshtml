@@ -22,8 +22,7 @@
             });
 
             FB.getLoginStatus(function (response) {
-                if (response.status === 'connected') {
-                    //alert("yes");
+                if (response.status === 'connected') {     
                     fbID = response.authResponse.userID;
                     var accessToken = response.authResponse.accessToken;
                     getCurrentUserInfo(fbID)
@@ -37,8 +36,8 @@
             });
 
             FB.Event.subscribe('auth.login', function (response) {
-                getCurrentUserInfo()
-
+                window.location.reload();
+                FB.getLoginStatus()
             });
             FB.Event.subscribe('auth.logout', function (response) {
                 window.location.reload();
