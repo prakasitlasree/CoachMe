@@ -264,6 +264,8 @@
     <Content Include="Content\images\teacher\logo.png" />
     <Content Include="Content\images\teacher\reen.jpg" />
     <Content Include="Content\images\teacher\user1.jpg" />
+    <Content Include="Content\images\zoom-in %281%29.png" />
+    <Content Include="Content\images\zoom-in %282%29.png" />
     <Content Include="Content\js\bootstrap-select.js" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\scripts.bundle.js" />

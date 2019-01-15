@@ -48,7 +48,7 @@
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) { return; }
             js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
+            js.src = "https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v3.2";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
@@ -232,8 +232,7 @@
         <div class='modal-dialog modal-dialog-centered' role='document'>
             <div class='modal-content'>
                 <div class='modal-header'>
-                    <h5 class='modal-title' id='exampleModalLongTitle'>สมัครสมาชิก</h5>
-                    
+                    <h5 class='modal-title' id='exampleModalLongTitle'>สมัครสมาชิกด้วย facebook</h5>              
                 </div>
                 <div class='modal-body'>
                     <div class="m-login__form m-form" method="post" novalidate="novalidate">

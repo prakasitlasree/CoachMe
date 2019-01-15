@@ -50,6 +50,7 @@ namespace COACHME.MODEL
         public Nullable<int> STUDENT_LEVEL { get; set; }
         public string LINE_ID { get; set; }
         public string FACEBOOK_URL { get; set; }
+        public string PROFILE_IMG_URL_FULL { get; set; }
     
         public virtual AMPHUR AMPHUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

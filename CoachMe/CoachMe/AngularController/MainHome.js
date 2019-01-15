@@ -4,7 +4,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
 
     $scope.PAGE_NUMBER = null;
     $scope.PAGE_COUNT = null;
-    
+
 
     $scope.LIST_SEARCH_TYPE = {
         availableOptions: [
@@ -124,7 +124,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
     }
 
     $scope.Search = function () {
-        
+
         if ($scope.LIST_SEARCH_TYPE.selectedOption.value == 1) {
             $scope.PAGE_NUMBER = 1;
             $scope.GetListTeacher();
@@ -204,7 +204,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
     }
 
     $scope.GetListCourse = function () {
-        
+
         $.LoadingOverlay("show");
         $http({
             url: "/home/GetListCourse",
@@ -223,7 +223,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 $scope.PAGE_NUMBER = response.data.OUTPUT_DATA.PAGE_NUMBER;
                 $scope.PAGE_COUNT = response.data.OUTPUT_DATA.PAGE_COUNT;
                 $scope.LIST_COURSE = response.data.OUTPUT_DATA;
-                
+
                 if ($scope.PAGE_NUMBER >= $scope.PAGE_COUNT) {
                     $('#BTN_NEXT').prop('disabled', true);
                 }
@@ -265,12 +265,19 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
                     debugger;
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
+                    html += "<img src= '" + pic + "' class='img-thumbnail' onclick = window.open('/content/images/blank-profile.jpg') style='height:130px;width:130px'  >"
                 }
                 else {
                     debugger;
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
-                    html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
+                    if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL_FULL != null) {
+                        var fullPic = $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL_FULL.replace("\\", "//")
+                        html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px' onclick=window.open('https://www.coachme.asia///" + fullPic + "')>"
+                    }
+                    else {
+                        var fullPic = $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL.replace("\\", "//")
+                        html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px' onclick=window.open('https://www.coachme.asia///" + fullPic + "')>"
+                    }
                 }
                 html += ""
                 html += "       </div></div></div> "
@@ -369,7 +376,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                              </a>`
                 }
                 else {
-                    
+
                     html += "<button href='#' class='btn m-btn--pill m-btn--air btn-outline-info btn-sm m-btn m-btn--custom' disabled='disabled'>\
                             <span>\
                             <i class='fa fa-star'></i>\
@@ -439,11 +446,18 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 html += "       <div class='m-card-profile'><div class='m-card-profile__pic'><div class='m-card-profile__pic-wrapper'>"
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
+                    html += "<img src= '" + pic + "' class='img-thumbnail' onclick = window.open('/content/images/blank-profile.jpg') style='height:130px;width:130px'  >"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
-                    html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'>"
+                    if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL_FULL != null) {
+                        var fullPic = $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL_FULL.replace("\\", "//")
+                        html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px' onclick=window.open('https://www.coachme.asia///" + fullPic + "')>"
+                    }
+                    else {
+                        var fullPic = $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL.replace("\\", "//")
+                        html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px' onclick=window.open('https://www.coachme.asia///" + fullPic + "')>"
+                    }
                 }
                 html += ""
                 html += "       </div></div></div> "
@@ -611,8 +625,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     </div>\
                     </div>\
             "
-                if ($scope.LIST_COURSE.LIST_MEMBERS[i].REGISTER_STATUS == false)
-                {
+                if ($scope.LIST_COURSE.LIST_MEMBERS[i].REGISTER_STATUS == false) {
                     html += "<div class='m-widget19__action'>\
                              <button type='button' class='btn m-btn--pill btn-brand m-btn--air m-btn--custom' data-toggle='modal' data-target='#MODAL_ACCEPT_COURSE" + $scope.LIST_COURSE.LIST_MEMBERS[i].COURSE_ID + "'><i class='fa fa-plus'></i>สมัครเรียน</button>\
                              </div>\
@@ -645,8 +658,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                             </div>\
                     "
                 }
-                else
-                {
+                else {
                     html += "<div class='m-widget19__action'>\
                              <button type='button' class='btn m-btn--pill btn-success m-btn--air m-btn--custom' disabled='disabled'>\
                              <i class='fa fa-star'></i>สมัครเรียบร้อย\
@@ -763,11 +775,18 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     "
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
                     var pic = "//Content//images//Blank-Profile.jpg";
-                    html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></div>"
+                    html += "<img src= '" + pic + "' class='img-thumbnail' onclick = window.open('/content/images/blank-profile.jpg') style='height:130px;width:130px' ></div>"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
-                    html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></div>"
+                    if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL_FULL != null) {
+                        var fullPic = $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL_FULL.replace("\\", "//")
+                        html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px' onclick=window.open('https://www.coachme.asia///" + fullPic + "')>"
+                    }
+                    else {
+                        var fullPic = $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL.replace("\\", "//")
+                        html += "<img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px' onclick=window.open('https://www.coachme.asia///" + fullPic + "')>"
+                    }
                 }
                 html += "</div>\
                         <div class='m-card-profile__details'>\
@@ -834,11 +853,11 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
         $('#modalTeacherProfile').append(html)
         $('#modalProfile').modal('show');
 
-        
+
     }
 
     $scope.SelectTeacher = function (TEACHER_AUTO_ID) {
-        
+
 
         $("#MODAL_ACCEPT_TEACHER" + TEACHER_AUTO_ID + "").modal('hide');
         $http({
@@ -859,7 +878,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
     }
 
     $scope.SelectCourse = function (COURSE_ID) {
-        
+
 
         $("#MODAL_ACCEPT_COURSE" + COURSE_ID + "").modal('hide');
         $http({

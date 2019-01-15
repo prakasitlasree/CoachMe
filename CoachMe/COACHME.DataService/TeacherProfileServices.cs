@@ -150,6 +150,7 @@ namespace COACHME.DATASERVICE
                     //Deploy
                     #region ==== DEPLOY PATH ====
                     string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//";
+                    string fullDir = @"C://WebApplication//coachme.asia//Content//images//ProfileFull//";
                     #endregion
                     #region ==== ROCK PATH ====
                     //myDir = "D://PXProject//CoachMe//CoachMe//CoachMe//Content//images//Profile//";
@@ -159,12 +160,14 @@ namespace COACHME.DATASERVICE
                     #endregion
 
                     string path = "";
-
+                    string fullPath = "";
                     var memberUsername = await ctx.MEMBER_LOGON.Where(x => x.MEMBER_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     //string[] FolderProfile = memberUsername.USER_NAME.Split('@');
 
                     myDir += memberUsername.USER_NAME;
                     System.IO.Directory.CreateDirectory(myDir);
+                    fullDir += memberUsername.USER_NAME;
+                    System.IO.Directory.CreateDirectory(fullDir);
 
                     //Upload Pic
                     if (profileImage.ContentLength > 0)
@@ -172,6 +175,10 @@ namespace COACHME.DATASERVICE
                         string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-profile-image" + Path.GetExtension(profileImage.FileName);
                         path = Path.Combine(myDir, fileName);
                         profileImage.SaveAs(path);
+
+                        fullPath = Path.Combine(fullDir, fileName);
+                        profileImage.SaveAs(fullPath);
+
                         Bitmap bimage = new Bitmap(path);
                         resizeImage(bimage, path);
                     }
@@ -179,7 +186,7 @@ namespace COACHME.DATASERVICE
                     var member = await ctx.MEMBERS.Where(x => x.AUTO_ID == dto.AUTO_ID).FirstOrDefaultAsync();
                     int index = path.IndexOf("Content");
                     member.PROFILE_IMG_URL = @"//" + path.Substring(index);
-
+                    member.PROFILE_IMG_URL_FULL = @"//" + fullPath.Substring(index);
                     #region === Activity ===
                     var activity = new LOGON_ACTIVITY();
                     activity.DATE = DateTime.Now;

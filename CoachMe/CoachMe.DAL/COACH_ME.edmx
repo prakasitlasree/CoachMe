@@ -237,6 +237,7 @@
           <Property Name="STUDENT_LEVEL" Type="int" />
           <Property Name="LINE_ID" Type="nvarchar" MaxLength="50" />
           <Property Name="FACEBOOK_URL" Type="nvarchar" MaxLength="50" />
+          <Property Name="PROFILE_IMG_URL_FULL" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -952,6 +953,7 @@
           <NavigationProperty Name="MEMBER_LOGON" Relationship="COACH_MEModel.FK_MEMBER_LOGON_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_LOGON" />
           <NavigationProperty Name="MEMBER_PACKAGE" Relationship="COACH_MEModel.FK_MEMBER_PACKAGE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_PACKAGE" />
           <NavigationProperty Name="MEMBER_ROLE" Relationship="COACH_MEModel.FK_MEMBER_ROLE_MEMBERS" FromRole="MEMBERS" ToRole="MEMBER_ROLE" />
+          <Property Name="PROFILE_IMG_URL_FULL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PLACE">
           <Key>
@@ -1443,6 +1445,7 @@
           <EntitySetMapping Name="MEMBERS">
             <EntityTypeMapping TypeName="COACH_MEModel.MEMBERS">
               <MappingFragment StoreEntitySet="MEMBERS">
+                <ScalarProperty Name="PROFILE_IMG_URL_FULL" ColumnName="PROFILE_IMG_URL_FULL" />
                 <ScalarProperty Name="FACEBOOK_URL" ColumnName="FACEBOOK_URL" />
                 <ScalarProperty Name="LINE_ID" ColumnName="LINE_ID" />
                 <ScalarProperty Name="STUDENT_LEVEL" ColumnName="STUDENT_LEVEL" />

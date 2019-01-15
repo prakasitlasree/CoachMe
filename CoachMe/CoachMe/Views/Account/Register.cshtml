@@ -5,6 +5,146 @@
 
 <div class="m-grid m-grid--hor m-grid--root m-page">
 
+    <script>
+
+        var bFbStatus = false;
+        var fbID = "";
+        var fbName = "";
+        var fbEmail = "";
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2305099133080843',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.2'
+            });
+
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    fbID = response.authResponse.userID;
+                    var accessToken = response.authResponse.accessToken;
+                    getCurrentUserInfo(fbID)
+                    // alert("Yes");
+                } else if (response.status === 'not_authorized') {
+
+                } else {
+
+                    //alert("No");
+
+                }
+            });
+
+            FB.Event.subscribe('auth.login', function (response) {
+                window.location.reload();
+                FB.getLoginStatus()
+            });
+            FB.Event.subscribe('auth.logout', function (response) {
+                window.location.reload();
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v3.2";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+        function getCurrentUserInfo(x) {
+            FB.api('/me?fields=name,email', function (userInfo) {
+                fbName = userInfo.name;
+                fbEmail = userInfo.email;
+                console.log(fbID);
+                console.log(fbName);
+                console.log(fbEmail);
+
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("FacebookLogin", "MainHome")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { ID: fbID, EMAIL: userInfo.email, NAME: userInfo.name },
+                    dataType: "json",
+                    success: function (response) {
+
+                        if (response.STATUS == true) {
+                            window.location.href = "/";
+                        }
+                        else {
+
+                            document.getElementById("FULLNAME_MODAL").value = userInfo.name
+                            debugger;
+                            document.getElementById("ID_MODAL").value = x
+                            document.getElementById("EMAIL_MODAL").value = userInfo.email
+                            $("#modalRegister").click();
+                        }
+
+                    }
+
+                });
+
+            })
+
+
+
+
+        }
+
+
+        function facebookLogout() {
+
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    FB.logout(function (response) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("logoff", "mainhome")',
+                            contentType: "application/json; charset=utf-8",
+                            data: {},
+                            dataType: "json",
+                            success: function (response) {
+                                location.reload();
+
+                            }
+                        });
+
+                    });
+                }
+            });
+        }
+
+        function FacebookRegisterConfirm() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("FacebookRegisterConfirm", "mainhome")',
+                contentType: "application/json; charset=utf-8",
+                data:
+                {
+                    FULLNAME: document.getElementById("FULLNAME_MODAL").value,
+                    USER_NAME: document.getElementById("ID_MODAL").value,
+                    ROLE_ID: $("#ROLE_MODAL:checked").val(),
+                    GENDER: $("#SEX_MODAL:checked").val(),
+
+                },
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    if (response.STATUS == true) {
+                        location.reload();
+                    }
+                    else {
+                        facebookLogout();
+                    }
+
+
+                }
+
+            });
+        }
+
+    </script>
 
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../Content/images/bg-3.jpg);">
         <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
@@ -25,8 +165,8 @@
                         <div class="m-login__desc">Enter your details to create your account:</div>
                     </div>
                     @using (Html.BeginForm("register", "account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
-                    { 
-                        
+                    {
+
                         @Html.AntiForgeryToken()
 
                         <div class="form-group m-form__group">
@@ -39,7 +179,7 @@
                                 <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("login", "account")" class="m-link">&nbsp; login.</a></p>
                             }
                             @if (!string.IsNullOrEmpty(ViewBag.ActiveFail))
-                            {                       
+                            {
                                 <p class="text-danger">@ViewBag.ActiveFail<a href="@Url.Action("SendMailConfirm", "account",new {EMAIL = Model.EMAIL})" class="m-link">&nbsp; send mail.</a></p>
                             }
                             <input class="form-control m-input" type="text" placeholder="Fullname" name="FULLNAME">
@@ -47,7 +187,7 @@
                         </div>
                         <div class="form-group m-form__group">
                             <input class="form-control m-input" type="text" placeholder="Email" name="EMAIL" autocomplete="off">
-                            @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })                           
+                            @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group m-form__group">
                             <input class="form-control m-input" type="password" placeholder="Password" name="PASSWORD">
@@ -94,21 +234,96 @@
                                 <br>@Html.ValidationMessageFor(m => m.AGREE, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                            <div class="m-login__form-action">
-                                <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+                        <div class="m-login__form-action">
+                            <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
 
-                                <a href="@Url.Action("login","account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
-                                @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
-                                    Cancel</button>*@
-                            </div>
+                            <a href="@Url.Action("login","account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
+                            @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
+                                Cancel</button>*@
+                        </div>
+                        
+                        <div class="m-login__form-action">
+                            <h3>หรือสมัครใช้งาน CoachMe ด้วย Facebook</h3>
+                            <div class="fb-login-button" data-width="800" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
+                        </div>
                     }
+
                 </div>
+
                 <!--End SignUp -->
 
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-info btn-md" id="modalRegister" data-toggle="modal" data-target="#m_modal_3" data-backdrop="static" style="display:none"></button>
+    <div class='modal fade' id='m_modal_3' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' style='display: none;' aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLongTitle'>สมัครสมาชิกด้วย facebook</h5>
+                </div>
+                <div class='modal-body'>
+                    <div class="m-login__form m-form" method="post" novalidate="novalidate">
+                        <div class="form-group m-form__group">
+                            <input id="ID_MODAL" hidden>
+                            <p>ชื่อ</p>
+                            <input class="form-control m-input" type="text" placeholder="Fullname" id="FULLNAME_MODAL">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <p>อีเมลล์</p>
+                            <input class="form-control m-input" type="text" placeholder="Email" id="EMAIL_MODAL" autocomplete="off" readonly>
 
+                        </div>
+                        <div class="row form-group m-form__group m-login__form-sub">
+
+                            <div class="col m--align-left">
+                                <label class="m-radio">
+                                    <input checked="checked" data-val="true" data-val-required="The GENDER field is required." id="SEX_MODAL" name="GENDER_MODAL" type="radio" value="1">ชาย
+                                    <span></span>
+                                </label>
+                                <label class="m-radio" style="margin-left:20px">
+                                    <input id="SEX_MODAL" name="GENDER_MODAL" type="radio" value="2">หญิง
+                                    <span></span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="row form-group m-form__group m-login__form-sub">
+
+                            <div class="col m--align-left">
+                                <label class="m-radio">
+                                    <input type="radio" id="ROLE_MODAL" name="ROLE_MODAL" value="1" checked> ครู
+                                    <span></span>
+                                </label>
+                                <label class="m-radio" style="margin-left:20px">
+                                    <input type="radio" id="ROLE_MODAL" name="ROLE_MODAL" value="2"> นักเรียน
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row form-group m-form__group m-login__form-sub">
+                            <div class="col m--align-left">
+                                <label class="m-checkbox m-checkbox--focus">
+                                    <input type="checkbox" name="Agree" value="true" checked> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
+
+                                    <span></span>
+                                </label>
+                                <span class="m-form__help"></span>
+
+                            </div>
+                        </div>
+                        <div class="m-login__form-action">
+                            <button onclick="FacebookRegisterConfirm()" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">สมัครสมาชิก</button>&nbsp;&nbsp;
+                            <button type='button' class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss='modal' onclick="facebookLogout()" aria-label='Close'>
+                                <span aria-hidden='true'>ปิด</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

@@ -31,8 +31,22 @@
                                 <div class="m-card-profile__pic">
                                     <div class="m-card-profile__pic-wrapper">
                                         <img src="..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? @"/Content/images/Blank-Profile.jpg" )"
-                                             alt="" style="height:130px;width:130px" onclick="window.open('/@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? @"/Content/images/Blank-Profile.jpg" )')" />
+                                             id="profilePic"
+                                             alt="" style="height:130px;width:130px;cursor: pointer;"
+                                             onmouseover="bigImg()" onmouseout="normalImg()"
+                                             onclick="window.open('https://www.coachme.asia///@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL_FULL ?? @"/Content/images/Blank-Profile.jpg" )')" />
                                     </div>
+                                    <script>
+                                        function bigImg() {
+                                            var pic = "..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? @"/Content/images/Blank-Profile.jpg" )";
+                                            $("#profilePic").fadeIn(1000);
+                                        }
+
+                                        function normalImg() {
+                                            var pic = "..//@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL ?? @"/Content/images/Blank-Profile.jpg" )";
+                                            $("#profilePic").attr("src", pic);
+                                        }
+                                    </script>
                                     @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                 </div>
                                 <input type="file" name="profileImage" id="imgupload" accept="image/*" style="display:none" />
@@ -407,7 +421,7 @@
 
         <script type="text/javascript">
 
-            
+
 
             function UploadAboutImg_1(input) {
 
@@ -422,16 +436,16 @@
             }
 
             $("#btnAboutImg_1").change(function () {
-                
+
                 UploadAboutImg_1(this);
             });
             $('#ChangeAbout_1').click(function () {
-                
+
                 $('#btnAboutImg_1').trigger('click');
             });
 
             function UploadAboutImg_2(input) {
-                
+
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
 

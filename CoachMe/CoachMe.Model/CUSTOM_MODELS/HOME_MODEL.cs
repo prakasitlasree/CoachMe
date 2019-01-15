@@ -30,7 +30,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int COURSE_ID { get; set; }
         #endregion
 
-        
+
         public MEMBER MEMBER { get; set; }
         public List<LIST_MEMBERS> LIST_MEMBERS { get; set; }
     }
@@ -64,6 +64,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string LOCATION { get; set; }
         public string CATEGORY { get; set; }
         public string PROFILE_IMG_URL { get; set; }
+        public string PROFILE_IMG_URL_FULL { get; set; }
         public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string UPDATED_BY { get; set; }
@@ -97,7 +98,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
     public class DATA_MEMBER_CATEGORY
     {
         public int AUTO_ID { get; set; }
-        public int CATEGORY_ID { get; set;}
+        public int CATEGORY_ID { get; set; }
         public string NAME { get; set; }
     }
 
