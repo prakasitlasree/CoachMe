@@ -775,7 +775,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                     "
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL == null) {
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<img src= '" + pic + "' class='img-thumbnail' onclick = window.open('/content/images/blank-profile.jpg') style='height:130px;width:130px' ></div>"
+                    html += "<img src= '" + pic + "' class='img-thumbnail' onclick = window.open('/content/images/blank-profile.jpg') style='height:130px;width:130px' >"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].PROFILE_IMG_URL;
