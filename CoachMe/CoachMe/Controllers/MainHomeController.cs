@@ -3,7 +3,11 @@ using COACHME.MODEL;
 using COACHME.MODEL.CUSTOM_MODELS;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -60,10 +64,10 @@ namespace COACHME.WEB_PRESENT.Controllers
             return View(dto);
         }
 
-        public async Task<JsonResult> FacebookRegisterConfirm(MEMBER member)
-        {
+        public async Task<JsonResult> FacebookRegisterConfirm(MEMBER member, string IMAGE_URL)
+        {           
             var resp = new RESPONSE__MODEL();
-            resp = await service.FacebookRegisterConfirm(member);
+            resp = await service.FacebookRegisterConfirm(member,IMAGE_URL);
             return Json(resp, JsonRequestBehavior.AllowGet);
         }
     }

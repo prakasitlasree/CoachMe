@@ -4,7 +4,11 @@ using COACHME.MODEL.CUSTOM_MODELS;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -618,11 +622,11 @@ namespace COACHME.DATASERVICE
                 {
                     var checkMember = ctx.MEMBER_LOGON
                                          .Include(o => o.MEMBERS)
-                                         .Where(o => o.USER_NAME == dto.ID).FirstOrDefault() ;
-                    if(checkMember != null)
-                    {                    
+                                         .Where(o => o.USER_NAME == dto.ID).FirstOrDefault();
+                    if (checkMember != null)
+                    {
                         resp.STATUS = true;
-                        resp.OUTPUT_DATA =  checkMember.MEMBERS;
+                        resp.OUTPUT_DATA = checkMember.MEMBERS;
                     }
                     else
                     {
@@ -639,17 +643,22 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
-        public async Task<RESPONSE__MODEL> FacebookRegisterConfirm(MEMBER dto)
+        public async Task<RESPONSE__MODEL> FacebookRegisterConfirm(MEMBER dto, string IMAGE_URL)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
+
             try
             {
+
+
                 var member = new MEMBERS();
                 using (var ctx = new COACH_MEEntities())
                 {
                     #region ==== SET DETAIL ====
                     //1.Master 
                     member.FULLNAME = dto.FULLNAME;
+                    member.FIRST_NAME = dto.FIRST_NAME;
+                    member.LAST_NAME = dto.LAST_NAME;
                     member.CREATED_DATE = DateTime.Now;
                     member.CREATED_BY = dto.FULLNAME;
                     member.UPDATED_DATE = DateTime.Now;
@@ -687,6 +696,51 @@ namespace COACHME.DATASERVICE
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
                     #endregion
+
+                    #region ==== DEPLOY PATH ====
+                    string myDir = @"C://WebApplication//coachme.asia//Content//images//Profile//";
+                    string fullDir = @"C://WebApplication//coachme.asia//Content//images//ProfileFull//";
+                    #endregion
+
+                    string path = "";
+                    string fullPath = "";
+
+                    myDir += memberLogon.USER_NAME;
+                    System.IO.Directory.CreateDirectory(myDir);
+                    fullDir += memberLogon.USER_NAME;
+                    System.IO.Directory.CreateDirectory(fullDir);
+
+                    using (WebClient webClient = new WebClient())
+                    {
+                        byte[] data = webClient.DownloadData(IMAGE_URL);
+
+                        using (MemoryStream mem = new MemoryStream(data))
+                        {
+                            using (var yourImage = Image.FromStream(mem))
+                            {
+                                var name = "ProfileImage.jpeg";
+                                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "-profile-image" + name;
+                                //yourImage.Save("C:\\Users\\Rock\\Desktop\\path_to_your_file.jpg", ImageFormat.Jpeg);
+                                path = Path.Combine(myDir, fileName);
+                                yourImage.Save(path, ImageFormat.Jpeg);
+
+                                fullPath = Path.Combine(fullDir, fileName);
+                                yourImage.Save(fullPath, ImageFormat.Jpeg);
+
+                                Bitmap bimage = new Bitmap(path);
+                                resizeImage(bimage, path);
+                            }
+                        }
+
+                    }
+
+                    var memberProfile = await ctx.MEMBERS.Where(x => x.AUTO_ID == member.AUTO_ID).FirstOrDefaultAsync();
+                    int index = path.IndexOf("Content");
+                    member.PROFILE_IMG_URL = @"//" + path.Substring(index);
+                    member.PROFILE_IMG_URL_FULL = @"//" + fullPath.Substring(index);
+
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
                 }
             }
             catch (Exception ex)
@@ -696,7 +750,46 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        private void resizeImage(Image imgToResize, string path)
+        {
+            try
+            {
 
 
+                foreach (var prop in imgToResize.PropertyItems)
+                {
+                    if ((prop.Id == 0x0112 || prop.Id == 5029 || prop.Id == 274))
+                    {
+                        var value = (int)prop.Value[0];
+                        if (value == 6)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                        }
+                        else if (value == 8)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                        }
+                        else if (value == 3)
+                        {
+                            imgToResize.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        }
+                    }
+                }
+
+                var imageResized = new Bitmap(imgToResize, 800, 500);
+
+                imgToResize.Dispose();
+                imgToResize = null;
+                imageResized.Save(path, ImageFormat.Jpeg);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
+
+    }
 }

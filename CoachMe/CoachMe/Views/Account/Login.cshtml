@@ -4,15 +4,40 @@
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="~/Content/css/bootstrap-social.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Mitr" rel="stylesheet">
+    <script src="~/Scripts/loadingoverlay.min.js"></script>
+    <style>
+        body, .btn, .btn.m-btn--custom {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        * {
+            font-family: 'Kanit', sans-serif;
+        }
+    </style>
+
 </head>
 <div class="m-grid m-grid--hor m-grid--root m-page">
 
     <script>
 
+       
+
+        var logout = false;
         var bFbStatus = false;
+
         var fbID = "";
         var fbName = "";
         var fbEmail = "";
+        var accessToken = "";
+        var imagelink = "";
+        var first_name = "";
+        var last_name = "";
+        var full_name = "";
+
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '2305099133080843',
@@ -22,27 +47,19 @@
                 cookie: true
             });
 
+
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
                     fbID = response.authResponse.userID;
-                    var accessToken = response.authResponse.accessToken;
-                    getCurrentUserInfo(fbID)
-                } else if (response.status === 'not_authorized') {
+                    accessToken = response.authResponse.accessToken;
+                }
+                else if (response.status === 'not_authorized') {
 
                 } else {
-
-                    //alert("No");
 
                 }
             });
 
-            FB.Event.subscribe('auth.login', function (response) {
-                window.location.reload();
-                FB.getLoginStatus()
-            });
-            FB.Event.subscribe('auth.logout', function (response) {
-                window.location.reload();
-            });
         };
 
         (function (d, s, id) {
@@ -53,14 +70,32 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
+        function fbLoginUser() {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    console.log('Welcome!  Fetching your information.... ');
+                    fbID = response.authResponse.userID;
+                    accessToken = response.authResponse.accessToken;
+                    getCurrentUserInfo();
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            });
 
-        function getCurrentUserInfo(x) {
-            FB.api('/me?fields=name,email', function (userInfo) {
+        }
+
+        function getCurrentUserInfo() {
+
+            FB.api('/me?fields=name,email,first_name,last_name', 'get', { access_token: accessToken }, function (userInfo) {
                 fbName = userInfo.name;
                 fbEmail = userInfo.email;
-                console.log(fbID);
-                console.log(fbName);
-                console.log(fbEmail);
+                first_name = userInfo.first_name;
+                last_name = userInfo.last_name;
+                full_name = userInfo.name;
+
+                FB.api('/me/picture?redirect=false', 'get', { access_token: accessToken, width: 1200, height: 1200 }, function (response) {
+                    imagelink = response.data.url;
+                });
 
                 $.ajax({
                     type: "GET",
@@ -69,77 +104,93 @@
                     data: { ID: fbID, EMAIL: userInfo.email, NAME: userInfo.name },
                     dataType: "json",
                     success: function (response) {
-
                         if (response.STATUS == true) {
                             window.location.href = "/";
                         }
                         else {
 
-                            document.getElementById("FULLNAME").value = userInfo.name
-                            debugger;
-                            document.getElementById("ID").value = x
-                            document.getElementById("EMAIL").value = userInfo.email
+                            var image = imagelink
                             $("#modalRegister").click();
                         }
-
                     }
 
                 });
-
             })
-
-
-
-
         }
 
-
-        function facebookLogout() {
-
+        
+        function FacebookRegisterConfirm() {
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
-                    FB.logout(function (response) {
+                    fbID = response.authResponse.userID;
+                    accessToken = response.authResponse.accessToken;
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("FacebookRegisterConfirm", "mainhome")',
+                        contentType: "application/json; charset=utf-8",
+                        data:
+                        {
+                            FULLNAME: full_name,
+                            USER_NAME: fbID,
+                            FIRST_NAME: first_name,
+                            LAST_NAME: last_name,
+                            ROLE_ID: $("#ROLE:checked").val(),
+                            GENDER: $("#SEX:checked").val(),
+                            IMAGE_URL: imagelink
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            debugger;
+                            if (response.STATUS == true) {
 
-                        $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("logoff", "mainhome")',
-                            contentType: "application/json; charset=utf-8",
-                            data: {},
-                            dataType: "json",
-                            success: function (response) {
-                                location.reload();
+                                $.ajax({
+                                    type: "GET",
+                                    url: '@Url.Action("FacebookLogin", "MainHome")',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: { ID: fbID, EMAIL: fbEmail, NAME: full_name },
+                                    dataType: "json",
+                                    success: function (response) {
+                                        if (response.STATUS == true) {
+                                            window.location.href = "/";
+                                        }
+                                       
+                                    }
 
+                                });
                             }
-                        });
-
+                        }
                     });
                 }
             });
         }
 
-        function FacebookRegisterConfirm() {
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("FacebookRegisterConfirm", "mainhome")',
-                contentType: "application/json; charset=utf-8",
-                data:
-                {
-                    FULLNAME: document.getElementById("FULLNAME").value,
-                    USER_NAME: document.getElementById("ID").value,
-                    ROLE_ID: $("#ROLE:checked").val(),
-                    GENDER: $("#SEX:checked").val(),
-
-                },
-                dataType: "json",
-                success: function (response) {
-                    debugger;
-                    if (response.STATUS == true) {
-                        location.reload();
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: true });
+            $.getScript('https://connect.facebook.net/en_US/sdk.js', function () {
+                FB.init({
+                    appId: '2305099133080843',
+                    autoLogAppEvents: true,
+                    xfbml: true,
+                    version: 'v3.2',
+                    cookie: true
+                });
+                FB.getLoginStatus(function (response) {
+                    if (response.status === 'connected') {
+                        fbID = response.authResponse.userID;
+                        accessToken = response.authResponse.accessToken;
                     }
+                    else if (response.status === 'not_authorized') {
 
+                    } else {
 
-                }
+                    }
+                });
+            });
+        });
 
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+               
             });
         }
 
@@ -148,6 +199,7 @@
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../Content/images/bg-3.jpg);">
         <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
             <div class="m-login__container">
+
                 @*<div class="m-login__logo">
                         <a href="#">
                             <img src="~/Content/images/login/login_logo.png">
@@ -198,14 +250,18 @@
                         </div>
 
                         <div class="m-login__form-action">
-                            <button type="submit" value="Login" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">Sign In</button>
+
+                            <button type="submit" value="Login" name="buttonType" class="btn m-btn--pill    btn-primary btn-block">เข้าสู่ระบบ</button>
+                            <br>
+                            <div class="m-divider">
+                                <span></span>
+                                <span>OR</span>
+                                <span></span>
+                            </div>
+                            <br>
+                            <button type="button" class="btn m-btn--pill btn-primary btn-block" style="background-color:#3b5998;" onclick="fbLoginUser()" onload="checkLoginState()"><i class="fa fa-facebook-square"></i>&nbsp เข้าสู่ระบบด้วยเฟสบุ๊ค</button>
+                            
                         </div>
-
-                        <div class="m-login__form-action">
-                            <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
-                        </div>
-
-
                     }
                     @*</form>*@
                 </div>
@@ -237,16 +293,6 @@
                 </div>
                 <div class='modal-body'>
                     <div class="m-login__form m-form" method="post" novalidate="novalidate">
-                        <div class="form-group m-form__group">
-                            <input id="ID" hidden>
-                            <p>ชื่อ</p>
-                            <input class="form-control m-input" type="text" placeholder="Fullname" id="FULLNAME">
-                        </div>
-
-                        <input class="form-control m-input" type="text" placeholder="Email" id="EMAIL" autocomplete="off" style="display:none">
-
-
-
 
                         <div class="row form-group m-form__group m-login__form-sub">
 
@@ -288,7 +334,7 @@
                         </div>
                         <div class="m-login__form-action">
                             <button onclick="FacebookRegisterConfirm()" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">สมัครสมาชิก</button>&nbsp;&nbsp;
-                            <button type='button' class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss='modal' onclick="facebookLogout()" aria-label='Close'>
+                            <button type='button' class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn" data-dismiss='modal' aria-label='Close'>
                                 <span aria-hidden='true'>ปิด</span>
                             </button>
                         </div>

@@ -147,23 +147,15 @@
 
         function facebookLogout() {
 
-            FB.getLoginStatus(function (response) {
-                if (response.status === 'connected') {
-                    FB.logout(function (response) {
+             $.ajax({
+                type: "POST",
+                url: '@Url.Action("logoff", "mainhome")',
+                contentType: "application/json; charset=utf-8",
+                data: {},
+                dataType: "json",
+                success: function (response) {
+                    location.reload();
 
-                        $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("logoff", "mainhome")',
-                            contentType: "application/json; charset=utf-8",
-                            data: {},
-                            dataType: "json",
-                            success: function (response) {
-                                location.reload();
-
-                            }
-                        });
-
-                    });
                 }
             });
         }

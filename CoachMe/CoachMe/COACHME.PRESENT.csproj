@@ -225,6 +225,7 @@
     <Content Include="Content\asset\vendors.bundle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap-social.css" />
     <Content Include="Content\css\teacher\fonts\flaticon\Flaticon.svg" />
     <Content Include="Content\css\teacher\fonts\fontawesome5\fa-brands-400.svg" />
     <Content Include="Content\css\teacher\fonts\fontawesome5\fa-regular-400.svg" />

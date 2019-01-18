@@ -91,6 +91,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string PROFILE_IMG_URL { get; set; }
         public string FULLNAME { get; set; }
         public string USER_NAME { get; set; }
+        public string FIRST_NAME { get; set; }
+        public string LAST_NAME { get; set; }
         public int ROLE_ID { get; set; }
         public string GENDER { get; set; }
 
