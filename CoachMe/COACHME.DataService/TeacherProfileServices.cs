@@ -176,7 +176,7 @@ namespace COACHME.DATASERVICE
                         path = Path.Combine(myDir, fileName);
                         profileImage.SaveAs(path);
 
-                        fullPath = Path.Combine(fullDir, fileName);
+                        fullPath = Path.Combine(fullDir, fileName).Replace("\\","//");
                         profileImage.SaveAs(fullPath);
 
                         Bitmap bimage = new Bitmap(path);

@@ -399,6 +399,7 @@ namespace COACHME.DATASERVICE
                                           ROLE = b.ROLE_ID.ToString(),
                                           AUTO_ID = a.AUTO_ID,
                                           PROFILE_IMG_URL = a.PROFILE_IMG_URL,
+                                          PROFILE_IMG_URL_FULL = a.PROFILE_IMG_URL_FULL,
                                           MEMBER_ROLE_ID = b.AUTO_ID,
                                           FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
                                           SEX = a.SEX == "1" ? "ชาย" : "หญิง",
@@ -526,6 +527,7 @@ namespace COACHME.DATASERVICE
                                              ROLE = b.ROLE_ID.ToString(),
                                              AUTO_ID = a.AUTO_ID,
                                              PROFILE_IMG_URL = a.PROFILE_IMG_URL,
+                                             PROFILE_IMG_URL_FULL = a.PROFILE_IMG_URL_FULL,
                                              MEMBER_ROLE_ID = b.AUTO_ID,
                                              FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
                                              SEX = a.SEX == "1" ? "ชาย" : "หญิง",
@@ -724,7 +726,7 @@ namespace COACHME.DATASERVICE
                                 path = Path.Combine(myDir, fileName);
                                 yourImage.Save(path, ImageFormat.Jpeg);
 
-                                fullPath = Path.Combine(fullDir, fileName);
+                                fullPath = Path.Combine(fullDir, fileName).Replace("\\","//");
                                 yourImage.Save(fullPath, ImageFormat.Jpeg);
 
                                 Bitmap bimage = new Bitmap(path);
