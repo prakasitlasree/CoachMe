@@ -34,9 +34,9 @@
         var imagelink = "";
         var first_name = "";
         var last_name = "";
-        var full_name = "";  
+        var full_name = "";
 
-        window.fbAsyncInit = function () {  
+        window.fbAsyncInit = function () {
             FB.init({
                 appId: '2305099133080843',
                 autoLogAppEvents: true,
@@ -78,7 +78,7 @@
                 } else {
                     console.log('User cancelled login or did not fully authorize.');
                 }
-            });
+            }, { scope: 'email' });
 
         }
 
@@ -127,6 +127,7 @@
                         contentType: "application/json; charset=utf-8",
                         data:
                         {
+                            EMAIL: fbEmail,
                             FULLNAME: full_name,
                             USER_NAME: fbID,
                             FIRST_NAME: first_name,
@@ -139,7 +140,7 @@
                         success: function (response) {
                             debugger;
                             if (response.STATUS == true) {
-                               
+
                                 $.ajax({
                                     type: "GET",
                                     url: '@Url.Action("FacebookLogin", "MainHome")',
@@ -261,7 +262,7 @@
 
                         <div class="m-login__form-action">
                             <h5>หรือสมัครใช้งาน CoachMe ด้วย Facebook</h5>
-                            <button type="button" class="btn m-btn--pill btn-primary btn-block" style="background-color:#3b5998;" onclick="fbLoginUser()"><i class="fa fa-facebook-square"></i>&nbsp สมัครใช้งานด้วยเฟสบุ๊ค</button>                      
+                            <button type="button" class="btn m-btn--pill btn-primary btn-block" style="background-color:#3b5998;" onclick="fbLoginUser()"><i class="fa fa-facebook-square"></i>&nbsp สมัครใช้งานด้วยเฟสบุ๊ค</button>
                         </div>
                     }
 

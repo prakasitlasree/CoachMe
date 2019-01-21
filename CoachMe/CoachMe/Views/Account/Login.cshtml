@@ -80,7 +80,7 @@
                 } else {
                     console.log('User cancelled login or did not fully authorize.');
                 }
-            });
+            }, { scope: 'email' });
 
         }
 
@@ -101,7 +101,7 @@
                     type: "GET",
                     url: '@Url.Action("FacebookLogin", "MainHome")',
                     contentType: "application/json; charset=utf-8",
-                    data: { ID: fbID, EMAIL: userInfo.email, NAME: userInfo.name },
+                    data: { ID: fbID, EMAIL: fbEmail, NAME: fbName },
                     dataType: "json",
                     success: function (response) {
                         if (response.STATUS == true) {
@@ -130,6 +130,7 @@
                         contentType: "application/json; charset=utf-8",
                         data:
                         {
+                            EMAIL:fbEmail,
                             FULLNAME: full_name,
                             USER_NAME: fbID,
                             FIRST_NAME: first_name,

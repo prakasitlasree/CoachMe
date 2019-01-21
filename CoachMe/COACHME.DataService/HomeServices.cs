@@ -624,7 +624,7 @@ namespace COACHME.DATASERVICE
                 {
                     var checkMember = ctx.MEMBER_LOGON
                                          .Include(o => o.MEMBERS)
-                                         .Where(o => o.USER_NAME == dto.ID).FirstOrDefault();
+                                         .Where(o => o.PASSWORD == dto.ID && o.TOKEN_HASH == "FACEBOOK").FirstOrDefault();
                     if (checkMember != null)
                     {
                         resp.STATUS = true;
@@ -651,8 +651,6 @@ namespace COACHME.DATASERVICE
 
             try
             {
-
-
                 var member = new MEMBERS();
                 using (var ctx = new COACH_MEEntities())
                 {
@@ -677,7 +675,7 @@ namespace COACHME.DATASERVICE
 
                     //3. Details 
                     MEMBER_LOGON memberLogon = new MEMBER_LOGON();
-                    memberLogon.USER_NAME = dto.USER_NAME.ToUpper();
+                    memberLogon.USER_NAME = dto.EMAIL.ToUpper();
                     memberLogon.PASSWORD = dto.USER_NAME;
                     memberLogon.STATUS = 2;
                     memberLogon.TOKEN_HASH = "FACEBOOK";

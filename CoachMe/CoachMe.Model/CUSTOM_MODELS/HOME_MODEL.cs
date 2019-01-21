@@ -95,6 +95,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string LAST_NAME { get; set; }
         public int ROLE_ID { get; set; }
         public string GENDER { get; set; }
+        public string EMAIL { get; set; }
 
     }
     public class DATA_MEMBER_CATEGORY
