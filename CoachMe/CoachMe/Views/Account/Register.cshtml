@@ -215,19 +215,7 @@
                             <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="CONFIRM_PASSWORD">
                             @Html.ValidationMessageFor(m => m.CONFIRM_PASSWORD, "", new { @class = "text-danger" })
                         </div>
-                        <div class="row form-group m-form__group m-login__form-sub">
-                            <div class="col m--align-left">
-                                <label class="m-radio">
-                                    @Html.RadioButtonFor(m => m.GENDER, "1", new { @id = "SEX", Checked = "checked" })Male
-                                    <span></span>
-                                </label>
-                                <label class="m-radio" style="margin-left:20px">
-                                    @Html.RadioButtonFor(m => m.GENDER, "2", new { @id = "SEX" })Female
-                                    <span></span>
-                                </label>
-                                @*@Html.ValidationMessageFor(m => m.ROLE, "", new { @class = "text-danger" })*@
-                            </div>
-                        </div>
+
                         <div class="row form-group m-form__group m-login__form-sub">
                             <div class="col m--align-left">
                                 <label class="m-radio">
