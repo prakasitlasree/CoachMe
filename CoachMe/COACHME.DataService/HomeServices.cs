@@ -622,13 +622,31 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var checkMember = ctx.MEMBER_LOGON
+                    var checkMember = await ctx.MEMBER_LOGON
                                          .Include(o => o.MEMBERS)
-                                         .Where(o => o.PASSWORD == dto.ID && o.TOKEN_HASH == "FACEBOOK").FirstOrDefault();
+                                         .Where(o => o.PASSWORD == dto.ID && o.TOKEN_HASH == "FACEBOOK").FirstOrDefaultAsync();
+
                     if (checkMember != null)
                     {
+                       var memberObj = ctx.MEMBERS
+                                       .Include("MEMBER_ROLE")
+                                       .Include("MEMBER_PACKAGE")
+                                       .Where(x => x.AUTO_ID == checkMember.MEMBER_ID).FirstOrDefault();
+
+                        #region Activity
+                        var activity = new LOGON_ACTIVITY();
+                        activity.DATE = DateTime.Now;
+                        activity.ACTION = "LOGON";
+                        activity.FULLNAME = checkMember.MEMBERS.FULLNAME;
+                        activity.USER_NAME = checkMember.USER_NAME;
+                        activity.PASSWORD = checkMember.PASSWORD;
+                        activity.STATUS = true;
+                        ctx.LOGON_ACTIVITY.Add(activity);
+                        var act_result = await ctx.SaveChangesAsync();
+                        #endregion
+
                         resp.STATUS = true;
-                        resp.OUTPUT_DATA = checkMember.MEMBERS;
+                        resp.OUTPUT_DATA = memberObj;
                     }
                     else
                     {
@@ -657,6 +675,7 @@ namespace COACHME.DATASERVICE
                     #region ==== SET DETAIL ====
                     //1.Master 
                     member.FULLNAME = dto.FULLNAME;
+                    member.NICKNAME = dto.FULLNAME;
                     member.FIRST_NAME = dto.FIRST_NAME;
                     member.LAST_NAME = dto.LAST_NAME;
                     member.CREATED_DATE = DateTime.Now;
