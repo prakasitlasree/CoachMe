@@ -317,7 +317,6 @@
     <Content Include="Content\css\teacher\fonts\summernote\summernote.woff" />
     <None Include="Properties\PublishProfiles\VPS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\Custom.css" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
