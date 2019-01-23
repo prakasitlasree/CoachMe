@@ -221,11 +221,11 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         if (TempData["RegisterVerify"] != null)
                         {
-                            <p class="text-warning">@TempData["RegisterVerify"].ToString()</p>
+                            <h5 class="text-warning text-center">@TempData["RegisterVerify"].ToString()</h5>
                         }
                         if (!string.IsNullOrEmpty(ViewBag.ActiveFail))
                         {
-                            <p class="text-danger">@ViewBag.ActiveFail<a href="@Url.Action("SendMailConfirm", "account",new {EMAIL = Model.USER_NAME})" class="m-link">&nbsp; send mail.</a></p>
+                            <h5 class="text-danger text-center">@ViewBag.ActiveFail<a href="@Url.Action("SendMailConfirm", "account",new {EMAIL = Model.USER_NAME})" class="m-link">&nbsp; send mail.</a></h5>
                         }
                         <p class="text-success">@ViewBag.StatusMessage</p>
                         <div class="form-group m-form__group">

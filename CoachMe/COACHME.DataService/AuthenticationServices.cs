@@ -80,12 +80,14 @@ namespace COACHME.DATASERVICE
                     var member = new MEMBERS();
                     var checkMember = await ctx.MEMBER_LOGON
                                                 .Include("MEMBERS")
-                                                .Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper()).FirstOrDefaultAsync();
+                                                .Where(x => x.USER_NAME.ToUpper() == dto.EMAIL.ToUpper() && x.PASSWORD == dto.PASSWORD).FirstOrDefaultAsync();
                     if (checkMember == null)
                     {
                         #region ==== SET DETAIL ====
                         //1.Master 
-                        member.FULLNAME = dto.FULLNAME;
+                        member.FULLNAME = "ไม่ระบุ ไม่ระบุ";
+                        member.FIRST_NAME = "ไม่ระบุ";
+                        member.LAST_NAME = "ไม่ระบุ";
                         member.CREATED_DATE = DateTime.Now;
                         member.CREATED_BY = dto.FULLNAME;
                         member.UPDATED_DATE = DateTime.Now;

@@ -176,7 +176,7 @@ namespace COACHME.DATASERVICE
                         path = Path.Combine(myDir, fileName);
                         profileImage.SaveAs(path);
 
-                        fullPath = Path.Combine(fullDir, fileName).Replace("\\","//");
+                        fullPath = Path.Combine(fullDir, fileName).Replace("\\", "//");
                         profileImage.SaveAs(fullPath);
 
                         Bitmap bimage = new Bitmap(path);
@@ -943,7 +943,7 @@ namespace COACHME.DATASERVICE
                     }
                 }
 
-             
+
                 imgToResize.Dispose();
                 imgToResize = null;
                 imgToResize.Save(path, ImageFormat.Jpeg);
@@ -1018,30 +1018,144 @@ namespace COACHME.DATASERVICE
                                                 .Include(o => o.MEMBER_ROLE)
                                                 .Where(o => o.AUTO_ID == dto.AUTO_ID)
                                                 .ToListAsync();
-                    resp.OUTPUT_DATA = (from item in memberProfile
-                                        select new CUSTOM_MEMBERS
-                                        {
-                                            AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
-                                            FULLNAME = memberProfile.FirstOrDefault().FULLNAME ?? "ไม่ระบุ",
-                                            FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME ?? "ไม่ระบุ",
-                                            LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME ?? "ไม่ระบุ",
-                                            MOBILE = memberProfile.FirstOrDefault().MOBILE ?? "ไม่ระบุ",
-                                            NICKNAME = memberProfile.FirstOrDefault().NICKNAME ?? "ไม่ระบุ",
-                                            DATE_OF_BIRTH_TEXT = (memberProfile.FirstOrDefault().DATE_OF_BIRTH.HasValue) ? memberProfile.FirstOrDefault().DATE_OF_BIRTH.Value.ToShortDateString() : "ไม่ระบุ",
-                                            SEX = memberProfile.FirstOrDefault().SEX ?? "ไม่ระบุ",
-                                            ABOUT = memberProfile.FirstOrDefault().ABOUT ?? "ไม่ระบุ",
-                                            AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID ?? 0,
-                                            TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE ?? 0,
-                                            STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL ?? 0,
-                                            LOCATION = memberProfile.FirstOrDefault().LOCATION ?? "ไม่ระบุ",
-                                            FACEBOOK_URL = memberProfile.FirstOrDefault().FACEBOOK_URL,
-                                            LINE_ID = memberProfile.FirstOrDefault().LINE_ID,
-                                            ROLE = memberProfile.FirstOrDefault().MEMBER_ROLE.FirstOrDefault().ROLE_ID.ToString(),
-                                            ABOUT_IMG_1 = memberProfile.FirstOrDefault().ABOUT_IMG_URL1,
-                                            ABOUT_IMG_2 = memberProfile.FirstOrDefault().ABOUT_IMG_URL2,
-                                            ABOUT_IMG_3 = memberProfile.FirstOrDefault().ABOUT_IMG_URL3,
-                                            ABOUT_IMG_4 = memberProfile.FirstOrDefault().ABOUT_IMG_URL4,
-                                        });
+
+
+                    var listItem = (from item in memberProfile
+                                    select new CUSTOM_MEMBERS
+                                    {
+                                        AUTO_ID = memberProfile.FirstOrDefault().AUTO_ID,
+                                        FULLNAME = memberProfile.FirstOrDefault().FULLNAME ?? "ไม่ระบุ",
+                                        FIRST_NAME = memberProfile.FirstOrDefault().FIRST_NAME ?? "ไม่ระบุ",
+                                        LAST_NAME = memberProfile.FirstOrDefault().LAST_NAME ?? "ไม่ระบุ",
+                                        MOBILE = memberProfile.FirstOrDefault().MOBILE ?? "ไม่ระบุ",
+                                        NICKNAME = memberProfile.FirstOrDefault().NICKNAME ?? "ไม่ระบุ",
+                                        DATE_OF_BIRTH_TEXT = (memberProfile.FirstOrDefault().DATE_OF_BIRTH.HasValue) ? memberProfile.FirstOrDefault().DATE_OF_BIRTH.Value.ToShortDateString() : "ไม่ระบุ",
+                                        SEX = memberProfile.FirstOrDefault().SEX ?? "ไม่ระบุ",
+                                        ABOUT = memberProfile.FirstOrDefault().ABOUT ?? "ไม่ระบุ",
+                                        AMPHUR_ID = memberProfile.FirstOrDefault().AMPHUR_ID ?? 0,
+                                        TEACHING_TYPE = memberProfile.FirstOrDefault().TEACHING_TYPE ?? 0,
+                                        STUDENT_LEVEL = memberProfile.FirstOrDefault().STUDENT_LEVEL ?? 0,
+                                        LOCATION = memberProfile.FirstOrDefault().LOCATION ?? "ไม่ระบุ",
+                                        FACEBOOK_URL = memberProfile.FirstOrDefault().FACEBOOK_URL,
+                                        LINE_ID = memberProfile.FirstOrDefault().LINE_ID,
+                                        ROLE = memberProfile.FirstOrDefault().MEMBER_ROLE.FirstOrDefault().ROLE_ID.ToString(),
+                                        ABOUT_IMG_1 = memberProfile.FirstOrDefault().ABOUT_IMG_URL1,
+                                        ABOUT_IMG_2 = memberProfile.FirstOrDefault().ABOUT_IMG_URL2,
+                                        ABOUT_IMG_3 = memberProfile.FirstOrDefault().ABOUT_IMG_URL3,
+                                        ABOUT_IMG_4 = memberProfile.FirstOrDefault().ABOUT_IMG_URL4,
+                                        PROFILE_IMG_URL = memberProfile.FirstOrDefault().PROFILE_IMG_URL,
+
+                                    }).ToList();
+
+                    foreach (var item in listItem)
+                    {
+                        if (item.PROFILE_IMG_URL == null)
+                        {
+                            item.STAGE = 1;
+                        }
+                        else if (
+                            (item.FIRST_NAME == null || item.FIRST_NAME == "ไม่ระบุ") ||
+                            (item.LAST_NAME == null || item.LAST_NAME == "ไม่ระบุ") ||
+                            (item.MOBILE == null || item.MOBILE == "ไม่ระบุ") ||
+                            (item.NICKNAME == null || item.NICKNAME == "ไม่ระบุ") ||
+                            (item.DATE_OF_BIRTH_TEXT == null || item.DATE_OF_BIRTH_TEXT == "ไม่ระบุ") ||
+                            (item.SEX == null || item.SEX == "ไม่ระบุ") ||
+                            (item.ABOUT == null || item.ABOUT == "ไม่ระบุ") ||
+                            (item.AMPHUR_ID == null || item.AMPHUR_ID == 0) ||
+                            (item.TEACHING_TYPE == null || item.TEACHING_TYPE == 0) ||
+                            (item.STUDENT_LEVEL == null || item.STUDENT_LEVEL == 0) ||
+                            (item.LOCATION == null || item.LOCATION == "ไม่ระบุ") ||
+                            (item.FACEBOOK_URL == null || item.FACEBOOK_URL == "ไม่ระบุ") ||
+                            (item.LINE_ID == null || item.LINE_ID == "ไม่ระบุ")
+                            )
+                        {
+                            item.MESSAGE = new List<string>();
+                            if (item.FIRST_NAME == null || item.FIRST_NAME == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("ชื่อ");
+                                item.STAGE = 2;
+                            }
+                            if (item.LAST_NAME == null || item.LAST_NAME == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("นามสกุล");
+                                item.STAGE = 2;
+                            }
+                            if (item.MOBILE == null || item.MOBILE == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("เบอร์มือถือ");
+                                item.STAGE = 2;
+                            }
+                            if (item.NICKNAME == null || item.NICKNAME == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("ชื่อเล่น");
+                                item.STAGE = 2;
+                            }
+                            if (item.DATE_OF_BIRTH_TEXT == null || item.DATE_OF_BIRTH_TEXT == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("วันเกิด");
+                                item.STAGE = 2;
+                            }
+                            if (item.SEX == null || item.SEX == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("เพศ");
+                                item.STAGE = 2;
+                            }
+                            if (item.ABOUT == null || item.ABOUT == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("เกี่ยวกับ");
+                                item.STAGE = 2;
+                            }
+                            if (item.AMPHUR_ID == null || item.AMPHUR_ID == 0)
+                            {
+                                item.MESSAGE.Add("ที่อยู่");
+                                item.STAGE = 2;
+                            }
+                            if (item.TEACHING_TYPE == null || item.TEACHING_TYPE == 0)
+                            {
+                                item.MESSAGE.Add("ประเภทการสอน");
+                                item.STAGE = 2;
+                            }
+                            if (item.STUDENT_LEVEL == null || item.STUDENT_LEVEL == 0)
+                            {
+                                item.MESSAGE.Add("ประเถทนักเรียน");
+                                item.STAGE = 2;
+                            }
+                            if (item.LOCATION == null || item.LOCATION == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("สถานที่สอน");
+                                item.STAGE = 2;
+                            }
+                            if (item.FACEBOOK_URL == null || item.FACEBOOK_URL == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("เฟสบุ๊ค");
+                                item.STAGE = 2;
+                            }
+                            if (item.LINE_ID == null || item.LINE_ID == "ไม่ระบุ")
+                            {
+                                item.MESSAGE.Add("ไลน์");
+                                item.STAGE = 2;
+                            }
+                        }
+                        else if (
+                            (item.ABOUT_IMG_1 == null || item.ABOUT_IMG_1 == "ไม่ระบุ") ||
+                            (item.ABOUT_IMG_2 == null || item.ABOUT_IMG_2 == "ไม่ระบุ") ||
+                            (item.ABOUT_IMG_3 == null || item.ABOUT_IMG_3 == "ไม่ระบุ") ||
+                            (item.ABOUT_IMG_4 == null || item.ABOUT_IMG_4 == "ไม่ระบุ")
+                            )
+                        {
+                            item.STAGE = 3;
+                        }
+                        else
+                        {
+                            item.STAGE = 4;
+                        }
+
+
+
+
+                    }
+
+                    resp.OUTPUT_DATA = listItem;
 
                 }
                 resp.STATUS = true;
@@ -1069,9 +1183,9 @@ namespace COACHME.DATASERVICE
 
                     #region =====Profile=====
                     //Update Profile
-                    if (dto.FULLNAME != null)
+                    if (dto.FIRST_NAME != null && dto.LAST_NAME != null)
                     {
-                        member.FULLNAME = dto.FULLNAME;
+                        member.FULLNAME = dto.FIRST_NAME + " " + dto.LAST_NAME;
                     }
                     if (dto.FIRST_NAME != null)
                     {

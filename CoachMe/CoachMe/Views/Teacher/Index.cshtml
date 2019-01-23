@@ -8,15 +8,103 @@
 }
 <section ng-app="TeacherApp" ng-controller="ListCategoryController" ng-init="init()">
 
-    <div class="m-subheader ">
-        <div class="d-flex align-items-center">
-            <div class="mr-auto">
-                <h3 class="m-subheader__title ">My Profile</h3>
+    @*<div class="m-subheader ">
+            <div class="d-flex align-items-center">
+                <div class="mr-auto">
+                    <h3 class="m-subheader__title ">My Profile</h3>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 
     <div class="m-content">
+        <style>
+            .m-wizard.m-wizard--1.m-wizard--success .m-wizard__progress .progress .progress-bar {
+                background-color: #5867dd;
+            }
+
+                .m-wizard.m-wizard--1.m-wizard--success .m-wizard__progress .progress .progress-bar:after {
+                    background-color: #5867dd;
+                }
+
+            .m-wizard.m-wizard--1 .m-wizard__head {
+                margin: 0;
+            }
+
+            .m-wizard.m-wizard--1.m-wizard--success .m-wizard__steps .m-wizard__step.m-wizard__step--done .m-wizard__step-info .m-wizard__step-number > span {
+                background-color: #5867dd;
+            }
+
+            .m-wizard.m-wizard--1.m-wizard--success .m-wizard__steps .m-wizard__step.m-wizard__step--current .m-wizard__step-info .m-wizard__step-number > span {
+                background-color: #b4bcf7;
+            }
+
+            .m-form .m-form__group {
+                margin-bottom: 0;
+                padding-top: 15px;
+                padding-bottom: 0px; 
+            }
+        </style>
+        <div class="m-portlet m-portlet--mobile m-portlet--body-progress-" id="process">
+            <div class="m-portlet__body" id="frmWizard">
+                <div class="m-wizard m-wizard--1 m-wizard--success m-wizard--step-between" id="m_wizard">
+
+                    <div class="m-wizard__head m-portlet__padding-x">
+
+                        <div class="m-wizard__progress">
+                            <div class="progress">
+                                <div class="progress-bar" id="progressbar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: calc(0% + 26px);"></div>
+                            </div>
+                        </div>
+                        <div class="m-wizard__nav">
+                            <div class="m-wizard__steps">
+                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_1" id="STEP_1">
+                                    <div class="m-wizard__step-info">
+                                        <a href="#" class="m-wizard__step-number">
+                                            <span><span>1</span></span>
+                                        </a>
+                                        <div class="m-wizard__step-line">
+                                            <span></span>
+                                        </div>
+                                        <div class="m-wizard__step-label">
+                                            อัพโหลดรูปโปรไฟล์
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_1" id="STEP_2">
+                                    <div class="m-wizard__step-info m-wizard__step--current">
+                                        <a class="m-wizard__step-number">
+                                            <span>
+                                                <span>2</span>
+                                            </span>
+                                        </a>
+                                        <div class="m-wizard__step-line">
+                                            <span></span>
+                                        </div>
+                                        <div class="m-wizard__step-label">
+                                            <button id="ttMessage" type="button" class="btn m-btn--pill btn-danger btn-sm" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="{{MESSAGE}}"><i class="fa fa-exclamation"></i></button>  กรอกข้อมูลประวัติส่วนตัว
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_1" id="STEP_3">
+                                    <div class="m-wizard__step-info">
+                                        <a href="#" class="m-wizard__step-number">
+                                            <span><span>3</span></span>
+                                        </a>
+                                        <div class="m-wizard__step-line">
+                                            <span></span>
+                                        </div>
+                                        <div class="m-wizard__step-label">
+                                            อัพโหลดรูปเกี่ยวกับการสอน
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xl-3 col-lg-4">
@@ -35,7 +123,7 @@
                                              alt="" style="height:130px;width:130px;cursor: pointer;"
                                              onclick="window.open('https://www.coachme.asia///@Url.Content(@Model.MEMBERS.PROFILE_IMG_URL_FULL ?? @"/Content/images/Blank-Profile.jpg" )')" />
                                     </div>
-                                  
+
                                     @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                 </div>
                                 <input type="file" name="profileImage" id="imgupload" accept="image/*" style="display:none" />
@@ -47,7 +135,7 @@
                             <div class="m-card-profile__details">
 
                                 <span class="m-card-profile__name">
-                                    @Url.Content(@Model.MEMBERS.FULLNAME)
+                                    {{FULLNAME}}
                                     <button id="fileDialog" type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="border-radius:20px">
                                         <i class="fa fa-camera"></i>
                                     </button>
@@ -56,15 +144,16 @@
                                 <a href="" class="m-card-profile__email m-link">
                                     @Url.Content(@Model.MEMBERS.MEMBER_LOGON.FirstOrDefault().USER_NAME)
                                 </a>
+                                <br>
+                                <br>
+                                <button type="button" class="btn m-btn--pill btn-block btn-primary" id="btnUpdate" ng-click="GetComponent()">แก้ไขโปรไฟล์</button>
+                                <br>
+                                <button type="button" style="display:none" id="btnUpdateSubmit" ng-click="UpdateMemberProfile()" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn"> บันทึก </button>
+                                <button type="button" style="display:none" id="btnUpdateCancel" ng-click="HideButton()" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">ยกเลิก </button>
+
                             </div>
                         </div>
-                        <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
-                            <li class="m-nav__separator m-nav__separator--fit"></li>
-                            <li class="m-nav__section m--hide">
-                                <span class="m-nav__section-text">Section</span>
-                            </li>
 
-                        </ul>
 
                         @using (Html.BeginForm("editcategory", "teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                         {
@@ -80,17 +169,9 @@
                                         @Html.HiddenFor(m => m.MEMBERS.AUTO_ID)
                                         <div class="m-widget1__item">
                                             <div class="row m-row--no-padding align-items-center">
-                                                <label for="example-text-input" class="col-8 col-form-label m-widget1__title">หมวดหมู่</label>
-                                                <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" id="btnUpdateCategory" ng-click="UpdateProfileCategory()">
-                                                    <i class="fa fa-user-edit"></i>
-                                                </button>
-                                                <br>
+                                                <label for="example-text-input" class="col-8 col-form-label m-widget1__title">หมวดหมู่ <button type="button" class="btn m-btn--pill btn-outline-metal m-btn m-btn--outline-2x btn-sm" id="btnUpdateCategory" ng-click="UpdateProfileCategory()"><i class="fa fa-plus"></i></button></label>
 
-                                                @*@Html.TextAreaFor(Model.MEMBERS.MEMBER_CATEGORY.Select(o=>o.NAME).ToList(), new { @id = "CATEGORY", @class = "form-control m-input m-input--pill", @rows = "4", @disabled = "disabled" })*@
-
-
-                                                @*<select class="form-control m-input  m-input--pill" name="categoryList" ng-model="selectedCategory" ng-change="AddSelectedCategory()" id="DropdownCategory" style="display:none"></select>*@
-                                                <div id="BadgeCategoryArea">
+                                                <div id="BadgeCategoryArea" class="ml-3">
                                                 </div>
 
                                             </div>
@@ -128,9 +209,7 @@
                                         <i class="flaticon-share m--hide"></i>
                                         ข้อมูลส่วนตัว
                                     </a>
-                                    &nbsp&nbsp <button type="button" class="btn btn-outline-metal m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="margin-top:12px;margin-bottom:12px;" id="btnUpdate" ng-click="GetComponent()">
-                                        <i class="fa fa-user-edit"></i>
-                                    </button>
+
                                 </li>
 
                                 @*
@@ -153,7 +232,7 @@
 
 
                                         <div class="form-group m-form__group row">
-                                            <label for="example-text-input" class="col-2 col-form-label">Display Name</label>
+                                            <label for="example-text-input" class="col-2 col-form-label">ชื่อ-นามสกุุล</label>
                                             <div class="col-7">
                                                 <input class="form-control m-input m-input--pill" id="FULLNAME" ng-model="FULLNAME" ng-value="FULLNAME" disabled>
                                             </div>
@@ -311,8 +390,6 @@
                                     <div class="m-portlet__foot">
 
                                         <div class="col-lg-12 m--align-center">
-                                            <button type="button" style="display:none" id="btnUpdateSubmit" ng-click="UpdateMemberProfile()" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn"> Save </button>
-                                            <button type="button" style="display:none" id="btnUpdateCancel" ng-click="HideButton()" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Close </button>
                                             <button type="submit" id="btnUpdateSubmitImg" style="display:none">บันทึก</button>
                                         </div>
                                     </div>
@@ -328,7 +405,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;border-radius:10px" aria-hidden="true">
             <div class="modal-dialog" role="document">

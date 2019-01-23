@@ -14,7 +14,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         [Display(Name = "EMAIL")]
         public string EMAIL { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "FULLNAME")]
         public string FULLNAME { get; set; }
 
@@ -24,7 +24,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         [Display(Name = "PASSWORD")]
         public string PASSWORD { get; set; }
 
-        [Required]
+        //[Required]
         //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         //[DataType(DataType.Password)]
         //[Display(Name = "PASSWORD")]

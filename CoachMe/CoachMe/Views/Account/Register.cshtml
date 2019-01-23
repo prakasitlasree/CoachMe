@@ -187,71 +187,78 @@
 
                         @Html.AntiForgeryToken()
 
-                        <div class="form-group m-form__group">
-                            @if (!string.IsNullOrEmpty(ViewBag.Success))
-                            {
-                                <p>@ViewBag.Success<a href="@Url.Action("login", "account")" class="m-link">&nbsp; login.</a></p>
-                            }
-                            @if (!string.IsNullOrEmpty(ViewBag.Fail))
-                            {
-                                <p class="text-danger">@ViewBag.Fail<a href="@Url.Action("login", "account")" class="m-link">&nbsp; login.</a></p>
-                            }
-                            @if (!string.IsNullOrEmpty(ViewBag.ActiveFail))
-                            {
-                                <p class="text-danger">@ViewBag.ActiveFail<a href="@Url.Action("SendMailConfirm", "account",new {EMAIL = Model.EMAIL})" class="m-link">&nbsp; send mail.</a></p>
-                            }
-                            <input class="form-control m-input" type="text" placeholder="Fullname" name="FULLNAME">
-                            @Html.ValidationMessageFor(m => m.FULLNAME, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input" type="text" placeholder="Email" name="EMAIL" autocomplete="off">
-                            @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input" type="password" placeholder="Password" name="PASSWORD">
-                            @Html.ValidationMessageFor(m => m.PASSWORD, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group m-form__group">
-                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="CONFIRM_PASSWORD">
-                            @Html.ValidationMessageFor(m => m.CONFIRM_PASSWORD, "", new { @class = "text-danger" })
-                        </div>
 
-                        <div class="row form-group m-form__group m-login__form-sub">
-                            <div class="col m--align-left">
-                                <label class="m-radio">
-                                    <input type="radio" name="ROLE" value="1" checked> Teacher
-                                    <span></span>
-                                </label>
-                                <label class="m-radio" style="margin-left:20px">
-                                    <input type="radio" name="ROLE" value="2"> Student
-                                    <span></span>
-                                </label>
-                                @*@Html.ValidationMessageFor(m => m.ROLE, "", new { @class = "text-danger" })*@
+                        if (!string.IsNullOrEmpty(ViewBag.Success))
+                        {
+                            <div class="form-group m-form__group">
+                                <h4>@ViewBag.Success<a href="@Url.Action("login", "account")" class="m-link text-success text-center">&nbsp; login.</a></h4>
                             </div>
-                        </div>
-                        <div class="row form-group m-form__group m-login__form-sub">
-                            <div class="col m--align-left">
-                                <label class="m-checkbox m-checkbox--focus">
-                                    <input type="checkbox" name="Agree" value="true" /> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
-                                    @*@Html.CheckBoxFor(o => o.Agree, htmlAttributes: new { @checked = true }) I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>.*@
-                                    <span></span>
-                                </label>
-                                <span class="m-form__help"></span>
-                                <br>@Html.ValidationMessageFor(m => m.AGREE, "", new { @class = "text-danger" })
+                        }
+                        else if (!string.IsNullOrEmpty(ViewBag.Fail))
+                        {
+                            <div class="form-group m-form__group">
+                                <h4 class="text-warning text-center">@ViewBag.Fail<a href="@Url.Action("login", "account")" class="m-link ">&nbsp; login.</a></h4>
                             </div>
-                        </div>
-                        <div class="m-login__form-action">
-                            <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+                        }
+                        else if (!string.IsNullOrEmpty(ViewBag.ActiveFail))
+                        {
+                            <div class="form-group m-form__group">
+                                <h4 class="text-warning text-center">@ViewBag.ActiveFail<a href="@Url.Action("SendMailConfirm", "account", new { EMAIL = Model.EMAIL })" class="m-link text-warning text-center">&nbsp; send mail.</a></h4>
+                            </div>
+                        }
+                        else
+                        {
 
-                            <a href="@Url.Action("login","account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
-                            @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
-                                Cancel</button>*@
-                        </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input" type="text" placeholder="Email" name="EMAIL" autocomplete="off">
+                                @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input" type="password" placeholder="Password" name="PASSWORD">
+                                @Html.ValidationMessageFor(m => m.PASSWORD, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="CONFIRM_PASSWORD">
+                                @Html.ValidationMessageFor(m => m.CONFIRM_PASSWORD, "", new { @class = "text-danger" })
+                            </div>
 
-                        <div class="m-login__form-action">
-                            <h5>หรือสมัครใช้งาน CoachMe ด้วย Facebook</h5>
-                            <button type="button" class="btn m-btn--pill btn-primary btn-block" style="background-color:#3b5998;" onclick="fbLoginUser()"><i class="fa fa-facebook-square"></i>&nbsp สมัครใช้งานด้วยเฟสบุ๊ค</button>
-                        </div>
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-radio">
+                                        <input type="radio" name="ROLE" value="1" checked> Teacher
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio" style="margin-left:20px">
+                                        <input type="radio" name="ROLE" value="2"> Student
+                                        <span></span>
+                                    </label>
+                                    @*@Html.ValidationMessageFor(m => m.ROLE, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+                            <div class="row form-group m-form__group m-login__form-sub">
+                                <div class="col m--align-left">
+                                    <label class="m-checkbox m-checkbox--focus">
+                                        <input type="checkbox" name="Agree" value="true" /> I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>
+                                        @*@Html.CheckBoxFor(o => o.Agree, htmlAttributes: new { @checked = true }) I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>.*@
+                                        <span></span>
+                                    </label>
+                                    <span class="m-form__help"></span>
+                                    <br>@Html.ValidationMessageFor(m => m.AGREE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="m-login__form-action">
+                                <button type="submit" value="Save" name="buttonType" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">Sign Up</button>&nbsp;&nbsp;
+
+                                <a href="@Url.Action("login", "account")" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">Cancel</a>
+                                @*<button type="button" value="Cancel" name="buttonType" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">
+                                    Cancel</button>*@
+                            </div>
+
+                            <div class="m-login__form-action">
+                                <h5>หรือสมัครใช้งาน CoachMe ด้วย Facebook</h5>
+                                <button type="button" class="btn m-btn--pill btn-primary btn-block" style="background-color:#3b5998;" onclick="fbLoginUser()"><i class="fa fa-facebook-square"></i>&nbsp สมัครใช้งานด้วยเฟสบุ๊ค</button>
+                            </div>
+                        }
                     }
 
                 </div>

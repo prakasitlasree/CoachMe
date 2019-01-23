@@ -21,6 +21,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.amphurID
     $scope.SEX_RADIO
 
+
     $scope.TEACHING_TYPE;
     $scope.STUDENT_LEVEL;
     $scope.FULLNAME;
@@ -42,10 +43,11 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.ABOUT_IMG_4 = "";
     $scope.ABOUT_IMG = new Array(4);
 
+    $scope.MESSAGE
+
     $scope.init = function () {
 
         $.LoadingOverlay("show");
-
 
         $http({
             url: "/teacher/GetTeacherProfile",
@@ -54,7 +56,28 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
             if (response.data.STATUS == true) {
+                debugger
                 $scope.TeacherProfile = response.data.OUTPUT_DATA;
+                if ($scope.TeacherProfile[0].STAGE == 1) {
+                    $('#progressbar').width('0%');
+                    $("#STEP_1").attr('class', 'm-wizard__step m-wizard__step--current');
+                }
+                if ($scope.TeacherProfile[0].STAGE == 2) {
+                    $('#progressbar').width('35%');
+                    $scope.MESSAGE = $scope.TeacherProfile[0].MESSAGE.join(",");
+                    $("#STEP_1").attr('class', 'm-wizard__step m-wizard__step--done');
+                    $("#STEP_2").attr('class', 'm-wizard__step m-wizard__step--current');
+                }
+                if ($scope.TeacherProfile[0].STAGE == 3) {
+                    $('#progressbar').width('68%');
+                    $("#ttMessage").hide()
+                    $("#STEP_1").attr('class', 'm-wizard__step m-wizard__step--done');
+                    $("#STEP_2").attr('class', 'm-wizard__step m-wizard__step--done');
+                    $("#STEP_3").attr('class', 'm-wizard__step m-wizard__step--current');
+                }
+                if ($scope.TeacherProfile[0].STAGE == 4) {
+                    $('#process').hide();
+                }
                 $scope.BindingProfile();
                 $http({
                     url: "/teacher/GetAdress",
@@ -84,15 +107,18 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
                 });
             }
         }).then(function () {
+            debugger;
             $('#modalUpdate').modal('show')
-        });
-        $.LoadingOverlay("hide");
+            $.LoadingOverlay("hide");
+        })
+
+
     };
 
     $scope.EnableControl = function () {
 
 
-        $("#FULLNAME").prop("disabled", false);
+        $("#FULLNAME").prop("disabled", true);
         $("#FIRST_NAME").prop("disabled", false);
         $("#LAST_NAME").prop("disabled", false);
         $("#MOBILE").prop("disabled", false);
@@ -289,7 +315,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
         $("#STUDENT_LEVEL").val($scope.TeacherProfile[0].STUDENT_LEVEL);
         $("#LOCATE").val($scope.TeacherProfile[0].LOCATION);
 
-        $scope.FULLNAME = $scope.TeacherProfile[0].FULLNAME
+        $scope.FULLNAME = $scope.TeacherProfile[0].FIRST_NAME + " " + $scope.TeacherProfile[0].LAST_NAME
         $scope.FIRST_NAME = $scope.TeacherProfile[0].FIRST_NAME
         $scope.LAST_NAME = $scope.TeacherProfile[0].LAST_NAME
         $scope.MOBILE = $scope.TeacherProfile[0].MOBILE
@@ -311,10 +337,13 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
 
             $("#SEX_RADIO_BTN_1").prop("checked", true);
         }
-        else {
+        else if ($scope.TeacherProfile[0].SEX == 2) {
             $scope.SEX = "หญิง"
 
             $("#SEX_RADIO_BTN_2").prop("checked", true);
+        }
+        else {
+            $scope.SEX = "ไม่ระบุ"
         }
 
         $scope.ABOUT = $scope.TeacherProfile[0].ABOUT
@@ -327,7 +356,7 @@ app.controller('ListCategoryController', function ($scope, $http, $compile) {
     $scope.UpdateMemberProfile = function () {
 
 
-
+        debugger;
         $http({
             url: "/teacher/UpdateMemberProfile",
             method: "GET",

@@ -628,10 +628,10 @@ namespace COACHME.DATASERVICE
 
                     if (checkMember != null)
                     {
-                       var memberObj = ctx.MEMBERS
-                                       .Include("MEMBER_ROLE")
-                                       .Include("MEMBER_PACKAGE")
-                                       .Where(x => x.AUTO_ID == checkMember.MEMBER_ID).FirstOrDefault();
+                        var memberObj = ctx.MEMBERS
+                                        .Include("MEMBER_ROLE")
+                                        .Include("MEMBER_PACKAGE")
+                                        .Where(x => x.AUTO_ID == checkMember.MEMBER_ID).FirstOrDefault();
 
                         #region Activity
                         var activity = new LOGON_ACTIVITY();
@@ -674,8 +674,8 @@ namespace COACHME.DATASERVICE
                 {
                     #region ==== SET DETAIL ====
                     //1.Master 
-                    member.FULLNAME = dto.FULLNAME;
-                    member.NICKNAME = dto.FULLNAME;
+                    member.FULLNAME = dto.FIRST_NAME + " " + dto.LAST_NAME;
+                    member.NICKNAME = dto.FIRST_NAME;
                     member.FIRST_NAME = dto.FIRST_NAME;
                     member.LAST_NAME = dto.LAST_NAME;
                     member.CREATED_DATE = DateTime.Now;
@@ -743,7 +743,7 @@ namespace COACHME.DATASERVICE
                                 path = Path.Combine(myDir, fileName);
                                 yourImage.Save(path, ImageFormat.Jpeg);
 
-                                fullPath = Path.Combine(fullDir, fileName).Replace("\\","//");
+                                fullPath = Path.Combine(fullDir, fileName).Replace("\\", "//");
                                 yourImage.Save(fullPath, ImageFormat.Jpeg);
 
                                 Bitmap bimage = new Bitmap(path);

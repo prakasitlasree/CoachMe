@@ -23,7 +23,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string TEACHING_TYPE_NAME { get; set; }
         public int? STUDENT_LEVEL { get; set; }
         public string STUDENT_LEVEL_NAME { get; set; }
-
+        public int STAGE { get; set; }
         public bool VERIFY { get; set; }
         public string SEX { get; set; }
         public Nullable<int> AGE { get; set; }
@@ -54,7 +54,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
 
         public string FACEBOOK_URL { get; set; }
 
-        //public List<int> LIST_MEMBER_CETEGORY { get; set; }
+        public List<string> MESSAGE { get; set; }
+        
         public List<MEMBER_CATEGORY> LIST_MEMBER_CETEGORY { get; set; }
         public List<MEMBER_TEACH_COURSE> LIST_MEMBER_TEACH_COURSE { get; set; }
 
