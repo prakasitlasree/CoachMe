@@ -377,7 +377,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 }
                 else {
 
-                    html += "<button href='#' class='btn m-btn--pill m-btn--air btn-outline-info btn-sm m-btn m-btn--custom' disabled='disabled'>\
+                    html += "<button class='btn m-btn--pill m-btn--air btn-outline-info btn-sm m-btn m-btn--custom' data-toggle='modal' data-target='#MODAL_CANCEL_TEACHER" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + "'>\
                             <span>\
                             <i class='fa fa-star'></i>\
                             <span>สมัครเรียบร้อย</span>\
@@ -411,6 +411,37 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                         </div>\
                         <div class='modal-footer'>\
                         <button class='btn m-btn--pill m-btn--air btn-primary' type='submit' ng-click='SelectTeacher(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")' name='AcceptStudent' value='" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + "'>\
+                        <span>\
+                        <i class='fa fa-check-square'></i>\
+                        <span>&nbsp; ตกลง</span>\
+                        </span>\
+                        </button>\
+                        <button type='button' class='btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom' data-dismiss='modal'>ปิด</button>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        </div>\
+                "
+                ////============================== MODAL ==========================
+                
+                html += "<div class='modal fade' id='MODAL_CANCEL_TEACHER" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + "' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' style='display: none' aria-hidden='true'>\
+                        <div class='modal-dialog modal-lg' role='document'>\
+                        <div class='modal-content'>\
+                        <div class='modal-body'>\
+                        <div class='m-portlet__body'>\
+                        <div class='m-demo__preview m-demo__preview--badge'>\
+                        <h4 class='m--font-bold m--font-bold'>\
+                        <span>\
+                        <i class='fa fa-address-card'></i>\
+                        <input id='TEACHER_ROLE_ID' name='TEACHER_ROLE_ID' type='hidden' value=" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + " autocomplete='off'>\
+                        <span> คุณจะยกเลิกครู " + $scope.LIST_TEACHER.LIST_MEMBERS[i].FULLNAME + " ใช่หรือไม่ ?</span>\
+                        </span>\
+                        </h4>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        <div class='modal-footer'>\
+                        <button class='btn m-btn--pill m-btn--air btn-primary' type='submit' ng-click='CancelTeacher(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")' name='AcceptStudent' value='" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + "'>\
                         <span>\
                         <i class='fa fa-check-square'></i>\
                         <span>&nbsp; ตกลง</span>\
@@ -862,6 +893,27 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
         $("#MODAL_ACCEPT_TEACHER" + TEACHER_AUTO_ID + "").modal('hide');
         $http({
             url: "/home/SelectTeacher",
+            method: "GET",
+            params: { MEMBER_AUTO_ID: $scope.LIST_TEACHER.MEMBER_AUTO_ID, TEACHER_AUTO_ID: TEACHER_AUTO_ID },
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+                $("#m_modal_1").modal('show');
+                $scope.Search()
+            }
+            else {
+                $("#m_modal_2").modal('show');
+                $scope.Search()
+            }
+        });
+    }
+
+    $scope.CancelTeacher = function (TEACHER_AUTO_ID) {
+
+
+        $("#MODAL_CANCEL_TEACHER" + TEACHER_AUTO_ID + "").modal('hide');
+        $http({
+            url: "/home/CancelTeacher",
             method: "GET",
             params: { MEMBER_AUTO_ID: $scope.LIST_TEACHER.MEMBER_AUTO_ID, TEACHER_AUTO_ID: TEACHER_AUTO_ID },
         }).then(function (response) {

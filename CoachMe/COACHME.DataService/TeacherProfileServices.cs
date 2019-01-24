@@ -1137,9 +1137,9 @@ namespace COACHME.DATASERVICE
                             }
                         }
                         else if (
-                            (item.ABOUT_IMG_1 == null || item.ABOUT_IMG_1 == "ไม่ระบุ") ||
-                            (item.ABOUT_IMG_2 == null || item.ABOUT_IMG_2 == "ไม่ระบุ") ||
-                            (item.ABOUT_IMG_3 == null || item.ABOUT_IMG_3 == "ไม่ระบุ") ||
+                            (item.ABOUT_IMG_1 == null || item.ABOUT_IMG_1 == "ไม่ระบุ") &&
+                            (item.ABOUT_IMG_2 == null || item.ABOUT_IMG_2 == "ไม่ระบุ") &&
+                            (item.ABOUT_IMG_3 == null || item.ABOUT_IMG_3 == "ไม่ระบุ") &&
                             (item.ABOUT_IMG_4 == null || item.ABOUT_IMG_4 == "ไม่ระบุ")
                             )
                         {

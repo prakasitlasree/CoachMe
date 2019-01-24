@@ -338,6 +338,20 @@ namespace CoachMe.Controllers
             }
         }
 
+        public async Task<JsonResult> CancelTeacher(HOME_MODEL dto)
+        {
+            resp = await service.CancelTeacher(dto);
+            if (resp.STATUS)
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         public async Task<JsonResult> SelectCourse(HOME_MODEL dto)
         {
             resp = await service.SelectCourse(dto);

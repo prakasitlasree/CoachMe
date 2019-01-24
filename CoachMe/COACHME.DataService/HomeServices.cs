@@ -127,6 +127,38 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
+
+        public async Task<RESPONSE__MODEL> CancelTeacher(HOME_MODEL dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+
+                    var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBER_AUTO_ID)
+                                                          .Include(o => o.MEMBERS).FirstOrDefaultAsync();
+
+                    var teachRoleId = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.TEACHER_AUTO_ID).FirstOrDefaultAsync();
+
+                    var obj = await ctx.MEMBER_MATCHING.Where(o => o.STUDENT_ROLE_ID == memberRole.AUTO_ID
+                                                          && o.TEACHER_ROLE_ID == teachRoleId.AUTO_ID).FirstOrDefaultAsync();
+                    ctx.MEMBER_MATCHING.Remove(obj);
+                  
+                    await ctx.SaveChangesAsync();
+                    resp.STATUS = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.STATUS = false;
+                throw ex;
+            }
+
+            return resp;
+        }
+
         public async Task<RESPONSE__MODEL> SelectCourse(HOME_MODEL dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
