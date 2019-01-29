@@ -2,7 +2,7 @@
 app.controller('MainHomeController', function ($scope, $http, $compile) {
 
     $.LoadingOverlaySetup({
-        background: "rgba(255,255, 255, 0.95)",
+        background: "rgba(255,255, 255, 0.8)",
     });
     
     $scope.PAGE_NUMBER = null;
@@ -325,6 +325,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
             $("#ID_COURSE_CATE").val(0);
             $("#ID_PROVINCE").val(0);
             $("#ID_AMPHUR").prop("disabled", true);
+            $scope.ID_NAME_TEACHER = ""; 
             $.LoadingOverlay("hide");
         });
 
@@ -370,6 +371,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
             $("#ID_COURSE_CATE").val(0);
             $("#ID_PROVINCE").val(0);
             $("#ID_AMPHUR").prop("disabled", true);
+             $scope.ID_NAME_TEACHER = "";   
             $.LoadingOverlay("hide");
         });;
     }
