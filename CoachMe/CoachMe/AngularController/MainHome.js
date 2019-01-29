@@ -1,10 +1,15 @@
 ﻿var app = angular.module('MainHome', []);
 app.controller('MainHomeController', function ($scope, $http, $compile) {
 
-
+    $.LoadingOverlaySetup({
+        background: "rgba(255,255, 255, 0.95)",
+    });
+    
     $scope.PAGE_NUMBER = null;
     $scope.PAGE_COUNT = null;
 
+    $scope.ID_NAME_TEACHER
+    $scope.ID_ABOUT_TEACHER
 
     $scope.LIST_SEARCH_TYPE = {
         availableOptions: [
@@ -170,7 +175,9 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 CATEGORY_ID: $scope.LIST_TEACHER_CATEGORY.selectedOption.AUTO_ID,
                 PROVINCE_ID: $scope.LIST_PROVINCE.selectedOption.PROVINCE_ID,
                 AMPHUR_ID: $scope.LIST_AMPHUR.selectedOption.AMPHUR_ID,
-                PAGE_NUMBER: $scope.PAGE_NUMBER
+                PAGE_NUMBER: $scope.PAGE_NUMBER,
+                ID_ABOUT_TEACHER: $scope.ID_ABOUT_TEACHER,
+                ID_NAME_TEACHER: $scope.ID_NAME_TEACHER,
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
@@ -455,7 +462,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 "
                 ////============================== MODAL ========================== 
 
-                console.log(html)
+                //console.log(html)
                 var $OnCompile = $(html).appendTo('#listTeacher');
                 $compile($OnCompile)($scope);
 

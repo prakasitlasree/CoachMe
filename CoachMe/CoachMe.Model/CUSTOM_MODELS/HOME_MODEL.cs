@@ -22,6 +22,8 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int CATEGORY_ID { get; set; }
         public int PROVINCE_ID { get; set; }
         public int AMPHUR_ID { get; set; }
+        public string ID_NAME_TEACHER { get; set; }
+        public string ID_ABOUT_TEACHER { get; set; }
         #endregion
 
         #region ============= SELECT OPTION =======

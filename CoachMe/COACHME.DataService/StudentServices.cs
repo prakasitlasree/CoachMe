@@ -58,6 +58,7 @@ namespace COACHME.DATASERVICE
 
 
         }
+
         public async Task<RESPONSE__MODEL> MatchTeacher(SEARCH_TEACHER_MODEL dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
@@ -92,6 +93,44 @@ namespace COACHME.DATASERVICE
             return resp;
         }
 
+        public async Task<RESPONSE__MODEL> GetMatchedTeacher(int student_id)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            CONTAINER_MODEL model = new CONTAINER_MODEL();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    var memberRoleID = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == student_id).FirstOrDefaultAsync();
+                    var listMatch = await ctx.MEMBER_MATCHING.Where(o => o.STUDENT_ROLE_ID == memberRoleID.AUTO_ID).ToListAsync();
+                    var listMatchTeacherId = listMatch.Select(o => o.TEACHER_ROLE_ID).ToList();
+                    var listMemberRole = await ctx.MEMBER_ROLE.Include(x => x.MEMBERS).ToListAsync();
+                    var listData = new List<MATCHING_TEACHER>();
+                    listData = (from item in listMatch
+                                select new MATCHING_TEACHER
+                                {
+                                    AUTO_ID = item.AUTO_ID.ToString(),
+                                    REGISTER_DATE = item.CREATED_DATE.ToString(),
+                                    TEACHER_PROFILE_IMG = listMemberRole.Where(o => o.AUTO_ID == item.TEACHER_ROLE_ID).Select(o => o.MEMBERS.PROFILE_IMG_URL).FirstOrDefault() ,
+                                    TEACHER_ROLE_ID = item.TEACHER_ROLE_ID.ToString(),
+                                    ABOUT = listMemberRole.Where(o => o.AUTO_ID == item.TEACHER_ROLE_ID).Select(o => o.MEMBERS.ABOUT).FirstOrDefault() ?? "ไม่ระบุ",
+                                    TEACHER_NAME = listMemberRole.Where(o => o.AUTO_ID == item.TEACHER_ROLE_ID).Select(o => o.MEMBERS.FULLNAME).FirstOrDefault() ?? "ไม่ระบุ",
+
+                                }).ToList();
+                    resp.OUTPUT_DATA = listData;
+                    resp.STATUS = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.ErrorMessage = ex.Message;
+                resp.STATUS = false;
+            }
+            return resp;
+
+
+        }
+
 
         public async Task<RESPONSE__MODEL> AcceptTeacher(SEARCH_TEACHER_MODEL dto)
         {
@@ -122,6 +161,7 @@ namespace COACHME.DATASERVICE
 
             return resp;
         }
+
         private string GetTeachtingTypeValue(int? id)
         {
             string result = string.Empty;
@@ -173,6 +213,8 @@ namespace COACHME.DATASERVICE
             //< option value = 4 > ทุกระดับผู้เรียน </ option >
             return result;
         }
+
+
 
         #region ===== BEFORE LOGIN ======
 
@@ -911,7 +953,7 @@ namespace COACHME.DATASERVICE
 
         #endregion
 
-        
+
 
     }
 }

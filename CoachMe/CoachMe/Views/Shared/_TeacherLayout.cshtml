@@ -9,9 +9,8 @@
 
     <meta charset="utf-8" />
     <link href="https://fonts.googleapis.com/css?family=Kanit|Mitr" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>     
 
     <title>
         CoachME เว็บไซต์หางานสอน บริหารงานสอน สำหรับครูหรือโค้ช ด้านวิชาชีพ
@@ -44,16 +43,14 @@
         gtag('config', 'UA-122822583-3');
     </script>
 
-
-
-
-
-    <script src="~/AngularController/TeacherController.js"></script>
-
+  
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/css/teacher/style.bundle.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/css/teacher/vendors.bundle.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <script src="~/AngularController/TeacherController.js"></script>
+    <script src="~/AngularController/StudentController.js"></script>
+    
 
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -170,7 +167,7 @@
                                     <a id="FindStudent" href="#" onclick="$('#btnFindStudent').trigger('click')" class="m-menu__link ">
                                         <span class="m-menu__item-here">
                                         </span>
-                                        <i class="m-menu__link-icon flaticon-layers">                                                                            </i>
+                                        <i class="m-menu__link-icon flaticon-users-1">                                                                            </i>
                                         <span class="m-menu__link-text">นักเรียน</span>
                                     </a>
                                 </li>
@@ -183,7 +180,7 @@
                                     }
                                     <a id="purchase" href="#" onclick="$('#btnPurchase').trigger('click')" class="m-menu__link ">
                                         <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-suitcase"></i>
+                                        <i class="m-menu__link-icon fa fa-money-bill"></i>
                                         <span class="m-menu__link-text">การเงิน</span>
                                     </a> 
                                 </li>
@@ -196,27 +193,27 @@
                                     }
                                     <a href="#" onclick="$('#btneCourse').trigger('click')" class="m-menu__link ">
                                         <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">คอร์ส</span>
+                                        <i class="m-menu__link-icon fa fa-book"></i><span class="m-menu__link-text">คอร์ส</span>
                                     </a>
                                 </li>
 
                                 <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 
-                                    @using (Html.BeginForm("index", "teacher", FormMethod.Post))
+                                    @using (Html.BeginForm("profile", "home", FormMethod.Post))
                                     {
                                         @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                         <button type="submit" id="btneditprofile" style="display:none"></button>
                                     }
                                     <a id="editprofile" href="#" onclick="$('#btneditprofile').trigger('click')" class="m-menu__link ">
                                         <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span>
+                                        <i class="m-menu__link-icon fa fa-edit"></i><span class="m-menu__link-text">แก้ไขโปรไฟล์</span>
                                     </a>
                                 </li>
 
                                 <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                                     <a id="admin" href="/" class="m-menu__link ">
                                         <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-diagram"></i><span class="m-menu__link-text">หน้าแรก</span>
+                                        <i class="m-menu__link-icon fa fa-home"></i><span class="m-menu__link-text">หน้าแรก</span>
                                     </a>
                                 </li>
                             }
@@ -224,21 +221,34 @@
                             {
                                 <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 
-                                    @using (Html.BeginForm("index", "teacher", FormMethod.Post))
+                                    @using (Html.BeginForm("profile", "home", FormMethod.Post))
                                     {
                                         @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
                                         <button type="submit" id="btneditprofile" style="display:none"></button>
                                     }
                                     <a id="editprofile" href="#" onclick="$('#btneditprofile').trigger('click')" class="m-menu__link ">
                                         <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span>
+                                        <i class="m-menu__link-icon fa fa-edit"></i><span class="m-menu__link-text">แก้ใขโปรไฟล์</span>
+                                    </a>
+                                </li>
+
+                                <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+
+                                    @using (Html.BeginForm("matchteacher", "student", FormMethod.Post))
+                                    {
+                                        @Html.HiddenFor(m => m.MEMBERS.AUTO_ID, new { @id = "AUTO_ID", @name = "AUTO_ID" })
+                                        <button type="submit" id="btnMatchtTeacher" style="display:none"></button>
+                                    }
+                                    <a id="editprofile" href="#" onclick="$('#btnMatchtTeacher').trigger('click')" class="m-menu__link ">
+                                        <span class="m-menu__item-here"></span>
+                                        <i class="m-menu__link-icon flaticon-users-1"></i><span class="m-menu__link-text">รายชื่อครูที่สมัคร</span>
                                     </a>
                                 </li>
 
                                 <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                                     <a id="admin" href="/" class="m-menu__link ">
                                         <span class="m-menu__item-here"></span>
-                                        <i class="m-menu__link-icon flaticon-diagram"></i><span class="m-menu__link-text">หน้าแรก</span>
+                                        <i class="m-menu__link-icon fa fa-home"></i><span class="m-menu__link-text">หน้าแรก</span>
                                     </a>
                                 </li>
                             }

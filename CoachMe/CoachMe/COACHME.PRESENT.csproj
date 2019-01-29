@@ -219,6 +219,7 @@
   <ItemGroup>
     <Content Include="AngularController\MainHome.js" />
     <Content Include="AngularController\SearchTeacherController.js" />
+    <Content Include="AngularController\StudentController.js" />
     <Content Include="AngularController\TeacherController.js" />
     <Content Include="Content\asset\favicon.ico" />
     <Content Include="Content\asset\style.bundle.css" />
@@ -369,7 +370,6 @@
     <Content Include="Views\Account\Login_new.cshtml" />
     <Content Include="Views\Account\Register_backup.cshtml" />
     <Content Include="Views\Account\ForgotPassword_backup.cshtml" />
-    <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />
     <Content Include="Views\Account\ForgotPasswordPartial.cshtml" />
     <Content Include="Views\Shared\_LogoPartial.cshtml" />
@@ -379,7 +379,6 @@
     <Content Include="Views\Shared\_TopBarPartial.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
-    <Content Include="Views\Teacher\Dashboard.cshtml" />
     <Content Include="Views\FindStudent\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Home\ErrorPage.cshtml" />
@@ -391,7 +390,12 @@
     <Content Include="Views\MainHome\Index.cshtml" />
     <Content Include="Views\MainHome\FacebookLogin.cshtml" />
     <Content Include="Views\MainHome\FacebookRegister.cshtml" />
-    <Content Include="Views\Teacher\Home.cshtml" />
+    <Content Include="Views\Profile\Home.cshtml" />
+    <Content Include="Views\Teacher\Dashboard.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Student\GetMatchTeacher.cshtml" />
+    <Content Include="Views\Student\MatchTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

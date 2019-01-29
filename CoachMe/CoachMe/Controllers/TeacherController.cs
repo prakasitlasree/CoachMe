@@ -41,7 +41,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                 ViewBag.Message = "File Uploaded Successfully!!";
                 MEMBERS param = resp.OUTPUT_DATA;
                 Session["logon"] = param;
-                return RedirectToAction("index", "teacher", new { member_id = dto.MEMBERS.AUTO_ID });
+                return RedirectToAction("profile", "home");
             }
             catch (Exception ex)
             {
@@ -494,13 +494,13 @@ namespace COACHME.WEB_PRESENT.Controllers
                 if (resp.STATUS)
                 {
                     TempData["UpdateStatus"] = "Success";
-                    return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
+                    return RedirectToAction("profile", "home");
                 }
                 else
                 {
                     resp.STATUS = false;
                     TempData["UpdateStatus"] = "Fail";
-                    return RedirectToAction("index", "teacher", new { member_id = memberLogon.AUTO_ID });
+                    return RedirectToAction("profile", "home");
                 }
             }
             else

@@ -145,7 +145,7 @@ namespace COACHME.DATASERVICE
                     var obj = await ctx.MEMBER_MATCHING.Where(o => o.STUDENT_ROLE_ID == memberRole.AUTO_ID
                                                           && o.TEACHER_ROLE_ID == teachRoleId.AUTO_ID).FirstOrDefaultAsync();
                     ctx.MEMBER_MATCHING.Remove(obj);
-                  
+
                     await ctx.SaveChangesAsync();
                     resp.STATUS = true;
                 }
@@ -402,106 +402,67 @@ namespace COACHME.DATASERVICE
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    #region ===========PROVINCE & AMPHUR SEARCH===========
-                    var listAmphur = new List<int?>();
-                    if (dto.PROVINCE_ID > 0 && dto.AMPHUR_ID == 0)
-                    {
-                        listAmphur = await ctx.AMPHUR
-                                              .Where(o => o.PROVINCE_ID == dto.PROVINCE_ID)
-                                              .Select(o => (int?)o.AMPHUR_ID).ToListAsync();
 
-                    }
-                    if (dto.PROVINCE_ID == 0 && dto.AMPHUR_ID == 0)
-                    {
-                        listAmphur.Add(0);
-                    }
-                    #endregion
+                    var listMember = await GetListTeacher(dto);
+                    var memberID = listMember.Select(o => o.AUTO_ID).ToList();
                     var listMemberPackage = await ctx.MEMBER_PACKAGE.ToListAsync();
-                    var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBER_AUTO_ID).FirstOrDefaultAsync();
+                    var listMemberRole = await ctx.MEMBER_ROLE.Where(o => o.ROLE_ID == 1 && memberID.Contains(o.MEMBERS.AUTO_ID)).ToListAsync();
+                    var listMemberLogon = await ctx.MEMBER_LOGON.Where(o => o.STATUS == 2 && memberID.Contains(o.MEMBERS.AUTO_ID)).ToListAsync();
                     var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x => x.CATEGORY).ToListAsync();
+
+                    var memberRole = await ctx.MEMBER_ROLE.Where(o => o.MEMBER_ID == dto.MEMBER_AUTO_ID).FirstOrDefaultAsync();
                     var listMatching = await ctx.MEMBER_MATCHING.Where(x => x.STUDENT_ROLE_ID == memberRole.AUTO_ID).ToListAsync();
-                    var list = await (from a in ctx.MEMBERS
-                                      join b in ctx.MEMBER_ROLE on a.AUTO_ID equals b.MEMBER_ID
-                                      join c in ctx.MEMBER_LOGON on a.AUTO_ID equals c.MEMBER_ID
-                                      where b.ROLE_ID == 1 && c.STATUS == 2
-                                       && (listAmphur.FirstOrDefault() != 0 ? listAmphur.Contains(a.AMPHUR_ID) : !listAmphur.Contains(a.AMPHUR_ID))
-                                      select new
-                                      LIST_MEMBERS
-                                      {
-                                          ROLE = b.ROLE_ID.ToString(),
-                                          AUTO_ID = a.AUTO_ID,
-                                          PROFILE_IMG_URL = a.PROFILE_IMG_URL,
-                                          PROFILE_IMG_URL_FULL = a.PROFILE_IMG_URL_FULL,
-                                          MEMBER_ROLE_ID = b.AUTO_ID,
-                                          FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
-                                          SEX = a.SEX == "1" ? "ชาย" : "หญิง",
-                                          AGE = a.AGE,
-                                          LOCATION = a.LOCATION ?? "ไม่ระบุ",
-                                          MOBILE = a.MOBILE ?? "ไม่ระบุ",
-                                          ABOUT = a.ABOUT ?? "ไม่ระบุ",
-                                          TEACHING_TYPE = a.TEACHING_TYPE,
-                                          STUDENT_LEVEL = a.STUDENT_LEVEL,
-                                          ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
-                                          ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
-                                          ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
-                                          ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
 
-                                      }).ToListAsync();
-                    list = list.OrderByDescending(x => x.VERIFY).ToList();
-                    foreach (var item in list)
-                    {
-                        var memberPackage = listMemberPackage.Where(x => x.MEMBER_ID == item.AUTO_ID
+                    var list = (from a in listMember
+                                join b in listMemberRole on a.AUTO_ID equals b.MEMBER_ID
+                                join c in listMemberLogon on a.AUTO_ID equals c.MEMBER_ID
+                                select new
+                                LIST_MEMBERS
+                                {
+                                    ROLE = b.ROLE_ID.ToString(),
+                                    AUTO_ID = a.AUTO_ID,
+                                    PROFILE_IMG_URL = a.PROFILE_IMG_URL,
+                                    PROFILE_IMG_URL_FULL = a.PROFILE_IMG_URL_FULL,
+                                    MEMBER_ROLE_ID = b.AUTO_ID,
+                                    FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
+                                    SEX = a.SEX == "1" ? "ชาย" : "หญิง",
+                                    AGE = a.AGE,
+                                    LOCATION = a.LOCATION ?? "ไม่ระบุ",
+                                    MOBILE = a.MOBILE ?? "ไม่ระบุ",
+                                    ABOUT = a.ABOUT ?? "ไม่ระบุ",
+                                    TEACHING_TYPE = a.TEACHING_TYPE,
+                                    STUDENT_LEVEL = a.STUDENT_LEVEL,
+                                    ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
+                                    ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
+                                    ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
+                                    ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
+                                    VERIFY = listMemberPackage.Where(x => x.MEMBER_ID == a.AUTO_ID
                                                                           && x.STATUS == "ACTIVE"
-                                                                          && x.EXPIRE_DATE > DateTime.Now).ToList();
-                        if (memberPackage.Count > 0)
-                        {
-                            item.VERIFY = true;
-                        }
-                        else
-                        {
-                            item.VERIFY = false;
-                        }
-                        item.LIST_MEMBER_CETEGORY = (from p in listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID)
-                                                     select new DATA_MEMBER_CATEGORY
-                                                     {
-                                                         AUTO_ID = p.AUTO_ID,
-                                                         NAME = p.NAME,
-                                                         CATEGORY_ID = p.CATEGORY_ID
+                                                                          && x.EXPIRE_DATE > DateTime.Now)
+                                                                          .ToList().Count > 0 ? true : false,
+                                    LIST_MEMBER_CETEGORY = (from i in listMemberCate.Where(x => x.MEMBER_ID == a.AUTO_ID)
+                                                            select new DATA_MEMBER_CATEGORY
+                                                            {
+                                                                AUTO_ID = i.AUTO_ID,
+                                                                NAME = i.NAME,
+                                                                CATEGORY_ID = i.CATEGORY_ID
+                                                            }).ToList(),
+                                    TEACHING_TYPE_NAME = a.TEACHING_TYPE != null ? GetTeachingTypeName(a.TEACHING_TYPE) : "ไม่ระบุ",
+                                    STUDENT_LEVEL_NAME = a.STUDENT_LEVEL != null ? GetTeachinLevelName(a.STUDENT_LEVEL) : "ไม่ระบุ",
+                                    REGISTER_STATUS = listMatching.Any(x => x.TEACHER_ROLE_ID == b.AUTO_ID) ? true : false,
 
-                                                     }).ToList();
-                        if (item.TEACHING_TYPE != null)
-                        {
-                            item.TEACHING_TYPE_NAME = GetTeachingTypeName(item.TEACHING_TYPE);
-                        }
-                        else
-                        {
-                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
-                        }
-                        if (item.STUDENT_LEVEL != null)
-                        {
-                            item.STUDENT_LEVEL_NAME = GetTeachinLevelName(item.STUDENT_LEVEL);
-                        }
-                        else
-                        {
-                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
-                        }
-                        var match = listMatching.Where(x => x.TEACHER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
-                        if (match.Count > 0)
-                        {
-                            item.REGISTER_STATUS = true;
-                        }
-                    }
+                                }).ToList();
+
+                    list = list.OrderByDescending(x => x.VERIFY).ToList();
+                 
                     #region === Advance Search ====
-
-
 
                     if (dto.CATEGORY_ID > 0)
                     {
-
                         int catId = dto.CATEGORY_ID;
                         list = list.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o => o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
-
                     }
+                    
                     #endregion
 
                     dto.PAGE_COUNT = Math.Ceiling(list.Count() / Convert.ToDecimal(dto.PAGE_SIZE));
@@ -525,113 +486,70 @@ namespace COACHME.DATASERVICE
         public async Task<RESPONSE__MODEL> GetListTeacherBeforeLogin(HOME_MODEL dto)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
-
+            var listTeacher = new List<LIST_MEMBERS>();
             try
             {
                 using (var ctx = new COACH_MEEntities())
                 {
-                    var listAmphur = new List<int?>();
-                    if (dto.PROVINCE_ID > 0 && dto.AMPHUR_ID == 0)
-                    {
-                        listAmphur = await ctx.AMPHUR
-                                              .Where(o => o.PROVINCE_ID == dto.PROVINCE_ID)
-                                              .Select(o => (int?)o.AMPHUR_ID).ToListAsync();
-
-                    }
-                    if (dto.PROVINCE_ID == 0 && dto.AMPHUR_ID == 0)
-                    {
-                        listAmphur.Add(0);
-                    }
-
-                    var listTeacher = new List<LIST_MEMBERS>();
+                    var listMember = await GetListTeacher(dto);
                     var listMemberCate = await ctx.MEMBER_CATEGORY.Include(x => x.CATEGORY).ToListAsync();
                     var listCourse = await ctx.MEMBER_TEACH_COURSE.Include(x => x.COURSES).ToListAsync();
                     var listMemberPackage = await ctx.MEMBER_PACKAGE.ToListAsync();
+                    var memberID = listMember.Select(o => o.AUTO_ID).ToList();
+                    var listMemberRole = await ctx.MEMBER_ROLE.Where(o => o.ROLE_ID == 1 && memberID.Contains(o.MEMBERS.AUTO_ID)).ToListAsync();
+                    var listMemberLogon = await ctx.MEMBER_LOGON.Where(o => o.STATUS == 2 && memberID.Contains(o.MEMBERS.AUTO_ID)).ToListAsync();
 
-                    listTeacher = await (from a in ctx.MEMBERS
-                                         join b in ctx.MEMBER_ROLE on a.AUTO_ID equals b.MEMBER_ID
-                                         join c in ctx.MEMBER_LOGON on a.AUTO_ID equals c.MEMBER_ID
-                                         where b.ROLE_ID == 1 && c.STATUS == 2
-                                          && (listAmphur.FirstOrDefault() != 0 ? listAmphur.Contains(a.AMPHUR_ID) : !listAmphur.Contains(a.AMPHUR_ID))
-                                         select new
-                                         LIST_MEMBERS
-                                         {
-                                             ROLE = b.ROLE_ID.ToString(),
-                                             AUTO_ID = a.AUTO_ID,
-                                             PROFILE_IMG_URL = a.PROFILE_IMG_URL,
-                                             PROFILE_IMG_URL_FULL = a.PROFILE_IMG_URL_FULL,
-                                             MEMBER_ROLE_ID = b.AUTO_ID,
-                                             FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
-                                             SEX = a.SEX == "1" ? "ชาย" : "หญิง",
-                                             AGE = a.AGE,
-                                             LOCATION = a.LOCATION ?? "ไม่ระบุ",
-                                             MOBILE = a.MOBILE ?? "ไม่ระบุ",
-                                             ABOUT = a.ABOUT ?? "ไม่ระบุ",
-                                             TEACHING_TYPE = a.TEACHING_TYPE,
-                                             STUDENT_LEVEL = a.STUDENT_LEVEL,
-                                             ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
-                                             ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
-                                             ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
-                                             ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
-                                         }).ToListAsync();
+                    listTeacher = (from a in listMember
+                                   join b in listMemberRole on a.AUTO_ID equals b.MEMBER_ID
+                                   join c in listMemberLogon on a.AUTO_ID equals c.MEMBER_ID
+                                   select new
+                                   LIST_MEMBERS
+                                   {
+                                       ROLE = b.ROLE_ID.ToString(),
+                                       AUTO_ID = a.AUTO_ID,
+                                       PROFILE_IMG_URL = a.PROFILE_IMG_URL,
+                                       PROFILE_IMG_URL_FULL = a.PROFILE_IMG_URL_FULL,
+                                       MEMBER_ROLE_ID = b.AUTO_ID,
+                                       FULLNAME = a.FULLNAME ?? "ไม่ระบุ",
+                                       SEX = a.SEX == "1" ? "ชาย" : "หญิง",
+                                       AGE = a.AGE,
+                                       LOCATION = a.LOCATION ?? "ไม่ระบุ",
+                                       MOBILE = a.MOBILE ?? "ไม่ระบุ",
+                                       ABOUT = a.ABOUT ?? "ไม่ระบุ",
+                                       TEACHING_TYPE = a.TEACHING_TYPE,
+                                       STUDENT_LEVEL = a.STUDENT_LEVEL,
+                                       ABOUT_IMG_1 = a.ABOUT_IMG_URL1,
+                                       ABOUT_IMG_2 = a.ABOUT_IMG_URL2,
+                                       ABOUT_IMG_3 = a.ABOUT_IMG_URL3,
+                                       ABOUT_IMG_4 = a.ABOUT_IMG_URL4,
 
+                                       LIST_MEMBER_CETEGORY = (from i in listMemberCate.Where(x => x.MEMBER_ID == a.AUTO_ID)
+                                                               select new DATA_MEMBER_CATEGORY
+                                                               {
+                                                                   AUTO_ID = i.AUTO_ID,
+                                                                   NAME = i.NAME,
+                                                                   CATEGORY_ID = i.CATEGORY_ID
+                                                               }).ToList(),
 
-                    foreach (var item in listTeacher)
-                    {
-                        var memberPackage = listMemberPackage.Where(x => x.MEMBER_ID == item.AUTO_ID
+                                       VERIFY = listMemberPackage.Where(x => x.MEMBER_ID == a.AUTO_ID
                                                                           && x.STATUS == "ACTIVE"
-                                                                          && x.EXPIRE_DATE > DateTime.Now).ToList();
-                        item.LIST_MEMBER_CETEGORY = (from p in listMemberCate.Where(x => x.MEMBER_ID == item.AUTO_ID)
-                                                     select new DATA_MEMBER_CATEGORY
-                                                     {
-                                                         AUTO_ID = p.AUTO_ID,
-                                                         NAME = p.NAME,
-                                                         CATEGORY_ID = p.CATEGORY_ID
+                                                                          && x.EXPIRE_DATE > DateTime.Now)
+                                                                          .ToList().Count > 0 ? true : false,
 
-                                                     }).ToList();
+                                       TEACHING_TYPE_NAME = a.TEACHING_TYPE != null ? GetTeachingTypeName(a.TEACHING_TYPE) : "ไม่ระบุ",
+                                       STUDENT_LEVEL_NAME = a.STUDENT_LEVEL != null ? GetTeachinLevelName(a.STUDENT_LEVEL) : "ไม่ระบุ",
 
-                        //item.LIST_MEMBER_TEACH_COURSE = listCourse.Where(x => x.MEMBER_ROLE_ID == item.MEMBER_ROLE_ID).ToList();
-                        if (memberPackage.Count > 0)
-                        {
-                            item.VERIFY = true;
-                        }
-                        else
-                        {
-                            item.VERIFY = false;
-                        }
-                        if (item.TEACHING_TYPE != null)
-                        {
-                            item.TEACHING_TYPE_NAME = GetTeachingTypeName(item.TEACHING_TYPE);
-                        }
-                        else
-                        {
-                            item.TEACHING_TYPE_NAME = "ไม่ระบุ";
-                        }
-                        if (item.STUDENT_LEVEL != null)
-                        {
-                            item.STUDENT_LEVEL_NAME = GetTeachinLevelName(item.STUDENT_LEVEL);
-                        }
-                        else
-                        {
-                            item.STUDENT_LEVEL_NAME = "ไม่ระบุ";
-                        }
-                    }
+                                   }).ToList();
 
-                    #region === Advance Search ====
                     if (dto.CATEGORY_ID > 0)
                     {
-
                         int catId = dto.CATEGORY_ID;
                         listTeacher = listTeacher.Where(x => x.LIST_MEMBER_CETEGORY != null).Where(o => o.LIST_MEMBER_CETEGORY.Any(s => s.CATEGORY_ID == catId)).ToList();
-
                     }
-                    #endregion
 
                     dto.PAGE_COUNT = Math.Ceiling(listTeacher.Count() / Convert.ToDecimal(dto.PAGE_SIZE));
                     listTeacher = listTeacher.OrderByDescending(x => x.VERIFY).ToList();
                     listTeacher = listTeacher.Skip(dto.PAGE_SIZE * (dto.PAGE_NUMBER - 1)).Take(dto.PAGE_SIZE).ToList();
-
-
 
                     dto.LIST_MEMBERS = listTeacher;
                     resp.OUTPUT_DATA = dto;
@@ -799,6 +717,80 @@ namespace COACHME.DATASERVICE
                 resp.STATUS = false;
             }
             return resp;
+        }
+
+        public async Task<List<MEMBERS>> GetListTeacher(HOME_MODEL dto)
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+            var listAmphur = new List<int?>();
+            try
+            {
+                using (var ctx = new COACH_MEEntities())
+                {
+                    IQueryable<MEMBERS> query = ctx.MEMBERS.Include(x => x.MEMBER_LOGON)
+                                                            .Include(x => x.MEMBER_ROLE);
+
+                    query = query.Where(o => o.MEMBER_LOGON.Any(x => x.STATUS == 2));
+                    query = query.Where(o => o.MEMBER_ROLE.Any(x => x.ROLE_ID == 1));
+
+                    query = query.Where(o => (o.PROFILE_IMG_URL != null
+                                         && o.FIRST_NAME != null
+                                         && o.LAST_NAME != null
+                                         && o.MOBILE != null
+                                         && o.NICKNAME != null
+                                         && o.DATE_OF_BIRTH != null
+                                         && o.SEX != null
+                                         && o.ABOUT != null
+                                         && o.AMPHUR_ID != null
+                                         && o.TEACHING_TYPE != null
+                                         && o.STUDENT_LEVEL != null
+                                         && o.LOCATION != null
+                                         && o.FACEBOOK_URL != null
+                                         && o.LINE_ID != null)
+                                         && (o.ABOUT_IMG_URL1 != null
+                                          || o.ABOUT_IMG_URL2 != null
+                                          || o.ABOUT_IMG_URL3 != null
+                                          || o.ABOUT_IMG_URL3 != null
+                                          || o.ABOUT_IMG_URL3 != null));
+
+                    if (dto.ID_ABOUT_TEACHER != null)
+                    {
+                        if (dto.ID_ABOUT_TEACHER.Trim() != "")
+                        {
+                            query = query.Where(x => x.ABOUT.Contains(dto.ID_ABOUT_TEACHER));
+                        }
+                    }
+                    if (dto.ID_NAME_TEACHER != null)
+                    {
+                        if (dto.ID_NAME_TEACHER.Trim() != "")
+                        {
+                            query = query.Where(x => x.FULLNAME.Contains(dto.ID_NAME_TEACHER));
+                        }
+                    }
+
+                    if (dto.PROVINCE_ID > 0 && dto.AMPHUR_ID == 0)
+                    {
+                        listAmphur = await ctx.AMPHUR
+                                              .Where(o => o.PROVINCE_ID == dto.PROVINCE_ID)
+                                              .Select(o => (int?)o.AMPHUR_ID).ToListAsync();
+
+                    }
+                    if (dto.PROVINCE_ID == 0 && dto.AMPHUR_ID == 0)
+                    {
+                        listAmphur.Add(0);
+                    }
+
+                    query = query.Where(x => listAmphur.FirstOrDefault() != 0 ? listAmphur.Contains(x.AMPHUR_ID) : !listAmphur.Contains(x.AMPHUR_ID));
+
+                    return await query.ToListAsync();
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
         private void resizeImage(Image imgToResize, string path)

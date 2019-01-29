@@ -37,7 +37,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             CONTAINER_MODEL container = new CONTAINER_MODEL();
             SEARCH_TEACHER_MODEL model = new SEARCH_TEACHER_MODEL();
 
-           
+
             resp = await service.GetListCourseName();
             model.LIST_COURSE = resp.OUTPUT_DATA;
 
@@ -50,7 +50,7 @@ namespace COACHME.WEB_PRESENT.Controllers
             resp = await commonService.GetListProvince();
             model.LIST_PROVINCE = resp.OUTPUT_DATA;
 
-         
+
 
             #region ===== SESSION NOT NUll หลัง LOGIN ====== 
             if (Session["logon"] != null)
@@ -60,11 +60,11 @@ namespace COACHME.WEB_PRESENT.Controllers
                 container.MEMBERS = memberLogon;
 
                 if (dto.SEARCH_TEACHER_MODEL == null)//เข้าครั้งแรก
-                { 
+                {
                     resp = await service.GetListAllTeacherAfterLogin(dto);
                     container.LIST_CUSTOM_MEMBERS = resp.OUTPUT_DATA;
                     container.SEARCH_TEACHER_MODEL.TEACH_TYPE = "ครู";
-                     
+
                     return View(container);
 
                 }
@@ -106,7 +106,7 @@ namespace COACHME.WEB_PRESENT.Controllers
                             return View(container);
                         }
                     }
-                                       
+
                 }
 
             }
@@ -190,40 +190,74 @@ namespace COACHME.WEB_PRESENT.Controllers
             }
         }
 
+       
+
         public async Task<JsonResult> GetListProvince()
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
-            
-                var memberLogon = (MEMBERS)Session["logon"];
-                resp = await commonService.GetListProvinceWithID();
-                if (resp.STATUS)
-                {
-                    return Json(resp, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    resp.STATUS = false;
-                    return Json(resp, JsonRequestBehavior.AllowGet);
-                }
-           
-        }
 
+            var memberLogon = (MEMBERS)Session["logon"];
+            resp = await commonService.GetListProvinceWithID();
+            if (resp.STATUS)
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
+        }
         public async Task<JsonResult> GetListAmphur(int provinceID)
         {
             RESPONSE__MODEL resp = new RESPONSE__MODEL();
-           
-                var memberLogon = (MEMBERS)Session["logon"];
-                resp = await commonService.GetListAmphur(provinceID);
-                if (resp.STATUS)
-                {
-                    return Json(resp, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    resp.STATUS = false;
-                    return Json(resp, JsonRequestBehavior.AllowGet);
-                }
-           
+
+            var memberLogon = (MEMBERS)Session["logon"];
+            resp = await commonService.GetListAmphur(provinceID);
+            if (resp.STATUS)
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        public ActionResult MatchTeacher()
+        {
+            if (Session["logon"] != null)
+            {
+                RESPONSE__MODEL resp = new RESPONSE__MODEL();
+                CONTAINER_MODEL model = new CONTAINER_MODEL();
+                var member = (MEMBERS)Session["logon"];
+                model.MEMBERS = member;
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+        public async Task<JsonResult> MatchedTeacher()
+        {
+            RESPONSE__MODEL resp = new RESPONSE__MODEL();
+
+            var member = (MEMBERS)Session["logon"];         
+            resp = await service.GetMatchedTeacher(member.AUTO_ID);
+            
+            if (resp.STATUS)
+            {
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                resp.STATUS = false;
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

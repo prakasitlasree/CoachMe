@@ -101,7 +101,7 @@ namespace CoachMe.Controllers
                 {
                     if (param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 1 || param.MEMBER_ROLE.FirstOrDefault().ROLE_ID == 3)
                     {
-                        return RedirectToAction("index", "teacher");
+                        return RedirectToAction("profile", "home");
                     }
                     else
                     {

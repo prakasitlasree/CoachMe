@@ -77,6 +77,7 @@
     <Compile Include="CUSTOM_MODELS\FACEBOOK_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\FORGOT_PASSWORD_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\LOGON_MODEL.cs" />
+    <Compile Include="CUSTOM_MODELS\MATCHING_TEACHER.cs" />
     <Compile Include="CUSTOM_MODELS\MEMBER_PACKAGE.cs" />
     <Compile Include="CUSTOM_MODELS\PROFILE_PROGRESS_MODEL.cs" />
     <Compile Include="CUSTOM_MODELS\REGISTER_MODEL.cs" />

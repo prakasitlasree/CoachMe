@@ -1047,9 +1047,14 @@ namespace COACHME.DATASERVICE
 
                                     }).ToList();
 
+                    
                     foreach (var item in listItem)
                     {
-                        if (item.PROFILE_IMG_URL == null)
+                        if (item.ROLE == "2")
+                        {
+                            item.STAGE = 4;
+                        }
+                        else if (item.PROFILE_IMG_URL == null)
                         {
                             item.STAGE = 1;
                         }

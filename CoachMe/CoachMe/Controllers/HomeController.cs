@@ -13,9 +13,10 @@ namespace CoachMe.Controllers
     public class HomeController : Controller
     {
 
-        RESPONSE__MODEL resp = new RESPONSE__MODEL();
-        HomeServices service = new HomeServices();
-        CommonServices commonService = new CommonServices();
+        private RESPONSE__MODEL resp = new RESPONSE__MODEL();
+        private HomeServices service = new HomeServices();
+        private CommonServices commonService = new CommonServices();
+        private TeacherProfileServices teacherService = new TeacherProfileServices();
         public ActionResult Index()
         {
             if (Session["logon"] != null)
@@ -351,7 +352,6 @@ namespace CoachMe.Controllers
             }
         }
 
-
         public async Task<JsonResult> SelectCourse(HOME_MODEL dto)
         {
             resp = await service.SelectCourse(dto);
@@ -365,6 +365,23 @@ namespace CoachMe.Controllers
             }
         }
 
+        public ActionResult Profile()
+        {
+            if (Session["logon"] != null)
+            {
+                RESPONSE__MODEL resp = new RESPONSE__MODEL();
+                CONTAINER_MODEL model = new CONTAINER_MODEL();
+                var member = (MEMBERS)Session["logon"];
+
+                member = teacherService.GetMemberProfileFromAutoID(member).OUTPUT_DATA;
+                model.MEMBERS = member;
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
 
         public ActionResult About()
         {
