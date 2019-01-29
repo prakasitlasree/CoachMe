@@ -288,7 +288,7 @@ namespace COACHME.DATASERVICE
                     {
                         if (dto.ID_NAME_TEACHER.Trim() != "")
                         {
-                            listTeachCourse = listTeachCourse.Where(x => x.FULLNAME.Contains(dto.ID_NAME_TEACHER) || x.ABOUT.Contains(dto.ID_NAME_TEACHER) || x.COURSE.Contains(dto.ID_NAME_TEACHER)).ToList();
+                            listTeachCourse = listTeachCourse.Where(x => x.FULLNAME.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.ABOUT.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.COURSE.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper())).ToList();
                         }
                     }
 
@@ -383,7 +383,7 @@ namespace COACHME.DATASERVICE
                     {
                         if (dto.ID_NAME_TEACHER.Trim() != "")
                         {
-                            listTeachCourse = listTeachCourse.Where(x => x.FULLNAME.Contains(dto.ID_NAME_TEACHER) || x.ABOUT.Contains(dto.ID_NAME_TEACHER) || x.LIST_TEACH_COURSE.Contains(dto.ID_NAME_TEACHER)).ToList();
+                            listTeachCourse = listTeachCourse.Where(x => x.FULLNAME.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.ABOUT.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.LIST_TEACH_COURSE.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper())).ToList();
                         }
                     }
 
@@ -484,7 +484,7 @@ namespace COACHME.DATASERVICE
                     {
                         if (dto.ID_NAME_TEACHER.Trim() != "")
                         {
-                            list = list.Where(x => x.FULLNAME.Contains(dto.ID_NAME_TEACHER) || x.ABOUT.Contains(dto.ID_NAME_TEACHER) || x.LIST_TEACH_COURSE.Contains(dto.ID_NAME_TEACHER)).ToList();
+                            list = list.Where(x => x.FULLNAME.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.ABOUT.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.LIST_TEACH_COURSE.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper())).ToList();
                         }
                     }
 
@@ -579,7 +579,7 @@ namespace COACHME.DATASERVICE
                     {
                         if (dto.ID_NAME_TEACHER.Trim() != "")
                         {
-                            listTeacher = listTeacher.Where(x => x.FULLNAME.Contains(dto.ID_NAME_TEACHER) || x.ABOUT.Contains(dto.ID_NAME_TEACHER) || x.LIST_TEACH_COURSE.Contains(dto.ID_NAME_TEACHER)).ToList();
+                            listTeacher = listTeacher.Where(x => x.FULLNAME.ToUpper().Contains(dto.ID_NAME_TEACHER.ToUpper().Trim()) || x.ABOUT.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper()) || x.LIST_TEACH_COURSE.ToUpper().Contains(dto.ID_NAME_TEACHER.Trim().ToUpper())).ToList();
                         }
                     }
 
