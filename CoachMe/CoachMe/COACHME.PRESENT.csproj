@@ -390,7 +390,6 @@
     <Content Include="Views\MainHome\Index.cshtml" />
     <Content Include="Views\MainHome\FacebookLogin.cshtml" />
     <Content Include="Views\MainHome\FacebookRegister.cshtml" />
-    <Content Include="Views\Profile\Home.cshtml" />
     <Content Include="Views\Teacher\Dashboard.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
@@ -401,6 +400,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
