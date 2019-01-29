@@ -140,6 +140,17 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
         }
     }
 
+    $scope.SearchAll = function () {
+        if ($scope.LIST_SEARCH_TYPE.selectedOption.value == 1) {
+            $scope.PAGE_NUMBER = 1;
+            $scope.GetListAllTeacher();
+        }
+        if ($scope.LIST_SEARCH_TYPE.selectedOption.value == 2) {
+            $scope.PAGE_NUMBER = 1;
+            $scope.GetListAllCourse();
+        }
+    }
+
     $scope.Next = function () {
 
         if ($scope.LIST_SEARCH_TYPE.selectedOption.value == 1) {
@@ -167,6 +178,21 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
 
     $scope.GetListTeacher = function () {
         $.LoadingOverlay("show");
+        debugger
+        var TEACH_TYPE = []
+        var STUDENT_TYPE = []
+        var GENDER_TYPE = []
+     
+        $("input:checkbox[name=GENDER_TYPE]:checked").each(function () {
+            GENDER_TYPE.push($(this).val());
+        });
+        $("input:checkbox[name=TEACH_TYPE]:checked").each(function () {
+            TEACH_TYPE.push($(this).val());
+        });
+        $("input:checkbox[name=STUDENT_TYPE]:checked").each(function () {
+            STUDENT_TYPE.push($(this).val());
+        });
+        
         $http({
             url: "/home/GetListTeacher",
             method: "GET",
@@ -176,8 +202,11 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 PROVINCE_ID: $scope.LIST_PROVINCE.selectedOption.PROVINCE_ID,
                 AMPHUR_ID: $scope.LIST_AMPHUR.selectedOption.AMPHUR_ID,
                 PAGE_NUMBER: $scope.PAGE_NUMBER,
-                ID_ABOUT_TEACHER: $scope.ID_ABOUT_TEACHER,
+                //ID_ABOUT_TEACHER: $scope.ID_ABOUT_TEACHER,
                 ID_NAME_TEACHER: $scope.ID_NAME_TEACHER,
+                TEACH_TYPE:TEACH_TYPE,
+                STUDENT_TYPE:STUDENT_TYPE,
+                GENDER_TYPE: GENDER_TYPE,
             }
         }).then(function (response) {
             console.log(response.data.OUTPUT_DATA)
@@ -221,6 +250,94 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 CATEGORY_ID: $scope.LIST_COURSE_CATEGORY.selectedOption.AUTO_ID,
                 PROVINCE_ID: $scope.LIST_PROVINCE.selectedOption.PROVINCE_ID,
                 AMPHUR_ID: $scope.LIST_AMPHUR.selectedOption.AMPHUR_ID,
+                ID_NAME_TEACHER: $scope.ID_NAME_TEACHER,
+                PAGE_NUMBER: $scope.PAGE_NUMBER
+            }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+
+                $scope.PAGE_NUMBER = response.data.OUTPUT_DATA.PAGE_NUMBER;
+                $scope.PAGE_COUNT = response.data.OUTPUT_DATA.PAGE_COUNT;
+                $scope.LIST_COURSE = response.data.OUTPUT_DATA;
+
+
+                if ($scope.PAGE_NUMBER >= $scope.PAGE_COUNT) {
+                    $('#BTN_NEXT').prop('disabled', true);
+                }
+                else {
+                    $('#BTN_NEXT').prop('disabled', false);
+
+                }
+                if ($scope.PAGE_NUMBER > 1) {
+                    $('#BTN_PREVIOUS').prop('disabled', false);
+                }
+                else {
+                    $('#BTN_PREVIOUS').prop('disabled', true);
+                }
+            }
+        }).then(function () {
+
+            $scope.renderCourseContent()
+        }).then(function () {
+            $.LoadingOverlay("hide");
+        });;
+    }
+
+    $scope.GetListAllTeacher = function () {
+        $.LoadingOverlay("show");
+        debugger
+      
+        $http({
+            url: "/home/GetListTeacher",
+            method: "GET",
+            params: {
+                SEARCH_TYPE: 1,             
+                PAGE_NUMBER: $scope.PAGE_NUMBER,              
+            }
+        }).then(function (response) {
+            console.log(response.data.OUTPUT_DATA)
+            if (response.data.STATUS == true) {
+
+                $scope.PAGE_NUMBER = response.data.OUTPUT_DATA.PAGE_NUMBER;
+                $scope.PAGE_COUNT = response.data.OUTPUT_DATA.PAGE_COUNT;
+                $scope.LIST_TEACHER = response.data.OUTPUT_DATA;
+
+                if ($scope.PAGE_NUMBER >= $scope.PAGE_COUNT) {
+                    $('#BTN_NEXT').prop('disabled', true);
+                }
+                else {
+                    $('#BTN_NEXT').prop('disabled', false);
+
+                }
+                if ($scope.PAGE_NUMBER > 1) {
+                    $('#BTN_PREVIOUS').prop('disabled', false);
+                }
+                else {
+                    $('#BTN_PREVIOUS').prop('disabled', true);
+                }
+            }
+        }).then(function () {
+            $scope.renderTeacherContent()
+
+        }).then(function () {
+            $("#ID_TEACHER_CATE").val(0);
+            $("#ID_COURSE_CATE").val(0);
+            $("#ID_PROVINCE").val(0);
+            $("#ID_AMPHUR").prop("disabled", true);
+            $.LoadingOverlay("hide");
+        });
+
+    }
+
+    $scope.GetListAllCourse = function () {
+
+        $.LoadingOverlay("show");
+        $http({
+            url: "/home/GetListCourse",
+            method: "GET",
+            params: {
+                SEARCH_TYPE: 2,
                 PAGE_NUMBER: $scope.PAGE_NUMBER
             }
         }).then(function (response) {
@@ -249,9 +366,14 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
 
             $scope.renderCourseContent()
         }).then(function () {
+            $("#ID_TEACHER_CATE").val(0);
+            $("#ID_COURSE_CATE").val(0);
+            $("#ID_PROVINCE").val(0);
+            $("#ID_AMPHUR").prop("disabled", true);
             $.LoadingOverlay("hide");
         });;
     }
+
 
     $scope.renderTeacherContent = function () {
 
@@ -360,7 +482,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 html += `</div>
                             </div>
                                 </div>`
-                html += "<button class='btn m-btn--pill m-btn--air btn-outline-success btn-sm m-btn m-btn--custom' ng-click='ShowModalTeacherProfile(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")'>"
+                html += "<button class='btn m-btn--pill m-btn--air btn-outline-success btn-sm m-btn m-btn--custom mr-2' ng-click='ShowModalTeacherProfile(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")'>"
                 html += `<span>
                          <i class='fa fa-plus'></i>
                          <span>ข้อมูลเพิ่มเติม</span>
@@ -419,8 +541,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                         <div class='modal-footer'>\
                         <button class='btn m-btn--pill m-btn--air btn-primary' type='submit' ng-click='SelectTeacher(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")' name='AcceptStudent' value='" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + "'>\
                         <span>\
-                        <i class='fa fa-check-square'></i>\
-                        <span>&nbsp; ตกลง</span>\
+                        <span>ตกลง</span>\
                         </span>\
                         </button>\
                         <button type='button' class='btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom' data-dismiss='modal'>ปิด</button>\
@@ -450,7 +571,6 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                         <div class='modal-footer'>\
                         <button class='btn m-btn--pill m-btn--air btn-primary' type='submit' ng-click='CancelTeacher(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")' name='AcceptStudent' value='" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + "'>\
                         <span>\
-                        <i class='fa fa-check-square'></i>\
                         <span>&nbsp; ตกลง</span>\
                         </span>\
                         </button>\
@@ -571,7 +691,7 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 html += `</div>
                             </div>
                                 </div>`
-                html += "<button class='btn m-btn--pill m-btn--air btn-outline-success btn-sm m-btn m-btn--custom' ng-click='ShowModalTeacherProfile(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")'>"
+                html += "<button class='btn m-btn--pill m-btn--air btn-outline-success btn-sm m-btn m-btn--custom mr-2' ng-click='ShowModalTeacherProfile(" + $scope.LIST_TEACHER.LIST_MEMBERS[i].AUTO_ID + ")'>"
                 html += `<span>
                          <i class='fa fa-plus'></i>
                          <span>ข้อมูลเพิ่มเติม</span>
@@ -845,38 +965,38 @@ app.controller('MainHomeController', function ($scope, $http, $compile) {
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_1 == null) {
 
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail m-1' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_1;
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail m-1' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_2 == null) {
 
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_2;
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_3 == null) {
 
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_3;
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 if ($scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_4 == null) {
 
                     var pic = "..////Content//images//Blank-Profile.jpg";
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 else {
                     var pic = "..////" + $scope.LIST_TEACHER.LIST_MEMBERS[i].ABOUT_IMG_4;
-                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px'></a>"
+                    html += "<a><img src= '" + pic + "' class='img-thumbnail' style='height:130px;width:130px;border-radius:10px;'></a>"
                 }
                 html += "</div></div></div></div>\
                         <div class='modal-footer'>\

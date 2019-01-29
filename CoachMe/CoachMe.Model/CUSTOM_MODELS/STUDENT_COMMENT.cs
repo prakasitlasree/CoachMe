@@ -14,7 +14,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string COMMENT_BY { get; set; }
         public Nullable<System.DateTime> COMMENT_DATE { get; set; }
 
-        public virtual MEMBER_REGIS_COURSE MEMBER_REGIS_COURSE { get; set; }
+        public virtual TEACHER_TEACH_COURSE MEMBER_REGIS_COURSE { get; set; }
 
 
     }

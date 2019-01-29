@@ -1062,7 +1062,7 @@ namespace COACHME.DATASERVICE
                             (item.FIRST_NAME == null || item.FIRST_NAME == "ไม่ระบุ") ||
                             (item.LAST_NAME == null || item.LAST_NAME == "ไม่ระบุ") ||
                             (item.MOBILE == null || item.MOBILE == "ไม่ระบุ") ||
-                            (item.NICKNAME == null || item.NICKNAME == "ไม่ระบุ") ||
+                            //(item.NICKNAME == null || item.NICKNAME == "ไม่ระบุ") ||
                             (item.DATE_OF_BIRTH_TEXT == null || item.DATE_OF_BIRTH_TEXT == "ไม่ระบุ") ||
                             (item.SEX == null || item.SEX == "ไม่ระบุ") ||
                             (item.ABOUT == null || item.ABOUT == "ไม่ระบุ") ||

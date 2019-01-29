@@ -24,6 +24,10 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int AMPHUR_ID { get; set; }
         public string ID_NAME_TEACHER { get; set; }
         public string ID_ABOUT_TEACHER { get; set; }
+        public List<int?> TEACH_TYPE { get; set; }
+        public List<int?> STUDENT_TYPE { get; set; }
+        public List<string> GENDER_TYPE { get; set; }
+
         #endregion
 
         #region ============= SELECT OPTION =======
@@ -83,7 +87,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public string ROLE { get; set; }
         public string LINE_ID { get; set; }
         public string FACEBOOK_URL { get; set; }
-
+        public string LIST_TEACH_COURSE { get; set; }
         public List<DATA_MEMBER_CATEGORY> LIST_MEMBER_CETEGORY { get; set; }
         public List<string> LIST_STUDENT_COMMENT { get; set; }
     }
@@ -106,5 +110,7 @@ namespace COACHME.MODEL.CUSTOM_MODELS
         public int CATEGORY_ID { get; set; }
         public string NAME { get; set; }
     }
-
+    public class TEACHER_TEACH_COURSE{
+        public string COURSE { get; set; }
+    }
 }
